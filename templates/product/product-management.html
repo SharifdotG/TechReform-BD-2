@@ -1,0 +1,1259 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Product Management - TechReform BD{% endblock %}
+
+{% block extra_css %}
+<style>
+    .product-name {
+        max-width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
+
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    @media (min-width: 640px) {
+        .action-buttons {
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .product-name {
+            max-width: 250px;
+        }    }
+
+    @media (min-width: 1024px) {
+        .product-name {
+            max-width: 300px;
+        }
+    }
+
+    .table-fixed {
+        table-layout: fixed;
+    }
+
+    /* Fix dropdown z-index issues */
+    .dropdown {
+        position: relative;
+        z-index: 1000;
+    }
+
+    .dropdown-content {
+        z-index: 1001 !important;
+        position: absolute !important;
+        background: white !important;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+        border: 1px solid rgba(16, 185, 129, 0.2) !important;
+    }
+
+    .dropdown.dropdown-end .dropdown-content {
+        right: 0;
+        left: auto;
+    }
+
+    /* Ensure the add product section has proper stacking */
+    .add-product-section {
+        position: relative;
+        z-index: 100;
+    }
+
+    /* Make sure table doesn't interfere */
+    .products-table-section {
+        position: relative;
+        z-index: 1;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Product Management Header Section -->
+<section class="py-12 bg-gradient-to-br from-base-100 to-blue-50/30 overflow-hidden relative">
+    <div class="container mx-auto px-4">
+        <div class="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
+            <div class="absolute top-1/2 -left-40 w-80 h-80 bg-gradient-to-tr from-secondary to-blue-400/80 rounded-full filter blur-3xl animate-pulse-slower"></div>
+            <div class="absolute bottom-20 right-1/4 w-64 h-64 bg-gradient-to-r from-yellow-400/60 to-amber-300/60 rounded-full filter blur-2xl opacity-30"></div>
+            <div class="absolute top-32 left-1/3 w-40 h-40 bg-gradient-to-bl from-green-400/40 to-emerald-300/40 rounded-full filter blur-xl"></div>
+        </div>
+
+        <!-- Decorative tech pattern -->
+        <div class="absolute inset-0 opacity-5 pointer-events-none">
+            <div class="w-full h-full" style="background-image: url('{% static 'index/images/tech-pattern.svg' %}'); background-repeat: repeat; background-size: 300px;"></div>
+        </div>
+
+        <!-- Breadcrumb Navigation -->
+        <nav class="mb-12" aria-label="Breadcrumb">
+            <ol class="flex flex-wrap items-center p-4 bg-gradient-to-r from-blue-50 via-white to-purple-50/80 backdrop-blur-md rounded-2xl shadow-lg border border-blue-100 gap-x-2 text-base font-medium">
+            <li class="flex items-center">
+                <a href="{% url 'index' %}" class="flex items-center text-gray-700 hover:text-blue-600 transition-colors group">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 group-hover:bg-blue-200 transition-all mr-2">
+                    <i class="lni lni-home text-lg"></i>
+                </span>
+                <span class="group-hover:underline">Home</span>
+                </a>
+                <svg class="w-5 h-5 mx-2 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </li>
+            <li class="flex items-center">
+                <a href="{% url 'profile' %}" class="flex items-center text-gray-700 hover:text-blue-600 transition-colors group">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 group-hover:bg-blue-200 transition-all mr-2">
+                    <i class="lni lni-user text-lg"></i>
+                </span>
+                <span class="group-hover:underline">Profile</span>
+                </a>
+                <svg class="w-5 h-5 mx-2 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </li>
+            <li class="flex items-center" aria-current="page">
+                <span class="flex items-center bg-gradient-to-r from-blue-500/90 to-indigo-400/90 px-4 py-1.5 rounded-xl text-white font-bold shadow-md">
+                <i class="lni lni-database mr-2"></i>
+                Product Management
+                </span>
+            </li>
+            </ol>
+        </nav>
+
+        <div class="text-center mb-12 relative">
+            <div class="absolute -top-8 left-1/2 -translate-x-1/2 w-40 h-40 bg-gradient-to-br from-blue-200 via-primary/30 to-purple-200 rounded-full blur-2xl opacity-40 pointer-events-none"></div>
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-primary to-purple-600 mb-4 drop-shadow-lg flex flex-col items-center gap-2">
+            <span class="inline-flex items-center gap-3">
+                <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-tr from-primary to-blue-400 shadow-lg shadow-blue-200/40 border-4 border-white">
+                <i class="lni lni-database text-5xl text-white drop-shadow"></i>
+                </span>
+                <span class="ml-2">Product Management</span>
+            </span>
+            </h1>
+            <p class="text-gray-700 max-w-2xl mx-auto text-lg sm:text-xl leading-relaxed bg-white/80 px-8 py-4 rounded-2xl shadow-lg border border-blue-100/60 mt-2 backdrop-blur-sm">
+            <span class="inline-flex items-center gap-2">
+                <i class="lni lni-checkmark-circle text-primary text-xl"></i>
+                Effortlessly manage your product inventory, update details, and add new products to keep your store up-to-date and organized.
+            </span>
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Product Management Interface -->
+<section class="py-12 bg-base-100">
+    <div class="container mx-auto px-4">
+        <!-- Management Controls -->        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden p-6 mb-8 add-product-section">
+            <div class="flex flex-col lg:flex-row justify-between gap-6">
+                <!-- Category Filter -->
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold mb-3">Filter Products</h3>
+                    <form method="get" class="flex flex-col md:flex-row gap-4">
+                        <div class="flex-1">
+                            <select name="category" id="category" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300">
+                                <option value="">All Categories</option>
+                                {% for category in categories %}
+                                <option value="{{ category }}" {% if category_filter == category %}selected{% endif %}>{{ category }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="flex-1">
+                            <div class="relative">
+                                <input type="text" name="search" placeholder="Search products..." value="{{ search_query }}" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary pr-10 transition-all duration-300">
+                                <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-all duration-300">
+                                    <i class="lni lni-search-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary px-6 py-3 h-full">Apply Filters</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Add New Product (Modal Version) -->
+                <div class="flex items-center justify-center">
+                    <!-- Trigger Button -->
+                    <button type="button" class="btn btn-success px-6 flex items-center gap-2 shadow-lg hover:shadow-success/30 transition-all duration-300"
+                        onclick="document.getElementById('addProductModal').classList.remove('hidden')">
+                        <i class="lni lni-plus"></i>
+                        <span>Add New Product</span>
+                    </button>
+                    <!-- Modal -->
+                    <div id="addProductModal" class="fixed inset-0 z-50 items-center justify-center bg-black/40 hidden">
+                        <div class="bg-white rounded-2xl shadow-2xl border border-success/20 w-full max-w-md mx-auto p-6 relative animate-fadeIn">
+                            <!-- Close Button -->
+                            <button type="button" class="absolute top-3 right-3 text-gray-400 hover:text-success text-2xl"
+                                onclick="document.getElementById('addProductModal').classList.add('hidden')">
+                                &times;
+                            </button>
+                            <div class="menu-title px-4 py-2 text-xs font-semibold text-success">Select Product Category</div>
+                            <div class="max-h-80 overflow-y-auto grid grid-cols-1 gap-1 mt-2">
+                                <a href="{% url 'add_product' 'cpu' %}" class="flex items-center gap-2 hover:bg-success/10 rounded-lg px-2 py-2">
+                                    <span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                        <i class="lni lni-cpu text-blue-500"></i>
+                                    </span>
+                                    <span>CPU</span>
+                                </a>
+                                <a href="{% url 'add_product' 'gpu' %}" class="flex items-center gap-2 hover:bg-success/10 rounded-lg px-2 py-2">
+                                    <span class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+                                        <i class="lni lni-display text-purple-500"></i>
+                                    </span>
+                                    <span>GPU</span>
+                                </a>
+                                <a href="{% url 'add_product' 'motherboard' %}" class="flex items-center gap-2 hover:bg-success/10 rounded-lg px-2 py-2">
+                                    <span class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center">
+                                        <i class="lni lni-layout text-teal-500"></i>
+                                    </span>
+                                    <span>Motherboard</span>
+                                </a>
+                                <a href="{% url 'add_product' 'ram' %}" class="flex items-center gap-2 hover:bg-success/10 rounded-lg px-2 py-2">
+                                    <span class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
+                                        <i class="lni lni-database text-amber-500"></i>
+                                    </span>
+                                    <span>RAM</span>
+                                </a>
+                                <a href="{% url 'add_product' 'ssd' %}" class="flex items-center gap-2 hover:bg-success/10 rounded-lg px-2 py-2">
+                                    <span class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                                        <i class="lni lni-database text-green-500"></i>
+                                    </span>
+                                    <span>SSD</span>
+                                </a>
+                                <a href="{% url 'add_product' 'hdd' %}" class="flex items-center gap-2 hover:bg-success/10 rounded-lg px-2 py-2">
+                                    <span class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                                        <i class="lni lni-database text-gray-500"></i>
+                                    </span>
+                                    <span>HDD</span>
+                                </a>
+                                <a href="{% url 'add_product' 'power-supply' %}" class="flex items-center gap-2 hover:bg-success/10 rounded-lg px-2 py-2">
+                                    <span class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+                                        <i class="lni lni-plug text-rose-500"></i>
+                                    </span>
+                                    <span>Power Supply</span>
+                                </a>
+                                <a href="{% url 'add_product' 'casing' %}" class="flex items-center gap-2 hover:bg-success/10 rounded-lg px-2 py-2">
+                                    <span class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                                        <i class="lni lni-frame-expand text-indigo-500"></i>
+                                    </span>
+                                    <span>Casing</span>
+                                </a>
+                                <a href="{% url 'add_product' 'cooler' %}" class="flex items-center gap-2 hover:bg-success/10 rounded-lg px-2 py-2">
+                                    <span class="w-8 h-8 rounded-full bg-cyan-100 flex items-center justify-center">
+                                        <i class="lni lni-cloud text-cyan-500"></i>
+                                    </span>
+                                    <span>Cooler</span>
+                                </a>
+                                <a href="{% url 'add_product' 'monitor' %}" class="flex items-center gap-2 hover:bg-success/10 rounded-lg px-2 py-2">
+                                    <span class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+                                        <i class="lni lni-laptop text-emerald-500"></i>
+                                    </span>
+                                    <span>Monitor</span>
+                                </a>
+                                <a href="{% url 'add_product' 'keyboard' %}" class="flex items-center gap-2 hover:bg-success/10 rounded-lg px-2 py-2">
+                                    <span class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
+                                        <i class="lni lni-keyboard text-orange-500"></i>
+                                    </span>
+                                    <span>Keyboard</span>
+                                </a>
+                                <a href="{% url 'add_product' 'mouse' %}" class="flex items-center gap-2 hover:bg-success/10 rounded-lg px-2 py-2">
+                                    <span class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center">
+                                        <i class="lni lni-mouse text-pink-500"></i>
+                                    </span>
+                                    <span>Mouse</span>
+                                </a>
+                                <a href="{% url 'add_product' 'headphone' %}" class="flex items-center gap-2 hover:bg-success/10 rounded-lg px-2 py-2">
+                                    <span class="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center">
+                                        <i class="lni lni-headphone text-violet-500"></i>
+                                    </span>
+                                    <span>Headphone</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    // Optional: Close modal on background click
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var modal = document.getElementById('addProductModal');
+                        if (modal) {
+                            modal.addEventListener('click', function (e) {
+                                if (e.target === modal) {
+                                    modal.classList.add('hidden');
+                                }
+                            });
+                        }
+                    });
+                </script>
+            </div>
+        </div>        <!-- Products Table -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden products-table-section"><div class="p-6 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800">
+                        {% if category_filter %}{{ category_filter }} Products{% else %}All Products{% endif %}
+                    </h3>
+                    <p class="text-gray-500 text-sm mt-1">
+                        <span class="inline-flex items-center gap-1.5">
+                            <i class="lni lni-database text-primary"></i>
+                            <span>Showing</span>
+                            <span class="font-medium text-primary">
+                                {% if category_filter == 'CPU' %}{{ cpus|length }}{% elif category_filter == 'GPU' %}{{ gpus|length }}
+                                {% elif category_filter == 'Motherboard' %}{{ motherboards|length }}{% elif category_filter == 'RAM' %}{{ rams|length }}
+                                {% elif category_filter == 'SSD' %}{{ ssds|length }}{% elif category_filter == 'HDD' %}{{ hdds|length }}
+                                {% elif category_filter == 'Power Supply' %}{{ power_supplies|length }}{% elif category_filter == 'Casing' %}{{ casings|length }}
+                                {% elif category_filter == 'Cooler' %}{{ coolers|length }}{% elif category_filter == 'Monitor' %}{{ monitors|length }}
+                                {% elif category_filter == 'Keyboard' %}{{ keyboards|length }}{% elif category_filter == 'Mouse' %}{{ mice|length }}
+                                {% elif category_filter == 'Headphone' %}{{ headphones|length }}                                {% else %}
+                                {{ total_products }}
+                                {% endif %}
+                            </span>
+                            <span>products</span>
+                        </span>
+                    </p>
+                </div>
+                {% if search_query or category_filter %}
+                <a href="{% url 'product_management' %}" class="btn btn-outline btn-sm px-4 flex items-center gap-2">
+                    <i class="lni lni-reload"></i>
+                    <span>Clear Filters</span>
+                </a>
+                {% endif %}
+            </div>
+            <!-- Table wrapper with horizontal scroll for small screens -->
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 table-fixed">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Product</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Category</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Price</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Stock</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Status</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% if category_filter == 'CPU' or not category_filter %}
+                            {% for product in cpus %}<tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            {% if product.image1 %}
+                                            <img class="h-10 w-10 rounded-full object-cover" src="{{ product.image1.url }}" alt="{{ product.brand }} {{ product.model }}">
+                                            {% else %}
+                                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <i class="lni lni-cpu text-gray-400"></i>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 product-name" title="{{ product.brand }} {{ product.model }}">{{ product.brand }} {{ product.model }}</div>
+                                            <div class="text-sm text-gray-500">ID: {{ product.id|truncatechars:8 }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">CPU</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">৳{{ product.price|floatformat:0|intcomma }}</div>
+                                    {% if product.regular_price and product.price < product.regular_price %}
+                                    <div class="text-xs text-gray-500 line-through">৳{{ product.regular_price|floatformat:0|intcomma }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ product.stock }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if not product.is_active %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                                    {% endif %}                                </td>                                <td class="px-6 py-4 whitespace-normal text-sm font-medium">
+                                    <div class="action-buttons">
+                                        <a href="{% url 'update_product' product.id 'CPU' %}"
+                                           class="btn btn-sm btn-outline border-indigo-300 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-pencil mr-1.5"></i> Edit
+                                        </a>
+                                        <a href="{% url 'product-detail' product.id %}"
+                                           class="btn btn-sm btn-outline border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-eye mr-1.5"></i> View
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-lg delete-btn"
+                                                data-product-id="{{ product.id }}"
+                                                data-product-type="cpu"
+                                                data-product-name="{{ product.brand }} {{ product.model }}">
+                                            <i class="lni lni-trash-can mr-1.5"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- GPU Products -->
+                        {% if category_filter == 'GPU' or not category_filter %}
+                            {% for product in gpus %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            {% if product.image1 %}
+                                            <img class="h-10 w-10 rounded-full object-cover" src="{{ product.image1.url }}" alt="{{ product.brand }} {{ product.model }}">
+                                            {% else %}
+                                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">                                                <i class="lni lni-display text-gray-400"></i>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 product-name" title="{{ product.brand }} {{ product.model }}">{{ product.brand }} {{ product.model }}</div>
+                                            <div class="text-sm text-gray-500">ID: {{ product.id|truncatechars:8 }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">GPU</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">৳{{ product.price|floatformat:0|intcomma }}</div>
+                                    {% if product.regular_price and product.price < product.regular_price %}
+                                    <div class="text-xs text-gray-500 line-through">৳{{ product.regular_price|floatformat:0|intcomma }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ product.stock }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if not product.is_active %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                                    {% endif %}                                </td>                                <td class="px-6 py-4 whitespace-normal text-sm font-medium">
+                                    <div class="action-buttons">
+                                        <a href="{% url 'update_product' product.id 'GPU' %}"
+                                           class="btn btn-sm btn-outline border-indigo-300 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-pencil mr-1.5"></i> Edit
+                                        </a>
+                                        <a href="{% url 'product-detail' product.id %}"
+                                           class="btn btn-sm btn-outline border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-eye mr-1.5"></i> View
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-lg delete-btn"
+                                                data-product-id="{{ product.id }}"
+                                                data-product-type="gpu"
+                                                data-product-name="{{ product.brand }} {{ product.model }}">
+                                            <i class="lni lni-trash-can mr-1.5"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- Motherboard Products -->
+                        {% if category_filter == 'Motherboard' or not category_filter %}
+                            {% for product in motherboards %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            {% if product.image1 %}
+                                            <img class="h-10 w-10 rounded-full object-cover" src="{{ product.image1.url }}" alt="{{ product.brand }} {{ product.model }}">
+                                            {% else %}
+                                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">                                                <i class="lni lni-layout text-gray-400"></i>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 product-name" title="{{ product.brand }} {{ product.model }}">{{ product.brand }} {{ product.model }}</div>
+                                            <div class="text-sm text-gray-500">ID: {{ product.id|truncatechars:8 }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Motherboard</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">৳{{ product.price|floatformat:0|intcomma }}</div>
+                                    {% if product.regular_price and product.price < product.regular_price %}
+                                    <div class="text-xs text-gray-500 line-through">৳{{ product.regular_price|floatformat:0|intcomma }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ product.stock }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if not product.is_active %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                                    {% endif %}
+                                </td>                                <td class="px-6 py-4 whitespace-normal text-sm font-medium">
+                                    <div class="action-buttons">
+                                        <a href="{% url 'update_product' product.id 'Motherboard' %}"
+                                           class="btn btn-sm btn-outline border-indigo-300 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-pencil mr-1.5"></i> Edit
+                                        </a>
+                                        <a href="{% url 'product-detail' product.id %}"
+                                           class="btn btn-sm btn-outline border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-eye mr-1.5"></i> View
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-lg delete-btn"
+                                                data-product-id="{{ product.id }}"
+                                                data-product-type="motherboard"
+                                                data-product-name="{{ product.brand }} {{ product.model }}">
+                                            <i class="lni lni-trash-can mr-1.5"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}                        <!-- RAM Products -->
+                        {% if category_filter == 'RAM' or not category_filter %}
+                            {% for product in rams %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            {% if product.image1 %}
+                                            <img class="h-10 w-10 rounded-full object-cover" src="{{ product.image1.url }}" alt="{{ product.brand }} {{ product.model }}">
+                                            {% else %}
+                                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <i class="lni lni-database text-gray-400"></i>
+                                            </div>
+                                            {% endif %}
+                                        </div>                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 product-name" title="{{ product.brand }} {{ product.model }}">{{ product.brand }} {{ product.model }}</div>
+                                            <div class="text-sm text-gray-500">ID: {{ product.id|truncatechars:8 }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-amber-100 text-amber-800">RAM</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">৳{{ product.price|floatformat:0|intcomma }}</div>
+                                    {% if product.regular_price and product.price < product.regular_price %}
+                                    <div class="text-xs text-gray-500 line-through">৳{{ product.regular_price|floatformat:0|intcomma }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ product.stock }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if not product.is_active %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                                    {% endif %}
+                                </td>                                <td class="px-6 py-4 whitespace-normal text-sm font-medium">
+                                    <div class="action-buttons">
+                                        <a href="{% url 'update_product' product.id 'RAM' %}"
+                                           class="btn btn-sm btn-outline border-indigo-300 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-pencil mr-1.5"></i> Edit
+                                        </a>
+                                        <a href="{% url 'product-detail' product.id %}"
+                                           class="btn btn-sm btn-outline border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-eye mr-1.5"></i> View
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-lg delete-btn"
+                                                data-product-id="{{ product.id }}"
+                                                data-product-type="ram"
+                                                data-product-name="{{ product.brand }} {{ product.model }}">
+                                            <i class="lni lni-trash-can mr-1.5"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- SSD Products -->
+                        {% if category_filter == 'SSD' or not category_filter %}
+                            {% for product in ssds %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            {% if product.image1 %}
+                                            <img class="h-10 w-10 rounded-full object-cover" src="{{ product.image1.url }}" alt="{{ product.brand }} {{ product.model }}">
+                                            {% else %}
+                                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <i class="lni lni-database text-gray-400"></i>
+                                            </div>
+                                            {% endif %}
+                                        </div>                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 product-name" title="{{ product.brand }} {{ product.model }}">{{ product.brand }} {{ product.model }}</div>
+                                            <div class="text-sm text-gray-500">ID: {{ product.id|truncatechars:8 }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">SSD</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">৳{{ product.price|floatformat:0|intcomma }}</div>
+                                    {% if product.regular_price and product.price < product.regular_price %}
+                                    <div class="text-xs text-gray-500 line-through">৳{{ product.regular_price|floatformat:0|intcomma }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ product.stock }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if not product.is_active %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                                    {% endif %}
+                                </td>                                <td class="px-6 py-4 whitespace-normal text-sm font-medium">
+                                    <div class="action-buttons">
+                                        <a href="{% url 'update_product' product.id 'SSD' %}"
+                                           class="btn btn-sm btn-outline border-indigo-300 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-pencil mr-1.5"></i> Edit
+                                        </a>
+                                        <a href="{% url 'product-detail' product.id %}"
+                                           class="btn btn-sm btn-outline border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-eye mr-1.5"></i> View
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-lg delete-btn"
+                                                data-product-id="{{ product.id }}"
+                                                data-product-type="ssd"
+                                                data-product-name="{{ product.brand }} {{ product.model }}">
+                                            <i class="lni lni-trash-can mr-1.5"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- HDD Products -->
+                        {% if category_filter == 'HDD' or not category_filter %}
+                            {% for product in hdds %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            {% if product.image1 %}
+                                            <img class="h-10 w-10 rounded-full object-cover" src="{{ product.image1.url }}" alt="{{ product.brand }} {{ product.model }}">
+                                            {% else %}
+                                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <i class="lni lni-database text-gray-400"></i>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 product-name" title="{{ product.brand }} {{ product.model }}">{{ product.brand }} {{ product.model }}</div>
+                                            <div class="text-sm text-gray-500">ID: {{ product.id|truncatechars:8 }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">HDD</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">৳{{ product.price|floatformat:0|intcomma }}</div>
+                                    {% if product.regular_price and product.price < product.regular_price %}
+                                    <div class="text-xs text-gray-500 line-through">৳{{ product.regular_price|floatformat:0|intcomma }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ product.stock }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if not product.is_active %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-normal text-sm font-medium">
+                                    <div class="action-buttons">
+                                        <a href="{% url 'update_product' product.id 'HDD' %}"
+                                           class="btn btn-sm btn-outline border-indigo-300 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-pencil mr-1.5"></i> Edit
+                                        </a>
+                                        <a href="{% url 'product-detail' product.id %}"
+                                           class="btn btn-sm btn-outline border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-eye mr-1.5"></i> View
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-lg delete-btn"
+                                                data-product-id="{{ product.id }}"
+                                                data-product-type="hdd"
+                                                data-product-name="{{ product.brand }} {{ product.model }}">
+                                            <i class="lni lni-trash-can mr-1.5"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- Power Supply Products -->
+                        {% if category_filter == 'Power Supply' or not category_filter %}
+                            {% for product in power_supplies %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            {% if product.image1 %}
+                                            <img class="h-10 w-10 rounded-full object-cover" src="{{ product.image1.url }}" alt="{{ product.brand }} {{ product.model }}">
+                                            {% else %}
+                                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <i class="lni lni-plug text-gray-400"></i>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 product-name" title="{{ product.brand }} {{ product.model }}">{{ product.brand }} {{ product.model }}</div>
+                                            <div class="text-sm text-gray-500">ID: {{ product.id|truncatechars:8 }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-rose-100 text-rose-800">Power Supply</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">৳{{ product.price|floatformat:0|intcomma }}</div>
+                                    {% if product.regular_price and product.price < product.regular_price %}
+                                    <div class="text-xs text-gray-500 line-through">৳{{ product.regular_price|floatformat:0|intcomma }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ product.stock }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if not product.is_active %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-normal text-sm font-medium">
+                                    <div class="action-buttons">
+                                        <a href="{% url 'update_product' product.id 'Power Supply' %}"
+                                           class="btn btn-sm btn-outline border-indigo-300 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-pencil mr-1.5"></i> Edit
+                                        </a>
+                                        <a href="{% url 'product-detail' product.id %}"
+                                           class="btn btn-sm btn-outline border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-eye mr-1.5"></i> View
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-lg delete-btn"
+                                                data-product-id="{{ product.id }}"
+                                                data-product-type="powersupply"
+                                                data-product-name="{{ product.brand }} {{ product.model }}">
+                                            <i class="lni lni-trash-can mr-1.5"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- Casing Products -->
+                        {% if category_filter == 'Casing' or not category_filter %}
+                            {% for product in casings %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            {% if product.image1 %}
+                                            <img class="h-10 w-10 rounded-full object-cover" src="{{ product.image1.url }}" alt="{{ product.brand }} {{ product.model }}">
+                                            {% else %}
+                                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <i class="lni lni-frame-expand text-gray-400"></i>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 product-name" title="{{ product.brand }} {{ product.model }}">{{ product.brand }} {{ product.model }}</div>
+                                            <div class="text-sm text-gray-500">ID: {{ product.id|truncatechars:8 }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">Casing</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">৳{{ product.price|floatformat:0|intcomma }}</div>
+                                    {% if product.regular_price and product.price < product.regular_price %}
+                                    <div class="text-xs text-gray-500 line-through">৳{{ product.regular_price|floatformat:0|intcomma }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ product.stock }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if not product.is_active %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-normal text-sm font-medium">
+                                    <div class="action-buttons">
+                                        <a href="{% url 'update_product' product.id 'Casing' %}"
+                                           class="btn btn-sm btn-outline border-indigo-300 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-pencil mr-1.5"></i> Edit
+                                        </a>
+                                        <a href="{% url 'product-detail' product.id %}"
+                                           class="btn btn-sm btn-outline border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-eye mr-1.5"></i> View
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-lg delete-btn"
+                                                data-product-id="{{ product.id }}"
+                                                data-product-type="casing"
+                                                data-product-name="{{ product.brand }} {{ product.model }}">
+                                            <i class="lni lni-trash-can mr-1.5"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- Cooler Products -->
+                        {% if category_filter == 'Cooler' or not category_filter %}
+                            {% for product in coolers %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            {% if product.image1 %}
+                                            <img class="h-10 w-10 rounded-full object-cover" src="{{ product.image1.url }}" alt="{{ product.brand }} {{ product.model }}">
+                                            {% else %}
+                                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <i class="lni lni-fan text-gray-400"></i>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 product-name" title="{{ product.brand }} {{ product.model }}">{{ product.brand }} {{ product.model }}</div>
+                                            <div class="text-sm text-gray-500">ID: {{ product.id|truncatechars:8 }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-sky-100 text-sky-800">Cooler</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">৳{{ product.price|floatformat:0|intcomma }}</div>
+                                    {% if product.regular_price and product.price < product.regular_price %}
+                                    <div class="text-xs text-gray-500 line-through">৳{{ product.regular_price|floatformat:0|intcomma }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ product.stock }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if not product.is_active %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-normal text-sm font-medium">
+                                    <div class="action-buttons">
+                                        <a href="{% url 'update_product' product.id 'Cooler' %}"
+                                           class="btn btn-sm btn-outline border-indigo-300 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-pencil mr-1.5"></i> Edit
+                                        </a>
+                                        <a href="{% url 'product-detail' product.id %}"
+                                           class="btn btn-sm btn-outline border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-eye mr-1.5"></i> View
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-lg delete-btn"
+                                                data-product-id="{{ product.id }}"
+                                                data-product-type="cooler"
+                                                data-product-name="{{ product.brand }} {{ product.model }}">
+                                            <i class="lni lni-trash-can mr-1.5"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- Monitor Products -->
+                        {% if category_filter == 'Monitor' or not category_filter %}
+                            {% for product in monitors %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            {% if product.image1 %}
+                                            <img class="h-10 w-10 rounded-full object-cover" src="{{ product.image1.url }}" alt="{{ product.brand }} {{ product.model }}">
+                                            {% else %}
+                                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <i class="lni lni-display-alt text-gray-400"></i>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 product-name" title="{{ product.brand }} {{ product.model }}">{{ product.brand }} {{ product.model }}</div>
+                                            <div class="text-sm text-gray-500">ID: {{ product.id|truncatechars:8 }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Monitor</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">৳{{ product.price|floatformat:0|intcomma }}</div>
+                                    {% if product.regular_price and product.price < product.regular_price %}
+                                    <div class="text-xs text-gray-500 line-through">৳{{ product.regular_price|floatformat:0|intcomma }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ product.stock }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if not product.is_active %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-normal text-sm font-medium">
+                                    <div class="action-buttons">
+                                        <a href="{% url 'update_product' product.id 'Monitor' %}"
+                                           class="btn btn-sm btn-outline border-indigo-300 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-pencil mr-1.5"></i> Edit
+                                        </a>
+                                        <a href="{% url 'product-detail' product.id %}"
+                                           class="btn btn-sm btn-outline border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-eye mr-1.5"></i> View
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-lg delete-btn"
+                                                data-product-id="{{ product.id }}"
+                                                data-product-type="monitor"
+                                                data-product-name="{{ product.brand }} {{ product.model }}">
+                                            <i class="lni lni-trash-can mr-1.5"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- Keyboard Products -->
+                        {% if category_filter == 'Keyboard' or not category_filter %}
+                            {% for product in keyboards %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            {% if product.image1 %}
+                                            <img class="h-10 w-10 rounded-full object-cover" src="{{ product.image1.url }}" alt="{{ product.brand }} {{ product.model }}">
+                                            {% else %}
+                                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <i class="lni lni-keyboard text-gray-400"></i>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 product-name" title="{{ product.brand }} {{ product.model }}">{{ product.brand }} {{ product.model }}</div>
+                                            <div class="text-sm text-gray-500">ID: {{ product.id|truncatechars:8 }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-lime-100 text-lime-800">Keyboard</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">৳{{ product.price|floatformat:0|intcomma }}</div>
+                                    {% if product.regular_price and product.price < product.regular_price %}
+                                    <div class="text-xs text-gray-500 line-through">৳{{ product.regular_price|floatformat:0|intcomma }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ product.stock }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if not product.is_active %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-normal text-sm font-medium">
+                                    <div class="action-buttons">
+                                        <a href="{% url 'update_product' product.id 'Keyboard' %}"
+                                           class="btn btn-sm btn-outline border-indigo-300 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-pencil mr-1.5"></i> Edit
+                                        </a>
+                                        <a href="{% url 'product-detail' product.id %}"
+                                           class="btn btn-sm btn-outline border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-eye mr-1.5"></i> View
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-lg delete-btn"
+                                                data-product-id="{{ product.id }}"
+                                                data-product-type="keyboard"
+                                                data-product-name="{{ product.brand }} {{ product.model }}">
+                                            <i class="lni lni-trash-can mr-1.5"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- Mouse Products -->
+                        {% if category_filter == 'Mouse' or not category_filter %}
+                            {% for product in mice %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            {% if product.image1 %}
+                                            <img class="h-10 w-10 rounded-full object-cover" src="{{ product.image1.url }}" alt="{{ product.brand }} {{ product.model }}">
+                                            {% else %}
+                                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <i class="lni lni-mouse text-gray-400"></i>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 product-name" title="{{ product.brand }} {{ product.model }}">{{ product.brand }} {{ product.model }}</div>
+                                            <div class="text-sm text-gray-500">ID: {{ product.id|truncatechars:8 }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">Mouse</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">৳{{ product.price|floatformat:0|intcomma }}</div>
+                                    {% if product.regular_price and product.price < product.regular_price %}
+                                    <div class="text-xs text-gray-500 line-through">৳{{ product.regular_price|floatformat:0|intcomma }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ product.stock }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if not product.is_active %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-normal text-sm font-medium">
+                                    <div class="action-buttons">
+                                        <a href="{% url 'update_product' product.id 'Mouse' %}"
+                                           class="btn btn-sm btn-outline border-indigo-300 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-pencil mr-1.5"></i> Edit
+                                        </a>
+                                        <a href="{% url 'product-detail' product.id %}"
+                                           class="btn btn-sm btn-outline border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-eye mr-1.5"></i> View
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-lg delete-btn"
+                                                data-product-id="{{ product.id }}"
+                                                data-product-type="mouse"
+                                                data-product-name="{{ product.brand }} {{ product.model }}">
+                                            <i class="lni lni-trash-can mr-1.5"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- Headphone Products -->
+                        {% if category_filter == 'Headphone' or not category_filter %}
+                            {% for product in headphones %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            {% if product.image1 %}
+                                            <img class="h-10 w-10 rounded-full object-cover" src="{{ product.image1.url }}" alt="{{ product.brand }} {{ product.model }}">
+                                            {% else %}
+                                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <i class="lni lni-headphone text-gray-400"></i>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 product-name" title="{{ product.brand }} {{ product.model }}">{{ product.brand }} {{ product.model }}</div>
+                                            <div class="text-sm text-gray-500">ID: {{ product.id|truncatechars:8 }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-violet-100 text-violet-800">Headphone</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">৳{{ product.price|floatformat:0|intcomma }}</div>
+                                    {% if product.regular_price and product.price < product.regular_price %}
+                                    <div class="text-xs text-gray-500 line-through">৳{{ product.regular_price|floatformat:0|intcomma }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ product.stock }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if not product.is_active %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-normal text-sm font-medium">
+                                    <div class="action-buttons">
+                                        <a href="{% url 'update_product' product.id 'Headphone' %}"
+                                           class="btn btn-sm btn-outline border-indigo-300 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-pencil mr-1.5"></i> Edit
+                                        </a>
+                                        <a href="{% url 'product-detail' product.id %}"
+                                           class="btn btn-sm btn-outline border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all duration-200 rounded-lg">
+                                            <i class="lni lni-eye mr-1.5"></i> View
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 transition-all duration-200 rounded-lg delete-btn"
+                                                data-product-id="{{ product.id }}"
+                                                data-product-type="headphone"
+                                                data-product-name="{{ product.brand }} {{ product.model }}">
+                                            <i class="lni lni-trash-can mr-1.5"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- Additional product categories can be added here following the same pattern -->                        {% if not cpus and not gpus and not motherboards and not rams and not ssds and not hdds and not power_supplies and not casings and not coolers and not monitors and not keyboards and not mice and not headphones %}
+                        <tr class="empty-products">
+                            <td colspan="6" class="px-6 py-10 text-center">
+                                <div class="py-8 flex flex-col items-center bg-gray-50 rounded-xl">
+                                    <i class="lni lni-search text-5xl text-gray-300 mb-4"></i>
+                                    <p class="text-xl font-medium text-gray-800">No products found</p>
+                                    <p class="text-gray-500 mt-2 max-w-lg mx-auto">Try adjusting your filters or adding new products using the 'Add New Product' button above.</p>
+                                    {% if search_query or category_filter %}
+                                    <a href="{% url 'product_management' %}" class="mt-6 inline-flex items-center px-5 py-2.5 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-focus focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all">
+                                        <i class="lni lni-reload mr-2"></i>
+                                        Clear All Filters
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteConfirmModal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-2xl shadow-2xl border border-red-200/60 w-full max-w-md mx-auto p-6 relative animate-fadeIn">
+            <!-- Close Button -->
+            <button type="button" id="closeDeleteModal" class="absolute top-3 right-3 text-gray-400 hover:text-red-500 text-2xl">
+                &times;
+            </button>
+
+            <div class="text-center mb-4">
+                <div class="w-16 h-16 bg-red-100 rounded-full mx-auto flex items-center justify-center mb-4">
+                    <i class="lni lni-warning text-red-500 text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Confirm Deletion</h3>
+                <p class="text-gray-600" id="deleteConfirmText">Are you sure you want to delete this product?</p>
+            </div>
+
+            <div class="bg-red-50 p-3 rounded-lg border border-red-100 mb-4">
+                <p class="text-sm text-red-700">
+                    <i class="lni lni-information-circle mr-1"></i>
+                    This action cannot be undone. The product will be permanently removed from the database.
+                </p>
+            </div>
+
+            <form id="deleteProductForm" method="post" class="mt-6">
+                {% csrf_token %}
+                <input type="hidden" id="productIdToDelete" name="product_id">
+                <input type="hidden" id="productTypeToDelete" name="product_type">
+
+                <div class="flex justify-end gap-3">
+                    <button type="button" id="cancelDelete" class="btn btn-outline px-5 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-all">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-error px-5 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all">
+                        <i class="lni lni-trash mr-1"></i> Delete
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all delete buttons
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+        const deleteModal = document.getElementById('deleteConfirmModal');
+        const closeModalBtn = document.getElementById('closeDeleteModal');
+        const cancelBtn = document.getElementById('cancelDelete');
+        const deleteForm = document.getElementById('deleteProductForm');
+        const productIdInput = document.getElementById('productIdToDelete');
+        const productTypeInput = document.getElementById('productTypeToDelete');
+        const deleteConfirmText = document.getElementById('deleteConfirmText');
+
+        // Add event listeners to all delete buttons
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product-id');
+                const productType = this.getAttribute('data-product-type');
+                const productName = this.getAttribute('data-product-name');
+
+                // Set the form values
+                productIdInput.value = productId;
+                productTypeInput.value = productType;
+                deleteConfirmText.textContent = `Are you sure you want to delete "${productName}"?`;
+
+                // Set the form action
+                deleteForm.action = "{% url 'delete_product' '00000000-0000-0000-0000-000000000000' 'placeholder' %}".replace('00000000-0000-0000-0000-000000000000', productId).replace('placeholder', productType);
+
+                // Show the modal
+                deleteModal.classList.remove('hidden');
+            });
+        });
+
+        // Close modal when close button is clicked
+        closeModalBtn.addEventListener('click', function() {
+            deleteModal.classList.add('hidden');
+        });
+
+        // Close modal when cancel button is clicked
+        cancelBtn.addEventListener('click', function() {
+            deleteModal.classList.add('hidden');
+        });
+
+        // Close modal when clicking outside
+        deleteModal.addEventListener('click', function(e) {
+            if (e.target === deleteModal) {
+                deleteModal.classList.add('hidden');
+            }
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,584 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Order #{{ order.id|slice:":8" }} - Admin - TechReform BD{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-base-300 via-base-200 to-base-100 py-8">
+    <div class="container mx-auto px-4">
+        <!-- Enhanced Header Section -->
+        <div class="mb-10">
+            <div class="bg-base-100/80 backdrop-blur-sm rounded-xl border border-base-300/50 shadow-xl p-6 mb-8">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div>
+                <a href="{% url 'admin_order_management' %}" class="btn btn-ghost btn-sm gap-2 mb-3 hover:bg-base-200/70 transition-all">
+                    <i class="lni lni-arrow-left"></i> Back to Orders
+                </a>
+                <h1 class="text-4xl font-extrabold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+                    Order #{{ order.id|slice:":8" }}
+                </h1>
+                <div class="flex items-center gap-2 mt-2">
+                    <span class="badge badge-sm badge-primary">{{ order.get_status_display }}</span>
+                    <span class="text-base-content/70">Created on {{ order.created_at|date:"M d, Y" }}</span>
+                </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="flex flex-wrap gap-3 lg:justify-end">
+                <button class="btn btn-primary btn-sm gap-2 hover:shadow-lg transition-all" onclick="printOrder()">
+                    <i class="lni lni-printer"></i> Print Order
+                </button>
+                <button class="btn btn-outline btn-sm gap-2 hover:bg-base-200/50 transition-all" onclick="sendNotification()">
+                    <i class="lni lni-envelope"></i> Notify Customer
+                </button>
+                <button class="btn btn-ghost btn-sm gap-2 hover:bg-base-200/50 transition-all" onclick="generateInvoice()">
+                    <i class="lni lni-files"></i> Invoice
+                </button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            <!-- Main Order Information -->
+            <div class="xl:col-span-2 space-y-8">
+                <!-- Order Summary Card -->
+                <div class="bg-base-100/80 backdrop-blur-sm rounded-xl overflow-hidden border border-base-300/50 shadow-xl hover:shadow-2xl transition-all duration-300">
+                    <div class="bg-gradient-to-r from-primary/20 to-secondary/20 p-6 border-b border-base-300/50">
+                        <h2 class="text-2xl font-bold text-base-content flex items-center gap-3">
+                            <i class="lni lni-cart-full text-primary"></i>
+                            Order Summary
+                            <div class="badge badge-primary badge-outline ml-auto text-xs">{{ order.get_status_display }}</div>
+                        </h2>
+                    </div>
+
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Order Information -->
+                            <div class="bg-base-200/30 p-4 rounded-xl border border-base-300/30">
+                                <h3 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide mb-3 flex items-center">
+                                    <i class="lni lni-agenda mr-2 text-primary"></i>Order Details
+                                </h3>
+                                <div class="space-y-3 divide-y divide-base-300/30">
+                                    <div class="flex justify-between py-1">
+                                        <span class="text-base-content/70 flex items-center"><i class="lni lni-tag text-xs mr-2"></i>Order ID:</span>
+                                        <span class="font-mono font-semibold text-primary">#{{ order.id|slice:":8" }}</span>
+                                    </div>
+                                    <div class="flex justify-between py-1">
+                                        <span class="text-base-content/70 flex items-center"><i class="lni lni-calendar text-xs mr-2"></i>Order Date:</span>
+                                        <span class="font-medium">{{ order.created_at|date:"M d, Y H:i" }}</span>
+                                    </div>
+                                    <div class="flex justify-between py-1">
+                                        <span class="text-base-content/70 flex items-center"><i class="lni lni-credit-cards text-xs mr-2"></i>Payment Method:</span>
+                                        <span class="font-medium capitalize badge badge-ghost">{{ order.payment_method }}</span>
+                                    </div>
+                                    <div class="flex justify-between py-1">
+                                        <span class="text-base-content/70 flex items-center"><i class="lni lni-coin text-xs mr-2"></i>Payment Status:</span>
+                                        <span class="font-medium badge
+                                            {% if order.payment_status == 'paid' %}badge-success{% endif %}
+                                            {% if order.payment_status == 'pending' %}badge-warning{% endif %}
+                                            {% if order.payment_status == 'failed' %}badge-error{% endif %}
+                                            {% if order.payment_status == 'refunded' %}badge-info{% endif %}">
+                                            {{ order.get_payment_status_display }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>                            <!-- Customer Information -->
+                            <div class="bg-base-200/30 p-4 rounded-xl border border-base-300/30">
+                                <h3 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide mb-3 flex items-center">
+                                    <i class="lni lni-user mr-2 text-primary"></i>Customer Details
+                                </h3>
+
+                                <!-- Customer Avatar and Basic Info -->
+                                <div class="flex items-center gap-3 mb-4 pb-3 border-b border-base-300/30">
+                                    <div class="avatar">
+                                        {% if order.user.profile.profile_image %}
+                                        <div class="w-14 h-14 rounded-full shadow-sm overflow-hidden">
+                                            <img src="{{ order.user.profile.profile_image.url }}" alt="{{ order.user.username }}'s Avatar" class="object-cover w-full h-full" />
+                                        </div>
+                                        {% else %}
+                                        <div class="bg-primary/20 text-primary rounded-full w-14 h-14 flex items-center justify-center shadow-sm placeholder">
+                                            <span class="text-xl font-semibold">{{ order.user.first_name|first }}{{ order.user.last_name|first }}</span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-base-content">{{ order.user.get_full_name|default:order.user.username }}</div>
+                                        <div class="text-xs text-base-content/70">Customer since {{ order.user.date_joined|date:"M Y" }}</div>
+                                    </div>
+                                </div>                                <div class="space-y-3 divide-y divide-base-300/30">
+                                    <div class="flex justify-between py-1">
+                                        <span class="text-base-content/70 flex items-center"><i class="lni lni-envelope text-xs mr-2"></i>Email:</span>
+                                        <span class="font-medium text-sm">{{ order.user.email }}</span>
+                                    </div>
+                                    <div class="flex justify-between py-1">
+                                        <span class="text-base-content/70 flex items-center"><i class="lni lni-phone text-xs mr-2"></i>Phone:</span>
+                                        <span class="font-medium">{{ order.phone|default:"Not provided" }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Items -->
+                <div class="bg-base-100/80 backdrop-blur-sm rounded-xl overflow-hidden border border-base-300/50 shadow-xl hover:shadow-2xl transition-all duration-300">
+                    <div class="bg-gradient-to-r from-primary/20 to-secondary/20 p-6 border-b border-base-300/50">
+                        <h2 class="text-2xl font-bold text-base-content flex items-center gap-3">
+                            <i class="lni lni-package text-primary"></i>
+                            Order Items
+                            <span class="badge badge-primary ml-2">{{ order_items.count }} items</span>
+                        </h2>
+                    </div>
+
+                    <div class="p-6">
+                        <div class="space-y-5">
+                            {% for item in order_items %}
+                            <div class="flex flex-col md:flex-row md:items-center gap-4 p-5 bg-base-200/50 rounded-xl border border-base-300/30 hover:bg-base-200/70 transition-all">                                <div class="w-20 h-20 bg-base-300/30 rounded-xl flex items-center justify-center shadow-sm">
+                                    {% if item.product_category and item.product_id %}
+                                    {% get_product_image item.product_category item.product_id as product_image %}
+                                    {% if product_image %}
+                                    <img src="{{ product_image }}" alt="{{ item.product_name }}" class="w-16 h-16 object-contain">
+                                    {% else %}
+                                    <i class="lni lni-package text-3xl text-primary/70"></i>
+                                    {% endif %}
+                                    {% else %}
+                                    <i class="lni lni-package text-3xl text-primary/70"></i>
+                                    {% endif %}
+                                </div>                                <div class="flex-1">
+                                    <h4 class="font-bold text-base-content text-lg">{{ item.product_name }}</h4>
+                                    <div class="flex flex-wrap gap-2 mt-1">
+                                        <span class="badge badge-ghost badge-sm">{{ item.product_category }}</span>
+                                        <span class="badge badge-primary badge-sm">Qty: {{ item.quantity }}</span>
+                                    </div>
+                                </div>                                <div class="text-right mt-2 md:mt-0">
+                                    <p class="font-bold text-xl text-primary">৳{{ item.get_total|floatformat:2 }}</p>
+                                    <p class="text-sm text-base-content/70">৳{{ item.price|floatformat:2 }} per unit</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Order Totals -->
+                        <div class="mt-8 pt-6 border-t border-base-300/50 bg-base-200/30 p-5 rounded-xl">
+                            <div class="space-y-3">
+                                <div class="flex justify-between text-base-content/70">
+                                    <span class="flex items-center gap-2"><i class="lni lni-calculator text-xs"></i>Subtotal:</span>
+                                    <span class="font-medium">৳{{ order.get_subtotal|floatformat:2 }}</span>
+                                </div>
+                                <div class="flex justify-between text-base-content/70">
+                                    <span class="flex items-center gap-2"><i class="lni lni-delivery text-xs"></i>Shipping:</span>
+                                    <span class="font-medium">৳{{ order.shipping_cost|floatformat:2 }}</span>
+                                </div>
+                                {% if order.discount_amount %}
+                                <div class="flex justify-between text-success">
+                                    <span class="flex items-center gap-2"><i class="lni lni-ticket text-xs"></i>Discount:</span>
+                                    <span class="font-medium">-৳{{ order.discount_amount|floatformat:2 }}</span>
+                                </div>
+                                {% endif %}
+                                <div class="flex justify-between text-lg font-bold text-primary border-t border-base-300/50 pt-3 mt-3">
+                                    <span class="flex items-center gap-2"><i class="lni lni-coin"></i>Total:</span>
+                                    <span>৳{{ order.total_price|floatformat:2 }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shipping Address -->
+                {% if shipping_address %}
+                <div class="bg-base-100/80 backdrop-blur-sm rounded-xl overflow-hidden border border-base-300/50 shadow-xl hover:shadow-2xl transition-all duration-300">
+                    <div class="bg-gradient-to-r from-primary/20 to-secondary/20 p-6 border-b border-base-300/50">
+                        <h2 class="text-2xl font-bold text-base-content flex items-center gap-3">
+                            <i class="lni lni-map-marker text-primary"></i>
+                            Shipping Address
+                            <div class="badge badge-secondary badge-outline ml-auto text-xs">Delivery Location</div>
+                        </h2>
+                    </div>
+
+                    <div class="p-6">
+                        <div class="bg-base-200/50 rounded-xl p-5 border border-base-300/30 hover:bg-base-200/70 transition-all">
+                            <div class="flex items-start gap-4">
+                                <div class="hidden sm:flex items-center justify-center w-12 h-12 bg-primary/10 text-primary rounded-full">
+                                    <i class="lni lni-home text-xl"></i>
+                                </div>
+                                <div class="space-y-2 flex-1">
+                                    <p class="font-bold text-lg">{{ shipping_address.first_name }} {{ shipping_address.last_name }}</p>
+                                    <div class="divider my-1"></div>
+                                    <p class="text-base-content/80 flex items-center gap-2">
+                                        <i class="lni lni-map text-xs text-primary"></i>
+                                        {{ shipping_address.address_line_1 }}
+                                    </p>
+                                    {% if shipping_address.address_line_2 %}
+                                    <p class="text-base-content/80 flex items-center gap-2 pl-5">
+                                        {{ shipping_address.address_line_2 }}
+                                    </p>
+                                    {% endif %}
+                                    <p class="text-base-content/80 flex items-center gap-2">
+                                        <i class="lni lni-map-marker text-xs text-primary"></i>
+                                        {{ shipping_address.city }}, {{ shipping_address.state }} {{ shipping_address.postal_code }}
+                                    </p>
+                                    <p class="text-base-content/80 flex items-center gap-2">
+                                        <i class="lni lni-world text-xs text-primary"></i>
+                                        {{ shipping_address.country }}
+                                    </p>
+                                    {% if shipping_address.phone %}
+                                    <p class="text-base-content/80 flex items-center gap-2">
+                                        <i class="lni lni-phone text-xs text-primary"></i>
+                                        {{ shipping_address.phone }}
+                                    </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-base-300/30 flex justify-end">
+                                <button class="btn btn-xs btn-ghost gap-1">
+                                    <i class="lni lni-pencil text-xs"></i> Edit
+                                </button>
+                                <button class="btn btn-xs btn-ghost gap-1">
+                                    <i class="lni lni-map-marker text-xs"></i> View on Map
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Status Management Sidebar -->
+            <div class="space-y-8">
+                <!-- Order Status Card -->
+                <div class="bg-base-100/80 backdrop-blur-sm rounded-xl overflow-hidden border border-base-300/50 shadow-xl hover:shadow-2xl transition-all duration-300">
+                    <div class="bg-gradient-to-r from-primary/20 to-secondary/20 p-6 border-b border-base-300/50">
+                        <h2 class="text-xl font-bold text-base-content flex items-center gap-3">
+                            <i class="lni lni-cog text-primary"></i>
+                            Order Management
+                            <div class="badge badge-primary badge-outline ml-auto text-xs">Status Control</div>
+                        </h2>
+                    </div>
+
+                    <div class="p-6 space-y-6">
+                        <!-- Current Status with Enhanced Visual -->
+                        <div class="bg-base-200/30 p-4 rounded-xl border border-base-300/30">
+                            <label class="text-sm font-semibold text-base-content/70 uppercase tracking-wide mb-3 flex items-center">
+                                <i class="lni lni-pulse mr-2 text-primary"></i>Current Status
+                            </label>
+                            <div class="flex items-center">
+                                <span class="badge badge-lg
+                                    {% if order.status == 'pending' %}badge-warning{% endif %}
+                                    {% if order.status == 'processing' %}badge-info{% endif %}
+                                    {% if order.status == 'shipped' %}badge-accent{% endif %}
+                                    {% if order.status == 'delivered' %}badge-success{% endif %}
+                                    {% if order.status == 'cancelled' %}badge-error{% endif %}
+                                    gap-2 py-4">
+                                    <i class="lni lni-{% if order.status == 'pending' %}timer{% elif order.status == 'processing' %}cog{% elif order.status == 'shipped' %}delivery{% elif order.status == 'delivered' %}checkmark-circle{% elif order.status == 'cancelled' %}close{% else %}circle-minus{% endif %}"></i>
+                                    {{ order.get_status_display }}
+                                </span>
+                                <div class="ml-3 text-xs text-base-content/60">
+                                    {% if order.status == 'pending' %}
+                                    Awaiting processing
+                                    {% elif order.status == 'processing' %}
+                                    Order is being prepared
+                                    {% elif order.status == 'shipped' %}
+                                    Item(s) in transit
+                                    {% elif order.status == 'delivered' %}
+                                    Successfully delivered
+                                    {% elif order.status == 'cancelled' %}
+                                    Order has been cancelled
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Status Timeline -->
+                        <div class="py-2">
+                            <div class="flex flex-col">
+                                <div class="timeline-item flex items-start mb-3">
+                                    <div class="w-6 h-6 rounded-full bg-success flex-shrink-0 flex items-center justify-center z-10">
+                                        <i class="lni lni-checkmark text-white text-xs"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium">Order Created</p>
+                                        <p class="text-xs text-base-content/60">{{ order.created_at|date:"M d, Y H:i" }}</p>
+                                    </div>
+                                </div>
+
+                                <!-- Current status indicator in timeline -->
+                                <div class="relative h-full">
+                                    <div class="absolute left-3 top-0 bottom-0 w-0.5 bg-base-300"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Update Status Form with Improved UI -->
+                        <form method="post" class="space-y-4">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="update_status">
+
+                            <div>
+                                <label class="text-sm font-semibold text-base-content/70 uppercase tracking-wide mb-2 flex items-center">
+                                    <i class="lni lni-reload mr-2 text-primary"></i>Update Status
+                                </label>
+                                <select name="status" class="select select-bordered w-full focus:ring-2 focus:ring-primary/50 transition-all">
+                                    {% for value, label in status_choices %}
+                                    <option value="{{ value }}" {% if value == order.status %}selected{% endif %}>{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-full gap-2 shadow-md hover:shadow-lg transition-all duration-300">
+                                <i class="lni lni-checkmark-circle"></i>
+                                Update Status
+                            </button>
+                        </form>
+
+                        <!-- Quick Status Buttons -->
+                        <div class="pt-2 border-t border-base-300/30">
+                            <label class="text-xs font-semibold text-base-content/70 uppercase tracking-wide mb-3 block">Quick Status Update</label>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="btn btn-xs btn-outline btn-info gap-1" onclick="document.querySelector('select[name=status]').value='processing';document.querySelector('form').submit()">
+                                    <i class="lni lni-cog text-xs"></i> Processing
+                                </button>
+                                <button class="btn btn-xs btn-outline btn-accent gap-1" onclick="document.querySelector('select[name=status]').value='shipped';document.querySelector('form').submit()">
+                                    <i class="lni lni-delivery text-xs"></i> Shipped
+                                </button>
+                                <button class="btn btn-xs btn-outline btn-success gap-1" onclick="document.querySelector('select[name=status]').value='delivered';document.querySelector('form').submit()">
+                                    <i class="lni lni-checkmark text-xs"></i> Delivered
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Status Card -->
+                <div class="bg-base-100/80 backdrop-blur-sm rounded-xl overflow-hidden border border-base-300/50 shadow-xl hover:shadow-2xl transition-all duration-300">
+                    <div class="bg-gradient-to-r from-primary/20 to-secondary/20 p-6 border-b border-base-300/50">
+                        <h2 class="text-xl font-bold text-base-content flex items-center gap-3">
+                            <i class="lni lni-credit-cards text-primary"></i>
+                            Payment Management
+                            <div class="badge badge-secondary badge-outline ml-auto text-xs">Financial</div>
+                        </h2>
+                    </div>
+
+                    <div class="p-6 space-y-6">
+                        <!-- Current Payment Status with Enhanced Visual -->
+                        <div class="bg-base-200/30 p-4 rounded-xl border border-base-300/30">
+                            <label class="text-sm font-semibold text-base-content/70 uppercase tracking-wide mb-3 flex items-center">
+                                <i class="lni lni-coin mr-2 text-primary"></i>Current Payment Status
+                            </label>
+                            <div class="flex items-center">
+                                <span class="badge badge-lg
+                                    {% if order.payment_status == 'paid' %}badge-success{% endif %}
+                                    {% if order.payment_status == 'pending' %}badge-warning{% endif %}
+                                    {% if order.payment_status == 'failed' %}badge-error{% endif %}
+                                    {% if order.payment_status == 'refunded' %}badge-info{% endif %}
+                                    gap-2 py-4">
+                                    <i class="lni lni-{% if order.payment_status == 'paid' %}checkmark-circle{% elif order.payment_status == 'pending' %}timer{% elif order.payment_status == 'failed' %}close{% elif order.payment_status == 'refunded' %}reload{% else %}circle-minus{% endif %}"></i>
+                                    {{ order.get_payment_status_display }}
+                                </span>
+                                <div class="ml-3 text-xs text-base-content/60">
+                                    {% if order.payment_status == 'paid' %}
+                                    Transaction completed successfully
+                                    {% elif order.payment_status == 'pending' %}
+                                    Awaiting payment confirmation
+                                    {% elif order.payment_status == 'failed' %}
+                                    Payment attempt unsuccessful
+                                    {% elif order.payment_status == 'refunded' %}
+                                    Amount returned to customer
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment Details -->
+                        <div class="bg-base-200/30 p-4 rounded-xl border border-base-300/30">
+                            <label class="text-sm font-semibold text-base-content/70 uppercase tracking-wide mb-2 flex items-center">
+                                <i class="lni lni-wallet mr-2 text-primary"></i>Payment Details
+                            </label>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-base-content/70">Method:</span>
+                                    <span class="font-medium capitalize">{{ order.payment_method }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-base-content/70">Amount:</span>
+                                    <span class="font-medium">৳{{ order.total_price|floatformat:2 }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-base-content/70">Transaction ID:</span>
+                                    <span class="font-mono text-xs">{{ order.transaction_id|default:"Not available" }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Update Payment Status Form with Improved UI -->
+                        <form method="post" class="space-y-4">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="update_payment">
+
+                            <div>
+                                <label class="text-sm font-semibold text-base-content/70 uppercase tracking-wide mb-2 flex items-center">
+                                    <i class="lni lni-reload mr-2 text-primary"></i>Update Payment Status
+                                </label>
+                                <select name="payment_status" class="select select-bordered w-full focus:ring-2 focus:ring-secondary/50 transition-all">
+                                    {% for value, label in payment_choices %}
+                                    <option value="{{ value }}" {% if value == order.payment_status %}selected{% endif %}>{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-secondary w-full gap-2 shadow-md hover:shadow-lg transition-all duration-300">
+                                <i class="lni lni-checkmark-circle"></i>
+                                Update Payment Status
+                            </button>
+                        </form>
+
+                        <!-- Quick Payment Buttons -->
+                        <div class="pt-2 border-t border-base-300/30">
+                            <label class="text-xs font-semibold text-base-content/70 uppercase tracking-wide mb-3 block">Quick Payment Update</label>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="btn btn-xs btn-outline btn-success gap-1" onclick="document.querySelector('select[name=payment_status]').value='paid';document.querySelector('form').submit()">
+                                    <i class="lni lni-checkmark text-xs"></i> Mark Paid
+                                </button>
+                                <button class="btn btn-xs btn-outline btn-warning gap-1" onclick="document.querySelector('select[name=payment_status]').value='pending';document.querySelector('form').submit()">
+                                    <i class="lni lni-timer text-xs"></i> Pending
+                                </button>
+                                <button class="btn btn-xs btn-outline btn-info gap-1" onclick="document.querySelector('select[name=payment_status]').value='refunded';document.querySelector('form').submit()">
+                                    <i class="lni lni-reload text-xs"></i> Refunded
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Actions -->
+                <div class="bg-base-100/80 backdrop-blur-sm rounded-xl overflow-hidden border border-base-300/50 shadow-xl hover:shadow-2xl transition-all duration-300">
+                    <div class="bg-gradient-to-r from-primary/20 to-secondary/20 p-6 border-b border-base-300/50">
+                        <h2 class="text-xl font-bold text-base-content flex items-center gap-3">
+                            <i class="lni lni-bolt-alt text-primary"></i>
+                            Quick Actions
+                            <div class="badge badge-accent badge-outline ml-auto text-xs">Admin Tools</div>
+                        </h2>
+                    </div>
+
+                    <div class="p-6 space-y-4">
+                        <div class="bg-base-200/30 p-4 rounded-xl border border-base-300/30 mb-4">
+                            <p class="text-sm text-base-content/70 mb-2 flex items-center">
+                                <i class="lni lni-information mr-2 text-primary"></i>
+                                These actions will directly affect the customer experience
+                            </p>
+                        </div>
+
+                        <button class="btn btn-outline btn-info w-full gap-2 hover:shadow-md transition-all duration-300 group">
+                            <i class="lni lni-envelope group-hover:animate-pulse"></i>
+                            Send Tracking Email
+                            <span class="badge badge-ghost badge-sm ml-auto">Customer</span>
+                        </button>
+
+                        <button class="btn btn-outline btn-accent w-full gap-2 hover:shadow-md transition-all duration-300 group">
+                            <i class="lni lni-files group-hover:animate-pulse"></i>
+                            Generate Invoice
+                            <span class="badge badge-ghost badge-sm ml-auto">PDF</span>
+                        </button>
+
+                        <div class="divider text-xs text-base-content/50">Additional Options</div>
+
+                        <button class="btn btn-outline btn-secondary w-full gap-2 hover:shadow-md transition-all duration-300 group">
+                            <i class="lni lni-comments-alt group-hover:animate-pulse"></i>
+                            Add Internal Note
+                        </button>
+
+                        {% if order.status != 'cancelled' and order.status != 'delivered' %}
+                        <button class="btn btn-error btn-outline w-full gap-2 hover:shadow-md transition-all duration-300 mt-4 group">
+                            <i class="lni lni-close-circle group-hover:animate-pulse"></i>
+                            Cancel Order
+                            <span class="badge badge-error badge-sm text-white ml-auto">Caution</span>
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cancel Confirmation Modal -->
+<div id="cancelModal" class="modal">
+    <div class="modal-box">
+        <h3 class="font-bold text-lg">Cancel Order</h3>
+        <p class="py-4">Are you sure you want to cancel this order? This action cannot be undone.</p>
+        <div class="modal-action">
+            <button class="btn" onclick="closeCancelModal()">Cancel</button>
+            <button class="btn btn-error" onclick="cancelOrder()">Confirm Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function printOrder() {
+    window.print();
+}
+
+function sendNotification() {
+    showToast('info', 'Notification sent to customer!');
+}
+
+function sendTrackingEmail() {
+    showToast('success', 'Tracking email sent to customer!');
+}
+
+function generateInvoice() {
+    showToast('info', 'Invoice generation coming soon!');
+}
+
+function confirmCancel() {
+    document.getElementById('cancelModal').classList.add('modal-open');
+}
+
+function closeCancelModal() {
+    document.getElementById('cancelModal').classList.remove('modal-open');
+}
+
+function cancelOrder() {
+    // Update order status to cancelled
+    fetch('{% url "update_order_status" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: `order_id={{ order.id }}&status=cancelled`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            showToast('success', 'Order cancelled successfully');
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        } else {
+            showToast('error', data.message);
+        }
+    })
+    .catch(error => {
+        showToast('error', 'An error occurred while cancelling the order');
+    });
+
+    closeCancelModal();
+}
+
+function showToast(type, message) {
+    const toast = document.createElement('div');
+    toast.className = `alert alert-${type} fixed top-4 right-4 w-auto z-50`;
+    toast.innerHTML = `
+        <i class="lni lni-${type === 'success' ? 'checkmark' : type === 'error' ? 'warning' : 'information'}"></i>
+        <span>${message}</span>
+    `;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+</script>
+{% endblock %}

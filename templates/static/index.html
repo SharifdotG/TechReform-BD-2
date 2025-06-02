@@ -1,0 +1,1707 @@
+{% extends "base.html" %} {% load static %} {% block title %}Home - TechReform
+BD{% endblock %} {% block content %}
+<!-- Start Promotional Area -->
+<section class="hero py-16 bg-gradient-to-b from-base-200 to-base-100 overflow-hidden relative">
+    <div class="container mx-auto px-6">
+        <!-- Enhanced animated background elements -->
+        <div
+            class="absolute inset-0 overflow-hidden opacity-5 pointer-events-none"
+        >
+            <div
+                class="absolute -top-40 -right-40 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl animate-pulse-slow"
+            ></div>
+            <div
+                class="absolute top-1/2 -left-40 w-96 h-96 bg-yellow-500 rounded-full filter blur-3xl"
+                style="animation: float 15s ease-in-out infinite;"
+            ></div>
+            <div
+                class="absolute bottom-20 right-20 w-64 h-64 bg-purple-500/30 rounded-full filter blur-2xl"
+                style="animation: float 18s ease-in-out infinite 2s;"
+            ></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <!-- Promotional Carousel with Enhanced Animation -->
+            <div
+                class="lg:col-span-2 transform hover:scale-[1.01] transition-transform duration-500 relative z-10"
+            >
+                <div
+                    class="carousel w-full rounded-2xl shadow-2xl shadow-blue-900/10 h-full overflow-hidden border border-white/10 backdrop-blur-sm"
+                >
+                    <!-- Slide 1 -->
+                    <div id="slide1" class="carousel-item relative w-full">
+                        <img
+                            src="/static/index/images/hero/slider-bg1.png"
+                            class="w-full object-cover transition-transform duration-700 hover:scale-105"
+                            alt="CPU Promotion"
+                        />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40 flex flex-col items-center justify-center text-white text-center p-8"
+
+                        >
+                            <span
+                                class="badge bg-gradient-to-r from-yellow-400 to-yellow-600 text-black px-6 py-2 mb-5 animate-bounce text-base font-semibold rounded-full shadow-lg transform hover:scale-105 transition-all"
+                                >Limited Time Offer</span
+                            >
+                            <h2
+                                class="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white to-yellow-300 bg-clip-text text-transparent mb-3"
+
+
+                            >
+                                Pre Order Yours Now!
+                            </h2>
+                            <p
+                                class="text-xl py-4 max-w-2xl text-gray-100"
+
+
+                            >
+                                Get the best deal on the latest Intel & AMD
+                                CPUs. Pre-order now and save
+                                <span class="font-bold text-yellow-400 text-2xl">৳1,500</span>
+                            </p>
+                            <h3
+                                class="text-2xl font-semibold mt-3 bg-white/10 px-6 py-2 rounded-lg backdrop-blur-sm"
+
+
+                            >
+                                Starting From
+                                <span class="text-yellow-400 text-3xl ml-2">৳40,500</span>
+                            </h3>
+                            <a
+                                href="{% url 'product-list' %}?category=CPU"
+                                class="btn bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-black font-semibold px-10 py-4 mt-8 rounded-lg transform transition-all duration-300 hover:scale-105 hover:-translate-y-1 shadow-lg shadow-yellow-500/30 hover:shadow-yellow-500/50 text-lg"
+
+
+                            >
+                                Shop Now
+                            </a>
+                        </div>
+                        <div
+                            class="absolute left-5 top-1/2 transform -translate-y-1/2 transition-all"
+                        >
+                            <a
+                                href="#slide2"
+                                onclick="event.preventDefault(); document.querySelector('#slide2').scrollIntoView({behavior: 'auto', block: 'nearest', inline: 'center'})"
+                                class="btn bg-white/20 backdrop-blur-md hover:bg-white/70 text-white hover:text-black p-4 rounded-full shadow-md transition-all flex items-center justify-center w-12 h-12"
+                                >❮</a
+                            >
+                        </div>
+                        <div
+                            class="absolute right-5 top-1/2 transform -translate-y-1/2 transition-all"
+                        >
+                            <a
+                                href="#slide2"
+                                onclick="event.preventDefault(); document.querySelector('#slide2').scrollIntoView({behavior: 'auto', block: 'nearest', inline: 'center'})"
+                                class="btn bg-white/20 backdrop-blur-md hover:bg-white/70 text-white hover:text-black p-4 rounded-full shadow-md transition-all flex items-center justify-center w-12 h-12"
+                                >❯</a
+                            >
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div id="slide2" class="carousel-item relative w-full">
+                        <img
+                            src="/static/index/images/hero/slider-bg2.png"
+                            class="w-full object-cover transition-transform duration-700 hover:scale-105"
+                            alt="GPU Promotion"
+                        />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40 flex flex-col items-center justify-center text-white text-center p-8"
+                        >
+                            <span
+                                class="badge bg-gradient-to-r from-red-500 to-red-700 text-white px-6 py-2 mb-5 animate-pulse text-base font-semibold rounded-full shadow-lg transform hover:scale-105 transition-all"
+                                >Hot Deal</span
+                            >
+                            <h2
+                                class="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white to-red-300 bg-clip-text text-transparent mb-3"
+                            >
+                                Early Winter GPU Sale!
+                            </h2>
+                            <p class="text-xl py-4 max-w-2xl text-gray-100">
+                                Get the best deal on the latest GPUs. Pre-order
+                                now and save
+                                <span class="font-bold text-yellow-400 text-2xl">৳3,000</span>
+                            </p>
+                            <h3 class="text-2xl font-semibold mt-3 bg-white/10 px-6 py-2 rounded-lg backdrop-blur-sm">
+                                Starting From:
+                                <span class="text-yellow-400 text-3xl ml-2">৳15,300</span>
+                            </h3>
+                            <a
+                                href="{% url 'product-list' %}?category=GPU"
+                                class="btn bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white font-semibold px-10 py-4 mt-8 rounded-lg transform transition-all duration-300 hover:scale-105 hover:-translate-y-1 shadow-lg shadow-red-500/30 hover:shadow-red-500/50 text-lg"
+                                ><i class="lni lni-cart-full mr-2"></i>
+                                Shop Now</a
+                            >
+                        </div>
+                        <div
+                            class="absolute left-5 top-1/2 transform -translate-y-1/2 transition-all"
+                        >
+                            <a
+                                href="#slide1"
+                                onclick="event.preventDefault(); document.querySelector('#slide1').scrollIntoView({behavior: 'auto', block: 'nearest', inline: 'center'})"
+                                class="btn bg-white/20 backdrop-blur-md hover:bg-white/70 text-white hover:text-black p-4 rounded-full shadow-md transition-all flex items-center justify-center w-12 h-12"
+                                >❮</a
+                            >
+                        </div>
+                        <div
+                            class="absolute right-5 top-1/2 transform -translate-y-1/2 transition-all"
+                        >
+                            <a
+                                href="#slide1"
+                                onclick="event.preventDefault(); document.querySelector('#slide1').scrollIntoView({behavior: 'auto', block: 'nearest', inline: 'center'})"
+                                class="btn bg-white/20 backdrop-blur-md hover:bg-white/70 text-white hover:text-black p-4 rounded-full shadow-md transition-all flex items-center justify-center w-12 h-12"
+                                >❯</a
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Carousel indicators -->
+                    <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                        <a href="#slide1" class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all"></a>
+                        <a href="#slide2" class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all"></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Small Banners with Refined Hover Effects -->
+            <div
+                class="flex flex-col h-full space-y-6"
+
+
+
+            >
+                <!-- Premium Keyboard Banner -->
+                <div
+                    class="card bg-gradient-to-br from-blue-50 to-white shadow-xl flex-1 rounded-xl overflow-hidden transform transition-all hover:shadow-2xl hover:scale-[1.02] duration-300 border border-blue-100/50 group relative"
+
+
+                >
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-100 rounded-full opacity-30"></div>
+                    <div class="absolute -left-5 -bottom-10 w-28 h-28 bg-purple-200/30 rounded-full blur-md"></div>
+
+                    <div class="relative overflow-hidden">
+                        <img
+                            src="/static/index/images/hero/slider-bnr.png"
+                            alt="Keyboard"
+                            class="h-48 w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-30 group-hover:opacity-70 transition-opacity duration-300"
+                        ></div>
+                        <div
+                            class="absolute top-0 right-0 bg-gradient-to-l from-blue-600 to-purple-500 text-white font-bold px-4 py-1 rounded-bl-lg shadow-lg animate-pulse"
+                        >
+                            HOT DEAL
+                        </div>
+                    </div>
+                    <div class="p-5 text-gray-800 relative z-10">
+                        <h2
+                            class="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                        >
+                            Premium Gaming Keyboard
+                        </h2>
+                        <p class="text-sm mt-2 text-gray-600 line-clamp-2 mb-3">
+                            Asus ROG CLAYMORE II - Modular TKL Mechanical Blue
+                            Switch RGB Gaming Keyboard
+                        </p>
+                        <div class="flex justify-between items-center mt-3 pt-3 border-t border-gray-100">
+                            <div>
+                                <h3 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                                    ৳29,000
+                                </h3>
+                                <span class="text-xs text-gray-400 line-through">৳32,500</span>
+                            </div>
+                            <a
+                                href="{% url 'product-list' %}?category=Keyboard"
+                                class="flex items-center bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm px-4 py-2 rounded-lg transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-500/30"
+                            >
+                                <span>Shop Now</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weekly Sale Banner -->
+                <div
+                    class="card bg-gradient-to-br from-yellow-500 via-yellow-400 to-amber-300 text-black shadow-xl flex-1 rounded-xl overflow-hidden transform transition-all hover:shadow-2xl hover:scale-[1.02] duration-300 relative group"
+
+
+                >
+                    <!-- Enhanced background elements -->
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-yellow-300/50 rounded-full opacity-50 group-hover:scale-110 transition-transform duration-700"></div>
+                    <div class="absolute -left-5 -bottom-10 w-32 h-32 bg-yellow-600/30 rounded-full blur-md group-hover:scale-125 transition-transform duration-700"></div>
+                    <div class="absolute right-10 bottom-5 w-20 h-20 bg-white/20 rounded-full blur-md animate-pulse"></div>
+
+                    <!-- Content with better padding and layout -->
+                    <div class="p-7 flex flex-col items-center justify-center relative z-10 h-full">
+                        <span class="bg-white/30 backdrop-blur-sm text-red-800 text-sm font-bold px-4 py-1 rounded-lg mb-3 animate-bounce">
+                            HOT DEAL
+                        </span>
+
+                        <h2 class="text-3xl font-extrabold relative z-10 text-center mb-2 bg-gradient-to-r from-red-500 to-purple-500 bg-clip-text text-transparent">
+                            Weekly FLASH Sale!
+                        </h2>
+
+                        <p class="text-md mt-1 relative z-10 text-center max-w-xs mx-auto font-medium text-black/80">
+                            Save up to <span class="font-black text-red-800 text-2xl inline-block transform -rotate-3 animate-pulse">50% OFF</span> all online store items this week.
+                        </p>
+
+                        <a
+                            href="{% url 'product-list' %}"
+                            class="btn mt-5 bg-black text-white hover:bg-gray-800 relative z-10 transform transition-all hover:scale-105 hover:-translate-y-1 shadow-lg flex items-center gap-2 px-6 py-3 rounded-lg group-hover:shadow-xl group-hover:shadow-yellow-700/30"
+                        >
+                            <span class="font-bold">Shop Now</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 12h14" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Promotional Area -->
+
+<!-- Start Call Action Area -->
+<section
+    class="call-action py-16 bg-gradient-to-r from-blue-600 to-blue-800 text-white relative overflow-hidden"
+>
+    <!-- Animated background elements -->
+    <div
+        class="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 animate-pulse"
+    ></div>
+    <div
+        class="absolute bottom-0 right-0 w-96 h-96 bg-yellow-400/10 rounded-full translate-x-1/3 translate-y-1/3 animate-pulse"
+        style="animation-delay: 1s"
+    ></div>
+    <div
+        class="absolute top-1/2 right-1/4 w-48 h-48 bg-purple-500/10 rounded-full -translate-y-1/2 animate-pulse"
+        style="animation-delay: 1.5s"
+    ></div>
+
+    <div class="container mx-auto px-6 relative z-10">
+        <div
+            class="max-w-3xl mx-auto text-center"
+
+
+        >
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                <span id="typewriter" class="inline-block"></span><br />
+                <span
+                    id="typewriter2"
+                    class="text-yellow-400 inline-block transform hover:scale-105 transition-all duration-300 mt-2 text-5xl md:text-6xl"
+                ></span>
+            </h2>
+            <p
+                class="text-lg leading-relaxed backdrop-blur-sm bg-blue-700/30 p-4 rounded-lg shadow-inner"
+
+
+            >
+                <strong class="text-yellow-300">TechReform BD</strong>
+                is transforming the PC component market in Bangladesh by
+                eliminating inflated prices, cutting out middlemen, and
+                providing reliable after-sales service. Our direct
+                <span class="text-yellow-400 font-bold"
+                    >Supplier-to-Consumer</span
+                >
+                model ensures fair pricing, transparency, and dependable
+                support.
+            </p>
+            <div
+                class="flex flex-wrap justify-center gap-4 mt-8"
+
+
+            >
+                <div
+                    class="bg-blue-500/40 px-4 py-3 rounded-lg shadow-lg flex items-center space-x-3 hover:bg-blue-500/60 transition-all"
+                >
+                    <i class="lni lni-check-box text-yellow-300 text-xl"></i>
+                    <span class="font-medium">Compatibility Checking</span>
+                </div>
+                <div
+                    class="bg-blue-500/40 px-4 py-3 rounded-lg shadow-lg flex items-center space-x-3 hover:bg-blue-500/60 transition-all"
+                >
+                    <i class="lni lni-delivery text-yellow-300 text-xl"></i>
+                    <span class="font-medium">Real-time Order Tracking</span>
+                </div>
+                <div
+                    class="bg-blue-500/40 px-4 py-3 rounded-lg shadow-lg flex items-center space-x-3 hover:bg-blue-500/60 transition-all"
+                >
+                    <i class="lni lni-credit-cards text-yellow-300 text-xl"></i>
+                    <span class="font-medium">Multiple Payment Options</span>
+                </div>
+            </div>
+            <div class="mt-10"  >
+                <a
+                    href="{% url 'product-list' %}"
+                    class="btn btn-lg bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-8 py-4 rounded-lg shadow-xl transform transition-all duration-300 hover:scale-105 hover:-translate-y-1 flex items-center justify-center mx-auto w-max group"
+                >
+                    <span>Browse Our Products</span>
+                    <i
+                        class="lni lni-arrow-right ml-2 group-hover:translate-x-1 transition-transform"
+                    ></i>
+                </a>
+            </div>
+
+            <div
+                class="mt-6 flex justify-center space-x-4"
+
+
+            >
+                <a
+                    href="https://www.facebook.com/SharifdotG"
+                    class="text-white hover:text-yellow-300 transition-colors"
+                >
+                    <i class="lni lni-facebook text-2xl"></i>
+                </a>
+                <a
+                    href="https://www.instagram.com/sharifdotg/"
+                    class="text-white hover:text-yellow-300 transition-colors"
+                >
+                    <i class="lni lni-instagram-original text-2xl"></i>
+                </a>
+                <a
+                    href="https://www.youtube.com/@SharifdotG"
+                    class="text-white hover:text-yellow-300 transition-colors"
+                >
+                    <i class="lni lni-youtube text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tech-themed decorative icons -->
+    <div class="hidden md:block">
+        <i
+            class="lni lni-cpu absolute top-20 left-20 text-blue-300/30 text-5xl animate-float"
+        ></i>
+        <i
+            class="lni lni-display absolute bottom-20 left-40 text-yellow-300/30 text-4xl animate-float"
+            style="animation-delay: 1s"
+        ></i>
+        <i
+            class="lni lni-laptop absolute top-40 right-20 text-blue-300/30 text-5xl animate-float"
+            style="animation-delay: 0.5s"
+        ></i>
+        <i
+            class="lni lni-keyboard absolute bottom-32 right-40 text-yellow-300/30 text-4xl animate-float"
+            style="animation-delay: 1.5s"
+        ></i>
+        <i
+            class="lni lni-gpu absolute top-60 left-60 text-blue-300/30 text-4xl animate-float"
+            style="animation-delay: 2s"
+        ></i>
+    </div>
+
+    <!-- Typewriter effect script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const typewriterElement = document.getElementById("typewriter");
+            const typewriter2Element = document.getElementById("typewriter2");
+            const text1 = "What is";
+            const text2 = "TechReform BD?";
+            let i = 0;
+            let j = 0;
+
+            function typeWriter() {
+                if (i < text1.length) {
+                    typewriterElement.textContent += text1.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 150);
+                } else {
+                    // Add cursor blink effect after typing completes
+                    typewriterElement.classList.add("typewriter-done");
+                    // Start typing the second part after a delay
+                    setTimeout(typeWriter2, 500);
+                }
+            }
+
+            function typeWriter2() {
+                if (j < text2.length) {
+                    typewriter2Element.textContent += text2.charAt(j);
+                    j++;
+                    setTimeout(typeWriter2, 200); // Slower speed (200ms vs 150ms)
+                } else {
+                    // Add cursor blink effect after typing completes
+                    typewriter2Element.classList.add("typewriter2-done");
+                }
+            }
+
+            // Start the typewriter effect when section is in view
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            setTimeout(typeWriter, 500);
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                { threshold: 0.3 }
+            );
+
+            observer.observe(typewriterElement.closest("section"));
+        });
+    </script>
+
+    <style>
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        #typewriter::after {
+            content: "|";
+            display: inline-block;
+            animation: blink 0.7s infinite;
+        }
+
+        #typewriter.typewriter-done::after {
+            content: "";
+            animation: none;
+        }
+
+        #typewriter2::after {
+            content: "|";
+            display: inline-block;
+            animation: blink 0.7s infinite;
+        }
+
+        #typewriter2.typewriter2-done::after {
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</section>
+<!-- End Call Action Area -->
+
+<!-- Start Banner Area -->
+<section
+    class="banner py-16 bg-gradient-to-b from-gray-50 to-gray-200 overflow-hidden relative"
+>
+    <div class="container mx-auto px-6">
+        <!-- Animated background elements -->
+        <div
+            class="absolute inset-0 overflow-hidden opacity-5 pointer-events-none"
+        >
+            <div
+                class="absolute top-40 -right-20 w-80 h-80 bg-blue-500 rounded-full filter blur-3xl"
+            ></div>
+            <div
+                class="absolute bottom-20 -left-20 w-60 h-60 bg-yellow-500 rounded-full filter blur-3xl"
+            ></div>
+        </div>
+
+        <div
+            class="text-center mb-10"
+
+
+        >
+            <span
+                class="bg-blue-100 text-blue-800 text-sm font-medium px-4 py-2 rounded-full inline-block"
+            >
+                Featured Categories
+            </span>
+            <h2
+                class="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mt-3"
+            >
+                Shop by Category
+            </h2>
+            <div
+                class="w-24 h-1 bg-gradient-to-r from-yellow-500 to-yellow-300 mx-auto my-4 rounded-full"
+            ></div>
+            <p
+                class="text-gray-600 max-w-2xl mx-auto"
+
+
+            >
+                High performance components to upgrade your PC setup at
+                unbeatable prices
+            </p>
+        </div>
+
+        <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-10"
+
+
+        >
+            <!-- Casing Banner -->
+            <div
+            class="relative bg-cover bg-center rounded-xl overflow-hidden shadow-2xl transform transition-all duration-500 hover:scale-[1.03] hover:shadow-blue-200/50 group"
+            style="
+                background-image: url('/static/index/images/banners/banner-1-bg.png');
+                height: 380px;
+            "
+
+
+            >
+            <!-- Fixed gradient overlay with proper class name and attributes -->
+            <div
+                class="bg-gradient-to-tr from-black/80 via-black/60 to-transparent absolute inset-0 transition-opacity duration-300 group-hover:opacity-75"
+            ></div>
+            <div
+                class="relative z-10 p-10 h-full flex flex-col justify-between text-white"
+            >
+                <div class="space-y-3">
+                <span
+                    class="inline-block bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-medium px-4 py-1.5 rounded-full animate-pulse shadow-lg shadow-blue-500/20"
+                    >New Arrivals</span
+                >
+                <h2
+                    class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white to-blue-300 bg-clip-text text-transparent transition-all duration-300 drop-shadow-md"
+                >
+                    Premium PC Casings
+                </h2>
+                <p class="mt-3 text-lg max-w-md text-gray-200 backdrop-blur-sm bg-black/10 p-3 rounded-lg">
+                    Explore a vast collection of stylish and
+                    high-performance casings with RGB lighting and
+                    optimal airflow.
+                </p>
+                </div>
+                <div class="mt-5"  >
+                <a
+                    href="{% url 'product-list' %}?category=Casing"
+                    class="group inline-flex items-center bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold px-7 py-3 rounded-lg shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transform transition-all duration-300 hover:-translate-y-1"
+                >
+                    View Collection
+                    <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 ml-2 transform transition-transform duration-300 group-hover:translate-x-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                    </svg>
+                </a>
+                </div>
+            </div>
+            </div>
+
+            <!-- RAM Banner -->
+            <div
+                class="relative bg-cover bg-center rounded-xl overflow-hidden shadow-2xl transform transition-all duration-500 hover:scale-[1.03] hover:shadow-green-200/50 group"
+                style="
+                    background-image: url('/static/index/images/banners/banner-2-bg.png');
+                    height: 380px;
+                "
+
+
+            >
+                <!-- Enhanced gradient overlay with smoother transition -->
+                <div
+                    class="bg-gradient-to-tr from-black/80 via-black/60 to-transparent absolute inset-0 transition-opacity duration-300 group-hover:opacity-75"
+                ></div>
+
+                <!-- Decorative elements that appear on hover -->
+                <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-green-400/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700 ease-in-out"></div>
+                <div class="absolute top-10 left-10 w-20 h-20 bg-green-300/30 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-all duration-700 delay-100 ease-in-out"></div>
+
+                <div
+                    class="relative z-10 p-10 h-full flex flex-col justify-between text-white"
+                >
+                    <div class="space-y-3">
+                        <span
+                            class="inline-block bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-medium px-4 py-1.5 rounded-full animate-pulse shadow-lg shadow-green-500/20 transform transition-all duration-300 group-hover:scale-105"
+                            >Best Sellers</span
+                        >
+                        <h2
+                            class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white to-green-300 bg-clip-text text-transparent transition-all duration-300 drop-shadow-md"
+                        >
+                            High-Performance RAMs
+                        </h2>
+                        <p class="mt-3 text-lg max-w-md text-gray-200 backdrop-blur-sm bg-black/10 p-3 rounded-lg transform transition-all duration-500 group-hover:translate-x-2">
+                            Boost your system speed with top-tier DDR4 & DDR5
+                            memory modules from trusted brands.
+                        </p>
+                    </div>
+
+                    <div class="mt-5"  >
+                        <a
+                            href="{% url 'product-list' %}?category=RAM"
+                            class="group inline-flex items-center bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold px-7 py-3 rounded-lg shadow-lg shadow-green-500/30 hover:shadow-green-500/50 transform transition-all duration-300 hover:-translate-y-1"
+                        >
+                            <i class="lni lni-cart-full mr-2"></i>
+                            Shop Now
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 ml-2 transform transition-transform duration-300 group-hover:translate-x-1"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                                />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Category Quick Links -->
+        <div
+            class="mt-16 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5"
+
+
+        >
+            <!-- Processors -->
+            <a
+            href="{% url 'product-list' %}?category=CPU"
+            class="flex flex-col items-center p-5 bg-white rounded-2xl shadow-lg border border-blue-50 hover:shadow-xl transform transition-all duration-300 hover:-translate-y-2 hover:border-blue-200 group relative overflow-hidden"
+            >
+            <div class="absolute -right-6 -top-6 w-12 h-12 bg-blue-100 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
+            <div
+                class="w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-100 to-blue-200 group-hover:from-blue-400 group-hover:to-blue-600 transition-all duration-300 z-10"
+            >
+                <i
+                class="lni lni-coral text-2xl text-blue-700 group-hover:text-white transition-colors duration-300"
+                ></i>
+            </div>
+            <span
+                class="mt-4 text-sm font-semibold text-gray-800 group-hover:text-blue-600 transition-colors"
+                >Processors</span
+            >
+            <div class="w-0 h-0.5 bg-blue-500 absolute bottom-3 transition-all duration-300 group-hover:w-16"></div>
+            </a>
+
+            <!-- Motherboards -->
+            <a
+            href="{% url 'product-list' %}?category=Motherboard"
+            class="flex flex-col items-center p-5 bg-white rounded-2xl shadow-lg border border-red-50 hover:shadow-xl transform transition-all duration-300 hover:-translate-y-2 hover:border-red-200 group relative overflow-hidden"
+            >
+            <div class="absolute -right-6 -top-6 w-12 h-12 bg-red-100 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
+            <div
+                class="w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-red-100 to-red-200 group-hover:from-red-400 group-hover:to-red-600 transition-all duration-300 z-10"
+            >
+                <i
+                class="lni lni-display text-2xl text-red-700 group-hover:text-white transition-colors duration-300"
+                ></i>
+            </div>
+            <span
+                class="mt-4 text-sm font-semibold text-gray-800 group-hover:text-red-600 transition-colors"
+                >Motherboards</span
+            >
+            <div class="w-0 h-0.5 bg-red-500 absolute bottom-3 transition-all duration-300 group-hover:w-16"></div>
+            </a>
+
+            <!-- Storage -->
+            <a
+            href="{% url 'product-list' %}?category=SSD"
+            class="flex flex-col items-center p-5 bg-white rounded-2xl shadow-lg border border-purple-50 hover:shadow-xl transform transition-all duration-300 hover:-translate-y-2 hover:border-purple-200 group relative overflow-hidden"
+            >
+            <div class="absolute -right-6 -top-6 w-12 h-12 bg-purple-100 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
+            <div
+                class="w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-purple-100 to-purple-200 group-hover:from-purple-400 group-hover:to-purple-600 transition-all duration-300 z-10"
+            >
+                <i
+                class="lni lni-database text-2xl text-purple-700 group-hover:text-white transition-colors duration-300"
+                ></i>
+            </div>
+            <span
+                class="mt-4 text-sm font-semibold text-gray-800 group-hover:text-purple-600 transition-colors"
+                >Storage</span
+            >
+            <div class="w-0 h-0.5 bg-purple-500 absolute bottom-3 transition-all duration-300 group-hover:w-16"></div>
+            </a>
+
+            <!-- Graphics Cards -->
+            <a
+            href="{% url 'product-list' %}?category=GPU"
+            class="flex flex-col items-center p-5 bg-white rounded-2xl shadow-lg border border-yellow-50 hover:shadow-xl transform transition-all duration-300 hover:-translate-y-2 hover:border-yellow-200 group relative overflow-hidden"
+            >
+            <div class="absolute -right-6 -top-6 w-12 h-12 bg-yellow-100 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
+            <div
+                class="w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-yellow-100 to-yellow-200 group-hover:from-yellow-400 group-hover:to-yellow-600 transition-all duration-300 z-10"
+            >
+                <i
+                class="lni lni-game text-2xl text-yellow-700 group-hover:text-white transition-colors duration-300"
+                ></i>
+            </div>
+            <span
+                class="mt-4 text-sm font-semibold text-gray-800 group-hover:text-yellow-600 transition-colors"
+                >Graphics Cards</span
+            >
+            <div class="w-0 h-0.5 bg-yellow-500 absolute bottom-3 transition-all duration-300 group-hover:w-16"></div>
+            </a>
+
+            <!-- Power Supplies -->
+            <a
+            href="{% url 'product-list' %}?category=Power%20Supply"
+            class="flex flex-col items-center p-5 bg-white rounded-2xl shadow-lg border border-green-50 hover:shadow-xl transform transition-all duration-300 hover:-translate-y-2 hover:border-green-200 group relative overflow-hidden"
+            >
+            <div class="absolute -right-6 -top-6 w-12 h-12 bg-green-100 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
+            <div
+                class="w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-green-100 to-green-200 group-hover:from-green-400 group-hover:to-green-600 transition-all duration-300 z-10"
+            >
+                <i
+                class="lni lni-bolt text-2xl text-green-700 group-hover:text-white transition-colors duration-300"
+                ></i>
+            </div>
+            <span
+                class="mt-4 text-sm font-semibold text-gray-800 group-hover:text-green-600 transition-colors"
+                >Power Supplies</span
+            >
+            <div class="w-0 h-0.5 bg-green-500 absolute bottom-3 transition-all duration-300 group-hover:w-16"></div>
+            </a>
+
+            <!-- View All -->
+            <a
+            href="{% url 'product-list' %}"
+            class="flex flex-col items-center p-5 bg-white rounded-2xl shadow-lg border border-gray-50 hover:shadow-xl transform transition-all duration-300 hover:-translate-y-2 hover:border-gray-200 group relative overflow-hidden"
+            >
+            <div class="absolute -right-6 -top-6 w-12 h-12 bg-gray-100 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
+            <div
+                class="w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-gray-100 to-gray-200 group-hover:from-gray-500 group-hover:to-gray-700 transition-all duration-300 z-10"
+            >
+                <i
+                class="lni lni-more-alt text-2xl text-gray-700 group-hover:text-white transition-colors duration-300"
+                ></i>
+            </div>
+            <span
+                class="mt-4 text-sm font-semibold text-gray-800 group-hover:text-gray-600 transition-colors"
+                >View All</span
+            >
+            <div class="w-0 h-0.5 bg-gray-500 absolute bottom-3 transition-all duration-300 group-hover:w-16"></div>
+            </a>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+<!-- Start Trending Product Area -->
+<section
+    class="trending-product section py-16 bg-gradient-to-b from-gray-50 to-white overflow-hidden relative"
+>
+    <div class="container mx-auto px-6">
+        <!-- Animated background elements -->
+        <div
+            class="absolute inset-0 overflow-hidden opacity-5 pointer-events-none"
+        >
+            <div
+                class="absolute top-40 -right-20 w-80 h-80 bg-blue-500 rounded-full filter blur-3xl"
+            ></div>
+            <div
+                class="absolute bottom-20 -left-20 w-60 h-60 bg-yellow-500 rounded-full filter blur-3xl"
+            ></div>
+        </div>
+
+        <div
+            class="text-center mb-12"
+
+
+        >
+            <span
+                class="bg-blue-100 text-blue-800 text-sm font-medium px-4 py-2 rounded-full inline-block"
+            >
+                Hot Items
+            </span>
+            <h2
+                class="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mt-3"
+            >
+                Trending Products
+            </h2>
+            <div
+                class="w-24 h-1 bg-gradient-to-r from-yellow-500 to-yellow-300 mx-auto my-4 rounded-full"
+            ></div>
+            <p
+                class="text-gray-600 max-w-2xl mx-auto"
+
+
+            >
+                These products are flying off our virtual shelves! High-quality
+                components at unbeatable prices - grab them before they're gone.
+            </p>
+        </div>
+
+        <!-- Ultra-Premium Futuristic Components Grid with cybernetic design and advanced animations -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"  >
+            <!-- Product Card 1 -->
+            <div class="card bg-gradient-to-br from-base-200/90 to-base-100/80 backdrop-blur-sm shadow-xl overflow-hidden relative group transform transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(59,130,246,0.35)] border border-blue-200/30 hover:border-blue-300/60"  >
+                <!-- Advanced cybernetic decorative elements with parallax effect -->
+                <div class="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-blue-500/5 to-indigo-600/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none transform group-hover:scale-150 group-hover:rotate-45"></div>
+                <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-tr from-purple-500/5 to-fuchsia-500/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 duration-700 pointer-events-none transform group-hover:scale-150 group-hover:-rotate-45 transition-transform"></div>
+
+                <!-- Futuristic scanline effect overlay -->
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/2 to-transparent bg-size-200 opacity-0 group-hover:opacity-100 transition-all duration-1000 pointer-events-none z-10 animate-scanline"></div>
+
+                <!-- Glowing border effect on hover -->
+                <div class="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"
+                     style="background: linear-gradient(90deg, transparent, rgba(59,130,246,0.15), transparent); background-size: 200% 100%; animation: borderGlow 3s linear infinite;"></div>
+
+                <figure class="h-48 relative bg-gradient-to-br from-white/95 to-white/80 p-4 overflow-hidden group-hover:shadow-inner transition-all duration-500">
+                    <!-- Product image with futuristic holographic effects -->
+                    <div class="h-full w-full flex items-center justify-center transform transition-transform duration-700 group-hover:scale-112 relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 rounded-full blur-3xl opacity-0 group-hover:opacity-40 transition-opacity duration-500 animate-pulse-slow"></div>
+                        <img src="/static/index/images/trending/gpu.jpg" alt="Gaming GPU" class="h-full object-contain relative z-10 filter drop-shadow-lg transform transition-all duration-700 group-hover:brightness-110 group-hover:contrast-110" />
+
+                        <!-- High-tech scanning effect -->
+                        <div class="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <div class="absolute inset-0 h-1/4 bg-gradient-to-b from-transparent via-blue-400/15 to-transparent -translate-y-full group-hover:translate-y-full transition-all duration-2000 ease-in-out transform opacity-60"></div>
+                        </div>
+                    </div>
+
+                    <!-- In Stock indicator -->
+                    <div class="absolute top-2 left-2 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-md px-2.5 py-1 text-xs shadow-md z-20 backdrop-blur-sm flex items-center">
+                        <i class="lni lni-checkmark-circle mr-1.5 animate-pulse"></i> In Stock
+                    </div>
+
+                    <!-- Discount indicator -->
+                    <div class="absolute top-2 right-2 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-md px-2.5 py-1 text-xs shadow-md z-20 backdrop-blur-sm flex items-center">
+                        <i class="lni lni-offer mr-1.5"></i> -15%
+                    </div>
+
+                    <!-- Futuristic hover overlay with digital particles effect -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                </figure>
+
+                <div class="card-body p-5 relative z-10">
+                    <div class="mb-2 flex items-center">
+                        <div class="badge badge-ghost bg-gradient-to-r from-base-300/80 to-base-200/80 backdrop-blur-sm border border-base-300 transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-md group-hover:shadow-blue-500/10 text-gray-700 font-medium">Sapphire</div>
+                        <div class="badge badge-accent ml-2 text-xs transform transition-all duration-300 group-hover:scale-108 group-hover:rotate-3 group-hover:shadow-md group-hover:shadow-accent/30 relative overflow-hidden">
+                            <span class="relative z-10 font-semibold">New</span>
+                            <!-- Badge shimmer effect -->
+                            <span class="absolute inset-0 w-full h-full bg-white/30 transform -translate-x-full group-hover:translate-x-full transition-all duration-1000 ease-in-out"></span>
+                        </div>
+                    </div>
+
+                    <h2 class="card-title text-base h-12 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300 relative font-bold">
+                        <span class="relative z-10">NITRO+ AMD Radeon RX 7900 XTX Vapor-X 24GB GDDR6</span>
+                        <!-- Text glow effect on hover -->
+                        <span class="absolute inset-0 bg-blue-400/10 rounded-lg blur-lg opacity-0 group-hover:opacity-80 transition-opacity duration-500 -z-10"></span>
+                    </h2>
+
+                    <!-- Product specs with futuristic tech-panel styling -->
+                    <div class="mt-3.5 space-y-2 text-sm text-gray-600 bg-gradient-to-r from-base-100/80 to-white/70 p-3 rounded-lg border border-base-300/50 transform transition-all duration-500 group-hover:shadow-inner group-hover:border-blue-300/40 group-hover:from-blue-50/20 group-hover:to-indigo-50/10">
+                        <div class="flex justify-between items-center transition-transform duration-300 group-hover:translate-x-1 hover:text-blue-700">
+                            <span class="inline-flex items-center"><i class="lni lni-chip mr-1.5 text-blue-500 group-hover:animate-pulse-slow"></i> Memory:</span>
+                            <span class="font-medium">24GB GDDR6</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-500 delay-75 group-hover:translate-x-1 hover:text-indigo-700">
+                            <span class="inline-flex items-center"><i class="lni lni-game mr-1.5 text-indigo-500 group-hover:animate-pulse-slow"></i> Type:</span>
+                            <span class="font-medium">Gaming</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-700 delay-150 group-hover:translate-x-1 hover:text-amber-700">
+                            <span class="inline-flex items-center"><i class="lni lni-bolt mr-1.5 text-amber-500 group-hover:animate-pulse-slow"></i> Performance:</span>
+                            <span class="font-medium">High-end</span>
+                        </div>
+
+                        <!-- Premium Price and CTA with enhanced visual effects and animations -->
+                        <div class="mt-6 flex items-center justify-between relative">
+                            <!-- Enhanced decorative accent lines with glow effect -->
+                            <div class="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-blue-300/40 to-transparent animate-pulse-slow"></div>
+
+                            <!-- Price display with luxurious 3D styling and particle effects -->
+                            <div class="relative group/price">
+                                <!-- Ambient glow effect behind price -->
+                                <div class="absolute -inset-1.5 bg-gradient-to-r from-blue-600/15 via-indigo-600/20 to-purple-600/15 rounded-lg blur-lg opacity-0 group-hover/price:opacity-100 transition-all duration-700 ease-out"></div>
+
+                                <!-- 3D price container with depth effect -->
+                                <div class="relative font-extrabold bg-clip-text text-transparent bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 text-xl transform transition-all duration-500 ease-out group-hover/price:scale-110 group-hover/price:-translate-y-0.5 flex items-center"
+                                     style="text-shadow: 0px 1px 1px rgba(120,120,255,0.4), 0px 2px 6px rgba(86,91,255,0.1);">
+                                    <span class="text-base mr-1 opacity-100 group-hover/price:animate-bounce animation-delay-300">৳</span>
+                                    155,900
+
+                                    <!-- Enhanced floating particle effects on hover -->
+                                    <span class="absolute -top-1 -right-1 w-2 h-2 bg-purple-400 rounded-full opacity-0 group-hover/price:opacity-70 animate-ping-slow"></span>
+                                    <span class="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-blue-400 rounded-full opacity-0 group-hover/price:opacity-70 animate-ping-slow animation-delay-700"></span>
+                                    <span class="absolute top-1/2 right-1/3 w-1 h-1 bg-indigo-400 rounded-full opacity-0 group-hover/price:opacity-60 animate-ping-slow animation-delay-1200"></span>
+                                </div>
+                                <span class="text-sm text-gray-400 line-through ml-2">৳165,900</span>
+                            </div>
+
+                            <!-- Premium animated Select Button with advanced hover effects and cybernetic design -->
+                            <button type="submit" class="relative px-5 py-2.5 overflow-hidden group/btn bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl hover:shadow-blue-500/40 transition-all duration-500 transform hover:scale-[1.03] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]">
+                                <!-- Enhanced background pulse effect -->
+                                <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"></span>
+
+                                <!-- Electric border effect -->
+                                <span class="absolute inset-0 border border-white/10 rounded-lg opacity-0 group-hover/btn:opacity-100"></span>
+
+                                <!-- Improved moving highlight/gleam effect -->
+                                <span class="absolute inset-0 w-1/4 h-full bg-white/30 skew-x-[-45deg] -translate-x-full group-hover/btn:translate-x-[400%] transition-all duration-1000 ease-in-out"></span>
+
+                                <!-- Subtle animated particle effect -->
+                                <div class="absolute inset-0 opacity-0 group-hover/btn:opacity-100">
+                                    <div class="absolute top-1/4 left-1/4 w-1 h-1 bg-white/60 rounded-full animate-ping-slow"></div>
+                                    <div class="absolute bottom-1/4 right-1/3 w-1 h-1 bg-white/60 rounded-full animate-ping-slow animation-delay-700"></div>
+                                </div>
+
+                                <!-- Button content with animated icon and text glow -->
+                                <span class="relative z-10 flex items-center">
+                                    <i class="lni lni-cart mr-1.5 group-hover/btn:rotate-180 transition-transform duration-500"></i>
+                                    <span class="tracking-wide group-hover/btn:text-white/95 transition-colors duration-300"
+                                          style="text-shadow: 0 0 5px rgba(255,255,255,0.5);">Shop</span>
+                                </span>
+
+                                <!-- Bottom border animation with glow -->
+                                <span class="absolute bottom-0 left-0 w-full h-[2px] bg-white/50 scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-500 origin-left group-hover/btn:shadow-glow"></span>
+                            </button>
+
+                            <!-- Enhanced decorative accent line with animated gradient -->
+                            <div class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-blue-300/40 to-transparent group-hover:via-blue-400/60 transition-colors duration-500"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card 2: Enhanced with cybernetic design elements and premium effects -->
+            <div class="card bg-gradient-to-br from-base-200/90 to-base-100/80 backdrop-blur-sm shadow-xl overflow-hidden relative group transform transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(39,175,96,0.35)] border border-green-200/30 hover:border-green-300/60"
+
+
+                >
+
+                <!-- Advanced decorative elements -->
+                <div class="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-green-500/5 to-teal-600/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none transform group-hover:scale-150 group-hover:rotate-45"></div>
+                <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-tr from-emerald-500/5 to-green-500/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none transform group-hover:scale-150 group-hover:-rotate-45"></div>
+
+                <!-- Futuristic scanline effect overlay -->
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-green-500/2 to-transparent bg-size-200 opacity-0 group-hover:opacity-100 transition-all duration-1000 pointer-events-none z-10 animate-scanline"></div>
+
+                <!-- Glowing border effect on hover -->
+                <div class="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"
+                     style="background: linear-gradient(90deg, transparent, rgba(39,175,96,0.15), transparent); background-size: 200% 100%; animation: borderGlow 3s linear infinite;"></div>
+
+                <figure class="h-48 relative bg-gradient-to-br from-white/95 to-white/80 p-4 overflow-hidden group-hover:shadow-inner transition-all duration-500">
+                    <!-- Enhanced product image presentation with effects -->
+                    <div class="h-full w-full flex items-center justify-center transform transition-transform duration-700 group-hover:scale-112 relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-green-500/5 to-teal-500/5 rounded-full blur-3xl opacity-0 group-hover:opacity-40 transition-opacity duration-500 animate-pulse-slow"></div>
+                        <img src="/static/index/images/trending/hdd.webp" alt="NAS HDD" class="h-full object-contain relative z-10 filter drop-shadow-lg transform transition-all duration-700 group-hover:brightness-110 group-hover:contrast-110" />
+
+                        <!-- High-tech scanning effect -->
+                        <div class="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <div class="absolute inset-0 h-1/4 bg-gradient-to-b from-transparent via-green-400/15 to-transparent -translate-y-full group-hover:translate-y-full transition-all duration-2000 ease-in-out transform opacity-60"></div>
+                        </div>
+                    </div>
+
+                    <!-- Status indicators -->
+                    <div class="absolute top-2 left-2 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-md px-2.5 py-1 text-xs shadow-md z-20 backdrop-blur-sm flex items-center">
+                        <i class="lni lni-checkmark-circle mr-1.5 animate-pulse"></i> In Stock
+                    </div>
+                    <div class="absolute top-2 right-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-md px-2.5 py-1 text-xs shadow-md z-20 backdrop-blur-sm flex items-center">
+                        <i class="lni lni-reload mr-1.5"></i> New Arrival
+                    </div>
+                </figure>
+
+                <div class="card-body p-5 relative z-10">
+                    <!-- Rating display with improved styling -->
+                    <div class="mb-2.5 flex items-center">
+                        <div class="badge badge-ghost bg-gradient-to-r from-base-300/80 to-base-200/80 backdrop-blur-sm border border-base-300 transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-md group-hover:shadow-green-500/10 text-gray-700 font-medium">Seagate</div>
+                        <div class="ml-2 flex">
+                            <div class="flex bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">
+                                <i class="lni lni-star-filled"></i>
+                                <i class="lni lni-star-filled"></i>
+                                <i class="lni lni-star-filled"></i>
+                                <i class="lni lni-star-filled"></i>
+                                <i class="lni lni-star-filled"></i>
+                            </div>
+                            <span class="text-xs text-gray-500 ml-1.5">(42)</span>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced product title -->
+                    <h2 class="card-title text-base h-12 line-clamp-2 group-hover:text-green-600 transition-colors duration-300 relative font-bold">
+                        <span class="relative z-10">Seagate IronWolf Pro 16TB 3.5-inch SATA 7200RPM NAS HDD</span>
+                        <!-- Text glow effect on hover -->
+                        <span class="absolute inset-0 bg-green-400/10 rounded-lg blur-lg opacity-0 group-hover:opacity-80 transition-opacity duration-500 -z-10"></span>
+                    </h2>
+
+                    <!-- Product specs with tech-panel styling -->
+                    <div class="mt-3.5 space-y-2 text-sm text-gray-600 bg-gradient-to-r from-base-100/80 to-white/70 p-3 rounded-lg border border-base-300/50 transform transition-all duration-500 group-hover:shadow-inner group-hover:border-green-300/40 group-hover:from-green-50/20 group-hover:to-emerald-50/10">
+                        <div class="flex justify-between items-center transition-transform duration-300 group-hover:translate-x-1 hover:text-green-700">
+                            <span class="inline-flex items-center"><i class="lni lni-database mr-1.5 text-green-500 group-hover:animate-pulse-slow"></i> Capacity:</span>
+                            <span class="font-medium">16TB</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-500 delay-75 group-hover:translate-x-1 hover:text-teal-700">
+                            <span class="inline-flex items-center"><i class="lni lni-cog mr-1.5 text-teal-500 group-hover:animate-pulse-slow"></i> RPM:</span>
+                            <span class="font-medium">7200</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-700 delay-150 group-hover:translate-x-1 hover:text-emerald-700">
+                            <span class="inline-flex items-center"><i class="lni lni-layers mr-1.5 text-emerald-500 group-hover:animate-pulse-slow"></i> Interface:</span>
+                            <span class="font-medium">SATA</span>
+                        </div>
+
+                        <!-- Premium Price and CTA -->
+                        <div class="mt-6 flex items-center justify-between relative">
+                            <!-- Decorative accent lines -->
+                            <div class="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-green-300/40 to-transparent animate-pulse-slow"></div>
+
+                            <!-- Price display with 3D styling -->
+                            <div class="relative group/price">
+                                <!-- Ambient glow effect -->
+                                <div class="absolute -inset-1.5 bg-gradient-to-r from-green-600/15 via-teal-600/20 to-emerald-600/15 rounded-lg blur-lg opacity-0 group-hover/price:opacity-100 transition-all duration-700 ease-out"></div>
+
+                                <!-- 3D price container -->
+                                <div class="relative font-extrabold bg-clip-text text-transparent bg-gradient-to-br from-green-600 via-teal-600 to-emerald-600 text-xl transform transition-all duration-500 ease-out group-hover/price:scale-110 group-hover/price:-translate-y-0.5 flex items-center"
+                                     style="text-shadow: 0px 1px 1px rgba(120,255,180,0.4), 0px 2px 6px rgba(86,255,171,0.1);">
+                                    <span class="text-base mr-1 opacity-100 group-hover/price:animate-bounce animation-delay-300">৳</span>
+                                    72,000
+                                </div>
+                            </div>
+
+                            <!-- Enhanced Shop Button -->
+                            <button type="submit" class="relative px-5 py-2.5 overflow-hidden group/btn bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl hover:shadow-green-500/40 transition-all duration-500 transform hover:scale-[1.03] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]">
+                                <!-- Enhanced background effects -->
+                                <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-green-500 to-teal-500 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"></span>
+                                <span class="absolute inset-0 border border-white/10 rounded-lg opacity-0 group-hover/btn:opacity-100"></span>
+                                <span class="absolute inset-0 w-1/4 h-full bg-white/30 skew-x-[-45deg] -translate-x-full group-hover/btn:translate-x-[400%] transition-all duration-1000 ease-in-out"></span>
+
+                                <!-- Button content -->
+                                <span class="relative z-10 flex items-center">
+                                    <i class="lni lni-cart mr-1.5 group-hover/btn:rotate-180 transition-transform duration-500"></i>
+                                    <span class="tracking-wide group-hover/btn:text-white/95 transition-colors duration-300"
+                                          style="text-shadow: 0 0 5px rgba(255,255,255,0.5);">Shop</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card 3: Premium gaming headphone with enhanced styling -->
+            <div class="card bg-gradient-to-br from-base-200/90 to-base-100/80 backdrop-blur-sm shadow-xl overflow-hidden relative group transform transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(236,72,153,0.35)] border border-pink-200/30 hover:border-pink-300/60"
+
+
+                >
+
+                <!-- Decorative elements -->
+                <div class="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-pink-500/5 to-purple-600/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none transform group-hover:scale-150 group-hover:rotate-45"></div>
+                <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-tr from-red-500/5 to-pink-500/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 duration-700 pointer-events-none transform group-hover:scale-150 group-hover:-rotate-45 transition-transform"></div>
+
+                <!-- Futuristic effects -->
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-pink-500/2 to-transparent bg-size-200 opacity-0 group-hover:opacity-100 transition-all duration-1000 pointer-events-none z-10 animate-scanline"></div>
+                <div class="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"
+                     style="background: linear-gradient(90deg, transparent, rgba(236,72,153,0.15), transparent); background-size: 200% 100%; animation: borderGlow 3s linear infinite;"></div>
+
+                <figure class="h-48 relative bg-gradient-to-br from-white/95 to-white/80 p-4 overflow-hidden group-hover:shadow-inner transition-all duration-500">
+                    <!-- Enhanced image presentation -->
+                    <div class="h-full w-full flex items-center justify-center transform transition-transform duration-700 group-hover:scale-112 relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-500/5 to-purple-500/5 rounded-full blur-3xl opacity-0 group-hover:opacity-40 transition-opacity duration-500 animate-pulse-slow"></div>
+                        <img src="/static/index/images/trending/headphone.webp" alt="Gaming Headphone" class="h-full object-contain relative z-10 filter drop-shadow-lg transform transition-all duration-700 group-hover:brightness-110 group-hover:contrast-110" />
+
+                        <!-- Tech scanning effect -->
+                        <div class="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <div class="absolute inset-0 h-1/4 bg-gradient-to-b from-transparent via-pink-400/15 to-transparent -translate-y-full group-hover:translate-y-full transition-all duration-2000 ease-in-out transform opacity-60"></div>
+                        </div>
+                    </div>
+
+                    <!-- Status indicators -->
+                    <div class="absolute top-2 left-2 bg-gradient-to-r from-pink-600 to-pink-500 text-white rounded-md px-2.5 py-1 text-xs shadow-md z-20 backdrop-blur-sm flex items-center">
+                        <i class="lni lni-bolt mr-1.5 animate-pulse"></i> HOT DEAL
+                    </div>
+                    <div class="absolute top-2 right-2 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-md px-2.5 py-1 text-xs shadow-md z-20 backdrop-blur-sm flex items-center">
+                        <i class="lni lni-offer mr-1.5"></i> -8.6%
+                    </div>
+                </figure>
+
+                <div class="card-body p-5 relative z-10">
+                    <!-- Enhanced brand and rating -->
+                    <div class="mb-2.5 flex items-center">
+                        <div class="badge badge-ghost bg-gradient-to-r from-base-300/80 to-base-200/80 backdrop-blur-sm border border-base-300 transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-md group-hover:shadow-pink-500/10 text-gray-700 font-medium">Asus ROG</div>
+                        <div class="ml-2 flex">
+                            <div class="flex bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">
+                                <i class="lni lni-star-filled"></i>
+                                <i class="lni lni-star-filled"></i>
+                                <i class="lni lni-star-filled"></i>
+                                <i class="lni lni-star-filled"></i>
+                                <i class="lni lni-star-half"></i>
+                            </div>
+                            <span class="text-xs text-gray-500 ml-1.5">(18)</span>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced product title -->
+                    <h2 class="card-title text-base h-12 line-clamp-2 group-hover:text-pink-600 transition-colors duration-300 relative font-bold">
+                        <span class="relative z-10">Asus ROG Fusion II 500 Wired Over-Ear Gaming Headphone</span>
+                        <!-- Text glow effect on hover -->
+                        <span class="absolute inset-0 bg-pink-400/10 rounded-lg blur-lg opacity-0 group-hover:opacity-80 transition-opacity duration-500 -z-10"></span>
+                    </h2>
+
+                    <!-- Product specs with tech-panel styling -->
+                    <div class="mt-3.5 space-y-2 text-sm text-gray-600 bg-gradient-to-r from-base-100/80 to-white/70 p-3 rounded-lg border border-base-300/50 transform transition-all duration-500 group-hover:shadow-inner group-hover:border-pink-300/40 group-hover:from-pink-50/20 group-hover:to-purple-50/10">
+                        <div class="flex justify-between items-center transition-transform duration-300 group-hover:translate-x-1 hover:text-pink-700">
+                            <span class="inline-flex items-center"><i class="lni lni-volume mr-1.5 text-pink-500 group-hover:animate-pulse-slow"></i> Sound:</span>
+                            <span class="font-medium">Virtual 7.1</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-500 delay-75 group-hover:translate-x-1 hover:text-purple-700">
+                            <span class="inline-flex items-center"><i class="lni lni-bluetooth mr-1.5 text-purple-500 group-hover:animate-pulse-slow"></i> Connection:</span>
+                            <span class="font-medium">Wired USB-C</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-700 delay-150 group-hover:translate-x-1 hover:text-fuchsia-700">
+                            <span class="inline-flex items-center"><i class="lni lni-paint-roller mr-1.5 text-fuchsia-500 group-hover:animate-pulse-slow"></i> RGB:</span>
+                            <span class="font-medium">Aura Sync</span>
+                        </div>
+
+                        <!-- Premium Price and CTA -->
+                        <div class="mt-6 flex items-center justify-between relative">
+                            <!-- Decorative accent lines -->
+                            <div class="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-pink-300/40 to-transparent animate-pulse-slow"></div>
+
+                            <!-- Price display with 3D styling -->
+                            <div class="relative group/price">
+                                <!-- Ambient glow effect -->
+                                <div class="absolute -inset-1.5 bg-gradient-to-r from-pink-600/15 via-fuchsia-600/20 to-purple-600/15 rounded-lg blur-lg opacity-0 group-hover/price:opacity-100 transition-all duration-700 ease-out"></div>
+
+                                <!-- 3D price container -->
+                                <div class="relative font-extrabold bg-clip-text text-transparent bg-gradient-to-br from-pink-600 via-fuchsia-600 to-purple-600 text-xl transform transition-all duration-500 ease-out group-hover/price:scale-110 group-hover/price:-translate-y-0.5 flex items-center"
+                                     style="text-shadow: 0px 1px 1px rgba(255,120,180,0.4), 0px 2px 6px rgba(255,86,171,0.1);">
+                                    <span class="text-base mr-1 opacity-100 group-hover/price:animate-bounce animation-delay-300">৳</span>
+                                    25,499
+
+                                    <!-- Enhanced floating particle effects -->
+                                    <span class="absolute -top-1 -right-1 w-2 h-2 bg-purple-400 rounded-full opacity-0 group-hover/price:opacity-70 animate-ping-slow"></span>
+                                    <span class="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-pink-400 rounded-full opacity-0 group-hover/price:opacity-70 animate-ping-slow animation-delay-700"></span>
+                                </div>
+                                <span class="text-sm text-gray-400 line-through ml-2">৳27,890</span>
+                            </div>
+
+                            <!-- Enhanced Add to Cart Button -->
+                            <button type="submit" class="relative px-5 py-2.5 overflow-hidden group/btn bg-gradient-to-r from-pink-600 to-purple-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl hover:shadow-pink-500/40 transition-all duration-500 transform hover:scale-[1.03] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]">
+                                <!-- Enhanced background effects -->
+                                <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-pink-500 to-purple-500 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"></span>
+                                <span class="absolute inset-0 border border-white/10 rounded-lg opacity-0 group-hover/btn:opacity-100"></span>
+                                <span class="absolute inset-0 w-1/4 h-full bg-white/30 skew-x-[-45deg] -translate-x-full group-hover/btn:translate-x-[400%] transition-all duration-1000 ease-in-out"></span>
+
+                                <!-- Button content -->
+                                <span class="relative z-10 flex items-center">
+                                    <i class="lni lni-cart mr-1.5 group-hover/btn:rotate-180 transition-transform duration-500"></i>
+                                    <span class="tracking-wide group-hover/btn:text-white/95 transition-colors duration-300"
+                                          style="text-shadow: 0 0 5px rgba(255,255,255,0.5);">Shop</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Trending Product Area -->
+
+<!-- Start Team Area -->
+<section class="py-24 bg-gradient-to-b from-gray-100 to-gray-50 overflow-hidden relative">
+    <div class="container mx-auto px-4 text-center">
+        <!-- Enhanced animated background elements with improved visual effects -->
+        <div class="absolute inset-0 overflow-hidden opacity-5 pointer-events-none">
+            <div class="absolute top-0 -right-40 w-96 h-96 bg-primary rounded-full filter blur-[100px] animate-pulse"></div>
+            <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-secondary rounded-full filter blur-[90px] animate-pulse" style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/3 left-1/2 w-72 h-72 bg-accent rounded-full filter blur-[80px] animate-pulse" style="animation-delay: 1s;"></div>
+            <div class="absolute -top-40 -left-40 w-60 h-60 bg-primary/70 rounded-full filter blur-[120px] animate-pulse" style="animation-delay: 3s;"></div>
+        </div>
+
+        <!-- Modernized section heading with enhanced animations -->
+        <div class="mb-16 relative z-10"  >
+            <span class="bg-primary/10 text-primary font-medium py-2 px-6 rounded-full text-sm mb-5 inline-block shadow-lg shadow-primary/20 backdrop-blur-sm border border-primary/20 transform hover:scale-105 transition-all duration-300">
+                <i class="lni lni-users mr-2"></i>Our Expert Team
+            </span>
+            <h2 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary via-purple-500 to-secondary bg-clip-text text-transparent mt-4 leading-tight max-w-3xl mx-auto">
+                Meet the Team Behind TechReform BD
+            </h2>
+            <div class="flex items-center justify-center mt-8 mb-3">
+                <div class="w-10 h-1.5 bg-primary rounded-full animate-pulse"></div>
+                <div class="w-24 h-1.5 bg-gradient-to-r from-primary to-secondary mx-2 rounded-full"></div>
+                <div class="w-10 h-1.5 bg-secondary rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+            </div>
+            <p class="mt-6 text-lg text-base-content/80 max-w-2xl mx-auto leading-relaxed backdrop-blur-sm relative"
+                >
+                <span class="absolute -left-4 -top-2 text-4xl text-primary/20 font-serif">"</span>
+                A passionate group of tech enthusiasts dedicated to revolutionizing
+                the PC component market in Bangladesh with innovation and expertise
+                <span class="absolute -right-4 -bottom-2 text-4xl text-primary/20 font-serif">"</span>
+            </p>
+            <div class="mt-8 flex justify-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-primary animate-ping"></span>
+                <span class="inline-block w-2 h-2 rounded-full bg-secondary animate-ping" style="animation-delay: 0.5s;"></span>
+                <span class="inline-block w-2 h-2 rounded-full bg-accent animate-ping" style="animation-delay: 1s;"></span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mt-12">
+            <!-- Team Member 1 - Enhanced with premium effects -->
+            <div
+            class="backdrop-blur-md shadow-xl rounded-2xl overflow-hidden transform transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 group relative border border-white/10 bg-gradient-to-br from-gray-50 to-white"
+
+
+
+            >
+            <!-- Enhanced decorative elements with better animation -->
+            <div class="absolute -left-10 -top-10 w-20 h-20 bg-primary/30 rounded-full blur-2xl animate-pulse opacity-70"></div>
+            <div class="absolute -right-10 -bottom-10 w-20 h-20 bg-secondary/30 rounded-full blur-2xl animate-pulse opacity-70" style="animation-delay: 1.5s;"></div>
+            <div class="absolute left-1/3 top-1/3 w-8 h-8 bg-accent/40 rounded-full blur-xl animate-ping opacity-60" style="animation-duration: 4s"></div>
+
+            <div class="relative">
+            <div class="bg-gradient-to-r from-blue-600 to-purple-700 h-40 overflow-hidden flex items-center justify-center">
+            <!-- Improved abstract pattern overlay -->
+            <div class="absolute inset-0 opacity-30">
+                <div class="absolute top-0 left-0 w-60 h-60 bg-white/30 rounded-full filter blur-3xl transform -translate-x-10 -translate-y-10"></div>
+                <div class="absolute bottom-0 right-0 w-60 h-60 bg-white/20 rounded-full filter blur-3xl transform translate-x-10 translate-y-10"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
+            </div>
+            <!-- Animated patterns -->
+            <div class="hidden md:block absolute inset-0 opacity-20">
+                <div class="absolute top-4 left-8 w-2 h-2 bg-white/90 rounded-full animate-ping"></div>
+                <div class="absolute top-10 right-12 w-2 h-2 bg-white/90 rounded-full animate-ping" style="animation-delay: 1s"></div>
+                <div class="absolute bottom-8 left-1/2 w-2 h-2 bg-white/90 rounded-full animate-ping" style="animation-delay: 2s"></div>
+            </div>
+            </div>
+            <div class="absolute left-0 right-0 -bottom-16 flex justify-center">
+            <div class="w-36 h-36 rounded-full p-1.5 bg-gradient-to-r from-blue-500 to-purple-600 shadow-xl group-hover:scale-105 transition-transform duration-500 rotate-1 group-hover:rotate-3">
+                <div class="w-full h-full rounded-full overflow-hidden border-4 border-white">
+                <img
+                src="/static/index/images/team/Sharif.jpg"
+                alt="Sharif Md. Yousuf"
+                class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                loading="lazy"
+                />
+                </div>
+            </div>
+            </div>
+            </div>
+
+            <div class="pt-24 p-8 text-center relative z-10">
+            <h3
+            class="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-2 transition-all duration-300 group-hover:scale-105"
+            >
+            Sharif Md. Yousuf
+            </h3>
+            <span
+            class="inline-block bg-gradient-to-r from-blue-100/80 to-purple-100/80 text-blue-800 px-4 py-1.5 rounded-full text-sm font-medium mb-5 shadow-sm group-hover:shadow-blue-200/50 transition-all duration-300 backdrop-blur-sm border border-blue-200/50"
+            >
+            <i class="lni lni-code mr-1.5 text-primary"></i> Frontend Developer
+            </span>
+            <p class="text-base-content/80 mb-6 leading-relaxed max-w-xs mx-auto">
+            Passionate about creating intuitive and responsive user
+            interfaces with modern web technologies.
+            </p>
+
+            <!-- Enhanced skills pills with hover effects -->
+            <div class="flex flex-wrap justify-center gap-2 mb-6">
+            <span class="px-3 py-1 bg-blue-100/50 text-blue-700 rounded-full text-xs font-medium border border-blue-200/30 transition-all duration-300 hover:scale-105 hover:shadow-sm">React</span>
+            <span class="px-3 py-1 bg-indigo-100/50 text-indigo-700 rounded-full text-xs font-medium border border-indigo-200/30 transition-all duration-300 hover:scale-105 hover:shadow-sm">Tailwind</span>
+            <span class="px-3 py-1 bg-purple-100/50 text-purple-700 rounded-full text-xs font-medium border border-purple-200/30 transition-all duration-300 hover:scale-105 hover:shadow-sm">Django</span>
+            </div>
+
+            <!-- Further enhanced social links with cooler effects -->
+            <div class="flex justify-center gap-5 mt-6">
+            <a
+                href="https://www.facebook.com/SharifdotG"
+                class="group/icon w-11 h-11 flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 hover:bg-gradient-to-br hover:from-blue-600 hover:to-blue-700 hover:text-white rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-6 shadow-sm hover:shadow-blue-300/40"
+                aria-label="Facebook"
+            >
+                <i class="lni lni-facebook text-lg group-hover/icon:animate-pulse"></i>
+            </a>
+            <a
+                href="https://github.com/SharifdotG"
+                class="group/icon w-11 h-11 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 hover:bg-gradient-to-br hover:from-gray-800 hover:to-gray-900 hover:text-white rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-6 shadow-sm hover:shadow-gray-300/40"
+                aria-label="GitHub"
+            >
+                <i class="lni lni-github-original text-lg group-hover/icon:animate-pulse"></i>
+            </a>
+            <a
+                href="https://www.linkedin.com/in/sharifdotg/"
+                class="group/icon w-11 h-11 flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 text-blue-700 hover:bg-gradient-to-br hover:from-blue-700 hover:to-blue-800 hover:text-white rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-6 shadow-sm hover:shadow-blue-300/40"
+                aria-label="LinkedIn"
+            >
+                <i class="lni lni-linkedin-original text-lg group-hover/icon:animate-pulse"></i>
+            </a>
+            </div>
+            </div>
+
+            <!-- Improved bottom decorative elements -->
+            <div class="h-2 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 mt-4 group-hover:opacity-80 transition-opacity"></div>
+            <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-gray-100/50 to-transparent opacity-60"></div>
+            </div>
+
+            <!-- Team Member 2 - Enhanced with premium effects -->
+            <div
+            class="backdrop-blur-md shadow-xl rounded-2xl overflow-hidden transform transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 group relative border border-white/10 bg-gradient-to-br from-gray-50 to-white"
+
+
+
+            >
+            <!-- Enhanced decorative elements with better animation -->
+            <div class="absolute -left-10 -top-10 w-20 h-20 bg-green-500/30 rounded-full blur-2xl animate-pulse opacity-70"></div>
+            <div class="absolute -right-10 -bottom-10 w-20 h-20 bg-teal-500/30 rounded-full blur-2xl animate-pulse opacity-70" style="animation-delay: 1.5s;"></div>
+            <div class="absolute left-1/3 top-1/3 w-8 h-8 bg-emerald-400/40 rounded-full blur-xl animate-ping opacity-60" style="animation-duration: 4s"></div>
+
+            <div class="relative">
+            <div class="bg-gradient-to-r from-green-600 to-teal-700 h-40 overflow-hidden flex items-center justify-center">
+            <!-- Improved abstract pattern overlay -->
+            <div class="absolute inset-0 opacity-30">
+                <div class="absolute top-0 left-0 w-60 h-60 bg-white/30 rounded-full filter blur-3xl transform -translate-x-10 -translate-y-10"></div>
+                <div class="absolute bottom-0 right-0 w-60 h-60 bg-white/20 rounded-full filter blur-3xl transform translate-x-10 translate-y-10"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
+            </div>
+            <!-- Animated patterns -->
+            <div class="hidden md:block absolute inset-0 opacity-20">
+                <div class="absolute top-4 left-8 w-2 h-2 bg-white/90 rounded-full animate-ping"></div>
+                <div class="absolute top-10 right-12 w-2 h-2 bg-white/90 rounded-full animate-ping" style="animation-delay: 1s"></div>
+                <div class="absolute bottom-8 left-1/2 w-2 h-2 bg-white/90 rounded-full animate-ping" style="animation-delay: 2s"></div>
+            </div>
+            </div>
+            <div class="absolute left-0 right-0 -bottom-16 flex justify-center">
+            <div class="w-36 h-36 rounded-full p-1.5 bg-gradient-to-r from-green-500 to-teal-600 shadow-xl group-hover:scale-105 transition-transform duration-500 rotate-1 group-hover:rotate-3">
+                <div class="w-full h-full rounded-full overflow-hidden border-4 border-white">
+                <img
+                src="/static/index/images/team/Priom.jpg"
+                alt="Noor Mohammed Priom"
+                class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                loading="lazy"
+                />
+                </div>
+            </div>
+            </div>
+            </div>
+
+            <div class="pt-24 p-8 text-center relative z-10">
+            <h3
+            class="text-2xl font-bold bg-gradient-to-r from-green-500 to-teal-600 bg-clip-text text-transparent mb-2 transition-all duration-300 group-hover:scale-105"
+            >
+            Noor Mohammed Priom
+            </h3>
+            <span
+            class="inline-block bg-gradient-to-r from-green-100/80 to-teal-100/80 text-green-800 px-4 py-1.5 rounded-full text-sm font-medium mb-5 shadow-sm group-hover:shadow-green-200/50 transition-all duration-300 backdrop-blur-sm border border-green-200/50"
+            >
+            <i class="lni lni-database mr-1.5 text-green-600"></i> Backend Developer
+            </span>
+            <p class="text-base-content/80 mb-6 leading-relaxed max-w-xs mx-auto">
+            Specializes in building robust server-side applications
+            and efficient database architectures.
+            </p>
+
+            <!-- Enhanced skills pills with hover effects -->
+            <div class="flex flex-wrap justify-center gap-2 mb-6">
+            <span class="px-3 py-1 bg-green-100/50 text-green-700 rounded-full text-xs font-medium border border-green-200/30 transition-all duration-300 hover:scale-105 hover:shadow-sm">Django</span>
+            <span class="px-3 py-1 bg-teal-100/50 text-teal-700 rounded-full text-xs font-medium border border-teal-200/30 transition-all duration-300 hover:scale-105 hover:shadow-sm">SQLite</span>
+            <span class="px-3 py-1 bg-emerald-100/50 text-emerald-700 rounded-full text-xs font-medium border border-emerald-200/30 transition-all duration-300 hover:scale-105 hover:shadow-sm">API</span>
+            </div>
+
+            <!-- Further enhanced social links with cooler effects -->
+            <div class="flex justify-center gap-5 mt-6">
+            <a
+                href="https://www.facebook.com/noormohammed.priom"
+                class="group/icon w-11 h-11 flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 hover:bg-gradient-to-br hover:from-blue-600 hover:to-blue-700 hover:text-white rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-6 shadow-sm hover:shadow-blue-300/40"
+                aria-label="Facebook"
+            >
+                <i class="lni lni-facebook text-lg group-hover/icon:animate-pulse"></i>
+            </a>
+            <a
+                href="https://github.com/SOrtINgmASteR"
+                class="group/icon w-11 h-11 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 hover:bg-gradient-to-br hover:from-gray-800 hover:to-gray-900 hover:text-white rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-6 shadow-sm hover:shadow-gray-300/40"
+                aria-label="GitHub"
+            >
+                <i class="lni lni-github-original text-lg group-hover/icon:animate-pulse"></i>
+            </a>
+            <a
+                href="https://www.linkedin.com/in/noor-mohammed-priom-227b43328/"
+                class="group/icon w-11 h-11 flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 text-blue-700 hover:bg-gradient-to-br hover:from-blue-700 hover:to-blue-800 hover:text-white rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-6 shadow-sm hover:shadow-blue-300/40"
+                aria-label="LinkedIn"
+            >
+                <i class="lni lni-linkedin-original text-lg group-hover/icon:animate-pulse"></i>
+            </a>
+            </div>
+            </div>
+
+            <!-- Improved bottom decorative elements -->
+            <div class="h-2 bg-gradient-to-r from-green-600 via-teal-600 to-green-600 mt-4 group-hover:opacity-80 transition-opacity"></div>
+            <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-base-200/50 to-transparent opacity-60"></div>
+            </div>
+
+            <!-- Team Member 3 - Enhanced with premium effects -->
+            <div
+            class="backdrop-blur-md shadow-xl rounded-2xl overflow-hidden transform transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 group relative border border-white/10 bg-gradient-to-br from-base-100 to-base-200/80"
+
+
+
+            >
+            <!-- Enhanced decorative elements with better animation -->
+            <div class="absolute -left-10 -top-10 w-20 h-20 bg-pink-500/30 rounded-full blur-2xl animate-pulse opacity-70"></div>
+            <div class="absolute -right-10 -bottom-10 w-20 h-20 bg-red-500/30 rounded-full blur-2xl animate-pulse opacity-70" style="animation-delay: 1.5s;"></div>
+            <div class="absolute left-1/3 top-1/3 w-8 h-8 bg-rose-400/40 rounded-full blur-xl animate-ping opacity-60" style="animation-duration: 4s"></div>
+
+            <div class="relative">
+            <div class="bg-gradient-to-r from-pink-600 to-red-700 h-40 overflow-hidden flex items-center justify-center">
+            <!-- Improved abstract pattern overlay -->
+            <div class="absolute inset-0 opacity-30">
+                <div class="absolute top-0 left-0 w-60 h-60 bg-white/30 rounded-full filter blur-3xl transform -translate-x-10 -translate-y-10"></div>
+                <div class="absolute bottom-0 right-0 w-60 h-60 bg-white/20 rounded-full filter blur-3xl transform translate-x-10 translate-y-10"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
+            </div>
+            <!-- Animated patterns -->
+            <div class="hidden md:block absolute inset-0 opacity-20">
+                <div class="absolute top-4 left-8 w-2 h-2 bg-white/90 rounded-full animate-ping"></div>
+                <div class="absolute top-10 right-12 w-2 h-2 bg-white/90 rounded-full animate-ping" style="animation-delay: 1s"></div>
+                <div class="absolute bottom-8 left-1/2 w-2 h-2 bg-white/90 rounded-full animate-ping" style="animation-delay: 2s"></div>
+            </div>
+            </div>
+            <div class="absolute left-0 right-0 -bottom-16 flex justify-center">
+            <div class="w-36 h-36 rounded-full p-1.5 bg-gradient-to-r from-pink-500 to-red-600 shadow-xl group-hover:scale-105 transition-transform duration-500 rotate-1 group-hover:rotate-3">
+                <div class="w-full h-full rounded-full overflow-hidden border-4 border-white">
+                <img
+                src="/static/index/images/team/Shorna.jpg"
+                alt="Shornali Akter"
+                class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                loading="lazy"
+                />
+                </div>
+            </div>
+            </div>
+            </div>
+
+            <div class="pt-24 p-8 text-center relative z-10">
+            <h3
+            class="text-2xl font-bold bg-gradient-to-r from-pink-500 to-red-600 bg-clip-text text-transparent mb-2 transition-all duration-300 group-hover:scale-105"
+            >
+            Shornali Akter
+            </h3>
+            <span
+            class="inline-block bg-gradient-to-r from-pink-100/80 to-red-100/80 text-pink-800 px-4 py-1.5 rounded-full text-sm font-medium mb-5 shadow-sm group-hover:shadow-pink-200/50 transition-all duration-300 backdrop-blur-sm border border-pink-200/50"
+            >
+            <i class="lni lni-sketch mr-1.5 text-pink-600"></i> UI/UX Designer
+            </span>
+            <p class="text-base-content/80 mb-6 leading-relaxed max-w-xs mx-auto">
+            Creates beautiful and user-friendly designs that enhance the overall experience for our customers.
+            </p>
+
+            <!-- Enhanced skills pills with hover effects -->
+            <div class="flex flex-wrap justify-center gap-2 mb-6">
+            <span class="px-3 py-1 bg-pink-100/50 text-pink-700 rounded-full text-xs font-medium border border-pink-200/30 transition-all duration-300 hover:scale-105 hover:shadow-sm">Figma</span>
+            <span class="px-3 py-1 bg-red-100/50 text-red-700 rounded-full text-xs font-medium border border-red-200/30 transition-all duration-300 hover:scale-105 hover:shadow-sm">Prototyping</span>
+            <span class="px-3 py-1 bg-rose-100/50 text-rose-700 rounded-full text-xs font-medium border border-rose-200/30 transition-all duration-300 hover:scale-105 hover:shadow-sm">UX Research</span>
+            </div>
+
+            <!-- Further enhanced social links with cooler effects -->
+            <div class="flex justify-center gap-5 mt-6">
+            <a
+                href="https://www.facebook.com/nudharshornaa"
+                class="group/icon w-11 h-11 flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 hover:bg-gradient-to-br hover:from-blue-600 hover:to-blue-700 hover:text-white rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-6 shadow-sm hover:shadow-blue-300/40"
+                aria-label="Facebook"
+            >
+                <i class="lni lni-facebook text-lg group-hover/icon:animate-pulse"></i>
+            </a>
+            <a
+                href="https://github.com/nudhar60"
+                class="group/icon w-11 h-11 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 hover:bg-gradient-to-br hover:from-gray-800 hover:to-gray-900 hover:text-white rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-6 shadow-sm hover:shadow-gray-300/40"
+                aria-label="GitHub"
+            >
+                <i class="lni lni-github-original text-lg group-hover/icon:animate-pulse"></i>
+            </a>
+            <a
+                href="https://www.instagram.com/nudharshorna/"
+                class="group/icon w-11 h-11 flex items-center justify-center bg-gradient-to-br from-pink-50 to-pink-100 text-pink-600 hover:bg-gradient-to-br hover:from-pink-600 hover:to-pink-700 hover:text-white rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-6 shadow-sm hover:shadow-pink-300/40"
+                aria-label="Instagram"
+            >
+                <i class="lni lni-instagram-original text-lg group-hover/icon:animate-pulse"></i>
+            </a>
+            </div>
+            </div>
+
+            <!-- Improved bottom decorative elements -->
+            <div class="h-2 bg-gradient-to-r from-pink-600 via-red-600 to-pink-600 mt-4 group-hover:opacity-80 transition-opacity"></div>
+            <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-base-200/50 to-transparent opacity-60"></div>
+            </div>
+        </div>
+
+        <div class="mt-16"  >
+            <a
+                href="https://github.com/SharifdotG/TechReform-BD"
+                class="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 hover:bg-gradient-to-r hover:from-blue-700 hover:via-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-xl shadow-lg shadow-blue-600/30 hover:shadow-xl hover:shadow-purple-600/40 transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 relative overflow-hidden"
+            >
+                <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-20 group-hover:animate-shimmer"></span>
+                <span class="absolute -inset-x-2 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-30 group-hover:opacity-100 transition-opacity duration-500"></span>
+                <i class="lni lni-github-original text-xl group-hover:rotate-12 transition-transform duration-300"></i>
+                <span class="font-medium text-lg">Explore Our GitHub Repository</span>
+                <i class="lni lni-arrow-right text-lg group-hover:translate-x-1 transition-transform duration-300"></i>
+                <span class="absolute top-0 right-0 -mt-2 -mr-2 w-2 h-2 rounded-full bg-white animate-ping"></span>
+            </a>
+        </div>
+    </div>
+</section>
+<!-- End Team Area -->
+
+<!-- Start Shipping Info -->
+<section class="bg-gradient-to-b from-gray-100 to-white py-16 lg:py-20 overflow-hidden relative">
+    <!-- Enhanced background elements with better positioning and animations -->
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-20 -right-20 w-80 h-80 bg-blue-500/30 rounded-full filter blur-[80px] animate-pulse-slow"></div>
+        <div class="absolute bottom-10 -left-20 w-60 h-60 bg-yellow-500/30 rounded-full filter blur-[80px] animate-pulse-slow" style="animation-delay: 2s"></div>
+        <div class="absolute top-1/2 left-1/3 w-40 h-40 bg-purple-500/20 rounded-full filter blur-[60px] animate-pulse-slow" style="animation-delay: 1s"></div>
+    </div>
+
+    <div class="container mx-auto px-6 relative z-10">
+        <!-- Enhanced section header with better typography and animations -->
+        <div class="text-center mb-12"  >
+            <span class="bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 text-sm font-medium px-5 py-2 rounded-full inline-block shadow-sm transform hover:scale-105 transition-transform duration-300 border border-blue-200/50 backdrop-blur-sm">
+                <i class="lni lni-checkmark-circle mr-2"></i>Our Customer Promises
+            </span>
+            <h2 class="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-blue-600 bg-clip-text text-transparent mt-4 leading-tight">
+                Why Shop With TechReform BD
+            </h2>
+            <div class="flex items-center justify-center mt-4 mb-2">
+                <div class="w-10 h-1 bg-blue-500 rounded-full animate-pulse"></div>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-2 rounded-full"></div>
+                <div class="w-10 h-1 bg-purple-500 rounded-full animate-pulse" style="animation-delay: 1s"></div>
+            </div>
+            <p class="mt-4 text-gray-600 max-w-2xl mx-auto"  >
+                Experience premium service with every purchase. We're committed to providing you with an exceptional shopping experience.
+            </p>
+        </div>
+
+        <!-- Enhanced card grid with glass-morphism and improved hover effects -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"  >
+            <!-- Free Shipping - Enhanced with glass morphism and better animations -->
+            <div class="backdrop-blur-md bg-white/90 shadow-xl rounded-2xl p-8 flex flex-col items-center group hover:bg-gradient-to-b hover:from-blue-50 hover:to-blue-100/80 transform transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-blue-200/60 border border-blue-100/50 relative overflow-hidden"
+                   >
+
+                <!-- Background decorative elements -->
+                <div class="absolute -right-12 -top-12 w-24 h-24 bg-blue-600/10 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                <div class="absolute -left-12 -bottom-12 w-24 h-24 bg-blue-400/10 rounded-full group-hover:scale-150 transition-transform duration-700 delay-100"></div>
+
+                <!-- Icon container with enhanced animations -->
+                <div class="bg-gradient-to-br from-blue-100 to-blue-200/80 p-5 rounded-2xl mb-5 group-hover:bg-gradient-to-br group-hover:from-blue-500 group-hover:to-blue-600 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-lg relative z-10">
+                    <i class="lni lni-delivery text-4xl text-blue-600 group-hover:text-white transform transition-all duration-500"></i>
+
+                    <!-- Floating particles that appear on hover -->
+                    <div class="absolute top-0 right-0 w-2 h-2 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:animate-ping"></div>
+                    <div class="absolute bottom-0 left-0 w-1.5 h-1.5 bg-blue-300 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:animate-ping" style="animation-delay: 500ms"></div>
+                </div>
+
+                <h5 class="text-2xl font-bold text-gray-800 mt-2 group-hover:text-blue-700 transition-colors duration-300 relative z-10">
+                    Free Shipping
+                </h5>
+
+                <span class="text-gray-600 mt-2 mb-3 relative z-10 group-hover:text-blue-800 transition-colors duration-300">On orders over ৳10,000</span>
+
+                <!-- Enhanced underline effect -->
+                <div class="relative z-10 w-0 group-hover:w-32 h-1.5 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full mt-3 transition-all duration-500 opacity-80"></div>
+
+                <!-- Expanding circle effect on hover -->
+                <div class="absolute inset-0 bg-gradient-to-b from-blue-50/0 to-blue-100/0 group-hover:from-blue-50/70 group-hover:to-blue-100/50 transition-all duration-500"></div>
+            </div>
+
+            <!-- 24/7 Support - Enhanced with modern design -->
+            <div class="backdrop-blur-md bg-white/90 shadow-xl rounded-2xl p-8 flex flex-col items-center group hover:bg-gradient-to-b hover:from-green-50 hover:to-green-100/80 transform transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-green-200/60 border border-green-100/50 relative overflow-hidden"
+                   >
+
+                <!-- Background decorative elements -->
+                <div class="absolute -right-12 -top-12 w-24 h-24 bg-green-600/10 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                <div class="absolute -left-12 -bottom-12 w-24 h-24 bg-green-400/10 rounded-full group-hover:scale-150 transition-transform duration-700 delay-100"></div>
+
+                <!-- Icon container with enhanced animations -->
+                <div class="bg-gradient-to-br from-green-100 to-green-200/80 p-5 rounded-2xl mb-5 group-hover:bg-gradient-to-br group-hover:from-green-500 group-hover:to-green-600 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-lg relative z-10">
+                    <i class="lni lni-support text-4xl text-green-600 group-hover:text-white transform transition-all duration-500"></i>
+
+                    <!-- Floating particles that appear on hover -->
+                    <div class="absolute top-0 right-0 w-2 h-2 bg-green-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:animate-ping"></div>
+                    <div class="absolute bottom-0 left-0 w-1.5 h-1.5 bg-green-300 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:animate-ping" style="animation-delay: 500ms"></div>
+                </div>
+
+                <h5 class="text-2xl font-bold text-gray-800 mt-2 group-hover:text-green-700 transition-colors duration-300 relative z-10">
+                    24/7 Support
+                </h5>
+
+                <span class="text-gray-600 mt-2 mb-3 relative z-10 group-hover:text-green-800 transition-colors duration-300">Live Chat or Call</span>
+
+                <!-- Enhanced underline effect -->
+                <div class="relative z-10 w-0 group-hover:w-32 h-1.5 bg-gradient-to-r from-green-400 to-green-600 rounded-full mt-3 transition-all duration-500 opacity-80"></div>
+
+                <!-- Expanding circle effect on hover -->
+                <div class="absolute inset-0 bg-gradient-to-b from-green-50/0 to-green-100/0 group-hover:from-green-50/70 group-hover:to-green-100/50 transition-all duration-500"></div>
+            </div>
+
+            <!-- Online Payment - Enhanced with contemporary design -->
+            <div class="backdrop-blur-md bg-white/90 shadow-xl rounded-2xl p-8 flex flex-col items-center group hover:bg-gradient-to-b hover:from-purple-50 hover:to-purple-100/80 transform transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-purple-200/60 border border-purple-100/50 relative overflow-hidden"
+                   >
+
+                <!-- Background decorative elements -->
+                <div class="absolute -right-12 -top-12 w-24 h-24 bg-purple-600/10 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                <div class="absolute -left-12 -bottom-12 w-24 h-24 bg-purple-400/10 rounded-full group-hover:scale-150 transition-transform duration-700 delay-100"></div>
+
+                <!-- Icon container with enhanced animations -->
+                <div class="bg-gradient-to-br from-purple-100 to-purple-200/80 p-5 rounded-2xl mb-5 group-hover:bg-gradient-to-br group-hover:from-purple-500 group-hover:to-purple-600 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-lg relative z-10">
+                    <i class="lni lni-credit-cards text-4xl text-purple-600 group-hover:text-white transform transition-all duration-500"></i>
+
+                    <!-- Floating particles that appear on hover -->
+                    <div class="absolute top-0 right-0 w-2 h-2 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:animate-ping"></div>
+                    <div class="absolute bottom-0 left-0 w-1.5 h-1.5 bg-purple-300 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:animate-ping" style="animation-delay: 500ms"></div>
+                </div>
+
+                <h5 class="text-2xl font-bold text-gray-800 mt-2 group-hover:text-purple-700 transition-colors duration-300 relative z-10">
+                    Online Payment
+                </h5>
+
+                <span class="text-gray-600 mt-2 mb-3 relative z-10 group-hover:text-purple-800 transition-colors duration-300">Secure Payment Services</span>
+
+                <!-- Enhanced underline effect -->
+                <div class="relative z-10 w-0 group-hover:w-32 h-1.5 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full mt-3 transition-all duration-500 opacity-80"></div>
+
+                <!-- Expanding circle effect on hover -->
+                <div class="absolute inset-0 bg-gradient-to-b from-purple-50/0 to-purple-100/0 group-hover:from-purple-50/70 group-hover:to-purple-100/50 transition-all duration-500"></div>
+            </div>
+
+            <!-- Easy Return - Enhanced with modern aesthetics -->
+            <div class="backdrop-blur-md bg-white/90 shadow-xl rounded-2xl p-8 flex flex-col items-center group hover:bg-gradient-to-b hover:from-red-50 hover:to-red-100/80 transform transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-red-200/60 border border-red-100/50 relative overflow-hidden"
+                   >
+
+                <!-- Background decorative elements -->
+                <div class="absolute -right-12 -top-12 w-24 h-24 bg-red-600/10 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                <div class="absolute -left-12 -bottom-12 w-24 h-24 bg-red-400/10 rounded-full group-hover:scale-150 transition-transform duration-700 delay-100"></div>
+
+                <!-- Icon container with enhanced animations -->
+                <div class="bg-gradient-to-br from-red-100 to-red-200/80 p-5 rounded-2xl mb-5 group-hover:bg-gradient-to-br group-hover:from-red-500 group-hover:to-red-600 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-lg relative z-10">
+                    <i class="lni lni-reload text-4xl text-red-600 group-hover:text-white transform transition-all duration-500"></i>
+
+                    <!-- Floating particles that appear on hover -->
+                    <div class="absolute top-0 right-0 w-2 h-2 bg-red-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:animate-ping"></div>
+                    <div class="absolute bottom-0 left-0 w-1.5 h-1.5 bg-red-300 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:animate-ping" style="animation-delay: 500ms"></div>
+                </div>
+
+                <h5 class="text-2xl font-bold text-gray-800 mt-2 group-hover:text-red-700 transition-colors duration-300 relative z-10">
+                    Easy Return
+                </h5>
+
+                <span class="text-gray-600 mt-2 mb-3 relative z-10 group-hover:text-red-800 transition-colors duration-300">Hassle-Free Shopping</span>
+
+                <!-- Enhanced underline effect -->
+                <div class="relative z-10 w-0 group-hover:w-32 h-1.5 bg-gradient-to-r from-red-400 to-red-600 rounded-full mt-3 transition-all duration-500 opacity-80"></div>
+
+                <!-- Expanding circle effect on hover -->
+                <div class="absolute inset-0 bg-gradient-to-b from-red-50/0 to-red-100/0 group-hover:from-red-50/70 group-hover:to-red-100/50 transition-all duration-500"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Shipping Info -->
+{% endblock %}

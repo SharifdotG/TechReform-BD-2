@@ -1,0 +1,444 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}{{ post.title }} | Blog | TechReform BD{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Animated Breadcrumbs -->
+        <div class="text-sm mb-8 animate-fade-in-up">
+            <ul class="flex space-x-2 items-center">
+            <li>
+                <a href="{% url 'index' %}" class="transition-colors duration-200 hover:text-primary flex items-center">
+                <i class="lni lni-home text-lg mr-1"></i> Home
+                </a>
+            </li>
+            <li>
+                <svg class="w-4 h-4 text-base-content/40 mx-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+            </li>
+            <li>
+                <a href="{% url 'blog:blog_list' %}" class="transition-colors duration-200 hover:text-primary">
+                Blog
+                </a>
+            </li>
+            <li>
+                <svg class="w-4 h-4 text-base-content/40 mx-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+            </li>
+            <li>
+                <a href="{% url 'blog:category_posts' post.category.slug %}" class="transition-colors duration-200 hover:text-primary">
+                {{ post.category.name }}
+                </a>
+            </li>
+            <li>
+                <svg class="w-4 h-4 text-base-content/40 mx-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+            </li>
+            <li class="font-semibold text-primary truncate max-w-xs" title="{{ post.title }}">
+                {{ post.title|truncatechars:30 }}
+            </li>
+            </ul>
+        </div>
+
+        <style>
+        @keyframes fade-in-up {
+            0% {
+            opacity: 0;
+            transform: translateY(30px);
+            }
+            100% {
+            opacity: 1;
+            transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        </style>
+
+        <!-- Post Content -->
+        <article class="bg-base-100 shadow-xl rounded-lg overflow-hidden">
+            <!-- Post Header with Enhanced Design and Animations -->
+            <header class="px-6 pt-6 md:px-8 md:pt-8 animate-fade-in-up">
+                <div class="flex flex-wrap gap-3 mb-6">
+                    <a href="{% url 'blog:category_posts' post.category.slug %}" class="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-r from-primary to-accent text-white font-semibold shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl animate-bounce-in text-base">
+                        <i class="lni lni-folder mr-2 text-lg"></i>
+                        {{ post.category.name }}
+                    </a>
+                    {% for tag in post.tags.all %}
+                    <a href="{% url 'blog:tag_posts' tag.slug %}" class="inline-flex items-center px-3 py-1.5 rounded-full bg-base-200 text-base-content font-medium shadow transition-transform duration-300 hover:scale-105 hover:bg-primary hover:text-white animate-fade-in" style="animation-delay: 0.{{ forloop.counter0|add:"1" }}s;">
+                        <i class="lni lni-tag mr-1 text-primary"></i>
+                        {{ tag.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent animate-gradient-move drop-shadow-xl transition-all duration-500 tracking-tight leading-tight">
+                    <span class="inline-block align-middle">
+                        {{ post.title }}
+                    </span>
+                    <span class="ml-2 align-middle animate-bounce text-2xl md:text-3xl text-accent">✦</span>
+                </h1>
+
+                <div class="flex flex-wrap items-center gap-4 text-base text-base-content/80 mb-8">
+                    <div class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 shadow-md animate-fade-in" style="animation-delay: 0.1s;">
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/20 text-primary mr-2">
+                            <i class="lni lni-user"></i>
+                        </span>
+                        <span class="font-semibold">{{ post.author.get_full_name|default:post.author.username }}</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-accent/10 to-secondary/10 shadow-md animate-fade-in" style="animation-delay: 0.2s;">
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-accent/20 text-accent mr-2">
+                            <i class="lni lni-calendar"></i>
+                        </span>
+                        <span>{{ post.published_at|date:"F d, Y" }}</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-info/10 to-primary/10 shadow-md animate-fade-in" style="animation-delay: 0.3s;">
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-info/20 text-info mr-2">
+                            <i class="lni lni-eye"></i>
+                        </span>
+                        <span>{{ post.view_count|intcomma }} views</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-success/10 to-accent/10 shadow-md animate-fade-in" style="animation-delay: 0.4s;">
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-success/20 text-success mr-2">
+                            <i class="lni lni-comments-alt"></i>
+                        </span>
+                        <span>{{ comments.count }} comments</span>
+                    </div>
+                </div>
+            </header>
+
+            <style>
+            @keyframes bounce-in {
+                0% { transform: scale(0.8); opacity: 0; }
+                60% { transform: scale(1.05); opacity: 1; }
+                100% { transform: scale(1); }
+            }
+            .animate-bounce-in {
+                animation: bounce-in 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+            }
+            @keyframes fade-in {
+                0% { opacity: 0; transform: translateY(20px);}
+                100% { opacity: 1; transform: translateY(0);}
+            }
+            .animate-fade-in {
+                animation: fade-in 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+            }
+            @keyframes gradient-move {
+                0% { background-position: 0% 50%; }
+                100% { background-position: 100% 50%; }
+            }
+            .animate-gradient-move {
+                background-size: 200% 200%;
+                animation: gradient-move 3s linear infinite alternate;
+            }
+            </style>
+
+            <!-- Featured Image with Enhanced Design and Animation -->
+            {% if post.featured_image %}
+            <div class="px-6 md:px-8 mb-8">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl group animate-featured-fade-in">
+                    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}"
+                         class="w-full h-72 md:h-96 object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 group-hover:brightness-90" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-base-100/80 via-base-100/10 to-transparent opacity-80 pointer-events-none"></div>
+                    <div class="absolute bottom-4 left-4 bg-primary/80 text-white px-4 py-2 rounded-full shadow-lg text-base font-semibold flex items-center gap-2 animate-badge-pop backdrop-blur-md ring-2 ring-blue-400/60">
+                        <i class="lni lni-image"></i>
+                        Featured Image
+                    </div>
+                </div>
+            </div>
+            <style>
+            @keyframes featured-fade-in {
+                0% { opacity: 0; transform: scale(0.98) translateY(40px);}
+                100% { opacity: 1; transform: scale(1) translateY(0);}
+            }
+            .animate-featured-fade-in {
+                animation: featured-fade-in 1s cubic-bezier(0.23, 1, 0.32, 1) both;
+            }
+            @keyframes badge-pop {
+                0% { transform: scale(0.7) translateY(20px); opacity: 0;}
+                70% { transform: scale(1.1) translateY(-4px); opacity: 1;}
+                100% { transform: scale(1) translateY(0);}
+            }
+            .animate-badge-pop {
+                animation: badge-pop 0.8s 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+            }
+            </style>
+            {% endif %}
+
+            <!-- Post Summary -->
+            <div class="px-6 md:px-8 mb-8">
+                <div class="relative bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 p-6 rounded-2xl shadow-lg border-l-4 border-primary/70">
+                    <div class="flex items-start gap-3">
+                        <div class="flex-1">
+                            <blockquote class="italic text-lg text-base-content/80 leading-relaxed">
+                                {{ post.summary }}
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post Content -->
+            <div class="px-6 md:px-8 pb-8">
+                <div class="prose prose-lg prose-primary max-w-none bg-base-200/60 rounded-2xl shadow-lg p-8 transition-all duration-300 hover:shadow-2xl animate-fade-in-up">
+                    {{ post.content|safe }}
+                </div>
+            </div>
+
+            <!-- Post Footer -->
+            <footer class="border-t border-base-300 px-8 py-8 bg-gradient-to-r from-base-100 via-base-200 to-base-100 rounded-b-lg shadow-inner">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                    <!-- Tags -->
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="font-semibold text-base-content/80 mr-2">
+                            <i class="lni lni-tags text-primary mr-1"></i> Tags:
+                        </span>
+                        {% for tag in post.tags.all %}
+                        <a href="{% url 'blog:tag_posts' tag.slug %}" class="badge badge-lg bg-primary/10 text-primary border-primary/40 hover:bg-primary hover:text-white transition-colors duration-200 shadow-sm">
+                            <i class="lni lni-tag mr-1"></i>{{ tag.name }}
+                        </a>
+                        {% empty %}
+                        <span class="text-base-content/60 italic">No tags</span>
+                        {% endfor %}
+                    </div>
+                    <!-- Social Share Buttons -->
+                    <div class="flex gap-3">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" rel="noopener" class="btn btn-circle btn-md bg-blue-600/90 hover:bg-blue-700 text-white shadow-lg transition-transform duration-200 hover:scale-110" title="Share on Facebook">
+                            <i class="lni lni-facebook text-lg"></i>
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title|urlencode }}" target="_blank" rel="noopener" class="btn btn-circle btn-md bg-sky-500/90 hover:bg-sky-600 text-white shadow-lg transition-transform duration-200 hover:scale-110" title="Share on Twitter">
+                            <i class="lni lni-twitter text-lg"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ post.title|urlencode }}" target="_blank" rel="noopener" class="btn btn-circle btn-md bg-blue-800/90 hover:bg-blue-900 text-white shadow-lg transition-transform duration-200 hover:scale-110" title="Share on LinkedIn">
+                            <i class="lni lni-linkedin-original text-lg"></i>
+                        </a>
+                        <button onclick="navigator.clipboard.writeText('{{ request.build_absolute_uri }}')" class="btn btn-circle btn-md bg-base-200 hover:bg-primary/80 text-base-content hover:text-white shadow-lg transition-transform duration-200 hover:scale-110" title="Copy Link">
+                            <i class="lni lni-link"></i>
+                        </button>
+                    </div>
+                </div>
+            </footer>
+        </article>
+
+        <!-- Related Posts -->
+        {% if related_posts %}
+        <div class="mt-12">
+            <h2 class="text-3xl font-extrabold mb-8 flex items-center gap-3 text-gradient bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent drop-shadow-lg animate-fade-in-up">
+                <i class="lni lni-bookmark text-primary text-2xl"></i>
+                Related Articles
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {% for related in related_posts %}
+                <div class="card bg-gradient-to-br from-base-100 via-base-200 to-base-100 shadow-2xl rounded-2xl overflow-hidden group transition-all duration-300 hover:scale-105 hover:shadow-3xl border border-primary/10">
+                    {% if related.featured_image %}
+                    <figure class="relative h-44 overflow-hidden">
+                        <img src="{{ related.featured_image.url }}" alt="{{ related.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:brightness-90" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-base-100/80 via-transparent to-transparent opacity-80 pointer-events-none"></div>
+                    </figure>
+                    {% endif %}
+
+                    <div class="card-body p-5">
+                        <div class="flex items-center gap-2 text-xs text-base-content/60 mb-2">
+                            <i class="lni lni-calendar text-primary"></i>
+                            {{ related.published_at|date:"M d, Y" }}
+                        </div>
+                        <h3 class="card-title text-lg font-extrabold mb-2 leading-tight hover:text-primary transition-colors duration-200">
+                            <a href="{% url 'blog:post_detail' related.slug %}" class="line-clamp-2">{{ related.title }}</a>
+                        </h3>
+                        <div class="text-base-content/70 text-sm mb-4 line-clamp-3">
+                            {{ related.summary|default:related.content|truncatewords:20 }}
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <a href="{% url 'blog:post_detail' related.slug %}" class="inline-flex items-center gap-1 text-primary font-semibold hover:underline text-sm transition-colors duration-200">
+                                Read More
+                                <i class="lni lni-arrow-right"></i>
+                            </a>
+                            <span class="badge bg-accent/10 text-accent border-accent/30 font-medium text-xs px-3 py-1 rounded-full">
+                                <i class="lni lni-folder mr-1"></i>{{ related.category.name }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <style>
+            .line-clamp-2 {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            @keyframes badge-pop {
+                0% { transform: scale(0.7) translateY(10px); opacity: 0;}
+                70% { transform: scale(1.1) translateY(-2px); opacity: 1;}
+                100% { transform: scale(1) translateY(0);}
+            }
+            .animate-badge-pop {
+                animation: badge-pop 0.7s 0.3s cubic-bezier(0.23, 1, 0.32, 1) both;
+            }
+            </style>
+        </div>
+        {% endif %}
+
+        <!-- Comments Section -->
+        <div class="mt-12">
+            <h2 class="text-3xl font-extrabold mb-8 flex items-center gap-3 text-gradient bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent drop-shadow-lg animate-fade-in-up">
+                <i class="lni lni-comments text-primary text-2xl"></i>
+                Comments
+                <span class="ml-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-semibold text-base shadow animate-badge-pop">
+                    {{ comments.count }}
+                </span>
+            </h2>
+            <style>
+            @keyframes badge-pop {
+                0% { transform: scale(0.7) translateY(10px); opacity: 0;}
+                70% { transform: scale(1.1) translateY(-2px); opacity: 1;}
+                100% { transform: scale(1) translateY(0);}
+            }
+            .animate-badge-pop {
+                animation: badge-pop 0.7s 0.3s cubic-bezier(0.23, 1, 0.32, 1) both;
+            }
+            </style>
+
+            {% if comments %}
+            <div class="space-y-8 mb-10">
+                {% for comment in comments %}
+                <div class="card bg-gradient-to-r from-base-100 via-base-200/60 to-base-100 shadow-2xl rounded-xl border-l-4 border-primary/40 group transition-all duration-300 hover:shadow-3xl" id="comment-{{ comment.id }}">
+                    <div class="card-body p-6">
+                        <div class="flex justify-between items-start">
+                            <div class="flex items-center gap-4">
+                                <div class="avatar">
+                                    {% if comment.author.profile.avatar %}
+                                        <div class="w-12 h-12 rounded-full overflow-hidden shadow-lg ring-2 ring-primary/40 group-hover:ring-accent/60 transition-all duration-300">
+                                            <img src="{{ comment.author.profile.avatar.url }}" alt="{{ comment.author.get_full_name|default:comment.author.username }}" class="w-full h-full object-cover" />
+                                        </div>
+                                    {% else %}
+                                        <div class="bg-primary/80 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold shadow-lg ring-2 ring-primary/40 group-hover:ring-accent/60 transition-all duration-300">
+                                            <span>{{ comment.author.username|make_list|first|upper }}</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-bold text-lg text-primary group-hover:text-accent transition-colors duration-200">
+                                            {{ comment.author.get_full_name|default:comment.author.username }}
+                                        </span>
+                                        {% if comment.author.profile and comment.author.profile.bio %}
+                                            <span class="text-xs bg-accent/10 text-accent px-2 py-0.5 rounded-full font-medium ml-1">
+                                                Verified
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="text-xs text-base-content/60 mt-1 flex items-center gap-1">
+                                        <i class="lni lni-timer text-accent"></i>
+                                        <span class="italic">{{ comment.created_at|naturaltime }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if request.user == comment.author %}
+                            <div class="flex items-center gap-2">
+                                <a href="{% url 'blog:delete_comment' comment.id %}"
+                                   class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-error/10 text-error font-semibold shadow-sm border border-error/20 hover:bg-error hover:text-white transition-all duration-200 group/delete"
+                                   title="Delete Comment">
+                                    <i class="lni lni-trash-can text-lg group-hover/delete:animate-bounce"></i>
+                                    <span class="hidden md:inline">Delete</span>
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="mt-4 bg-gradient-to-r from-primary/5 via-base-200/60 to-accent/5 rounded-xl p-5 shadow-inner border-l-4 border-primary/40 relative group">
+                            <blockquote class="text-base-content/90 text-lg leading-relaxed italic font-medium">
+                                <span class="absolute -left-4 -top-2 text-3xl text-primary/30 select-none group-hover:text-accent/40 transition-colors duration-200">“</span>
+                                {{ comment.content|linebreaks }}
+                                <span class="absolute -right-4 -bottom-2 text-3xl text-primary/30 select-none group-hover:text-accent/40 transition-colors duration-200">”</span>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="alert mb-8 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 border-l-4 border-primary/60 shadow-lg rounded-xl flex items-center gap-4 p-6 animate-fade-in-up">
+                <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary/20 text-primary shadow-md mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-7 h-7">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-semibold text-lg text-primary block mb-1">No comments yet</span>
+                    <span class="text-base-content/70">Be the first to share your thoughts and start the conversation!</span>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Comment Form -->
+            {% if user.is_authenticated %}
+            <div class="card bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 shadow-2xl rounded-xl border-l-4 border-primary/60 animate-fade-in-up">
+                <div class="card-body p-8">
+                    <h3 class="card-title text-2xl font-extrabold mb-6 flex items-center gap-2 text-gradient bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent drop-shadow-lg">
+                        <i class="lni lni-pencil-alt text-primary text-xl"></i>
+                        Leave a Comment
+                    </h3>
+                    <form method="POST" action="{% url 'blog:add_comment' post.slug %}" class="space-y-6">
+                        {% csrf_token %}
+                        <div class="form-control mb-2">
+                            <label for="{{ comment_form.content.id_for_label }}" class="block mb-2 font-semibold text-base-content/80">
+                                <i class="lni lni-comments-alt mr-1 text-accent"></i>
+                                Your Comment
+                            </label>
+                            {{ comment_form.content }}
+                            {% if comment_form.content.errors %}
+                                <div class="text-error mt-2 text-sm font-medium flex items-center gap-2">
+                                    <i class="lni lni-warning text-lg"></i>
+                                    {{ comment_form.content.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-control flex items-end justify-between mt-6">
+                            <div class="flex items-center gap-3">
+                                <span class="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold text-base shadow">
+                                    <i class="lni lni-user mr-2"></i>
+                                    {{ user.get_full_name|default:user.username }}
+                                </span>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg px-8 py-3 shadow-xl hover:scale-105 hover:bg-accent transition-all duration-200 flex items-center gap-2 rounded-full text-lg font-bold tracking-wide">
+                                <i class="lni lni-comments text-2xl"></i>
+                                Post Comment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% else %}
+            <div class="card bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 shadow-2xl rounded-xl border-l-4 border-primary/60 animate-fade-in-up">
+                <div class="card-body p-8 flex flex-col items-center text-center">
+                    <div class="flex items-center justify-center w-14 h-14 rounded-full bg-primary/20 text-primary shadow-md mb-4">
+                        <i class="lni lni-lock-alt text-3xl"></i>
+                    </div>
+                    <p class="mb-6 text-lg font-semibold text-base-content/80">
+                        Please <span class="text-primary">log in</span> to leave a comment and join the conversation.
+                    </p>
+                    <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary btn-lg px-8 py-3 shadow-xl hover:scale-105 hover:bg-accent transition-all duration-200 flex items-center gap-2 rounded-full text-lg font-bold tracking-wide">
+                        <i class="lni lni-enter text-2xl"></i>
+                        Log In
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

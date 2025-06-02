@@ -1,0 +1,466 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Order Management - TechReform BD{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-base-300 via-base-200 to-base-100 py-8">
+    <div class="container mx-auto px-4">
+        <!-- Enhanced Header Section -->
+        <div class="mb-8">
+            <div class="bg-base-100/80 backdrop-blur-sm rounded-xl p-6 border border-base-300/50 shadow-lg">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                <div class="mb-4 lg:mb-0">
+                <h1 class="text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent animate-gradient-x">
+                    Order Management Center
+                </h1>
+                <p class="text-base-content/70 mt-2 flex items-center gap-2">
+                    <i class="lni lni-dashboard text-primary"></i>
+                    Comprehensive order tracking and management dashboard
+                </p>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="flex flex-wrap gap-3">
+                <button class="btn btn-primary btn-sm gap-2 hover:shadow-md transition-all duration-300" onclick="exportOrders()">
+                    <i class="lni lni-download"></i> Export Data
+                </button>
+                <button class="btn btn-outline btn-sm gap-2 hover:bg-base-200 transition-all duration-300" onclick="refreshData()">
+                    <i class="lni lni-reload"></i> Refresh
+                </button>
+                <div class="dropdown dropdown-end">
+                    <label tabindex="0" class="btn btn-sm btn-secondary gap-2">
+                    <i class="lni lni-cog-effect"></i> Actions
+                    </label>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <li><a href="{% url 'user_management' %}"><i class="lni lni-users"></i> Manage Users</a></li>
+                    <li><a href="{% url 'product_management' %}"><i class="lni lni-package"></i> Manage Products</a></li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+
+            <!-- Date & Time Badge -->
+            <div class="mt-4 flex flex-wrap gap-2">
+                <div class="flex gap-2 flex-wrap">
+                    <span class="badge badge-primary badge-lg gap-2 py-3 px-4 shadow-sm hover:shadow-md transition-all">
+                        <i class="lni lni-calendar text-sm"></i> {% now "F j, Y" %}
+                    </span>
+                    <span class="badge badge-outline badge-lg gap-2 py-3 px-4 backdrop-blur-sm bg-base-100/30 border-primary/20 hover:border-primary/40 transition-all">
+                        <i class="lni lni-timer text-sm animate-pulse"></i> Last updated: {% now "H:i" %}
+                    </span>
+                    <span class="badge badge-secondary badge-lg gap-2 py-3 px-4 shadow-sm hover:shadow-md transition-all">
+                        <i class="lni lni-user text-sm"></i> Admin: {{ request.user.username }}
+                    </span>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
+            <!-- Total Orders -->
+            <div class="bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-sm rounded-xl p-6 border border-primary/20 hover:border-primary/40 hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
+            <div class="absolute -right-6 -top-6 w-20 h-20 bg-primary/10 rounded-full opacity-70"></div>
+            <div class="flex items-center justify-between relative z-10">
+                <div>
+                <p class="text-primary/70 text-sm font-medium tracking-wide">Total Orders</p>
+                <p class="text-3xl font-bold text-primary mt-1 group-hover:scale-105 transition-transform">{{ total_orders }}</p>
+                <div class="h-1 w-12 bg-primary/30 rounded-full mt-2 group-hover:w-16 transition-all"></div>
+                </div>
+                <div class="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm">
+                <i class="lni lni-cart text-primary text-2xl"></i>
+                </div>
+            </div>
+            </div>
+
+            <!-- Pending Orders -->
+            <div class="bg-gradient-to-br from-warning/10 to-warning/5 backdrop-blur-sm rounded-xl p-6 border border-warning/20 hover:border-warning/40 hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
+            <div class="absolute -right-6 -top-6 w-20 h-20 bg-warning/10 rounded-full opacity-70"></div>
+            <div class="flex items-center justify-between relative z-10">
+                <div>
+                <p class="text-warning/70 text-sm font-medium tracking-wide">Pending</p>
+                <p class="text-3xl font-bold text-warning mt-1 group-hover:scale-105 transition-transform">{{ pending_orders }}</p>
+                <div class="h-1 w-12 bg-warning/30 rounded-full mt-2 group-hover:w-16 transition-all"></div>
+                </div>
+                <div class="w-14 h-14 bg-warning/20 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm">
+                <i class="lni lni-timer text-warning text-2xl animate-pulse"></i>
+                </div>
+            </div>
+            </div>
+
+            <!-- Processing Orders -->
+            <div class="bg-gradient-to-br from-info/10 to-info/5 backdrop-blur-sm rounded-xl p-6 border border-info/20 hover:border-info/40 hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
+            <div class="absolute -right-6 -top-6 w-20 h-20 bg-info/10 rounded-full opacity-70"></div>
+            <div class="flex items-center justify-between relative z-10">
+                <div>
+                <p class="text-info/70 text-sm font-medium tracking-wide">Processing</p>
+                <p class="text-3xl font-bold text-info mt-1 group-hover:scale-105 transition-transform">{{ processing_orders }}</p>
+                <div class="h-1 w-12 bg-info/30 rounded-full mt-2 group-hover:w-16 transition-all"></div>
+                </div>
+                <div class="w-14 h-14 bg-info/20 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm">
+                <i class="lni lni-cog text-info text-2xl group-hover:animate-spin"></i>
+                </div>
+            </div>
+            </div>
+
+            <!-- Shipped Orders -->
+            <div class="bg-gradient-to-br from-accent/10 to-accent/5 backdrop-blur-sm rounded-xl p-6 border border-accent/20 hover:border-accent/40 hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
+            <div class="absolute -right-6 -top-6 w-20 h-20 bg-accent/10 rounded-full opacity-70"></div>
+            <div class="flex items-center justify-between relative z-10">
+                <div>
+                <p class="text-accent/70 text-sm font-medium tracking-wide">Shipped</p>
+                <p class="text-3xl font-bold text-accent mt-1 group-hover:scale-105 transition-transform">{{ shipped_orders }}</p>
+                <div class="h-1 w-12 bg-accent/30 rounded-full mt-2 group-hover:w-16 transition-all"></div>
+                </div>
+                <div class="w-14 h-14 bg-accent/20 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm">
+                <i class="lni lni-delivery text-accent text-2xl"></i>
+                </div>
+            </div>
+            </div>
+
+            <!-- Delivered Orders -->
+            <div class="bg-gradient-to-br from-success/10 to-success/5 backdrop-blur-sm rounded-xl p-6 border border-success/20 hover:border-success/40 hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
+            <div class="absolute -right-6 -top-6 w-20 h-20 bg-success/10 rounded-full opacity-70"></div>
+            <div class="flex items-center justify-between relative z-10">
+                <div>
+                <p class="text-success/70 text-sm font-medium tracking-wide">Delivered</p>
+                <p class="text-3xl font-bold text-success mt-1 group-hover:scale-105 transition-transform">{{ completed_orders }}</p>
+                <div class="h-1 w-12 bg-success/30 rounded-full mt-2 group-hover:w-16 transition-all"></div>
+                </div>
+                <div class="w-14 h-14 bg-success/20 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm">
+                <i class="lni lni-checkmark-circle text-success text-2xl"></i>
+                </div>
+            </div>
+            </div>
+
+            <!-- Total Revenue -->
+            <div class="bg-gradient-to-br from-primary/20 to-secondary/20 backdrop-blur-sm rounded-xl p-6 border border-primary/30 hover:border-primary/50 hover:shadow-lg transition-all duration-300 group relative overflow-hidden">
+            <div class="absolute -right-6 -top-6 w-20 h-20 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full opacity-70"></div>
+            <div class="flex items-center justify-between relative z-10">
+                <div>
+                <p class="text-primary/80 text-sm font-medium tracking-wide">Total Revenue</p>
+                <p class="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mt-1 group-hover:scale-105 transition-transform">৳{{ total_revenue|floatformat:2 }}</p>
+                <div class="h-1 w-16 bg-gradient-to-r from-primary/40 to-secondary/40 rounded-full mt-2 group-hover:w-20 transition-all"></div>
+                </div>
+                <div class="w-14 h-14 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm">
+                <i class="lni lni-coin text-primary text-2xl"></i>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Filters Section -->
+        <div class="bg-base-100/80 backdrop-blur-sm rounded-xl p-6 mb-8 border border-base-300/50">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex flex-wrap gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-base-200/60 p-2 rounded-lg">
+                            <i class="lni lni-funnel text-primary text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-base-content">Filter Orders</h3>
+                            <p class="text-xs text-base-content/60">Narrow down results by criteria</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-3">
+                    <a href="?status=all" class="btn btn-sm gap-2 transition-all duration-300 hover:shadow-md {% if status_filter == 'all' %}btn-primary{% else %}btn-outline hover:bg-base-200/80{% endif %}">
+                        <i class="lni lni-grid-alt"></i> All Orders
+                        {% if status_filter == 'all' %}<span class="badge badge-sm badge-ghost">{{ total_orders }}</span>{% endif %}
+                    </a>
+                    <a href="?status=pending" class="btn btn-sm gap-2 transition-all duration-300 hover:shadow-md {% if status_filter == 'pending' %}btn-warning{% else %}btn-outline hover:text-warning hover:border-warning/50{% endif %}">
+                        <i class="lni lni-timer"></i> Pending
+                        {% if status_filter == 'pending' %}<span class="badge badge-sm badge-ghost">{{ pending_orders }}</span>{% endif %}
+                    </a>
+                    <a href="?status=processing" class="btn btn-sm gap-2 transition-all duration-300 hover:shadow-md {% if status_filter == 'processing' %}btn-info{% else %}btn-outline hover:text-info hover:border-info/50{% endif %}">
+                        <i class="lni lni-cog"></i> Processing
+                        {% if status_filter == 'processing' %}<span class="badge badge-sm badge-ghost">{{ processing_orders }}</span>{% endif %}
+                    </a>
+                    <a href="?status=shipped" class="btn btn-sm gap-2 transition-all duration-300 hover:shadow-md {% if status_filter == 'shipped' %}btn-accent{% else %}btn-outline hover:text-accent hover:border-accent/50{% endif %}">
+                        <i class="lni lni-delivery"></i> Shipped
+                        {% if status_filter == 'shipped' %}<span class="badge badge-sm badge-ghost">{{ shipped_orders }}</span>{% endif %}
+                    </a>
+                    <a href="?status=delivered" class="btn btn-sm gap-2 transition-all duration-300 hover:shadow-md {% if status_filter == 'delivered' %}btn-success{% else %}btn-outline hover:text-success hover:border-success/50{% endif %}">
+                        <i class="lni lni-checkmark-circle"></i> Delivered
+                        {% if status_filter == 'delivered' or status_filter == 'completed' %}<span class="badge badge-sm badge-ghost">{{ completed_orders }}</span>{% endif %}
+                    </a>
+                    <a href="?status=cancelled" class="btn btn-sm gap-2 transition-all duration-300 hover:shadow-md {% if status_filter == 'cancelled' %}btn-error{% else %}btn-outline hover:text-error hover:border-error/50{% endif %}">
+                        <i class="lni lni-close"></i> Cancelled
+                        {% if status_filter == 'cancelled' %}<span class="badge badge-sm badge-ghost">{{ cancelled_orders }}</span>{% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="bg-base-100/80 backdrop-blur-sm rounded-xl overflow-hidden border border-base-300/50 shadow-xl">
+            <div class="p-6 border-b border-base-300/50 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="bg-primary/10 p-2.5 rounded-lg">
+                        <i class="lni lni-list text-primary text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-base-content">Orders List</h3>
+                        <p class="text-sm text-base-content/60">Manage and track all customer orders</p>
+                    </div>
+                    <span class="badge badge-primary badge-md ml-2">{{ page_obj.paginator.count }} total</span>
+                </div>
+            </div>
+
+            {% if orders %}
+            <div class="overflow-x-auto">
+                <table class="table table-zebra w-full">
+                    <thead class="bg-base-200/80 text-base-content/80">
+                        <tr>
+                            <th class="font-semibold text-xs uppercase tracking-wider">Order ID</th>
+                            <th class="font-semibold text-xs uppercase tracking-wider">Customer</th>
+                            <th class="font-semibold text-xs uppercase tracking-wider">Date</th>
+                            <th class="font-semibold text-xs uppercase tracking-wider">Status</th>
+                            <th class="font-semibold text-xs uppercase tracking-wider">Payment</th>
+                            <th class="font-semibold text-xs uppercase tracking-wider">Total</th>
+                            <th class="font-semibold text-xs uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr class="hover:bg-base-200/50 transition-all duration-300 group border-b border-base-200/70">
+                            <td>
+                                <div class="font-mono text-sm">
+                                    <span class="text-primary font-semibold group-hover:text-primary/80 transition-colors">#{{ order.id|slice:":8" }}</span>
+                                </div>
+                            </td>
+                            <td>                                <div class="flex items-center gap-3">
+                                    <div class="avatar">
+                                        {% if order.user.profile.profile_image %}
+                                        <div class="w-10 h-10 rounded-full shadow-sm transition-all duration-300 group-hover:scale-105 overflow-hidden">
+                                            <img src="{{ order.user.profile.profile_image.url }}" alt="{{ order.user.username }}'s Avatar" class="object-cover w-full h-full" />
+                                        </div>
+                                        {% else %}
+                                        <div class="bg-primary/20 text-primary rounded-full w-10 h-10 transition-all duration-300 group-hover:scale-105 group-hover:bg-primary/30 shadow-sm placeholder">
+                                            <span>{{ order.user.first_name|first }}{{ order.user.last_name|first }}</span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold">{{ order.user.get_full_name|default:order.user.username }}</div>
+                                        <div class="text-xs text-base-content/70">{{ order.user.email }}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="text-sm">
+                                    <div class="font-medium">{{ order.created_at|date:"M d, Y" }}</div>
+                                    <div class="text-xs text-base-content/70 flex items-center gap-1">
+                                        <i class="lni lni-timer text-xs"></i>
+                                        {{ order.created_at|time:"H:i" }}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge badge-sm py-2.5 px-3
+                                    {% if order.status == 'pending' %}badge-warning/90{% endif %}
+                                    {% if order.status == 'processing' %}badge-info/90{% endif %}
+                                    {% if order.status == 'shipped' %}badge-accent/90{% endif %}
+                                    {% if order.status == 'completed' or order.status == 'delivered' %}badge-success/90{% endif %}
+                                    {% if order.status == 'cancelled' %}badge-error/90{% endif %}
+                                    gap-1.5 shadow-sm group-hover:shadow-md transition-all">
+                                    <i class="lni lni-circle-minus text-xs"></i>
+                                    {{ order.get_status_display }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge badge-sm py-2 px-3
+                                    {% if order.payment_status == 'paid' %}badge-success/90{% endif %}
+                                    {% if order.payment_status == 'pending' %}badge-warning/90{% endif %}
+                                    {% if order.payment_status == 'failed' %}badge-error/90{% endif %}
+                                    {% if order.payment_status == 'refunded' %}badge-info/90{% endif %}
+                                    gap-1 shadow-sm group-hover:shadow-md transition-all">
+                                    {{ order.get_payment_status_display }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="font-bold text-primary group-hover:scale-105 inline-block transition-transform">৳{{ order.total_price|floatformat:2 }}</span>
+                            </td>
+                            <td>
+                                <div class="flex gap-2">
+                                    <a href="{% url 'admin_order_detail' order.id %}"
+                                       class="btn btn-xs btn-primary gap-1 shadow-sm hover:shadow-md transition-all"
+                                       title="View Details">
+                                        <i class="lni lni-eye"></i>
+                                        <span class="hidden lg:inline-block">View</span>
+                                    </a>
+
+                                    <div class="dropdown dropdown-end">
+                                        <label tabindex="0" class="btn btn-xs btn-outline gap-1 hover:bg-base-200 transition-all">
+                                            <i class="lni lni-cog"></i>
+                                            <span class="hidden lg:inline-block">Update</span>
+                                        </label>
+                                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-lg bg-base-100 rounded-box w-52 border border-base-200">
+                                            {% if order.status != 'delivered' %}
+                                            <li class="hover:bg-base-200/50 rounded-lg transition-colors">
+                                                <a onclick="updateOrderStatus('{{ order.id }}', 'processing')" class="flex items-center gap-2">
+                                                    <i class="lni lni-cog text-info"></i> Mark as Processing
+                                                </a>
+                                            </li>
+                                            <li class="hover:bg-base-200/50 rounded-lg transition-colors">
+                                                <a onclick="updateOrderStatus('{{ order.id }}', 'shipped')" class="flex items-center gap-2">
+                                                    <i class="lni lni-delivery text-accent"></i> Mark as Shipped
+                                                </a>
+                                            </li>
+                                            <li class="hover:bg-base-200/50 rounded-lg transition-colors">
+                                                <a onclick="updateOrderStatus('{{ order.id }}', 'delivered')" class="flex items-center gap-2">
+                                                    <i class="lni lni-checkmark-circle text-success"></i> Mark as Delivered
+                                                </a>
+                                            </li>
+                                            {% endif %}
+                                            {% if order.status != 'cancelled' %}
+                                            <li class="hover:bg-error/10 rounded-lg transition-colors mt-1">
+                                                <a onclick="updateOrderStatus('{{ order.id }}', 'cancelled')" class="flex items-center gap-2 text-error">
+                                                    <i class="lni lni-close"></i> Cancel Order
+                                                </a>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            {% if page_obj.has_other_pages %}
+            <div class="p-6 border-t border-base-300/50">
+                <div class="flex justify-center">
+                    <div class="join">
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}{% if status_filter != 'all' %}&status={{ status_filter }}{% endif %}" class="join-item btn btn-sm">«</a>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <span class="join-item btn btn-sm btn-active">{{ num }}</span>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <a href="?page={{ num }}{% if status_filter != 'all' %}&status={{ status_filter }}{% endif %}" class="join-item btn btn-sm">{{ num }}</a>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}{% if status_filter != 'all' %}&status={{ status_filter }}{% endif %}" class="join-item btn btn-sm">»</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% else %}
+            <div class="p-12 text-center">
+                <div class="w-24 h-24 bg-base-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="lni lni-cart text-4xl text-base-content/30"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-base-content/70 mb-2">No Orders Found</h3>
+                <p class="text-base-content/50">No orders match the current filter criteria.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Loading Modal -->
+<div id="loadingModal" class="modal">
+    <div class="modal-box">
+        <div class="flex items-center gap-4">
+            <span class="loading loading-spinner loading-md"></span>
+            <span>Updating order status...</span>
+        </div>
+    </div>
+</div>
+
+<script>
+// Update order status via AJAX
+function updateOrderStatus(orderId, newStatus) {
+    const modal = document.getElementById('loadingModal');
+    modal.classList.add('modal-open');
+
+    fetch('{% url "update_order_status" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: `order_id=${orderId}&status=${newStatus}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        modal.classList.remove('modal-open');
+        if (data.status === 'success') {
+            // Show success message
+            const toast = document.createElement('div');
+            toast.className = 'alert alert-success fixed top-4 right-4 w-auto z-50';
+            toast.innerHTML = `
+                <i class="lni lni-checkmark"></i>
+                <span>${data.message}</span>
+            `;
+            document.body.appendChild(toast);
+
+            // Remove toast after 3 seconds and reload page
+            setTimeout(() => {
+                toast.remove();
+                window.location.reload();
+            }, 2000);
+        } else {
+            // Show error message
+            const toast = document.createElement('div');
+            toast.className = 'alert alert-error fixed top-4 right-4 w-auto z-50';
+            toast.innerHTML = `
+                <i class="lni lni-warning"></i>
+                <span>${data.message}</span>
+            `;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+    })
+    .catch(error => {
+        modal.classList.remove('modal-open');
+        console.error('Error:', error);
+
+        const toast = document.createElement('div');
+        toast.className = 'alert alert-error fixed top-4 right-4 w-auto z-50';
+        toast.innerHTML = `
+            <i class="lni lni-warning"></i>
+            <span>An error occurred while updating the order.</span>
+        `;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
+    });
+}
+
+function exportOrders() {
+    // Placeholder for export functionality
+    const toast = document.createElement('div');
+    toast.className = 'alert alert-info fixed top-4 right-4 w-auto z-50';
+    toast.innerHTML = `
+        <i class="lni lni-information"></i>
+        <span>Export functionality coming soon!</span>
+    `;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+function refreshData() {
+    window.location.reload();
+}
+</script>
+{% endblock %}

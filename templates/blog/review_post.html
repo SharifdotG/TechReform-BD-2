@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Review Post | TechReform BD{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Breadcrumbs -->
+        <div class="text-sm breadcrumbs mb-8 p-3 bg-base-200 rounded-lg shadow-sm">
+            <ul class="flex flex-wrap items-center">
+            <li class="flex items-center">
+                <i class="lni lni-home mr-1 text-primary"></i>
+                <a href="{% url 'index' %}" class="hover:text-primary transition-colors">Home</a>
+            </li>
+            <li class="flex items-center">
+                <i class="lni lni-book mr-1 text-primary"></i>
+                <a href="{% url 'blog:blog_list' %}" class="hover:text-primary transition-colors">Blog</a>
+            </li>
+            <li class="flex items-center">
+                <i class="lni lni-timer mr-1 text-primary"></i>
+                <a href="{% url 'blog:pending_posts' %}" class="hover:text-primary transition-colors">Pending Posts</a>
+            </li>
+            <li class="flex items-center font-medium">
+                <i class="lni lni-magnifier mr-1 text-primary"></i>
+                <span>Review Post</span>
+            </li>
+            </ul>
+        </div>
+
+        <div class="bg-base-100 shadow-xl rounded-lg overflow-hidden">
+            <div class="flex flex-col md:flex-row md:items-center justify-between p-6 border-b border-base-200 bg-gradient-to-r from-base-100 to-base-100/50">
+                <h1 class="text-3xl font-bold mb-4 md:mb-0 flex items-center gap-3">
+                    <i class="lni lni-check-box text-primary text-2xl bg-primary/10 p-2 rounded-lg"></i>
+                    <span class="relative group">
+                        Review Post
+                        <span class="absolute bottom-0 left-0 w-0 h-1 bg-primary rounded-full group-hover:w-full transition-all duration-300"></span>
+                    </span>
+                </h1>
+
+                <div class="flex items-center gap-4">
+                    <span class="badge badge-warning badge-lg py-3 px-4 font-medium shadow-sm flex items-center gap-2">
+                        <i class="lni lni-reload animate-spin-slow"></i>
+                        Pending Review
+                    </span>
+                    <div class="flex items-center gap-1 bg-base-200/70 py-1 px-3 rounded-full text-xs text-base-content/70">
+                        <i class="lni lni-ticket-alt text-primary"></i>
+                        ID: #{{ post.id }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6">
+                <!-- Post Info Card -->
+                <div class="card bg-base-200/70 shadow-inner mb-8 border border-base-300 hover:shadow-md transition-shadow duration-300">
+                    <div class="card-body p-6">
+                        <div class="flex items-center gap-4 mb-4">                            <div class="avatar {% if not post.author.profile.profile_image %}placeholder{% endif %}">
+                                <div class="w-16 h-16 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 overflow-hidden">
+                                    {% if post.author.profile.profile_image %}
+                                        <img src="{{ post.author.profile.profile_image.url }}" alt="{{ post.author.username }}" />
+                                    {% else %}
+                                        <div class="bg-primary/20 text-primary font-bold text-xl w-full h-full flex items-center justify-center">
+                                            <span>{{ post.author.get_full_name|default:post.author.username|slice:":2"|upper }}</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <h2 class="card-title text-2xl font-bold text-primary-focus">{{ post.title }}</h2>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm my-4">                            <div class="flex items-center badge badge-ghost py-3 px-4">
+                                <i class="lni lni-user mr-2 text-primary"></i>
+                                <div class="flex flex-col">
+                                    <span>{{ post.author.get_full_name|default:post.author.username }}</span>
+                                    {% if post.author.profile.role %}
+                                    <span class="text-xs opacity-70">{{ post.author.profile.get_role_display }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="flex items-center badge badge-ghost py-3 px-4">
+                                <i class="lni lni-folder mr-2 text-primary"></i>
+                                <span>{{ post.category.name }}</span>
+                            </div>
+                            <div class="flex items-center badge badge-ghost py-3 px-4">
+                                <i class="lni lni-calendar mr-2 text-primary"></i>
+                                <span>Submitted {{ post.created_at|naturaltime }}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            {% for tag in post.tags.all %}
+                            <span class="badge badge-primary badge-outline hover:bg-primary/10 transition-colors duration-200">{{ tag.name }}</span>
+                            {% empty %}
+                            <span class="text-base-content/60 italic">No tags</span>
+                            {% endfor %}
+                        </div>
+
+                        <div class="divider before:bg-primary/20 after:bg-primary/20"></div>
+
+                        <div class="bg-base-100 rounded-lg p-5 border border-base-300 shadow-inner">
+                            <p class="font-medium text-lg mb-2 flex items-center">
+                                <i class="lni lni-text-format mr-2 text-primary"></i> Summary:
+                            </p>
+                            <div class="prose max-w-none">
+                                {{ post.summary }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Image -->
+                {% if post.featured_image %}
+                <div class="mb-8 group">
+                    <p class="font-medium mb-3 flex items-center">
+                        <i class="lni lni-image mr-2 text-primary"></i>
+                        <span>Featured Image:</span>
+                    </p>
+                    <div class="rounded-xl overflow-hidden border border-base-300 shadow-md hover:shadow-lg transition-all duration-300 relative">
+                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <p class="text-sm font-medium">Featured image for "{{ post.title }}"</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Post Content -->
+                <div class="mb-8 group">
+                    <p class="font-medium mb-3 flex items-center justify-between">
+                        <span class="flex items-center">
+                            <i class="lni lni-text-align-justify mr-2 text-primary"></i>
+                            <span>Article Content:</span>
+                        </span>
+                        <button id="toggleFullContent" class="btn btn-sm btn-outline btn-primary">
+                            <i class="lni lni-full-screen mr-1"></i> Expand View
+                        </button>
+                    </p>
+                    <div class="bg-base-100 p-6 rounded-xl border border-base-300 shadow-inner hover:shadow-md transition-all duration-300">
+                        <div id="contentContainer" class="max-h-[500px] overflow-y-auto pr-2 custom-scrollbar transition-all duration-300">
+                            <div class="prose prose-lg max-w-none prose-headings:text-primary prose-a:text-secondary prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg prose-blockquote:border-l-primary prose-blockquote:bg-base-200/50 prose-blockquote:p-4 prose-blockquote:rounded-r-lg">
+                                {{ post.content|safe }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const toggleBtn = document.getElementById('toggleFullContent');
+                        const container = document.getElementById('contentContainer');
+                        let expanded = false;
+
+                        toggleBtn.addEventListener('click', function() {
+                            expanded = !expanded;
+                            if (expanded) {
+                                container.classList.remove('max-h-[500px]');
+                                container.classList.add('max-h-[2000px]');
+                                toggleBtn.innerHTML = '<i class="lni lni-frame-expand mr-1"></i> Collapse View';
+                            } else {
+                                container.classList.add('max-h-[500px]');
+                                container.classList.remove('max-h-[2000px]');
+                                toggleBtn.innerHTML = '<i class="lni lni-full-screen mr-1"></i> Expand View';
+                            }
+                        });
+                    });
+                </script>
+
+                <style>
+                    .custom-scrollbar::-webkit-scrollbar {
+                        width: 8px;
+                    }
+                    .custom-scrollbar::-webkit-scrollbar-track {
+                        background: rgba(0,0,0,0.05);
+                        border-radius: 10px;
+                    }
+                    .custom-scrollbar::-webkit-scrollbar-thumb {
+                        background: var(--p);
+                        border-radius: 10px;
+                    }
+                    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                        background: var(--pf);
+                    }
+                </style>
+
+                <!-- Decision Form -->
+                <div class="divider before:bg-primary/20 after:bg-primary/20 my-8">
+                    <span class="bg-base-200 px-4 py-2 rounded-lg text-primary font-medium flex items-center gap-2">
+                        <i class="lni lni-checkmark-circle"></i> Review Decision
+                    </span>
+                </div>
+
+                <form method="POST" class="mt-6">
+                    {% csrf_token %}
+
+                    <div class="card bg-base-200/70 border border-base-300 shadow-sm hover:shadow-md transition-all duration-300">
+                        <div class="card-body p-6">
+                            <div class="flex flex-col gap-6">
+                                <div class="alert alert-info shadow-sm">
+                                    <i class="lni lni-information-circle text-lg"></i>
+                                    <span>Please review the post carefully before making your decision.</span>
+                                </div>
+
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <a href="{% url 'blog:pending_posts' %}" class="btn btn-outline btn-neutral flex items-center gap-2 flex-1 sm:flex-initial">
+                                        <i class="lni lni-arrow-left"></i>
+                                        <span>Back to List</span>
+                                    </a>
+
+                                    <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <button type="submit" name="decision" value="reject" class="btn btn-error flex items-center gap-2 transition-all duration-300 hover:shadow-lg">
+                                            <i class="lni lni-close"></i>
+                                            <span>Reject Post</span>
+                                        </button>
+
+                                        <button type="submit" name="decision" value="approve" class="btn btn-success flex items-center gap-2 transition-all duration-300 hover:shadow-lg">
+                                            <i class="lni lni-checkmark-circle"></i>
+                                            <span>Approve & Publish</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

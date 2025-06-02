@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Content Analysis Report</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+            }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            h1 {
+                color: #2563eb;
+                text-align: center;
+                margin-bottom: 30px;
+                border-bottom: 2px solid #2563eb;
+                padding-bottom: 10px;
+            }
+            h2 {
+                color: #1d4ed8;
+                margin-top: 30px;
+                border-bottom: 1px solid #e2e8f0;
+                padding-bottom: 5px;
+            }
+            .stats-grid {
+                display: table;
+                width: 100%;
+                margin: 20px 0;
+                border-collapse: collapse;
+            }
+            .stat-item {
+                display: table-row;
+            }
+            .stat-label,
+            .stat-value {
+                display: table-cell;
+                padding: 8px;
+                border: 1px solid #e2e8f0;
+            }
+            .stat-label {
+                background-color: #f8fafc;
+                font-weight: bold;
+                width: 60%;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 20px 0;
+            }
+            th,
+            td {
+                padding: 8px;
+                text-align: left;
+                border: 1px solid #e2e8f0;
+            }
+            th {
+                background-color: #f8fafc;
+                font-weight: bold;
+            }
+            .meta-info {
+                text-align: right;
+                color: #64748b;
+                font-size: 0.9em;
+                margin-bottom: 30px;
+            }
+            .percentage-bar {
+                width: 100%;
+                height: 20px;
+                background-color: #e2e8f0;
+                position: relative;
+                margin-top: 5px;
+            }
+            .percentage-fill {
+                height: 100%;
+                background-color: #3b82f6;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Content Analysis Report</h1>
+            <div class="meta-info">Generated on: {{ generated_at }}</div>
+
+            <h2>Summary Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">Total Posts</div>
+                    <div class="stat-value">{{ total_posts }}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Published Posts</div>
+                    <div class="stat-value">
+                        {{ published_posts }} ({{ published_percent }}%)
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pending Posts</div>
+                    <div class="stat-value">
+                        {{ pending_posts }} ({{ pending_percent }}%)
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Rejected Posts</div>
+                    <div class="stat-value">
+                        {{ rejected_posts }} ({{ rejected_percent }}%)
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Total Views</div>
+                    <div class="stat-value">{{ total_views }}</div>
+                </div>
+            </div>
+
+            <h2>Category Distribution</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Post Count</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <td>{{ category.name }}</td>
+                        <td>{{ category.post_count }}</td>
+                        <td>
+                            {% widthratio category.post_count published_posts
+                            100 %}%
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h2>Top Performing Posts</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Category</th>
+                        <th>Published</th>
+                        <th>Views</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for post in top_posts %}
+                    <tr>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.author.username }}</td>
+                        <td>{{ post.category.name }}</td>
+                        <td>{{ post.published_at|date:"Y-m-d" }}</td>
+                        <td>{{ post.view_count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h2>Top Content Contributors</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Author</th>
+                        <th>Posts</th>
+                        <th>Total Views</th>
+                        <th>Avg. Views/Post</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for author in top_authors %}
+                    <tr>
+                        <td>{{ author.author__username }}</td>
+                        <td>{{ author.post_count }}</td>
+                        <td>{{ author.total_views }}</td>
+                        <td>
+                            {% widthratio author.total_views author.post_count 1
+                            %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,572 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Update {{ category }} - TechReform BD{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        transition: all 0.2s;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .form-textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .form-select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        background-color: white;
+        transition: all 0.2s;
+    }
+
+    .form-select:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .image-preview {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 0.5rem;
+        border: 2px solid #e5e7eb;
+    }
+
+    .image-upload-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .current-image {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .delete-image-checkbox {
+        margin-left: 0.5rem;
+    }
+
+    .btn-primary {
+        background-color: #3b82f6;
+        color: white;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+        background-color: #2563eb;
+        transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+        background-color: #6b7280;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-secondary:hover {
+        background-color: #4b5563;
+        color: white;
+        text-decoration: none;
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .grid-2 {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .category-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background-color: #3b82f6;
+        color: white;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .required-field::after {
+        content: " *";
+        color: #ef4444;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Update Product Header Section -->
+<section class="py-14 bg-gradient-to-br from-base-100 to-blue-50/40 overflow-hidden relative">
+    <div class="container mx-auto px-4 relative z-10">
+        <!-- Breadcrumb Navigation -->
+        <nav class="mb-12" aria-label="Breadcrumb">
+            <ol class="flex flex-wrap items-center p-4 bg-gradient-to-r from-blue-50 via-white to-purple-50/80 backdrop-blur-md rounded-2xl shadow-lg border border-blue-100 gap-x-2 text-base font-medium">
+            <li class="flex items-center">
+                <a href="{% url 'index' %}" class="flex items-center text-gray-700 hover:text-blue-600 transition-colors group">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 group-hover:bg-blue-200 transition-all mr-2">
+                    <i class="lni lni-home text-lg"></i>
+                </span>
+                <span class="group-hover:underline">Home</span>
+                </a>
+                <svg class="w-5 h-5 mx-2 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </li>
+            <li class="flex items-center">
+                <a href="{% url 'profile' %}" class="flex items-center text-gray-700 hover:text-blue-600 transition-colors group">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 group-hover:bg-blue-200 transition-all mr-2">
+                    <i class="lni lni-user text-lg"></i>
+                </span>
+                <span class="group-hover:underline">Profile</span>
+                </a>
+                <svg class="w-5 h-5 mx-2 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </li>
+            <li class="flex items-center">
+                <a href="{% url 'product_management' %}" class="flex items-center text-gray-700 hover:text-blue-600 transition-colors group">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 group-hover:bg-blue-200 transition-all mr-2">
+                    <i class="lni lni-database text-lg"></i>
+                </span>
+                <span class="group-hover:underline">Product Management</span>
+                </a>
+                <svg class="w-5 h-5 mx-2 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </li>
+            <li class="flex items-center" aria-current="page">
+                <span class="flex items-center bg-gradient-to-r from-blue-500/90 to-indigo-400/90 px-4 py-1.5 rounded-xl text-white font-bold shadow-md">
+                <i class="lni lni-pencil mr-2"></i>
+                Update Product
+                </span>
+            </li>
+            </ol>
+        </nav>
+
+        <div class="text-center mb-14">
+            <h1 class="text-5xl font-extrabold text-gray-800 mb-3 tracking-tight drop-shadow-sm">
+            <span class="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent animate-gradient-x">
+                <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 shadow-lg border-4 border-white ring-4 ring-blue-200/40 mb-2">
+                <i class="lni lni-pencil-alt text-4xl text-blue-600"></i>
+                </span>
+                <span>
+                Update <span class="text-primary">{{ category }}</span> Details
+                </span>
+            </span>
+            </h1>
+            <span class="category-badge text-base px-6 py-2 shadow-lg border border-blue-200 bg-gradient-to-r from-blue-500/90 to-indigo-400/90 text-white tracking-wide uppercase font-bold mb-2">
+            <i class="lni lni-tag mr-1"></i>{{ category }}
+            </span>
+            <p class="text-gray-600 max-w-2xl mx-auto mt-7 text-lg leading-relaxed">
+            <span class="inline-block font-semibold text-primary">{{ category|lower }}</span> listing at your fingertips.<br>
+            <span class="inline-block mt-4 px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 via-indigo-100 to-purple-100 text-blue-700 font-semibold shadow-md border border-blue-200/60">
+                Update specifications, pricing, and images to keep your product information accurate and appealing.
+            </span>
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Update Product Form -->
+<section class="py-16 bg-gradient-to-br from-blue-50 via-white to-purple-50/60 relative overflow-hidden">
+    <div class="container mx-auto px-4">
+        <div class="form-container shadow-2xl rounded-3xl bg-white/90 border border-blue-100 p-10 backdrop-blur-lg">
+            <!-- Display Messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="mb-6 p-4 rounded-xl shadow-md flex items-center gap-3
+                        {% if message.tags == 'error' %}
+                            bg-red-50 border border-red-200 text-red-700
+                        {% elif message.tags == 'success' %}
+                            bg-green-50 border border-green-200 text-green-700
+                        {% else %}
+                            bg-blue-50 border border-blue-200 text-blue-700
+                        {% endif %}">
+                        <i class="lni {% if message.tags == 'error' %}lni-cross-circle{% elif message.tags == 'success' %}lni-checkmark-circle{% else %}lni-information{% endif %} text-2xl"></i>
+                        <span class="font-medium">{{ message }}</span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="bg-white/80 rounded-2xl shadow-lg border border-gray-100 p-10">
+                <form method="post" enctype="multipart/form-data" class="space-y-12">
+                    {% csrf_token %}
+
+                    <!-- Basic Product Information -->
+                    <div>
+                        <h3 class="text-2xl font-extrabold text-blue-700 mb-7 flex items-center gap-3 border-b-2 border-blue-100 pb-2 tracking-tight">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 shadow border-2 border-white ring-2 ring-blue-200/40">
+                                <i class="lni lni-tag text-2xl text-blue-500"></i>
+                            </span>
+                            Basic Information
+                        </h3>
+                        <div class="grid-2 gap-8">
+                            <div class="form-group">
+                                <label for="brand" class="form-label required-field">
+                                    <i class="lni lni-briefcase text-blue-400 mr-1"></i>Brand
+                                </label>
+                                <input type="text" id="brand" name="brand" value="{{ product.brand }}" class="form-input focus:ring-2 focus:ring-blue-400 shadow-sm" required placeholder="e.g., Apple, Samsung">
+                            </div>
+                            <div class="form-group">
+                                <label for="model" class="form-label required-field">
+                                    <i class="lni lni-barcode text-blue-400 mr-1"></i>Model
+                                </label>
+                                <input type="text" id="model" name="model" value="{{ product.model }}" class="form-input focus:ring-2 focus:ring-blue-400 shadow-sm" required placeholder="e.g., iPhone 14 Pro">
+                            </div>
+                        </div>
+                        <div class="grid-2 gap-8">
+                            <div class="form-group">
+                                <label for="price" class="form-label required-field">
+                                    <i class="lni lni-money-protection text-green-500 mr-1"></i>Price <span class="text-xs text-gray-400">(৳)</span>
+                                </label>
+                                <input type="number" id="price" name="price" value="{{ product.price }}" class="form-input focus:ring-2 focus:ring-green-400 shadow-sm" step="0.01" min="0" required placeholder="Current price">
+                            </div>
+                            <div class="form-group">
+                                <label for="regular_price" class="form-label">
+                                    <i class="lni lni-offer text-yellow-500 mr-1"></i>Regular Price <span class="text-xs text-gray-400">(৳)</span>
+                                </label>
+                                <input type="number" id="regular_price" name="regular_price" value="{{ product.regular_price|default:'' }}" class="form-input focus:ring-2 focus:ring-yellow-400 shadow-sm" step="0.01" min="0" placeholder="Old price (optional)">
+                            </div>
+                        </div>
+                        <div class="grid-2 gap-8">
+                            <div class="form-group">
+                                <label for="stock" class="form-label required-field">
+                                    <i class="lni lni-database text-purple-500 mr-1"></i>Stock Quantity
+                                </label>
+                                <input type="number" id="stock" name="stock" value="{{ product.stock }}" class="form-input focus:ring-2 focus:ring-purple-400 shadow-sm" min="0" required placeholder="Available stock">
+                            </div>
+                            <div class="form-group">
+                                <label for="warranty" class="form-label">
+                                    <i class="lni lni-protection text-indigo-500 mr-1"></i>Warranty
+                                </label>
+                                <input type="text" id="warranty" name="warranty" value="{{ product.warranty|default:'' }}" class="form-input focus:ring-2 focus:ring-indigo-400 shadow-sm" placeholder="e.g., 1 Year">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="form-label">
+                                <i class="lni lni-pencil-alt text-pink-500 mr-1"></i>Description
+                            </label>
+                            <textarea id="description" name="description" class="form-input form-textarea focus:ring-2 focus:ring-pink-400 shadow-sm" placeholder="Product description...">{{ product.description|default:'' }}</textarea>
+                            <p class="text-xs text-gray-400 mt-2">Give a detailed and attractive description to help buyers.</p>
+                        </div>
+                    </div>
+
+                    <!-- Category-Specific Fields -->
+                    {% if category_fields %}
+                    <div class="mt-12">
+                        <h3 class="text-2xl font-extrabold text-indigo-700 mb-7 flex items-center gap-3 border-b-2 border-indigo-100 pb-2 tracking-tight">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-indigo-100 via-purple-100 to-blue-100 shadow border-2 border-white ring-2 ring-indigo-200/40">
+                                <i class="lni lni-cog text-2xl text-indigo-500"></i>
+                            </span>
+                            {{ category }} Specifications
+                        </h3>
+                        <div class="grid-2 gap-8">
+                            {% for field in category_fields %}
+                                <div class="form-group">
+                                    <label for="{{ field.name }}" class="form-label{% if field.required %} required-field{% endif %} flex items-center gap-2">
+                                        <i class="lni lni-chevron-right text-indigo-400"></i>
+                                        <span>{{ field.label }}</span>
+                                    </label>
+                                    {% if field.type == 'select' %}
+                                        <select id="{{ field.name }}" name="{{ field.name }}" class="form-select focus:ring-2 focus:ring-indigo-400 shadow-sm bg-gradient-to-r from-indigo-50 to-purple-50"
+                                            {% if field.required %} required{% endif %}>
+                                            <option value="">Select {{ field.label }}</option>
+                                            {% for choice in field.choices %}
+                                                <option value="{{ choice.0 }}"{% if choice.0 == field.value %} selected{% endif %}>{{ choice.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% elif field.type == 'number' %}
+                                        <input type="number" id="{{ field.name }}" name="{{ field.name }}" value="{{ field.value|default:'' }}"
+                                            class="form-input focus:ring-2 focus:ring-indigo-400 shadow-sm bg-gradient-to-r from-indigo-50 to-purple-50"
+                                            {% if field.min %}min="{{ field.min }}"{% endif %}
+                                            {% if field.max %}max="{{ field.max }}"{% endif %}
+                                            {% if field.step %}step="{{ field.step }}"{% endif %}
+                                            {% if field.required %}required{% endif %}
+                                            {% if field.placeholder %}placeholder="{{ field.placeholder }}"{% endif %}>
+                                    {% elif field.type == 'textarea' %}
+                                        <textarea id="{{ field.name }}" name="{{ field.name }}"
+                                            class="form-input form-textarea focus:ring-2 focus:ring-indigo-400 shadow-sm bg-gradient-to-r from-indigo-50 to-purple-50"
+                                            {% if field.required %}required{% endif %}
+                                            {% if field.placeholder %}placeholder="{{ field.placeholder }}"{% endif %}>{{ field.value|default:'' }}</textarea>
+                                    {% else %}
+                                        <input type="text" id="{{ field.name }}" name="{{ field.name }}" value="{{ field.value|default:'' }}"
+                                            class="form-input focus:ring-2 focus:ring-indigo-400 shadow-sm bg-gradient-to-r from-indigo-50 to-purple-50"
+                                            {% if field.required %}required{% endif %}
+                                            {% if field.placeholder %}placeholder="{{ field.placeholder }}"{% endif %}>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}                    <!-- Product Images -->
+                    <div>
+                        <h3 class="text-2xl font-extrabold text-purple-700 mb-7 flex items-center gap-3 border-b-2 border-purple-100 pb-2 tracking-tight">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-purple-100 via-blue-100 to-indigo-100 shadow border-2 border-white ring-2 ring-purple-200/40">
+                                <i class="lni lni-image text-2xl text-purple-500"></i>
+                            </span>
+                            Product Images
+                        </h3>
+                        <div class="grid-2 gap-8">
+                            <!-- Image 1 -->
+                            <div class="form-group">
+                                <label for="image1" class="form-label flex items-center gap-2">
+                                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 shadow border border-purple-100">
+                                        <i class="lni lni-image text-purple-400"></i>
+                                    </span>
+                                    Image 1 <span class="text-xs text-purple-600 font-semibold">(Main)</span>
+                                </label>
+                                <div class="image-upload-container">
+                                    {% if product.image1 %}
+                                        <div class="current-image bg-gradient-to-r from-purple-50 via-blue-50 to-indigo-50 p-2 rounded-lg border border-purple-100 shadow-sm">
+                                            <img src="{{ product.image1.url }}" alt="Current Image 1" class="image-preview shadow border-2 border-purple-200 ring-2 ring-purple-100/40">
+                                            <div>
+                                                <p class="text-xs text-gray-500 mb-2">Current image</p>
+                                                <label class="inline-flex items-center text-xs">
+                                                    <input type="checkbox" name="delete_image1" class="delete-image-checkbox accent-red-500">
+                                                    <span class="ml-1 text-red-600">Delete this image</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    <input type="file" id="image1" name="image1" class="form-input focus:ring-2 focus:ring-purple-400 shadow-sm bg-gradient-to-r from-purple-50 to-blue-50" accept="image/*">
+                                    <p class="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                                        <i class="lni lni-info-circle text-purple-400"></i>
+                                        Recommended: <span class="font-semibold">800x800px</span>, max <span class="font-semibold">5MB</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Image 2 -->
+                            <div class="form-group">
+                                <label for="image2" class="form-label flex items-center gap-2">
+                                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 shadow border border-purple-100">
+                                        <i class="lni lni-image text-purple-400"></i>
+                                    </span>
+                                    Image 2
+                                </label>
+                                <div class="image-upload-container">
+                                    {% if product.image2 %}
+                                        <div class="current-image bg-gradient-to-r from-purple-50 via-blue-50 to-indigo-50 p-2 rounded-lg border border-purple-100 shadow-sm">
+                                            <img src="{{ product.image2.url }}" alt="Current Image 2" class="image-preview shadow border-2 border-purple-200 ring-2 ring-purple-100/40">
+                                            <div>
+                                                <p class="text-xs text-gray-500 mb-2">Current image</p>
+                                                <label class="inline-flex items-center text-xs">
+                                                    <input type="checkbox" name="delete_image2" class="delete-image-checkbox accent-red-500">
+                                                    <span class="ml-1 text-red-600">Delete this image</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    <input type="file" id="image2" name="image2" class="form-input focus:ring-2 focus:ring-purple-400 shadow-sm bg-gradient-to-r from-purple-50 to-blue-50" accept="image/*">
+                                    <p class="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                                        <i class="lni lni-info-circle text-purple-400"></i>
+                                        Recommended: <span class="font-semibold">800x800px</span>, max <span class="font-semibold">5MB</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Image 3 -->
+                            <div class="form-group">
+                                <label for="image3" class="form-label flex items-center gap-2">
+                                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 shadow border border-purple-100">
+                                        <i class="lni lni-image text-purple-400"></i>
+                                    </span>
+                                    Image 3
+                                </label>
+                                <div class="image-upload-container">
+                                    {% if product.image3 %}
+                                        <div class="current-image bg-gradient-to-r from-purple-50 via-blue-50 to-indigo-50 p-2 rounded-lg border border-purple-100 shadow-sm">
+                                            <img src="{{ product.image3.url }}" alt="Current Image 3" class="image-preview shadow border-2 border-purple-200 ring-2 ring-purple-100/40">
+                                            <div>
+                                                <p class="text-xs text-gray-500 mb-2">Current image</p>
+                                                <label class="inline-flex items-center text-xs">
+                                                    <input type="checkbox" name="delete_image3" class="delete-image-checkbox accent-red-500">
+                                                    <span class="ml-1 text-red-600">Delete this image</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    <input type="file" id="image3" name="image3" class="form-input focus:ring-2 focus:ring-purple-400 shadow-sm bg-gradient-to-r from-purple-50 to-blue-50" accept="image/*">
+                                    <p class="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                                        <i class="lni lni-info-circle text-purple-400"></i>
+                                        Recommended: <span class="font-semibold">800x800px</span>, max <span class="font-semibold">5MB</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Image 4 -->
+                            <div class="form-group">
+                                <label for="image4" class="form-label flex items-center gap-2">
+                                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 shadow border border-purple-100">
+                                        <i class="lni lni-image text-purple-400"></i>
+                                    </span>
+                                    Image 4
+                                </label>
+                                <div class="image-upload-container">
+                                    {% if product.image4 %}
+                                        <div class="current-image bg-gradient-to-r from-purple-50 via-blue-50 to-indigo-50 p-2 rounded-lg border border-purple-100 shadow-sm">
+                                            <img src="{{ product.image4.url }}" alt="Current Image 4" class="image-preview shadow border-2 border-purple-200 ring-2 ring-purple-100/40">
+                                            <div>
+                                                <p class="text-xs text-gray-500 mb-2">Current image</p>
+                                                <label class="inline-flex items-center text-xs">
+                                                    <input type="checkbox" name="delete_image4" class="delete-image-checkbox accent-red-500">
+                                                    <span class="ml-1 text-red-600">Delete this image</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    <input type="file" id="image4" name="image4" class="form-input focus:ring-2 focus:ring-purple-400 shadow-sm bg-gradient-to-r from-purple-50 to-blue-50" accept="image/*">
+                                    <p class="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                                        <i class="lni lni-info-circle text-purple-400"></i>
+                                        Recommended: <span class="font-semibold">800x800px</span>, max <span class="font-semibold">5MB</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Image 5 -->
+                            <div class="form-group">
+                                <label for="image5" class="form-label flex items-center gap-2">
+                                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 shadow border border-purple-100">
+                                        <i class="lni lni-image text-purple-400"></i>
+                                    </span>
+                                    Image 5
+                                </label>
+                                <div class="image-upload-container">
+                                    {% if product.image5 %}
+                                        <div class="current-image bg-gradient-to-r from-purple-50 via-blue-50 to-indigo-50 p-2 rounded-lg border border-purple-100 shadow-sm">
+                                            <img src="{{ product.image5.url }}" alt="Current Image 5" class="image-preview shadow border-2 border-purple-200 ring-2 ring-purple-100/40">
+                                            <div>
+                                                <p class="text-xs text-gray-500 mb-2">Current image</p>
+                                                <label class="inline-flex items-center text-xs">
+                                                    <input type="checkbox" name="delete_image5" class="delete-image-checkbox accent-red-500">
+                                                    <span class="ml-1 text-red-600">Delete this image</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    <input type="file" id="image5" name="image5" class="form-input focus:ring-2 focus:ring-purple-400 shadow-sm bg-gradient-to-r from-purple-50 to-blue-50" accept="image/*">
+                                    <p class="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                                        <i class="lni lni-info-circle text-purple-400"></i>
+                                        Recommended: <span class="font-semibold">800x800px</span>, max <span class="font-semibold">5MB</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-xs text-gray-500 flex items-center gap-2">
+                            <i class="lni lni-lightbulb text-yellow-400"></i>
+                            <span>Tip: Upload high-quality images for better product appeal. The first image will be used as the main display.</span>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="flex flex-col md:flex-row items-center justify-between pt-10 border-t-2 border-blue-100 gap-6 mt-12">
+                        <a href="{% url 'product_management' %}" class="btn-secondary flex items-center gap-2 shadow-lg hover:scale-105 transition-transform px-8 py-3 text-lg font-semibold rounded-xl border border-gray-200 bg-gradient-to-r from-gray-200/60 to-blue-100/60 hover:bg-gradient-to-r hover:from-blue-100 hover:to-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-300 group">
+                            <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-gray-100 via-blue-100 to-purple-100 shadow border border-gray-200 mr-2 group-hover:bg-blue-100 transition-all">
+                                <i class="lni lni-arrow-left text-xl text-blue-500 group-hover:text-blue-700"></i>
+                            </span>
+                            <span class="group-hover:underline">Cancel</span>
+                        </a>
+                        <button type="submit" class="btn-primary flex items-center gap-2 shadow-xl hover:scale-105 transition-transform px-10 py-3 text-lg font-bold rounded-xl border border-blue-200 bg-gradient-to-r from-blue-500/90 to-indigo-400/90 hover:from-indigo-500 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 group relative overflow-hidden">
+                            <span class="absolute left-0 top-0 w-full h-full bg-gradient-to-r from-blue-400/20 via-indigo-400/10 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl pointer-events-none"></span>
+                            <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 shadow border border-blue-200 mr-2 group-hover:bg-indigo-100 transition-all">
+                                <i class="lni lni-checkmark-circle text-2xl text-green-500 group-hover:text-green-700"></i>
+                            </span>
+                            <span class="group-hover:underline">Update Product</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// Preview images before upload
+document.addEventListener('DOMContentLoaded', function() {
+    const imageInputs = ['image1', 'image2', 'image3', 'image4', 'image5'];
+
+    imageInputs.forEach(function(inputId) {
+        const input = document.getElementById(inputId);
+        if (input) {
+            input.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // Find or create preview
+                        let preview = input.parentElement.querySelector('.new-image-preview');
+                        if (!preview) {
+                            preview = document.createElement('img');
+                            preview.className = 'image-preview new-image-preview';
+                            preview.style.marginTop = '0.5rem';
+                            input.parentElement.appendChild(preview);
+
+                            // Add label for new image
+                            const label = document.createElement('p');
+                            label.className = 'text-sm text-gray-600 mt-1';
+                            label.textContent = 'New image preview';
+                            input.parentElement.appendChild(label);
+                        }
+                        preview.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

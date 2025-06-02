@@ -1,0 +1,574 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Customer Support Dashboard - TechReform BD{% endblock %}
+
+{% block content %}
+<!-- Customer Support Dashboard -->
+<section class="py-12 lg:py-16 bg-gradient-to-br from-base-100 via-base-200 to-base-100 min-h-screen">
+    <div class="container mx-auto px-4">
+        <!-- Header Section -->
+        <div class="relative bg-gradient-to-r from-primary/40 via-secondary/20 to-accent/10 rounded-3xl p-12 mb-14 border-2 border-primary/50 shadow-2xl flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10 overflow-hidden">
+            <!-- Decorative Circles -->
+            <div class="absolute -top-12 -left-12 w-44 h-44 bg-primary/20 rounded-full blur-3xl z-0"></div>
+            <div class="absolute -bottom-16 -right-16 w-56 h-56 bg-secondary/20 rounded-full blur-3xl z-0"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-accent/10 rounded-full blur-2xl z-0"></div>
+            <div class="relative z-10 flex-1">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-primary mb-4 flex items-center gap-5 drop-shadow-xl">
+                <span class="animate-float">
+                    <span class="inline-flex items-center justify-center bg-gradient-to-tr from-primary/60 via-secondary/40 to-accent/30 rounded-full p-5 shadow-2xl ring-8 ring-primary/10 border-2 border-primary/20 transition-all duration-300 hover:scale-105">
+                        <i class="lni lni-headphone text-5xl md:text-6xl text-primary drop-shadow-lg"></i>
+                    </span>
+                </span>
+                <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                    Customer Support Dashboard
+                </span>
+            </h1>
+            <p class="text-lg md:text-xl text-base-content/90 font-medium max-w-2xl mb-2 flex items-center gap-2">
+                <i class="lni lni-star-filled text-accent text-xl animate-float"></i>
+                <span>
+                    Manage customer support tickets, track progress, and deliver
+                    <span class="font-bold text-primary">outstanding service</span> to your clients.
+                </span>
+            </p>
+            <div class="flex flex-wrap gap-2 mb-2">
+                <span class="badge badge-accent badge-lg px-4 py-2 shadow-md">Fast Response</span>
+                <span class="badge badge-info badge-lg px-4 py-2 shadow-md">24/7 Support</span>
+                <span class="badge badge-success badge-lg px-4 py-2 shadow-md">Customer Satisfaction</span>
+            </div>
+            <div class="flex flex-wrap gap-4 mt-6">
+                <a href="{% url 'profile' %}" class="btn btn-outline btn-primary btn-lg shadow-md hover:scale-105 hover:-translate-y-1 transition-all duration-200 flex items-center gap-2 group">
+                    <span class="relative flex items-center">
+                        <i class="lni lni-arrow-left mr-2 group-hover:-translate-x-1 transition-transform duration-200"></i>
+                        <span class="hidden md:inline">Back to Profile</span>
+                    </span>
+                </a>
+                <a href="{% url 'contact' %}" class="btn btn-primary btn-lg shadow-md hover:scale-105 hover:-translate-y-1 transition-all duration-200 flex items-center gap-2 group">
+                    <span class="relative flex items-center">
+                        <span class="inline-flex items-center justify-center bg-accent/20 rounded-full p-2 mr-2 group-hover:scale-110 transition-transform duration-200">
+                            <i class="lni lni-plus text-accent"></i>
+                        </span>
+                        <span class="font-semibold">New Ticket</span>
+                    </span>
+                </a>
+            </div>
+            </div>
+            <!-- Optional: Add a subtle illustration or icon for extra polish -->
+            <div class="hidden lg:flex items-center justify-center z-10">
+            <div class="bg-base-100/80 rounded-2xl p-6 shadow-lg border border-primary/10 flex flex-col items-center">
+                <i class="lni lni-support text-6xl text-primary mb-2 animate-float"></i>
+                <span class="text-base font-semibold text-primary">24/7 Support</span>
+            </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Statistics Cards (Improved Look) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6 mb-12">
+            <!-- Total Tickets -->
+            <div class="relative group bg-gradient-to-br from-primary/20 via-base-100 to-primary/10 rounded-3xl p-8 shadow-2xl border-2 border-primary/30 hover:scale-105 hover:shadow-3xl transition-all duration-300 overflow-hidden">
+            <div class="absolute -top-8 -right-8 w-24 h-24 bg-primary/30 rounded-full blur-3xl opacity-70 group-hover:opacity-90 transition-opacity"></div>
+            <div class="flex flex-col items-start gap-4 relative z-10">
+                <div class="flex items-center gap-3">
+                <div class="w-16 h-16 bg-primary/30 rounded-2xl flex items-center justify-center animate-spin-slow shadow-lg ring-4 ring-primary/10">
+                    <i class="lni lni-ticket text-4xl text-primary"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-base-content/70 uppercase font-bold tracking-widest mb-1">Total</p>
+                    <p class="text-4xl font-extrabold text-primary drop-shadow">{{ stats.total_tickets }}</p>
+                </div>
+                </div>
+                <div class="h-1 w-16 bg-primary/40 rounded-full group-hover:w-24 transition-all duration-300"></div>
+            </div>
+            </div>
+            <!-- Open Tickets -->
+            <div class="relative group bg-gradient-to-br from-info/20 via-base-100 to-info/10 rounded-3xl p-8 shadow-2xl border-2 border-info/30 hover:scale-105 hover:shadow-3xl transition-all duration-300 overflow-hidden">
+            <div class="absolute -bottom-8 -left-8 w-24 h-24 bg-info/30 rounded-full blur-3xl opacity-70 group-hover:opacity-90 transition-opacity"></div>
+            <div class="flex flex-col items-start gap-4 relative z-10">
+                <div class="flex items-center gap-3">
+                <div class="w-16 h-16 bg-info/30 rounded-2xl flex items-center justify-center animate-float shadow-lg ring-4 ring-info/10">
+                    <i class="lni lni-circle-plus text-4xl text-info"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-base-content/70 uppercase font-bold tracking-widest mb-1">Open</p>
+                    <p class="text-4xl font-extrabold text-info drop-shadow">{{ stats.open_tickets }}</p>
+                </div>
+                </div>
+                <div class="h-1 w-16 bg-info/40 rounded-full group-hover:w-24 transition-all duration-300"></div>
+            </div>
+            </div>
+            <!-- In Progress -->
+            <div class="relative group bg-gradient-to-br from-warning/20 via-base-100 to-warning/10 rounded-3xl p-8 shadow-2xl border-2 border-warning/30 hover:scale-105 hover:shadow-3xl transition-all duration-300 overflow-hidden">
+            <div class="absolute -top-8 -left-8 w-24 h-24 bg-warning/30 rounded-full blur-3xl opacity-70 group-hover:opacity-90 transition-opacity"></div>
+            <div class="flex flex-col items-start gap-4 relative z-10">
+                <div class="flex items-center gap-3">
+                <div class="w-16 h-16 bg-warning/30 rounded-2xl flex items-center justify-center animate-pulse-slow shadow-lg ring-4 ring-warning/10">
+                    <i class="lni lni-timer text-4xl text-warning"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-base-content/70 uppercase font-bold tracking-widest mb-1">In Progress</p>
+                    <p class="text-4xl font-extrabold text-warning drop-shadow">{{ stats.in_progress_tickets }}</p>
+                </div>
+                </div>
+                <div class="h-1 w-16 bg-warning/40 rounded-full group-hover:w-24 transition-all duration-300"></div>
+            </div>
+            </div>
+            <!-- Pending -->
+            <div class="relative group bg-gradient-to-br from-accent/20 via-base-100 to-accent/10 rounded-3xl p-8 shadow-2xl border-2 border-accent/30 hover:scale-105 hover:shadow-3xl transition-all duration-300 overflow-hidden">
+            <div class="absolute -bottom-8 -right-8 w-24 h-24 bg-accent/30 rounded-full blur-3xl opacity-70 group-hover:opacity-90 transition-opacity"></div>
+            <div class="flex flex-col items-start gap-4 relative z-10">
+                <div class="flex items-center gap-3">
+                <div class="w-16 h-16 bg-accent/30 rounded-2xl flex items-center justify-center animate-float shadow-lg ring-4 ring-accent/10">
+                    <i class="lni lni-hourglass text-4xl text-accent"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-base-content/70 uppercase font-bold tracking-widest mb-1">Pending</p>
+                    <p class="text-4xl font-extrabold text-accent drop-shadow">{{ stats.pending_tickets }}</p>
+                </div>
+                </div>
+                <div class="h-1 w-16 bg-accent/40 rounded-full group-hover:w-24 transition-all duration-300"></div>
+            </div>
+            </div>
+            <!-- Overdue -->
+            <div class="relative group bg-gradient-to-br from-error/20 via-base-100 to-error/10 rounded-3xl p-8 shadow-2xl border-2 border-error/30 hover:scale-105 hover:shadow-3xl transition-all duration-300 overflow-hidden">
+            <div class="absolute -top-8 -right-8 w-24 h-24 bg-error/30 rounded-full blur-3xl opacity-70 group-hover:opacity-90 transition-opacity"></div>
+            <div class="flex flex-col items-start gap-4 relative z-10">
+                <div class="flex items-center gap-3">
+                <div class="w-16 h-16 bg-error/30 rounded-2xl flex items-center justify-center animate-pulse-slow shadow-lg ring-4 ring-error/10">
+                    <i class="lni lni-alarm-clock text-4xl text-error"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-base-content/70 uppercase font-bold tracking-widest mb-1">Overdue</p>
+                    <p class="text-4xl font-extrabold text-error drop-shadow">{{ stats.overdue_tickets }}</p>
+                </div>
+                </div>
+                <div class="h-1 w-16 bg-error/40 rounded-full group-hover:w-24 transition-all duration-300"></div>
+            </div>
+            </div>
+            <!-- My Tickets -->
+            <div class="relative group bg-gradient-to-br from-success/20 via-base-100 to-success/10 rounded-3xl p-8 shadow-2xl border-2 border-success/30 hover:scale-105 hover:shadow-3xl transition-all duration-300 overflow-hidden">
+            <div class="absolute -bottom-8 -left-8 w-24 h-24 bg-success/30 rounded-full blur-3xl opacity-70 group-hover:opacity-90 transition-opacity"></div>
+            <div class="flex flex-col items-start gap-4 relative z-10">
+                <div class="flex items-center gap-3">
+                <div class="w-16 h-16 bg-success/30 rounded-2xl flex items-center justify-center animate-float shadow-lg ring-4 ring-success/10">
+                    <i class="lni lni-user text-4xl text-success"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-base-content/70 uppercase font-bold tracking-widest mb-1">My Tickets</p>
+                    <p class="text-4xl font-extrabold text-success drop-shadow">{{ stats.my_tickets }}</p>
+                </div>
+                </div>
+                <div class="h-1 w-16 bg-success/40 rounded-full group-hover:w-24 transition-all duration-300"></div>
+            </div>
+            </div>
+            <!-- Unassigned -->
+            <div class="relative group bg-gradient-to-br from-neutral/20 via-base-100 to-neutral/10 rounded-3xl p-8 shadow-2xl border-2 border-neutral/30 hover:scale-105 hover:shadow-3xl transition-all duration-300 overflow-hidden">
+            <div class="absolute -top-8 -left-8 w-24 h-24 bg-neutral/30 rounded-full blur-3xl opacity-70 group-hover:opacity-90 transition-opacity"></div>
+            <div class="flex flex-col items-start gap-4 relative z-10">
+                <div class="flex items-center gap-3">
+                <div class="w-16 h-16 bg-neutral/30 rounded-2xl flex items-center justify-center animate-pulse-slow shadow-lg ring-4 ring-neutral/10">
+                    <i class="lni lni-question-circle text-4xl text-neutral"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-base-content/70 uppercase font-bold tracking-widest mb-1">Unassigned</p>
+                    <p class="text-4xl font-extrabold text-neutral drop-shadow">{{ stats.unassigned_tickets }}</p>
+                </div>
+                </div>
+                <div class="h-1 w-16 bg-neutral/40 rounded-full group-hover:w-24 transition-all duration-300"></div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Filters and Search (Enhanced & Modernized) -->
+        <div class="relative mb-12">
+            <!-- Decorative Blobs -->
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-gradient-to-br from-primary/30 via-primary/10 to-accent/10 rounded-full blur-3xl z-0"></div>
+            <div class="absolute -bottom-14 -right-14 w-52 h-52 bg-gradient-to-tr from-accent/30 via-secondary/10 to-primary/10 rounded-full blur-3xl z-0"></div>
+            <div class="relative z-10 bg-gradient-to-br from-base-100 via-primary/10 to-base-100 rounded-3xl p-10 shadow-2xl border-2 border-primary/10 overflow-hidden">
+            <form method="GET" class="space-y-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
+                <!-- Search -->
+                <div class="lg:col-span-2">
+                    <label class="block text-sm font-bold text-primary mb-2 flex items-center gap-1">
+                    <i class="lni lni-search-alt text-primary"></i>
+                    Search
+                    </label>
+                    <div class="relative group">
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ search_query }}"
+                        placeholder="Ticket ID, subject, customer..."
+                        class="input input-bordered w-full focus:input-primary bg-base-100 pl-12 shadow-lg border-2 border-primary/20 focus:border-primary/60 transition-all duration-200 group-hover:ring-2 group-hover:ring-primary/30"
+                    >
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary/70">
+                        <i class="lni lni-search"></i>
+                    </span>
+                    </div>
+                </div>
+                <!-- Status Filter -->
+                <div>
+                    <label class="block text-sm font-bold text-info mb-2 flex items-center gap-1">
+                    <i class="lni lni-circle-plus text-info"></i>
+                    Status
+                    </label>
+                    <div class="relative group">
+                    <select name="status" class="select select-bordered w-full focus:select-info bg-base-100 shadow-lg border-2 border-info/20 focus:border-info/60 transition-all duration-200 group-hover:ring-2 group-hover:ring-info/30">
+                        <option value="all" {% if status_filter == 'all' %}selected{% endif %}>All Status</option>
+                        {% for value, label in status_choices %}
+                        <option value="{{ value }}" {% if status_filter == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-info/70 pointer-events-none">
+                        <i class="lni lni-chevron-down"></i>
+                    </span>
+                    </div>
+                </div>
+                <!-- Priority Filter -->
+                <div>
+                    <label class="block text-sm font-bold text-warning mb-2 flex items-center gap-1">
+                    <i class="lni lni-target text-warning"></i>
+                    Priority
+                    </label>
+                    <div class="relative group">
+                    <select name="priority" class="select select-bordered w-full focus:select-warning bg-base-100 shadow-lg border-2 border-warning/20 focus:border-warning/60 transition-all duration-200 group-hover:ring-2 group-hover:ring-warning/30">
+                        <option value="all" {% if priority_filter == 'all' %}selected{% endif %}>All Priorities</option>
+                        {% for value, label in priority_choices %}
+                        <option value="{{ value }}" {% if priority_filter == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-warning/70 pointer-events-none">
+                        <i class="lni lni-chevron-down"></i>
+                    </span>
+                    </div>
+                </div>
+                <!-- Category Filter -->
+                <div>
+                    <label class="block text-sm font-bold text-accent mb-2 flex items-center gap-1">
+                    <i class="lni lni-tag text-accent"></i>
+                    Category
+                    </label>
+                    <div class="relative group">
+                    <select name="category" class="select select-bordered w-full focus:select-accent bg-base-100 shadow-lg border-2 border-accent/20 focus:border-accent/60 transition-all duration-200 group-hover:ring-2 group-hover:ring-accent/30">
+                        <option value="all" {% if category_filter == 'all' %}selected{% endif %}>All Categories</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}" {% if category_filter == category.id|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-accent/70 pointer-events-none">
+                        <i class="lni lni-chevron-down"></i>
+                    </span>
+                    </div>
+                </div>
+                <!-- Assignment Filter -->
+                <div>
+                    <label class="block text-sm font-bold text-success mb-2 flex items-center gap-1">
+                    <i class="lni lni-users text-success"></i>
+                    Assignment
+                    </label>
+                    <div class="relative group">
+                    <select name="assigned" class="select select-bordered w-full focus:select-success bg-base-100 shadow-lg border-2 border-success/20 focus:border-success/60 transition-all duration-200 group-hover:ring-2 group-hover:ring-success/30">
+                        <option value="all" {% if assigned_filter == 'all' %}selected{% endif %}>All Assignments</option>
+                        <option value="me" {% if assigned_filter == 'me' %}selected{% endif %}>My Tickets</option>
+                        <option value="unassigned" {% if assigned_filter == 'unassigned' %}selected{% endif %}>Unassigned</option>
+                        {% for staff in staff_members %}
+                        <option value="{{ staff.id }}" {% if assigned_filter == staff.id|stringformat:"s" %}selected{% endif %}>{{ staff.get_full_name|default:staff.username }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-success/70 pointer-events-none">
+                        <i class="lni lni-chevron-down"></i>
+                    </span>
+                    </div>
+                </div>
+                </div>
+                <div class="flex flex-wrap gap-4 mt-4 justify-end">
+                <button type="submit" class="btn btn-primary btn-lg shadow-xl flex items-center gap-2 hover:scale-105 hover:-translate-y-1 transition-transform duration-200">
+                    <span class="relative flex items-center">
+                    <span class="inline-flex items-center justify-center bg-primary/20 rounded-full p-2 mr-2 group-hover:scale-110 transition-transform duration-200">
+                        <i class="lni lni-funnel text-primary"></i>
+                    </span>
+                    <span class="font-semibold">Apply Filters</span>
+                    </span>
+                </button>
+                <a href="{% url 'customer_support_dashboard' %}" class="btn btn-outline btn-lg flex items-center gap-2 hover:scale-105 hover:-translate-y-1 transition-transform duration-200">
+                    <span class="relative flex items-center">
+                    <span class="inline-flex items-center justify-center bg-accent/20 rounded-full p-2 mr-2 group-hover:scale-110 transition-transform duration-200">
+                        <i class="lni lni-reload text-accent"></i>
+                    </span>
+                    <span class="font-semibold">Clear Filters</span>
+                    </span>
+                </a>
+                </div>
+            </form>
+            </div>
+        </div>
+
+        <!-- Tickets Table (Enhanced Look) -->
+        <div class="bg-gradient-to-br from-base-100 via-primary/5 to-base-200 rounded-3xl shadow-2xl border-2 border-primary/10 overflow-hidden relative">
+            <!-- Decorative Blobs (Enhanced) -->
+            <div class="absolute -top-12 -left-12 w-40 h-40 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/10 rounded-full blur-3xl z-0"></div>
+            <div class="absolute -bottom-16 -right-16 w-56 h-56 bg-gradient-to-tr from-accent/20 via-secondary/10 to-primary/10 rounded-full blur-3xl z-0"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-primary/5 rounded-full blur-2xl z-0"></div>
+            <div class="relative z-10">
+                <div class="p-10 border-b-2 border-primary/20 bg-gradient-to-r from-primary/10 via-base-100 to-secondary/10 flex flex-col md:flex-row items-center justify-between gap-6 rounded-t-3xl shadow-lg">
+                    <div class="flex items-center gap-4">
+                        <span class="inline-flex items-center justify-center bg-gradient-to-tr from-primary/30 via-secondary/20 to-accent/20 rounded-full p-4 shadow-xl ring-8 ring-primary/10 border-2 border-primary/20 animate-float">
+                            <i class="lni lni-list text-4xl text-accent drop-shadow"></i>
+                        </span>
+                        <div>
+                            <h2 class="text-3xl font-extrabold text-primary flex items-center gap-2 drop-shadow">
+                                Support Tickets
+                                <span class="ml-2 badge badge-primary badge-lg shadow-md text-lg px-4 py-2 animate-pulse-slow">{{ page_obj.paginator.count }}</span>
+                            </h2>
+                            <p class="text-base-content/70 text-sm mt-1">All your support tickets in one place</p>
+                        </div>
+                    </div>
+                    <a href="{% url 'contact' %}" class="btn btn-accent btn-lg shadow-xl flex items-center gap-2 hover:scale-105 hover:-translate-y-1 transition-transform duration-200 group">
+                        <span class="inline-flex items-center justify-center bg-accent/20 rounded-full p-2 mr-2 group-hover:scale-110 transition-transform duration-200">
+                            <i class="lni lni-plus text-accent"></i>
+                        </span>
+                        <span class="font-semibold">New Ticket</span>
+                    </a>
+                </div>
+            </div>
+            {% if page_obj %}
+                <div class="overflow-x-auto rounded-3xl shadow-2xl border border-primary/10 bg-gradient-to-br from-base-100 via-primary/5 to-base-200 backdrop-blur-lg">
+                <table class="table w-full text-base table-hover">
+                    <thead>
+                    <tr class="bg-gradient-to-r from-primary/20 via-base-200 to-accent/20 text-base-content/90 text-xs uppercase tracking-wider shadow-md">
+                        <th class="font-extrabold py-6 px-5 rounded-tl-3xl">Ticket ID</th>
+                        <th class="font-extrabold py-6 px-5">Customer</th>
+                        <th class="font-extrabold py-6 px-5">Subject</th>
+                        <th class="font-extrabold py-6 px-5">Category</th>
+                        <th class="font-extrabold py-6 px-5">Priority</th>
+                        <th class="font-extrabold py-6 px-5">Status</th>
+                        <th class="font-extrabold py-6 px-5">Assigned</th>
+                        <th class="font-extrabold py-6 px-5">Created</th>
+                        <th class="font-extrabold py-6 px-5 rounded-tr-3xl">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for ticket in page_obj %}
+                        <tr class="hover:bg-primary/10 hover:shadow-lg transition-all duration-200 group border-b border-base-200 last:border-b-0">                        <td class="py-5 px-5 align-middle">
+                            <a href="{% url 'ticket_detail' ticket.ticket_id %}" class="font-mono text-base font-bold text-primary hover:text-accent group-hover:underline transition-all duration-150 flex items-center gap-2 hover:scale-105 cursor-pointer">
+                                <span class="inline-flex items-center justify-center bg-primary/10 rounded-full p-2 shadow ring-2 ring-primary/10 group-hover:bg-accent/20 group-hover:ring-accent/30 transition-all duration-200">
+                                    <i class="lni lni-ticket text-primary group-hover:text-accent transition-colors duration-200"></i>
+                                </span>
+                                #{{ ticket.ticket_id }}
+                            </a>
+                        </td>
+                        <td class="py-5 px-5 align-middle">
+                            <div class="flex items-center gap-3">
+                            <div class="avatar placeholder">
+                                <div class="bg-gradient-to-tr from-primary/60 via-secondary/40 to-accent/30 text-primary-content rounded-full w-11 h-11 flex items-center justify-center font-bold shadow-md ring-4 ring-primary/10">
+                                <span class="text-base">{{ ticket.customer.username.0|upper }}</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-base leading-tight text-primary">{{ ticket.customer.get_full_name|default:ticket.customer.username }}</div>
+                                <div class="text-xs text-base-content/60">{{ ticket.customer_email }}</div>
+                            </div>
+                            </div>
+                        </td>
+                        <td class="py-5 px-5 align-middle max-w-xs">
+                            <div class="font-semibold text-base truncate text-base-content/90" title="{{ ticket.subject }}">
+                            {{ ticket.subject }}
+                            </div>
+                            <div class="text-xs text-base-content/60 truncate" title="{{ ticket.description }}">
+                            {{ ticket.description|truncatechars:50 }}
+                            </div>
+                        </td>
+                        <td class="py-5 px-5 align-middle">
+                            {% if ticket.category %}
+                            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full shadow font-semibold text-sm"
+                                  style="background: {{ ticket.category.color }}20; color: {{ ticket.category.color }};">
+                                <span class="w-2.5 h-2.5 rounded-full" style="background: {{ ticket.category.color }};"></span>
+                                <i class="lni lni-tag"></i>
+                                {{ ticket.category.name }}
+                            </span>
+                            {% else %}
+                            <span class="text-base-content/50 text-xs">No category</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-5 px-5 align-middle">
+                            {% if ticket.priority == 'urgent' %}
+                            <span class="badge badge-error badge-lg shadow-md animate-pulse-slow flex items-center gap-1 font-bold"><i class="lni lni-warning"></i>{{ ticket.get_priority_display }}</span>
+                            {% elif ticket.priority == 'high' %}
+                            <span class="badge badge-warning badge-lg shadow-md flex items-center gap-1 font-bold"><i class="lni lni-arrow-up"></i>{{ ticket.get_priority_display }}</span>
+                            {% elif ticket.priority == 'medium' %}
+                            <span class="badge badge-info badge-lg shadow-md flex items-center gap-1 font-bold"><i class="lni lni-bolt-alt"></i>{{ ticket.get_priority_display }}</span>
+                            {% else %}
+                            <span class="badge badge-neutral badge-lg shadow-md flex items-center gap-1 font-bold"><i class="lni lni-checkmark-circle"></i>{{ ticket.get_priority_display }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-5 px-5 align-middle">
+                            {% if ticket.status == 'open' %}
+                            <span class="badge badge-info badge-lg shadow-md flex items-center gap-1 font-bold"><i class="lni lni-unlock"></i>{{ ticket.get_status_display }}</span>
+                            {% elif ticket.status == 'in_progress' %}
+                            <span class="badge badge-warning badge-lg shadow-md animate-pulse-slow flex items-center gap-1 font-bold"><i class="lni lni-spinner"></i>{{ ticket.get_status_display }}</span>
+                            {% elif ticket.status == 'pending_customer' %}
+                            <span class="badge badge-accent badge-lg shadow-md flex items-center gap-1 font-bold"><i class="lni lni-hourglass"></i>{{ ticket.get_status_display }}</span>
+                            {% elif ticket.status == 'resolved' %}
+                            <span class="badge badge-success badge-lg shadow-md flex items-center gap-1 font-bold"><i class="lni lni-checkmark"></i>{{ ticket.get_status_display }}</span>
+                            {% else %}
+                            <span class="badge badge-neutral badge-lg shadow-md flex items-center gap-1 font-bold"><i class="lni lni-question-circle"></i>{{ ticket.get_status_display }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-5 px-5 align-middle">
+                            {% if ticket.assigned_staff %}
+                            <div class="flex items-center gap-2">
+                                <div class="avatar placeholder">
+                                <div class="bg-gradient-to-tr from-success/60 via-success/30 to-base-100 text-success-content rounded-full w-9 h-9 flex items-center justify-center font-bold shadow ring-2 ring-success/10">
+                                    <span class="text-sm">{{ ticket.assigned_staff.username.0|upper }}</span>
+                                </div>
+                                </div>
+                                <span class="text-base font-semibold text-success">{{ ticket.assigned_staff.get_full_name|default:ticket.assigned_staff.username }}</span>
+                            </div>
+                            {% else %}
+                            <span class="text-error text-base font-semibold flex items-center gap-1"><i class="lni lni-user-times"></i>Unassigned</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-5 px-5 align-middle">
+                            <div class="text-base font-medium text-base-content/90">{{ ticket.created_at|date:"M d, Y" }}</div>
+                            <div class="text-xs text-base-content/60">{{ ticket.created_at|time:"g:i A" }}</div>
+                        </td>
+                        <td class="py-5 px-5 align-middle">
+                            <div class="flex gap-2">
+                            <a href="{% url 'ticket_detail' ticket.ticket_id %}" class="btn btn-xs btn-primary tooltip" data-tip="View Details">
+                                <i class="lni lni-eye"></i>
+                            </a>
+                            {% if not ticket.assigned_staff %}
+                                <a href="{% url 'assign_ticket' ticket.ticket_id %}" class="btn btn-xs btn-info tooltip" data-tip="Assign Ticket">
+                                <i class="lni lni-user-plus"></i>
+                                </a>
+                            {% endif %}
+                            </div>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+                <!-- Pagination -->
+                {% if page_obj.has_other_pages %}
+                <div class="p-8 border-t border-primary/20 bg-gradient-to-r from-base-100 via-primary/5 to-base-200 rounded-b-3xl shadow-inner">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div class="text-sm text-base-content/70 flex items-center gap-2">
+                            <span class="inline-flex items-center justify-center bg-primary/10 rounded-full p-2 shadow ring-2 ring-primary/10 mr-2">
+                                <i class="lni lni-stats-up text-primary"></i>
+                            </span>
+                            Showing
+                            <span class="font-bold text-primary">{{ page_obj.start_index }}</span>
+                            to
+                            <span class="font-bold text-primary">{{ page_obj.end_index }}</span>
+                            of
+                            <span class="font-bold text-primary">{{ page_obj.paginator.count }}</span>
+                            tickets
+                        </div>
+                        <div class="flex items-center gap-2">
+                            {% if page_obj.has_previous %}
+                                <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.priority %}&priority={{ request.GET.priority }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.assigned %}&assigned={{ request.GET.assigned }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+                                   class="btn btn-md btn-outline btn-primary flex items-center gap-1 shadow group transition-all duration-200 hover:scale-105">
+                                    <i class="lni lni-chevron-left group-hover:-translate-x-1 transition-transform"></i>
+                                    <span class="hidden sm:inline">Previous</span>
+                                </a>
+                            {% endif %}
+                            <div class="flex items-center gap-1">
+                                {% for num in page_obj.paginator.page_range %}
+                                    {% if page_obj.number == num %}
+                                        <span class="btn btn-md btn-primary font-bold shadow-md scale-110">{{ num }}</span>
+                                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                        <a href="?page={{ num }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.priority %}&priority={{ request.GET.priority }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.assigned %}&assigned={{ request.GET.assigned }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+                                           class="btn btn-md btn-outline btn-primary shadow-sm hover:scale-105 transition-all duration-200">{{ num }}</a>
+                                    {% elif num == 1 or num == page_obj.paginator.num_pages %}
+                                        <a href="?page={{ num }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.priority %}&priority={{ request.GET.priority }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.assigned %}&assigned={{ request.GET.assigned }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+                                           class="btn btn-md btn-outline btn-primary shadow-sm hover:scale-105 transition-all duration-200">{{ num }}</a>
+                                    {% elif num == page_obj.number|add:'-3' or num == page_obj.number|add:'3' %}
+                                        <span class="btn btn-md btn-ghost text-base-content/40 cursor-default">...</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.priority %}&priority={{ request.GET.priority }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.assigned %}&assigned={{ request.GET.assigned }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+                                   class="btn btn-md btn-outline btn-primary flex items-center gap-1 shadow group transition-all duration-200 hover:scale-105">
+                                    <span class="hidden sm:inline">Next</span>
+                                    <i class="lni lni-chevron-right group-hover:translate-x-1 transition-transform"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% else %}
+                <div class="p-20 text-center flex flex-col items-center justify-center min-h-[350px] bg-gradient-to-br from-base-100 via-primary/10 to-base-200 rounded-b-3xl shadow-inner relative overflow-hidden">
+                    <!-- Decorative Blobs -->
+                    <div class="absolute -top-10 -left-10 w-40 h-40 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/10 rounded-full blur-3xl z-0"></div>
+                    <div class="absolute -bottom-14 -right-14 w-52 h-52 bg-gradient-to-tr from-accent/20 via-secondary/10 to-primary/10 rounded-full blur-3xl z-0"></div>
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-primary/5 rounded-full blur-2xl z-0"></div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div class="w-24 h-24 bg-gradient-to-tr from-primary/10 via-base-300 to-accent/10 rounded-full flex items-center justify-center mx-auto mb-8 animate-float shadow-2xl ring-8 ring-primary/10 border-2 border-primary/20">
+                            <i class="lni lni-empty-file text-5xl text-base-content/40"></i>
+                        </div>
+                        <h3 class="text-3xl font-extrabold text-primary mb-2 flex items-center gap-2">
+                            <i class="lni lni-warning text-accent"></i>
+                            No Tickets Found
+                        </h3>
+                        <p class="text-base-content/70 text-lg mb-6 max-w-xl mx-auto">
+                            {% if search_query or status_filter != 'all' or priority_filter != 'all' or category_filter != 'all' or assigned_filter != 'all' %}
+                                Try adjusting your <span class="font-semibold text-primary">filters</span> or <span class="font-semibold text-primary">search</span> to see more results.
+                            {% else %}
+                                There are currently <span class="font-semibold text-primary">no support tickets</span>. Create a new ticket to get started!
+                            {% endif %}
+                        </p>
+                        <div class="flex flex-wrap gap-4 justify-center">
+                            <a href="{% url 'contact' %}" class="btn btn-accent btn-lg shadow-lg flex items-center gap-2 hover:scale-105 hover:-translate-y-1 transition-transform duration-200 group">
+                                <span class="inline-flex items-center justify-center bg-accent/20 rounded-full p-2 mr-2 group-hover:scale-110 transition-transform duration-200">
+                                    <i class="lni lni-plus text-accent"></i>
+                                </span>
+                                <span class="font-semibold">Create New Ticket</span>
+                            </a>
+                            {% if search_query or status_filter != 'all' or priority_filter != 'all' or category_filter != 'all' or assigned_filter != 'all' %}
+                                <a href="{% url 'customer_support_dashboard' %}" class="btn btn-outline btn-lg flex items-center gap-2 hover:scale-105 hover:-translate-y-1 transition-transform duration-200">
+                                    <span class="inline-flex items-center justify-center bg-primary/20 rounded-full p-2 mr-2 group-hover:scale-110 transition-transform duration-200">
+                                        <i class="lni lni-reload text-primary"></i>
+                                    </span>
+                                    <span class="font-semibold">Clear Filters</span>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-slow {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.3; }
+}
+
+@keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 4s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+    animation: spin-slow 20s linear infinite;
+}
+</style>
+{% endblock %}

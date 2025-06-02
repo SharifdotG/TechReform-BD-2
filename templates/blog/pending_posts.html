@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Pending Posts | TechReform BD{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-6xl mx-auto">
+        <!-- Breadcrumbs -->
+        <nav aria-label="Breadcrumb" class="mb-8">
+            <ol class="flex flex-wrap items-center space-x-2 text-sm text-base-content/70">
+            <li>
+                <a href="{% url 'index' %}" class="flex items-center hover:text-primary transition-colors group">
+                <i class="lni lni-home mr-1.5 text-primary group-hover:scale-110 transition-transform"></i>
+                <span>Home</span>
+                </a>
+            </li>
+            <li class="flex items-center text-base-content/50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </li>
+            <li>
+                <a href="{% url 'blog:blog_list' %}" class="hover:text-primary transition-colors font-medium">Blog</a>
+            </li>
+            <li class="flex items-center text-base-content/50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </li>
+            <li class="font-semibold text-primary">Pending Posts</li>
+            </ol>
+        </nav>
+
+        <div class="bg-base-100 shadow-xl rounded-lg overflow-hidden">
+            <div class="p-6 border-b border-base-200 bg-gradient-to-r from-primary/5 to-base-200">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold flex items-center text-base-content">
+                            <i class="lni lni-timer text-primary mr-3 animate-pulse"></i>
+                            Pending Posts Review
+                        </h1>
+                        <p class="text-base-content/70 mt-2 max-w-2xl leading-relaxed">
+                            Review and moderate blog submissions from contributors. Ensure content meets
+                            <span class="text-primary font-medium">community guidelines</span> before publishing.
+                        </p>
+                    </div>
+                    <div class="mt-4 md:mt-0">
+                        <span class="badge badge-primary badge-lg py-3 px-4 shadow-md transition-all hover:shadow-lg">
+                            <i class="lni lni-reload mr-2 animate-spin-slow"></i>
+                            <span class="font-bold">{{ page_obj.paginator.count|default:"0" }}</span> Pending
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            {% if messages %}
+            <div class="p-4 pt-6">
+                {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success bg-success/10 border-success/20{% elif message.tags == 'error' %}alert-error bg-error/10 border-error/20{% else %}alert-info bg-info/10 border-info/20{% endif %} mb-4 shadow-md animate-fadeIn flex justify-between items-center">
+                    <div class="flex items-center">
+                        {% if message.tags == 'success' %}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-success flex-shrink-0 h-6 w-6 animate-pulse" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        {% elif message.tags == 'error' %}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-error flex-shrink-0 h-6 w-6 animate-pulse" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info flex-shrink-0 w-6 h-6 animate-pulse"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        {% endif %}
+                        <span class="ml-2 font-medium">{{ message }}</span>
+                    </div>
+                    <button onclick="this.parentElement.remove()" class="btn btn-sm btn-circle btn-ghost">✕</button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="p-6">
+                {% if page_obj %}
+                    <div class="overflow-x-auto rounded-lg border border-base-200 shadow-md">
+                        <table class="table table-zebra w-full">
+                            <thead>
+                                <tr class="bg-base-200/50">
+                                    <th class="text-primary font-bold">Title</th>
+                                    <th class="font-bold">Author</th>
+                                    <th class="font-bold">Category</th>
+                                    <th class="font-bold">Submitted</th>
+                                    <th class="text-right font-bold">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for post in page_obj %}
+                                <tr class="hover:bg-base-200/40 transition-colors duration-200">
+                                    <td>
+                                        <div class="font-bold text-primary/90 hover:text-primary transition-colors truncate max-w-xs flex items-center gap-2">
+                                            {% if post.featured %}
+                                                <span class="badge badge-sm badge-accent animate-pulse">Featured</span>
+                                            {% endif %}
+                                            {{ post.title }}
+                                        </div>
+                                        <div class="text-xs text-base-content/60 truncate max-w-xs mt-1">{{ post.excerpt|truncatechars:60 }}</div>
+                                    </td>                                    <td>
+                                        <div class="flex items-center space-x-3">
+                                            <div class="avatar {% if not post.author.profile.profile_image %}placeholder{% endif %}">
+                                                {% if post.author.profile.profile_image %}
+                                                <div class="w-9 h-9 rounded-full shadow-sm">
+                                                    <img src="{{ post.author.profile.profile_image.url }}" alt="{{ post.author.username }}" />
+                                                </div>
+                                                {% else %}
+                                                <div class="bg-primary/20 text-primary font-bold text-xs rounded-full w-9 h-9 flex items-center justify-center shadow-sm">
+                                                    <span>{{ post.author.get_full_name|default:post.author.username|slice:":2"|upper }}</span>
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                            <div>
+                                                <div class="font-medium">{{ post.author.get_full_name|default:post.author.username }}</div>
+                                                {% if post.author.profile.role %}
+                                                <div class="text-xs opacity-70">{{ post.author.profile.get_role_display }}</div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge badge-ghost badge-outline">{{ post.category.name }}</span></td>
+                                    <td>
+                                        <span class="tooltip tooltip-left" data-tip="{{ post.created_at|date:'F j, Y, g:i a' }}">
+                                            <span class="flex items-center gap-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-base-content/70">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                                                </svg>
+                                                {{ post.created_at|date:"M d, Y" }}
+                                            </span>
+                                        </span>
+                                    </td>
+                                    <td class="text-right">
+                                        <a href="{% url 'blog:review_post' post.slug %}" class="btn btn-sm btn-primary gap-1 shadow-sm hover:shadow-md transition-all">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                            </svg>
+                                            Review
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    {% if page_obj.has_other_pages %}
+                    <div class="flex justify-center mt-8">
+                        <div class="join shadow-md rounded-lg">
+                            {% if page_obj.has_previous %}
+                            <a href="?page=1" class="join-item btn btn-sm bg-base-200 hover:bg-primary hover:text-white transition-colors" title="First page">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+                                </svg>
+                            </a>
+                            <a href="?page={{ page_obj.previous_page_number }}" class="join-item btn btn-sm bg-base-200 hover:bg-primary hover:text-white transition-colors" title="Previous page">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </a>
+                            {% else %}
+                            <button class="join-item btn btn-sm btn-disabled">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+                                </svg>
+                            </button>
+                            <button class="join-item btn btn-sm btn-disabled">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+                            {% endif %}
+
+                            <button class="join-item btn btn-sm bg-primary text-primary-content font-medium px-4">
+                                <span>{{ page_obj.number }}</span>
+                                <span class="mx-1 opacity-60">/</span>
+                                <span>{{ page_obj.paginator.num_pages }}</span>
+                            </button>
+
+                            {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="join-item btn btn-sm bg-base-200 hover:bg-primary hover:text-white transition-colors" title="Next page">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}" class="join-item btn btn-sm bg-base-200 hover:bg-primary hover:text-white transition-colors" title="Last page">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                            {% else %}
+                            <button class="join-item btn btn-sm btn-disabled">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                            <button class="join-item btn btn-sm btn-disabled">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                {% else %}
+                    <div class="flex flex-col items-center justify-center py-12 text-center">
+                        <div class="bg-success/10 rounded-full p-6 mb-4 animate-pulse">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-base-content mb-2">All Caught Up!</h3>
+                        <p class="text-base-content/70 max-w-md mb-6">
+                            No pending posts found. All submissions have been reviewed and processed.
+                        </p>
+                        <a href="{% url 'blog:blog_list' %}" class="btn btn-primary btn-sm gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                            </svg>
+                            View Published Posts
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

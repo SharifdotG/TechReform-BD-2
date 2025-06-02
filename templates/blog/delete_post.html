@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Delete Post | TechReform BD{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-md mx-auto">
+        <!-- Enhanced Breadcrumbs -->
+        <nav class="flex mb-8" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+                <a href="{% url 'index' %}" class="inline-flex items-center text-sm font-medium text-primary hover:text-primary-focus transition-colors duration-200">
+                <i class="lni lni-home mr-2"></i>
+                Home
+                </a>
+            </li>
+            <li>
+                <div class="flex items-center">
+                <i class="lni lni-chevron-right text-base-content/40 mx-2"></i>
+                <a href="{% url 'blog:blog_list' %}" class="ml-1 text-sm font-medium text-base-content hover:text-primary transition-colors duration-200">
+                    Blog
+                </a>
+                </div>
+            </li>
+            <li>
+                <div class="flex items-center">
+                <i class="lni lni-chevron-right text-base-content/40 mx-2"></i>
+                <a href="{% url 'blog:my_posts' %}" class="ml-1 text-sm font-medium text-base-content hover:text-primary transition-colors duration-200">
+                    <i class="lni lni-files mr-1"></i>
+                    My Posts
+                </a>
+                </div>
+            </li>
+            <li aria-current="page">
+                <div class="flex items-center">
+                <i class="lni lni-chevron-right text-base-content/40 mx-2"></i>
+                <span class="ml-1 text-sm font-medium text-error">
+                    <i class="lni lni-trash-can mr-1"></i>
+                    Delete Post
+                </span>
+                </div>
+            </li>
+            </ol>
+        </nav>
+
+        <div class="bg-base-100 shadow-xl rounded-lg overflow-hidden">
+            <div class="p-6 md:p-8">
+                <div class="flex items-center mb-8">
+                    <div class="bg-error/10 rounded-full p-3 mr-4">
+                        <i class="lni lni-warning text-3xl text-error"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-extrabold text-error mb-1 flex items-center">
+                            Delete Post
+                        </h1>
+                        <p class="text-base text-base-content/70">
+                            You are about to permanently remove this post from your blog.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="alert alert-error bg-error/10 border border-error/20 mb-6 shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-error fill-none flex-shrink-0 h-6 w-6" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <div class="flex flex-col">
+                            <span class="font-semibold">Warning!</span>
+                            <span class="text-sm">This action cannot be undone. All comments and engagement data will be permanently deleted.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card bg-base-200 mb-6 border border-error/20 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+                    <div class="card-body p-5">
+                        <h2 class="card-title text-xl font-bold text-base-content flex items-center gap-2 mb-2">
+                            <i class="lni lni-book text-error"></i>
+                            {{ post.title }}
+                        </h2>
+                        <p class="text-sm text-base-content/70 mb-3 line-clamp-2">{{ post.summary }}</p>
+                        <div class="divider my-2 before:bg-error/20 after:bg-error/20"></div>
+                        <div class="flex flex-wrap items-center gap-3 text-sm">
+                            <span class="badge badge-error badge-outline p-2.5 font-medium">
+                                <i class="lni lni-folder mr-1.5"></i>
+                                {{ post.category.name }}
+                            </span>
+                            <span class="flex items-center text-base-content/70 bg-base-300/50 px-2.5 py-1 rounded-full">
+                                <i class="lni lni-calendar mr-1.5"></i>
+                                {{ post.created_at|date:"M d, Y" }}
+                            </span>
+                            {% if post.views %}
+                            <span class="flex items-center text-base-content/70 bg-base-300/50 px-2.5 py-1 rounded-full">
+                                <i class="lni lni-eye mr-1.5"></i>
+                                {{ post.views }} {% if post.views == 1 %}view{% else %}views{% endif %}
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <form method="POST" class="mt-2">
+                    {% csrf_token %}
+                    <div class="flex flex-col gap-5">
+                        <div class="form-control">
+                            <label class="cursor-pointer flex items-center p-3 bg-base-200 rounded-lg border border-error/20">
+                                <input type="checkbox" required class="checkbox checkbox-error mr-3" />
+                                <span class="label-text">I understand this action cannot be undone</span>
+                            </label>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row justify-between gap-4 mt-2">
+                            <a href="{% url 'blog:my_posts' %}" class="btn btn-outline btn-md transition-all duration-300 hover:bg-base-200">
+                                <i class="lni lni-arrow-left mr-2"></i>
+                                Cancel
+                            </a>
+                            <button type="submit" class="btn btn-error btn-md shadow-sm hover:shadow-md transition-all duration-300">
+                                <i class="lni lni-trash-can mr-2"></i>
+                                Delete Permanently
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

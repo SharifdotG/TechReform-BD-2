@@ -1,0 +1,691 @@
+{% extends "base.html" %}
+{% load static %}
+{% load product_extras %}
+
+{% block title %}Add {{ display_category }} - TechReform BD{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-group {
+        transition: all 0.3s ease;
+    }
+    .form-group:focus-within {
+        transform: translateY(-2px);
+    }
+    .floating-label {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+    .floating-label input,
+    .floating-label select,
+    .floating-label textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        background: white;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        outline: none;
+    }
+    .floating-label input:focus,
+    .floating-label select:focus,
+    .floating-label textarea:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    .floating-label label {
+        position: absolute;
+        top: 12px;
+        left: 16px;
+        background: white;
+        padding: 0 8px;
+        color: #6b7280;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        pointer-events: none;
+    }
+    .floating-label input:focus + label,
+    .floating-label input:not(:placeholder-shown) + label,
+    .floating-label select:focus + label,
+    .floating-label select:not([value=""]) + label,
+    .floating-label textarea:focus + label,
+    .floating-label textarea:not(:placeholder-shown) + label {
+        top: -8px;
+        font-size: 12px;
+        color: #3b82f6;
+        font-weight: 600;
+    }
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        background: white;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .checkbox-group:hover {
+        border-color: #3b82f6;
+        background: #f8faff;
+    }
+    .checkbox-group input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        accent-color: #3b82f6;
+    }
+    .image-upload-area {
+        border: 2px dashed #d1d5db;
+        border-radius: 12px;
+        padding: 24px;
+        text-align: center;
+        background: #f9fafb;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    .image-upload-area:hover {
+        border-color: #3b82f6;
+        background: #f0f7ff;
+    }
+    .image-upload-area.has-file {
+        border-color: #10b981;
+        background: #f0fdf4;
+    }
+    .image-preview {
+        max-width: 150px;
+        max-height: 150px;
+        border-radius: 8px;
+        margin: 10px auto;
+        display: none;
+    }
+    .btn-gradient {
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        border: none;
+        color: white;
+        padding: 12px 32px;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+    .btn-gradient:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+    .category-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin: 0 auto 16px;
+    }
+    .section-divider {
+        border: none;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+        margin: 32px 0;
+    }
+
+    /* Animation for notification */
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .animate-slideInRight {
+        animation: slideInRight 0.5s forwards;
+    }
+
+    .notification {
+        transition: all 0.3s ease;
+    }
+
+    .notification.hiding {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Add Product Header -->
+<section class="py-12 bg-gradient-to-br from-blue-50 to-indigo-50 overflow-hidden relative">
+    <div class="container mx-auto px-4">
+        <!-- Enhanced Background decorations -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <!-- Large blue/indigo blurred orb, animated pulse -->
+            <div class="absolute top-1/2 -left-40 w-96 h-96 bg-gradient-to-tr from-blue-500 via-blue-400 to-indigo-400 rounded-full filter blur-3xl opacity-30 animate-pulse-slower shadow-2xl"></div>
+            <!-- Purple/pink orb, more vibrant and larger -->
+            <div class="absolute bottom-20 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-400 via-pink-300 to-pink-200 rounded-full filter blur-2xl opacity-40 animate-pulse shadow-xl"></div>
+            <!-- Subtle white glow for depth -->
+            <div class="absolute top-10 left-1/2 -translate-x-1/2 w-72 h-24 bg-white rounded-full filter blur-2xl opacity-20"></div>
+            <!-- Small accent orb, teal/emerald, top right -->
+            <div class="absolute -top-10 right-10 w-32 h-32 bg-gradient-to-br from-teal-300 to-emerald-200 rounded-full filter blur-xl opacity-30 animate-pulse"></div>
+            <!-- Decorative SVG wave at the bottom for extra flair -->
+            <svg class="absolute bottom-0 left-0 w-full h-16 opacity-20" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="url(#wave-gradient)"/>
+            <defs>
+                <linearGradient id="wave-gradient" x1="0" y1="0" x2="1440" y2="80" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#3b82f6" stop-opacity="0.15"/>
+                <stop offset="0.5" stop-color="#a78bfa" stop-opacity="0.10"/>
+                <stop offset="1" stop-color="#f472b6" stop-opacity="0.10"/>
+                </linearGradient>
+            </defs>
+            </svg>
+        </div>
+
+        <!-- Breadcrumb Navigation -->
+        <nav class="mb-12" aria-label="Breadcrumb">
+            <ol class="flex flex-wrap items-center p-4 bg-gradient-to-r from-blue-50 via-white to-purple-50/80 backdrop-blur-md rounded-2xl shadow-lg border border-blue-100 gap-x-2 text-base font-medium">
+            <li class="flex items-center">
+                <a href="{% url 'index' %}" class="flex items-center text-gray-700 hover:text-blue-600 transition-colors group">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 group-hover:bg-blue-200 transition-all mr-2">
+                    <i class="lni lni-home text-lg"></i>
+                </span>
+                <span class="group-hover:underline">Home</span>
+                </a>
+                <svg class="w-5 h-5 mx-2 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </li>
+            <li class="flex items-center">
+                <a href="{% url 'product_management' %}" class="flex items-center text-gray-700 hover:text-blue-600 transition-colors group">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 group-hover:bg-blue-200 transition-all mr-2">
+                    <i class="lni lni-database text-lg"></i>
+                </span>
+                <span class="group-hover:underline">Product Management</span>
+                </a>
+                <svg class="w-5 h-5 mx-2 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </li>
+            <li class="flex items-center" aria-current="page">
+                <span class="flex items-center bg-gradient-to-r from-blue-500/90 to-indigo-400/90 px-4 py-1.5 rounded-xl text-white font-bold shadow-md">
+                <i class="lni lni-plus mr-2"></i>
+                Add {{ display_category }}
+                </span>
+            </li>
+            </ol>
+        </nav>
+
+        <!-- Header Content -->
+        <div class="text-center relative">
+            {% if display_category == 'CPU' %}
+            <div class="category-icon bg-gradient-to-br from-blue-200 via-blue-100 to-blue-50 text-blue-600 shadow-lg mb-4 ring-4 ring-blue-100 animate-bounce">
+                <i class="lni lni-cpu"></i>
+            </div>
+            {% elif display_category == 'GPU' %}
+            <div class="category-icon bg-gradient-to-br from-purple-200 via-purple-100 to-purple-50 text-purple-600 shadow-lg mb-4 ring-4 ring-purple-100 animate-bounce">
+                <i class="lni lni-display"></i>
+            </div>
+            {% elif display_category == 'Motherboard' %}
+            <div class="category-icon bg-gradient-to-br from-teal-200 via-teal-100 to-teal-50 text-teal-600 shadow-lg mb-4 ring-4 ring-teal-100 animate-bounce">
+                <i class="lni lni-layout"></i>
+            </div>
+            {% elif display_category == 'RAM' %}
+            <div class="category-icon bg-gradient-to-br from-amber-200 via-amber-100 to-amber-50 text-amber-600 shadow-lg mb-4 ring-4 ring-amber-100 animate-bounce">
+                <i class="lni lni-database"></i>
+            </div>
+            {% elif display_category == 'SSD' %}
+            <div class="category-icon bg-gradient-to-br from-green-200 via-green-100 to-green-50 text-green-600 shadow-lg mb-4 ring-4 ring-green-100 animate-bounce">
+                <i class="lni lni-database"></i>
+            </div>
+            {% elif display_category == 'HDD' %}
+            <div class="category-icon bg-gradient-to-br from-gray-200 via-gray-100 to-gray-50 text-gray-600 shadow-lg mb-4 ring-4 ring-gray-100 animate-bounce">
+                <i class="lni lni-database"></i>
+            </div>
+            {% elif display_category == 'Power Supply' %}
+            <div class="category-icon bg-gradient-to-br from-rose-200 via-rose-100 to-rose-50 text-rose-600 shadow-lg mb-4 ring-4 ring-rose-100 animate-bounce">
+                <i class="lni lni-plug"></i>
+            </div>
+            {% elif display_category == 'Casing' %}
+            <div class="category-icon bg-gradient-to-br from-indigo-200 via-indigo-100 to-indigo-50 text-indigo-600 shadow-lg mb-4 ring-4 ring-indigo-100 animate-bounce">
+                <i class="lni lni-frame-expand"></i>
+            </div>
+            {% elif display_category == 'Cooler' %}
+            <div class="category-icon bg-gradient-to-br from-cyan-200 via-cyan-100 to-cyan-50 text-cyan-600 shadow-lg mb-4 ring-4 ring-cyan-100 animate-bounce">
+                <i class="lni lni-cloud"></i>
+            </div>
+            {% elif display_category == 'Monitor' %}
+            <div class="category-icon bg-gradient-to-br from-emerald-200 via-emerald-100 to-emerald-50 text-emerald-600 shadow-lg mb-4 ring-4 ring-emerald-100 animate-bounce">
+                <i class="lni lni-laptop"></i>
+            </div>
+            {% elif display_category == 'Keyboard' %}
+            <div class="category-icon bg-gradient-to-br from-orange-200 via-orange-100 to-orange-50 text-orange-600 shadow-lg mb-4 ring-4 ring-orange-100 animate-bounce">
+                <i class="lni lni-keyboard"></i>
+            </div>
+            {% elif display_category == 'Mouse' %}
+            <div class="category-icon bg-gradient-to-br from-pink-200 via-pink-100 to-pink-50 text-pink-600 shadow-lg mb-4 ring-4 ring-pink-100 animate-bounce">
+                <i class="lni lni-mouse"></i>
+            </div>
+            {% elif display_category == 'Headphone' %}
+            <div class="category-icon bg-gradient-to-br from-violet-200 via-violet-100 to-violet-50 text-violet-600 shadow-lg mb-4 ring-4 ring-violet-100 animate-bounce">
+                <i class="lni lni-headphone"></i>
+            </div>
+            {% endif %}
+
+            <h1 class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500 mb-4 drop-shadow-2xl tracking-tight animate-fadeIn">
+                <span class="inline-flex items-center gap-2">
+                    <i class="lni lni-plus text-blue-400 animate-pulse"></i>
+                    Add New {{ display_category }}
+                </span>
+            </h1>
+            <p class="text-gray-700 max-w-2xl mx-auto text-lg md:text-2xl leading-relaxed animate-fadeIn delay-100 font-medium">
+                Fill in the details below to add a new
+                <span class="font-bold text-blue-600 underline underline-offset-4 decoration-2 decoration-blue-400">{{ display_category|lower }}</span>
+                product to your inventory and make it stand out!
+            </p>
+            <div class="absolute left-1/2 -translate-x-1/2 top-0 z-0 pointer-events-none">
+                <svg width="220" height="70" viewBox="0 0 220 70" fill="none" class="mx-auto opacity-40">
+                    <ellipse cx="110" cy="35" rx="100" ry="25" fill="url(#paint0_radial)" />
+                    <defs>
+                        <radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientTransform="translate(110 35) scale(100 25)" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#6366f1" stop-opacity="0.18"/>
+                            <stop offset="0.5" stop-color="#a5b4fc" stop-opacity="0.10"/>
+                            <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                </svg>
+            </div>
+            <div class="flex justify-center mt-6 gap-4 animate-fadeIn delay-200">
+                <span class="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700 font-semibold shadow-md ring-2 ring-blue-200">
+                    <i class="lni lni-star-filled mr-2 text-yellow-400"></i>
+                    Easy & Fast Entry
+                </span>
+                <span class="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 font-semibold shadow-md ring-2 ring-purple-200">
+                    <i class="lni lni-bolt-alt mr-2 text-pink-400"></i>
+                    Modern Design
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Add Product Form (Enhanced) -->
+<section class="py-24 bg-gradient-to-br from-blue-50 via-white to-purple-50/80 relative overflow-hidden">
+    <!-- Decorative SVG background shapes (more vibrant, layered) -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <svg class="absolute -top-36 -left-36 w-[600px] h-[600px] opacity-30" viewBox="0 0 600 600" fill="none">
+            <circle cx="300" cy="300" r="300" fill="url(#circle-gradient1)" />
+            <defs>
+                <radialGradient id="circle-gradient1" cx="0" cy="0" r="1" gradientTransform="translate(300 300) scale(300)" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#6366f1" stop-opacity="0.22"/>
+                    <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+                </radialGradient>
+            </defs>
+        </svg>
+        <svg class="absolute bottom-0 right-0 w-[450px] h-[450px] opacity-20" viewBox="0 0 450 450" fill="none">
+            <circle cx="225" cy="225" r="225" fill="url(#circle-gradient2)" />
+            <defs>
+                <radialGradient id="circle-gradient2" cx="0" cy="0" r="1" gradientTransform="translate(225 225) scale(225)" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#a78bfa" stop-opacity="0.18"/>
+                    <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+                </radialGradient>
+            </defs>
+        </svg>
+        <svg class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[250px] opacity-15" viewBox="0 0 700 250" fill="none">
+            <ellipse cx="350" cy="125" rx="350" ry="125" fill="url(#ellipse-gradient)" />
+            <defs>
+                <radialGradient id="ellipse-gradient" cx="0" cy="0" r="1" gradientTransform="translate(350 125) scale(350 125)" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#f472b6" stop-opacity="0.13"/>
+                    <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+                </radialGradient>
+            </defs>
+        </svg>
+        <!-- Extra accent orb -->
+        <div class="absolute top-10 right-1/3 w-32 h-32 bg-gradient-to-br from-teal-300 to-emerald-200 rounded-full filter blur-xl opacity-30 animate-pulse"></div>
+    </div>
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="max-w-4xl mx-auto shadow-2xl rounded-3xl overflow-hidden bg-white/95 backdrop-blur-2xl border border-blue-100 ring-4 ring-blue-100/10">
+            <form method="post" enctype="multipart/form-data" class="p-0">
+                {% csrf_token %}
+                <div class="p-10 md:p-16">
+                    <!-- Basic Product Information (Enhanced) -->
+                    <div class="mb-14">
+                        <h2 class="text-3xl font-extrabold text-blue-700 mb-8 flex items-center gap-4 tracking-tight drop-shadow">
+                            <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 shadow ring-2 ring-blue-200 mr-2 animate-pulse-slower">
+                                <i class="lni lni-tag text-4xl text-blue-500"></i>
+                            </span>
+                            Basic Information
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div class="floating-label relative">
+                                <input type="text" name="name" id="name" placeholder=" " required class="font-semibold shadow focus:shadow-xl focus:ring-4 focus:ring-blue-300 border-2 border-blue-100 hover:border-blue-400 transition-all duration-200">
+                                <label for="name">Product Name *</label>
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400">
+                                    <i class="lni lni-pencil"></i>
+                                </span>
+                            </div>
+                            <div class="floating-label relative">
+                                <input type="text" name="brand" id="brand" placeholder=" " required class="shadow focus:shadow-xl focus:ring-4 focus:ring-blue-300 border-2 border-blue-100 hover:border-blue-400 transition-all duration-200">
+                                <label for="brand">Brand *</label>
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400">
+                                    <i class="lni lni-briefcase"></i>
+                                </span>
+                            </div>
+                            <div class="floating-label relative">
+                                <input type="text" name="model" id="model" placeholder=" " class="shadow focus:shadow-xl focus:ring-4 focus:ring-blue-300 border-2 border-blue-100 hover:border-blue-400 transition-all duration-200">
+                                <label for="model">Model</label>
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400">
+                                    <i class="lni lni-barcode"></i>
+                                </span>
+                            </div>
+                            <div class="floating-label relative">
+                                <input type="number" name="price" id="price" placeholder=" " step="0.01" required class="shadow focus:shadow-xl focus:ring-4 focus:ring-blue-300 border-2 border-blue-100 hover:border-blue-400 transition-all duration-200">
+                                <label for="price">Price (৳) *</label>
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-green-500">
+                                    <i class="lni lni-money-protection"></i>
+                                </span>
+                            </div>
+                            <div class="floating-label relative">
+                                <input type="number" name="stock_quantity" id="stock_quantity" placeholder=" " required class="shadow focus:shadow-xl focus:ring-4 focus:ring-blue-300 border-2 border-blue-100 hover:border-blue-400 transition-all duration-200">
+                                <label for="stock_quantity">Stock Quantity *</label>
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-amber-500">
+                                    <i class="lni lni-database"></i>
+                                </span>
+                            </div>
+                            <div class="floating-label relative">
+                                <select name="warranty" id="warranty" class="shadow focus:shadow-xl focus:ring-4 focus:ring-blue-300 border-2 border-blue-100 hover:border-blue-400 transition-all duration-200">
+                                    <option value="">Select Warranty</option>
+                                    <option value="1 Year">1 Year</option>
+                                    <option value="2 Years">2 Years</option>
+                                    <option value="3 Years">3 Years</option>
+                                    <option value="4 Years">4 Years</option>
+                                    <option value="5 Years">5 Years</option>
+                                    <option value="10 Years">10 Years</option>
+                                    <option value="Lifetime Warranty">Lifetime Warranty</option>
+                                </select>
+                                <label for="warranty">Warranty</label>
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-indigo-400">
+                                    <i class="lni lni-protection"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="mt-10">
+                            <div class="floating-label relative">
+                                <textarea name="description" id="description" placeholder=" " rows="4" class="resize-none shadow focus:shadow-xl focus:ring-4 focus:ring-blue-300 border-2 border-blue-100 hover:border-blue-400 transition-all duration-200"></textarea>
+                                <label for="description">Description</label>
+                                <span class="absolute right-3 top-3 text-blue-300">
+                                    <i class="lni lni-comments-alt"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Product Flags -->
+                        <div class="mt-10">
+                            <h3 class="text-lg font-semibold text-blue-600 mb-4 flex items-center gap-2">
+                                <i class="lni lni-crown text-yellow-400"></i>
+                                Product Options
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <label class="checkbox-group hover:ring-2 hover:ring-blue-200 transition bg-blue-50/60 shadow relative group">
+                                    <input type="checkbox" name="is_featured" id="is_featured">
+                                    <span class="font-medium">Featured Product</span>
+                                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-yellow-400 opacity-70 group-hover:opacity-100 transition">
+                                        <i class="lni lni-star-filled"></i>
+                                    </span>
+                                </label>
+                                <label class="checkbox-group hover:ring-2 hover:ring-purple-200 transition bg-purple-50/60 shadow relative group">
+                                    <input type="checkbox" name="is_new_arrival" id="is_new_arrival">
+                                    <span class="font-medium">New Arrival</span>
+                                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-pink-400 opacity-70 group-hover:opacity-100 transition">
+                                        <i class="lni lni-bolt-alt"></i>
+                                    </span>
+                                </label>
+                                <label class="checkbox-group hover:ring-2 hover:ring-pink-200 transition bg-pink-50/60 shadow relative group" id="sale-checkbox">
+                                    <input type="checkbox" name="is_on_sale" id="is_on_sale">
+                                    <span class="font-medium">On Sale</span>
+                                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-pink-500 opacity-70 group-hover:opacity-100 transition">
+                                        <i class="lni lni-offer"></i>
+                                    </span>
+                                </label>
+                            </div>
+                            <div id="sale-price-field" class="mt-4 hidden">
+                                <div class="floating-label relative">
+                                    <input type="number" name="sale_price" id="sale_price" placeholder=" " step="0.01" class="shadow focus:shadow-xl focus:ring-4 focus:ring-pink-300 border-2 border-pink-100 hover:border-pink-400 transition-all duration-200">
+                                    <label for="sale_price">Sale Price (৳)</label>
+                                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-pink-400">
+                                        <i class="lni lni-money-location"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="section-divider">
+                    <!-- Category-Specific Fields (Enhanced) -->
+                    {% if fields %}
+                    <div class="mb-14">
+                        <h2 class="text-3xl font-extrabold text-green-700 mb-8 flex items-center gap-4 tracking-tight drop-shadow">
+                            <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-green-100 to-green-50 shadow ring-2 ring-green-200 mr-2 animate-pulse-slower">
+                                <i class="lni lni-cog text-4xl text-green-500"></i>
+                            </span>
+                            {{ display_category }} Specifications
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            {% for field in fields %}
+                            <div class="floating-label">
+                                {% if field.type == 'select' %}
+                                    <select name="{{ field.name }}" id="{{ field.name }}" {% if field.required %}required{% endif %} class="shadow focus:shadow-lg focus:ring-2 focus:ring-green-300">
+                                        <option value="">Choose {{ field.label }}</option>
+                                        {% if field.name in choices %}
+                                            {% for choice in choices|get_item:field.name %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                    <label for="{{ field.name }}">{{ field.label }}{% if field.required %} *{% endif %}</label>
+                                {% elif field.type == 'checkbox' %}
+                                    <label class="checkbox-group w-full bg-green-50/60 shadow">
+                                        <input type="checkbox" name="{{ field.name }}" id="{{ field.name }}">
+                                        <span class="font-medium">{{ field.label }}</span>
+                                    </label>
+                                {% elif field.type == 'textarea' %}
+                                    <textarea name="{{ field.name }}" id="{{ field.name }}" placeholder=" " rows="3" {% if field.required %}required{% endif %} class="shadow focus:shadow-lg focus:ring-2 focus:ring-green-300"></textarea>
+                                    <label for="{{ field.name }}">{{ field.label }}{% if field.required %} *{% endif %}</label>
+                                {% else %}
+                                    <input
+                                        type="{{ field.type|default:'text' }}"
+                                        name="{{ field.name }}"
+                                        id="{{ field.name }}"
+                                        placeholder=" "
+                                        {% if field.step %}step="{{ field.step }}"{% endif %}
+                                        {% if field.required %}required{% endif %}
+                                        class="shadow focus:shadow-lg focus:ring-2 focus:ring-green-300"
+                                    >
+                                    <label for="{{ field.name }}">{{ field.label }}{% if field.required %} *{% endif %}</label>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <hr class="section-divider">
+                    {% endif %}
+                    <!-- Product Images -->
+                    <div class="mb-14">
+                        <h2 class="text-3xl font-extrabold text-purple-700 mb-8 flex items-center gap-4 tracking-tight drop-shadow">
+                            <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-purple-100 to-pink-50 shadow ring-2 ring-purple-200 mr-2 animate-pulse-slower">
+                                <i class="lni lni-image text-4xl text-purple-500"></i>
+                            </span>
+                            Product Images
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                            {% for i in "12345" %}
+                            <div class="image-upload-area group relative hover:shadow-2xl transition border-2 border-dashed border-purple-200 hover:border-blue-400 bg-gradient-to-br from-white via-purple-50 to-blue-50"
+                                 onclick="document.getElementById('image{{ i }}').click()">
+                                <input type="file" name="image{{ i }}" id="image{{ i }}" accept="image/*" class="hidden" onchange="previewImage(this, {{ i }})">
+                                <div class="flex flex-col items-center justify-center h-full">
+                                    <i class="lni lni-cloud-upload text-7xl text-purple-200 mb-3 group-hover:text-blue-400 transition"></i>
+                                    <p class="text-gray-700 font-semibold text-lg">Image {{ i }}</p>
+                                    <p class="text-xs text-gray-400 mt-1">Click to upload</p>
+                                    <img class="image-preview mt-3 shadow-lg ring-2 ring-blue-200" id="preview{{ i }}" alt="Preview">
+                                </div>
+                                <div class="absolute top-2 right-2 hidden" id="remove{{ i }}">
+                                    <button type="button" onclick="removeImage({{ i }})" class="bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center text-base hover:bg-red-600 shadow-lg">×</button>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <p class="text-sm text-gray-500 mt-6 text-center">
+                            <i class="lni lni-information mr-1"></i>
+                            Upload high-quality images (JPG, PNG). First image will be the main product image.
+                        </p>
+                    </div>
+                </div>
+                <!-- Form Actions (Enhanced) -->
+                <div class="bg-gradient-to-r from-blue-50 via-white to-purple-50 px-10 py-10 border-t-2 border-blue-100 flex flex-col sm:flex-row gap-6 justify-end items-center rounded-b-3xl shadow-inner relative overflow-hidden">
+                    <!-- Decorative Glow/Accent -->
+                    <div class="absolute left-0 top-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-br from-blue-200 via-blue-100 to-purple-100 rounded-full filter blur-2xl opacity-30 pointer-events-none"></div>
+                    <div class="absolute right-0 bottom-0 w-24 h-24 bg-gradient-to-tr from-purple-200 via-pink-100 to-blue-100 rounded-full filter blur-xl opacity-20 pointer-events-none"></div>
+
+                    <a href="{% url 'product_management' %}" class="inline-flex items-center gap-2 px-8 py-3 rounded-xl border-2 border-blue-200 text-blue-700 font-semibold bg-white/80 hover:bg-blue-50 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 ring-2 ring-blue-100/30 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 mr-2 shadow">
+                            <i class="lni lni-arrow-left text-blue-500"></i>
+                        </span>
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn-gradient px-10 py-4 rounded-xl flex items-center gap-3 text-lg shadow-xl hover:scale-105 focus:ring-4 focus:ring-blue-300 transition-all duration-200 font-bold tracking-wide animate-pulse-slower">
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-blue-200 to-purple-100 shadow mr-2">
+                            <i class="lni lni-plus text-blue-600"></i>
+                        </span>
+                        Add {{ display_category }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% if messages %}
+<div class="notifications fixed top-24 right-6 z-50 space-y-4">
+    {% for message in messages %}
+    <div class="relative bg-gradient-to-br from-white via-blue-50 to-purple-50 border-l-8
+        {% if message.tags == 'success' %}border-green-500 shadow-green-200/40
+        {% elif message.tags == 'error' %}border-red-500 shadow-red-200/40
+        {% else %}border-blue-500 shadow-blue-200/40
+        {% endif %}
+        rounded-2xl shadow-xl p-5 pr-12 animate-slideInRight max-w-md notification transition-all duration-300">
+        <div class="flex items-center gap-3">
+            <div class="flex-shrink-0">
+                {% if message.tags == 'success' %}
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-green-100 shadow ring-2 ring-green-200">
+                    <i class="lni lni-checkmark-circle text-green-500 text-2xl"></i>
+                </span>
+                {% elif message.tags == 'error' %}
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-red-100 shadow ring-2 ring-red-200">
+                    <i class="lni lni-close-circle text-red-500 text-2xl"></i>
+                </span>
+                {% else %}
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 shadow ring-2 ring-blue-200">
+                    <i class="lni lni-information text-blue-500 text-2xl"></i>
+                </span>
+                {% endif %}
+            </div>
+            <div class="ml-1">
+                <p class="text-base font-semibold text-gray-800 tracking-tight">
+                    {% if message.tags == 'success' %}Success!{% elif message.tags == 'error' %}Error!{% else %}Notice{% endif %}
+                </p>
+                <p class="text-sm text-gray-600 mt-1">{{ message }}</p>
+            </div>
+        </div>
+        <button onclick="this.closest('.notification').remove()" class="absolute top-3 right-3 bg-white/70 hover:bg-blue-100 text-gray-400 hover:text-blue-600 rounded-full w-8 h-8 flex items-center justify-center shadow transition-all focus:outline-none focus:ring-2 focus:ring-blue-300">
+            <span class="sr-only">Dismiss</span>
+            <i class="lni lni-close text-lg"></i>
+        </button>
+        <!-- Decorative Glow -->
+        <div class="absolute -bottom-3 -right-3 w-16 h-16 bg-gradient-to-br from-blue-200 via-purple-100 to-pink-100 rounded-full filter blur-xl opacity-30 pointer-events-none"></div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<script>
+// Show/hide sale price field
+document.getElementById('is_on_sale').addEventListener('change', function() {
+    const salePriceField = document.getElementById('sale-price-field');
+    if (this.checked) {
+        salePriceField.classList.remove('hidden');
+    } else {
+        salePriceField.classList.add('hidden');
+        document.getElementById('sale_price').value = '';
+    }
+});
+
+// Image preview functionality
+function previewImage(input, index) {
+    const file = input.files[0];
+    const preview = document.getElementById('preview' + index);
+    const uploadArea = input.closest('.image-upload-area');
+    const removeBtn = document.getElementById('remove' + index);
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            uploadArea.classList.add('has-file');
+            removeBtn.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function removeImage(index) {
+    const input = document.getElementById('image' + index);
+    const preview = document.getElementById('preview' + index);
+    const uploadArea = input.closest('.image-upload-area');
+    const removeBtn = document.getElementById('remove' + index);
+
+    input.value = '';
+    preview.style.display = 'none';
+    preview.src = '';
+    uploadArea.classList.remove('has-file');
+    removeBtn.classList.add('hidden');
+}
+
+// Form validation
+document.querySelector('form').addEventListener('submit', function(e) {
+    const requiredFields = this.querySelectorAll('[required]');
+    let hasErrors = false;
+
+    requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+            field.style.borderColor = '#ef4444';
+            hasErrors = true;
+        } else {
+            field.style.borderColor = '#e5e7eb';
+        }
+    });
+
+    if (hasErrors) {
+        e.preventDefault();
+        alert('Please fill in all required fields.');
+    }
+});
+
+// Auto-dismiss notifications
+document.addEventListener('DOMContentLoaded', function() {
+    const notifications = document.querySelectorAll('.notifications > div');
+
+    notifications.forEach(notification => {
+        setTimeout(() => {
+            notification.classList.add('hiding');
+            setTimeout(() => {
+                notification.remove();
+            }, 500);
+        }, 5000);
+    });
+});
+</script>
+{% endblock %}

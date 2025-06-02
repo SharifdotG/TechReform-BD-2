@@ -1,0 +1,1188 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Select {{ component_type }} - PC Builder{% endblock %}
+{% block content %}
+
+<!-- Start Component Selection Area -->
+<section class="py-10 bg-base-100 min-h-screen">
+    <div class="container mx-auto px-4">
+        <!-- Enhanced Header with premium 3D effects and advanced animations -->
+        <div class="mb-8 relative z-10">
+            <!-- Advanced animated background elements with improved visual effects -->
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-indigo-600/10 blur-3xl rounded-full transform -rotate-3 animate-pulse-slow -z-10"></div>
+            <div class="absolute inset-0 bg-gradient-to-l from-blue-600/5 via-cyan-600/5 to-purple-600/5 blur-2xl rounded-full transform rotate-6 animate-pulse-slow animation-delay-1000 -z-10"></div>
+
+            <div class="flex flex-col md:flex-row md:items-center justify-between">
+                <div>
+                    <div class="flex items-center mb-2">
+                        <a href="{% url 'pc_builder' %}" class="text-blue-600 hover:text-blue-800 mr-2 group relative overflow-hidden inline-flex items-center transform transition-all duration-300 hover:scale-105">
+                            <span class="absolute inset-0 w-full h-full bg-blue-500/10 scale-0 group-hover:scale-100 rounded-full transition-transform duration-500 origin-center"></span>
+                            <i class="lni lni-arrow-left mr-1 relative group-hover:animate-pulse"></i>
+                            <span class="relative">Back to PC Builder</span>
+                        </a>
+                    </div>
+                    <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent relative inline-block transform transition-all duration-500 hover:scale-105" style="text-shadow: 3px 3px 6px rgba(0,0,0,0.1);">
+                        Select {{ component_type }}
+                        <!-- Text glow effect on hover -->
+                        <span class="absolute inset-0 bg-gradient-to-r from-blue-600/30 via-indigo-600/30 to-purple-600/30 blur-xl opacity-0 hover:opacity-100 transition-opacity duration-300 -z-10"></span>
+                    </h1>
+
+                    <!-- Premium separator with interactive effects -->
+                    <div class="flex items-center my-4">
+                        <div class="h-1 w-12 bg-gradient-to-r from-transparent to-gray-300 rounded-full transform transition-all duration-500 hover:w-20 hover:bg-blue-300"></div>
+                        <div class="h-2 w-28 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 mx-3 rounded-full shadow-md animate-pulse-slow relative overflow-hidden">
+                            <!-- Shimmer effect -->
+                            <div class="absolute inset-0 w-1/3 h-full bg-white/20 skew-x-[-45deg] animate-shimmer"></div>
+                        </div>
+                        <div class="h-1 w-12 bg-gradient-to-l from-transparent to-gray-300 rounded-full transform transition-all duration-500 hover:w-20 hover:bg-purple-300"></div>
+                    </div>
+
+                    <p class="text-gray-600 max-w-2xl relative">
+                        Choose a <span class="font-semibold text-blue-600 dark:text-blue-400 relative inline-block group">
+                            compatible {{ component_type }}
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300 ease-out"></span>
+                        </span> for your PC build.
+                        {% if compatibility_filtered %}
+                        <span class="text-green-600 font-medium inline-flex items-center ml-2 relative overflow-hidden px-2 py-0.5 rounded-full bg-green-100 border border-green-200">
+                            <span class="absolute inset-0 bg-gradient-to-r from-green-100 to-green-50 opacity-50"></span>
+                            <i class="lni lni-checkmark-circle mr-1 animate-pulse-slow"></i>
+                            <span class="relative">Showing only compatible components</span>
+                        </span>
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="mt-4 md:mt-0 flex space-x-2">
+                    <div class="form-control relative group">
+                        <form method="get" class="flex">
+                            <input type="text" name="search" placeholder="Search {{ component_type }}" class="input input-bordered w-full md:w-64 shadow-sm group-hover:shadow-md group-hover:shadow-blue-500/10 transition-all duration-300 border-blue-200 group-hover:border-blue-300" value="{{ search_query }}"/>
+                            <button type="submit" class="btn btn-primary ml-2 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group/btn">
+                                <!-- Moving highlight effect -->
+                                <span class="absolute inset-0 w-full h-full bg-white/20 transform -translate-x-full group-hover/btn:translate-x-full transition-all duration-1000 ease-in-out"></span>
+                                <i class="lni lni-search-alt relative z-10"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="ml-2">
+                        <form method="get" class="flex">
+                            <input type="hidden" name="search" value="{{ search_query }}">
+                            <input type="hidden" name="sort" value="{{ current_sort }}">
+                            <label class="cursor-pointer flex items-center space-x-2 px-3 py-2 rounded-lg bg-gradient-to-r from-base-200/80 to-base-100/80 backdrop-blur-sm border border-blue-200/30 hover:border-blue-300/50 hover:shadow-md hover:shadow-blue-500/10 transition-all duration-300 group">
+                                <div class="flex items-center">
+                                    <div class="relative mr-2 w-5 h-5 flex items-center justify-center">
+                                        <div class="absolute inset-0 bg-blue-500/10 rounded-full transform transition-transform duration-300 group-hover:scale-125"></div>
+                                        <i class="lni lni-checkmark-circle text-blue-500 relative z-10 text-sm"></i>
+                                    </div>
+                                    <span class="label-text font-medium text-gray-700 group-hover:text-blue-700 transition-colors duration-300">Compatible Only</span>
+                                </div>
+                                <input type="checkbox" name="compatibility_filter" class="toggle toggle-primary toggle-sm" {% if compatibility_filtered %}checked{% endif %} onchange="this.form.submit()">
+                            </label>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Premium Filter Options with enhanced effects and animations -->
+            <div class="flex flex-wrap gap-2 mt-6 relative z-10">
+                <!-- Luxurious Sort Button with sophisticated hover effects -->
+                <div class="dropdown dropdown-hover">
+                    <label tabindex="0" class="btn btn-outline bg-gradient-to-r hover:from-blue-500/10 hover:to-purple-500/10 m-1 border-blue-200 hover:border-blue-300 transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-blue-500/20 group relative overflow-hidden">
+                        <!-- Glowing background effect on hover -->
+                        <span class="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-purple-400/10 opacity-0 group-hover:opacity-100 transform scale-0 group-hover:scale-100 transition-all duration-500 rounded-md"></span>
+                        <!-- Subtle particle effect -->
+                        <span class="absolute inset-0 bg-blue-300/5 opacity-0 group-hover:opacity-100 animate-pulse-slow"></span>
+                        <!-- Icon with enhanced animation -->
+                        <i class="lni lni-funnel mr-1.5 group-hover:animate-bounce text-blue-500 relative transition-all duration-300 transform group-hover:scale-110"></i>
+                        <span class="relative">Sort By</span>
+                        <!-- Highlight shimmer effect -->
+                        <span class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-blue-400/0 via-blue-400/70 to-purple-400/0 -translate-x-full group-hover:translate-x-full transition-all duration-1000 ease-in-out"></span>
+                    </label>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-xl bg-base-100/95 backdrop-blur-md rounded-xl w-60 border border-blue-100/80 transform origin-top-right transition-all duration-300 animate-dropdown">
+                        <li class="mb-1">
+                            <a href="?sort=price_asc{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if storage_type %}&storage_type={{ storage_type }}{% endif %}"
+                               class="{% if current_sort == 'price_asc' %}bg-gradient-to-r from-blue-50 to-blue-100/50 text-blue-700{% endif %} hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-blue-100/30 rounded-lg transition-all duration-300 group/item">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full {% if current_sort == 'price_asc' %}bg-blue-100/80{% else %}bg-gray-100/50 group-hover/item:bg-blue-100/50{% endif %} transition-all duration-300">
+                                        <i class="lni lni-sort-amount-asc {% if current_sort == 'price_asc' %}text-blue-600{% else %}text-gray-500 group-hover/item:text-blue-500{% endif %} transition-colors duration-300"></i>
+                                    </span>
+                                    <span>Price: Low to High</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-1">
+                            <a href="?sort=price_desc{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if storage_type %}&storage_type={{ storage_type }}{% endif %}"
+                               class="{% if current_sort == 'price_desc' %}bg-gradient-to-r from-blue-50 to-blue-100/50 text-blue-700{% endif %} hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-blue-100/30 rounded-lg transition-all duration-300 group/item">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full {% if current_sort == 'price_desc' %}bg-blue-100/80{% else %}bg-gray-100/50 group-hover/item:bg-blue-100/50{% endif %} transition-all duration-300">
+                                        <i class="lni lni-sort-amount-desc {% if current_sort == 'price_desc' %}text-blue-600{% else %}text-gray-500 group-hover/item:text-blue-500{% endif %} transition-colors duration-300"></i>
+                                    </span>
+                                    <span>Price: High to Low</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-1">
+                            <a href="?sort=name_asc{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if storage_type %}&storage_type={{ storage_type }}{% endif %}"
+                               class="{% if current_sort == 'name_asc' %}bg-gradient-to-r from-blue-50 to-blue-100/50 text-blue-700{% endif %} hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-blue-100/30 rounded-lg transition-all duration-300 group/item">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full {% if current_sort == 'name_asc' %}bg-blue-100/80{% else %}bg-gray-100/50 group-hover/item:bg-blue-100/50{% endif %} transition-all duration-300">
+                                        <i class="lni lni-text-format {% if current_sort == 'name_asc' %}text-blue-600{% else %}text-gray-500 group-hover/item:text-blue-500{% endif %} transition-colors duration-300"></i>
+                                    </span>
+                                    <span>Name: A to Z</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="?sort=newest{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if storage_type %}&storage_type={{ storage_type }}{% endif %}"
+                               class="{% if current_sort == 'newest' %}bg-gradient-to-r from-blue-50 to-blue-100/50 text-blue-700{% endif %} hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-blue-100/30 rounded-lg transition-all duration-300 group/item">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full {% if current_sort == 'newest' %}bg-blue-100/80{% else %}bg-gray-100/50 group-hover/item:bg-blue-100/50{% endif %} transition-all duration-300">
+                                        <i class="lni lni-calendar {% if current_sort == 'newest' %}text-blue-600{% else %}text-gray-500 group-hover/item:text-blue-500{% endif %} transition-colors duration-300"></i>
+                                    </span>
+                                    <span>Newest First</span>
+                                </div>
+                            </a>
+                        </li>
+                        <div class="h-0.5 w-full my-1.5 bg-gradient-to-r from-transparent via-blue-200/50 to-transparent"></div>
+                        <li>
+                            <a href="?{% if search_query %}search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if storage_type %}&storage_type={{ storage_type }}{% endif %}"
+                               class="hover:bg-gradient-to-r hover:from-gray-50/50 hover:to-gray-100/30 rounded-lg transition-all duration-300 group/item text-gray-600">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full bg-gray-100/50 group-hover/item:bg-red-50/50 transition-all duration-300">
+                                        <i class="lni lni-close text-gray-500 group-hover/item:text-red-500 transition-colors duration-300"></i>
+                                    </span>
+                                    <span>Clear Sorting</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                {% if component_type == 'Storage' %}
+                <!-- Enhanced Storage Type Filter with premium styling -->
+                <div class="dropdown dropdown-hover">
+                    <label tabindex="0" class="btn btn-outline bg-gradient-to-r hover:from-amber-500/10 hover:to-yellow-500/10 m-1 border-amber-200 hover:border-amber-300 transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-amber-500/20 group relative overflow-hidden">
+                        <!-- Glowing background effect on hover -->
+                        <span class="absolute inset-0 bg-gradient-to-r from-amber-400/10 to-yellow-400/10 opacity-0 group-hover:opacity-100 transform scale-0 group-hover:scale-100 transition-all duration-500 rounded-md"></span>
+                        <!-- Subtle particle effect -->
+                        <span class="absolute inset-0 bg-amber-300/5 opacity-0 group-hover:opacity-100 animate-pulse-slow"></span>
+                        <!-- Icon with enhanced animation -->
+                        <i class="lni lni-database mr-1.5 group-hover:animate-bounce text-amber-500 relative transition-all duration-300 transform group-hover:scale-110"></i>
+                        <span class="relative">Storage Type</span>
+                        <!-- Highlight shimmer effect -->
+                        <span class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-amber-400/0 via-amber-400/70 to-yellow-400/0 -translate-x-full group-hover:translate-x-full transition-all duration-1000 ease-in-out"></span>
+                    </label>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-xl bg-base-100/95 backdrop-blur-md rounded-xl w-64 border border-amber-100/80 transform origin-top-right transition-all duration-300 animate-dropdown">
+                        <li class="mb-1">
+                            <a href="?storage_type=all{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                               class="{% if storage_type == 'all' or not storage_type %}bg-gradient-to-r from-amber-50 to-amber-100/50 text-amber-700{% endif %} hover:bg-gradient-to-r hover:from-amber-50/50 hover:to-amber-100/30 rounded-lg transition-all duration-300 group/item">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full {% if storage_type == 'all' or not storage_type %}bg-amber-100/80{% else %}bg-gray-100/50 group-hover/item:bg-amber-100/50{% endif %} transition-all duration-300">
+                                        <i class="lni lni-layers {% if storage_type == 'all' or not storage_type %}text-amber-600{% else %}text-gray-500 group-hover/item:text-amber-500{% endif %} transition-colors duration-300"></i>
+                                    </span>
+                                    <span>All Storage Types</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-1">
+                            <a href="?storage_type=ssd{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                               class="{% if storage_type == 'ssd' %}bg-gradient-to-r from-blue-50 to-blue-100/50 text-blue-700{% endif %} hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-blue-100/30 rounded-lg transition-all duration-300 group/item">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full {% if storage_type == 'ssd' %}bg-blue-100/80{% else %}bg-gray-100/50 group-hover/item:bg-blue-100/50{% endif %} transition-all duration-300">
+                                        <i class="lni lni-database {% if storage_type == 'ssd' %}text-blue-600{% else %}text-gray-500 group-hover/item:text-blue-500{% endif %} transition-colors duration-300"></i>
+                                    </span>
+                                    <span>SSD Only</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="?storage_type=hdd{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                               class="{% if storage_type == 'hdd' %}bg-gradient-to-r from-amber-50 to-amber-100/50 text-amber-700{% endif %} hover:bg-gradient-to-r hover:from-amber-50/50 hover:to-amber-100/30 rounded-lg transition-all duration-300 group/item">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full {% if storage_type == 'hdd' %}bg-amber-100/80{% else %}bg-gray-100/50 group-hover/item:bg-amber-100/50{% endif %} transition-all duration-300">
+                                        <i class="lni lni-reload {% if storage_type == 'hdd' %}text-amber-600{% else %}text-gray-500 group-hover/item:text-amber-500{% endif %} transition-colors duration-300"></i>
+                                    </span>
+                                    <span>HDD Only</span>
+                                </div>
+                            </a>
+                        </li>
+                        <div class="h-0.5 w-full my-1.5 bg-gradient-to-r from-transparent via-amber-200/50 to-transparent"></div>
+                        <li>
+                            <a href="?{% if search_query %}search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                               class="hover:bg-gradient-to-r hover:from-gray-50/50 hover:to-gray-100/30 rounded-lg transition-all duration-300 group/item text-gray-600">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full bg-gray-100/50 group-hover/item:bg-red-50/50 transition-all duration-300">
+                                        <i class="lni lni-close text-gray-500 group-hover/item:text-red-500 transition-colors duration-300"></i>
+                                    </span>
+                                    <span>Clear Filter</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if component_type == 'CPU' %}
+                <div class="dropdown dropdown-hover">
+                    <label tabindex="0" class="btn btn-outline bg-gradient-to-r hover:from-indigo-500/10 hover:to-violet-500/10 m-1 border-indigo-200 hover:border-indigo-300 transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-indigo-500/20 group relative overflow-hidden">
+                        <!-- Glowing background effect on hover -->
+                        <span class="absolute inset-0 bg-gradient-to-r from-indigo-400/10 to-violet-400/10 opacity-0 group-hover:opacity-100 transform scale-0 group-hover:scale-100 transition-all duration-500 rounded-md"></span>
+                        <!-- Subtle particle effect -->
+                        <span class="absolute inset-0 bg-indigo-300/5 opacity-0 group-hover:opacity-100 animate-pulse-slow"></span>
+                        <!-- Icon with enhanced animation -->
+                        <i class="lni lni-network mr-1.5 group-hover:animate-bounce text-indigo-500 relative transition-all duration-300 transform group-hover:scale-110"></i>
+                        <span class="relative">Socket</span>
+                        <!-- Highlight shimmer effect -->
+                        <span class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-indigo-400/0 via-indigo-400/70 to-violet-400/0 -translate-x-full group-hover:translate-x-full transition-all duration-1000 ease-in-out"></span>
+                    </label>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-xl bg-base-100/95 backdrop-blur-md rounded-xl w-60 border border-indigo-100/80 transform origin-top-right transition-all duration-300 animate-dropdown">
+                        {% for socket in sockets %}
+                        <li class="mb-1">
+                            <a href="?filter_socket={{ socket }}{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                               class="{% if selected_socket == socket %}bg-gradient-to-r from-indigo-50 to-indigo-100/50 text-indigo-700{% endif %} hover:bg-gradient-to-r hover:from-indigo-50/50 hover:to-indigo-100/30 rounded-lg transition-all duration-300 group/item">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full {% if selected_socket == socket %}bg-indigo-100/80{% else %}bg-gray-100/50 group-hover/item:bg-indigo-100/50{% endif %} transition-all duration-300">
+                                        <i class="lni lni-network {% if selected_socket == socket %}text-indigo-600{% else %}text-gray-500 group-hover/item:text-indigo-500{% endif %} transition-colors duration-300"></i>
+                                    </span>
+                                    <span>{{ socket }}</span>
+                                </div>
+                            </a>
+                        </li>
+                        {% endfor %}
+                        <div class="h-0.5 w-full my-1.5 bg-gradient-to-r from-transparent via-indigo-200/50 to-transparent"></div>
+                        <li>
+                            <a href="?{% if search_query %}search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                               class="hover:bg-gradient-to-r hover:from-gray-50/50 hover:to-gray-100/30 rounded-lg transition-all duration-300 group/item text-gray-600">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full bg-gray-100/50 group-hover/item:bg-red-50/50 transition-all duration-300">
+                                        <i class="lni lni-close text-gray-500 group-hover/item:text-red-500 transition-colors duration-300"></i>
+                                    </span>
+                                    <span>Clear Filter</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if component_type == 'Motherboard' %}
+                <!-- Enhanced Socket Filter with premium styling and effects -->
+                <div class="dropdown dropdown-hover">
+                    <label tabindex="0" class="btn btn-outline bg-gradient-to-r hover:from-indigo-500/10 hover:to-violet-500/10 m-1 border-indigo-200 hover:border-indigo-300 transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-indigo-500/20 group relative overflow-hidden">
+                        <!-- Glowing background effect on hover -->
+                        <span class="absolute inset-0 bg-gradient-to-r from-indigo-400/10 to-violet-400/10 opacity-0 group-hover:opacity-100 transform scale-0 group-hover:scale-100 transition-all duration-500 rounded-md"></span>
+                        <!-- Subtle particle effect -->
+                        <span class="absolute inset-0 bg-indigo-300/5 opacity-0 group-hover:opacity-100 animate-pulse-slow"></span>
+                        <!-- Icon with enhanced animation -->
+                        <i class="lni lni-network mr-1.5 group-hover:animate-bounce text-indigo-500 relative transition-all duration-300 transform group-hover:scale-110"></i>
+                        <span class="relative">Socket</span>
+                        <!-- Highlight shimmer effect -->
+                        <span class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-indigo-400/0 via-indigo-400/70 to-violet-400/0 -translate-x-full group-hover:translate-x-full transition-all duration-1000 ease-in-out"></span>
+                    </label>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-xl bg-base-100/95 backdrop-blur-md rounded-xl w-60 border border-indigo-100/80 transform origin-top-right transition-all duration-300 animate-dropdown">
+                        {% for socket in sockets %}
+                        <li class="mb-1">
+                            <a href="?filter_socket={{ socket }}{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                               class="{% if selected_socket == socket %}bg-gradient-to-r from-indigo-50 to-indigo-100/50 text-indigo-700{% endif %} hover:bg-gradient-to-r hover:from-indigo-50/50 hover:to-indigo-100/30 rounded-lg transition-all duration-300 group/item">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full {% if selected_socket == socket %}bg-indigo-100/80{% else %}bg-gray-100/50 group-hover/item:bg-indigo-100/50{% endif %} transition-all duration-300">
+                                        <i class="lni lni-network {% if selected_socket == socket %}text-indigo-600{% else %}text-gray-500 group-hover/item:text-indigo-500{% endif %} transition-colors duration-300"></i>
+                                    </span>
+                                    <span>{{ socket }}</span>
+                                </div>
+                            </a>
+                        </li>
+                        {% endfor %}
+                        <div class="h-0.5 w-full my-1.5 bg-gradient-to-r from-transparent via-indigo-200/50 to-transparent"></div>
+                        <li>
+                            <a href="?{% if search_query %}search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                               class="hover:bg-gradient-to-r hover:from-gray-50/50 hover:to-gray-100/30 rounded-lg transition-all duration-300 group/item text-gray-600">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full bg-gray-100/50 group-hover/item:bg-red-50/50 transition-all duration-300">
+                                        <i class="lni lni-close text-gray-500 group-hover/item:text-red-500 transition-colors duration-300"></i>
+                                    </span>
+                                    <span>Clear Filter</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Enhanced Form Factor Filter with premium styling and effects -->
+                <div class="dropdown dropdown-hover">
+                    <label tabindex="0" class="btn btn-outline bg-gradient-to-r hover:from-purple-500/10 hover:to-fuchsia-500/10 m-1 border-purple-200 hover:border-purple-300 transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-purple-500/20 group relative overflow-hidden">
+                        <!-- Glowing background effect on hover -->
+                        <span class="absolute inset-0 bg-gradient-to-r from-purple-400/10 to-fuchsia-400/10 opacity-0 group-hover:opacity-100 transform scale-0 group-hover:scale-100 transition-all duration-500 rounded-md"></span>
+                        <!-- Subtle particle effect -->
+                        <span class="absolute inset-0 bg-purple-300/5 opacity-0 group-hover:opacity-100 animate-pulse-slow"></span>
+                        <!-- Icon with enhanced animation -->
+                        <i class="lni lni-layout mr-1.5 group-hover:animate-bounce text-purple-500 relative transition-all duration-300 transform group-hover:scale-110"></i>
+                        <span class="relative">Form Factor</span>
+                        <!-- Highlight shimmer effect -->
+                        <span class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-purple-400/0 via-purple-400/70 to-fuchsia-400/0 -translate-x-full group-hover:translate-x-full transition-all duration-1000 ease-in-out"></span>
+                    </label>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-xl bg-base-100/95 backdrop-blur-md rounded-xl w-60 border border-purple-100/80 transform origin-top-right transition-all duration-300 animate-dropdown">
+                        {% for form_factor in form_factors %}
+                        <li class="mb-1">
+                            <a href="?filter_form_factor={{ form_factor }}{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                               class="{% if selected_form_factor == form_factor %}bg-gradient-to-r from-purple-50 to-purple-100/50 text-purple-700{% endif %} hover:bg-gradient-to-r hover:from-purple-50/50 hover:to-purple-100/30 rounded-lg transition-all duration-300 group/item">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full {% if selected_form_factor == form_factor %}bg-purple-100/80{% else %}bg-gray-100/50 group-hover/item:bg-purple-100/50{% endif %} transition-all duration-300">
+                                        <i class="lni lni-layout {% if selected_form_factor == form_factor %}text-purple-600{% else %}text-gray-500 group-hover/item:text-purple-500{% endif %} transition-colors duration-300"></i>
+                                    </span>
+                                    <span>{{ form_factor }}</span>
+                                </div>
+                            </a>
+                        </li>
+                        {% endfor %}
+                        <div class="h-0.5 w-full my-1.5 bg-gradient-to-r from-transparent via-purple-200/50 to-transparent"></div>
+                        <li>
+                            <a href="?{% if search_query %}search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                               class="hover:bg-gradient-to-r hover:from-gray-50/50 hover:to-gray-100/30 rounded-lg transition-all duration-300 group/item text-gray-600">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full bg-gray-100/50 group-hover/item:bg-red-50/50 transition-all duration-300">
+                                        <i class="lni lni-close text-gray-500 group-hover/item:text-red-500 transition-colors duration-300"></i>
+                                    </span>
+                                    <span>Clear Filter</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if component_type == 'RAM' %}
+                <div class="dropdown dropdown-hover">
+                    <label tabindex="0" class="btn btn-outline bg-gradient-to-r hover:from-purple-500/10 hover:to-blue-500/10 m-1 border-purple-200 hover:border-purple-300 transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-purple-500/20 group relative overflow-hidden">
+                        <!-- Glowing background effect on hover -->
+                        <span class="absolute inset-0 bg-gradient-to-r from-purple-400/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transform scale-0 group-hover:scale-100 transition-all duration-500 rounded-md"></span>
+                        <!-- Subtle particle effect -->
+                        <span class="absolute inset-0 bg-purple-300/5 opacity-0 group-hover:opacity-100 animate-pulse-slow"></span>
+                        <!-- Icon with enhanced animation -->
+                        <i class="lni lni-chip mr-1.5 group-hover:animate-bounce text-purple-500 relative transition-all duration-300 transform group-hover:scale-110"></i>
+                        <span class="relative">RAM Type</span>
+                        <!-- Highlight shimmer effect -->
+                        <span class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-purple-400/0 via-purple-400/70 to-blue-400/0 -translate-x-full group-hover:translate-x-full transition-all duration-1000 ease-in-out"></span>
+                    </label>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-xl bg-base-100/95 backdrop-blur-md rounded-xl w-60 border border-purple-100/80 transform origin-top-right transition-all duration-300 animate-dropdown">
+                        {% for ram_type in ram_types %}
+                        <li class="mb-1">
+                            <a href="?filter_ram_type={{ ram_type }}{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                               class="{% if selected_ram_type == ram_type %}bg-gradient-to-r from-purple-50 to-purple-100/50 text-purple-700{% endif %} hover:bg-gradient-to-r hover:from-purple-50/50 hover:to-purple-100/30 rounded-lg transition-all duration-300 group/item">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full {% if selected_ram_type == ram_type %}bg-purple-100/80{% else %}bg-gray-100/50 group-hover/item:bg-purple-100/50{% endif %} transition-all duration-300">
+                                        <i class="lni lni-chip {% if selected_ram_type == ram_type %}text-purple-600{% else %}text-gray-500 group-hover/item:text-purple-500{% endif %} transition-colors duration-300"></i>
+                                    </span>
+                                    <span>{{ ram_type }}</span>
+                                </div>
+                            </a>
+                        </li>
+                        {% endfor %}
+                        <div class="h-0.5 w-full my-1.5 bg-gradient-to-r from-transparent via-purple-200/50 to-transparent"></div>
+                        <li>
+                            <a href="?{% if search_query %}search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                               class="hover:bg-gradient-to-r hover:from-gray-50/50 hover:to-gray-100/30 rounded-lg transition-all duration-300 group/item text-gray-600">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 mr-2 flex items-center justify-center rounded-full bg-gray-100/50 group-hover/item:bg-red-50/50 transition-all duration-300">
+                                        <i class="lni lni-close text-gray-500 group-hover/item:text-red-500 transition-colors duration-300"></i>
+                                    </span>
+                                    <span>Clear Filter</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Ultra-Premium Futuristic Components Grid with cybernetic design and advanced animations -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {% for product in products %}
+            <div class="card bg-gradient-to-br from-base-200/90 to-base-100/80 backdrop-blur-sm shadow-xl overflow-hidden relative group transform transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(59,130,246,0.35)] {% if product.is_compatible %}border border-blue-200/30 hover:border-blue-300/60{% else %}border-2 border-red-300/70 hover:border-red-400/80{% endif %}">
+                <!-- Advanced cybernetic decorative elements with parallax effect -->
+                <div class="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-blue-500/5 to-indigo-600/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none transform group-hover:scale-150 group-hover:rotate-45 transition-transform"></div>
+                <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-tr from-purple-500/5 to-fuchsia-500/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none transform group-hover:scale-150 group-hover:-rotate-45 transition-transform"></div>
+
+                <!-- Futuristic scanline effect overlay -->
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/2 to-transparent bg-size-200 opacity-0 group-hover:opacity-100 transition-all duration-1000 pointer-events-none z-10 animate-scanline"></div>
+
+                <!-- Glowing border effect on hover -->
+                <div class="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"
+                     style="background: linear-gradient(90deg, transparent, rgba(59,130,246,0.15), transparent); background-size: 200% 100%; animation: borderGlow 3s linear infinite;"></div>
+
+                <figure class="h-48 relative bg-gradient-to-br from-white/95 to-white/80 p-4 overflow-hidden group-hover:shadow-inner transition-all duration-500">
+                    <!-- Product image with futuristic holographic effects -->
+                    <div class="h-full w-full flex items-center justify-center transform transition-transform duration-700 group-hover:scale-112 relative">
+                    {% if product.image1 %}
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 rounded-full blur-3xl opacity-0 group-hover:opacity-40 transition-opacity duration-500 animate-pulse-slow"></div>
+                    <img src="{{ product.image1.url }}" alt="{{ product.brand }} {{ product.model }}" class="h-full object-contain relative z-10 filter drop-shadow-lg transform transition-all duration-700 group-hover:brightness-110 group-hover:contrast-110" />
+                    {% else %}
+                    <div class="flex items-center justify-center h-full w-full bg-gradient-to-br from-base-200 to-base-300">
+                    <i class="lni lni-image text-3xl text-gray-400 animate-pulse-slow"></i>
+                    </div>
+                    {% endif %}
+
+                    <!-- High-tech scanning effect -->
+                    <div class="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    <div class="absolute inset-0 h-1/4 bg-gradient-to-b from-transparent via-blue-400/15 to-transparent -translate-y-full group-hover:translate-y-full transition-all duration-2000 ease-in-out transform opacity-60"></div>
+                    </div>
+                    </div>
+
+                    <!-- In Stock indicator -->
+                    <div class="absolute top-2 left-2 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-md px-2.5 py-1 text-xs shadow-md z-20 backdrop-blur-sm flex items-center">
+                        <i class="lni lni-checkmark-circle mr-1.5 animate-pulse"></i> In Stock
+                    </div>
+
+                    {% if not product.is_compatible %}
+                    <div class="absolute top-2 right-2 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-md px-2.5 py-1 text-xs shadow-md animate-pulse-slow z-20 backdrop-blur-sm flex items-center">
+                    <i class="lni lni-warning mr-1.5"></i> Not Compatible
+                    </div>
+                    {% endif %}
+
+                    <!-- Futuristic hover overlay with digital particles effect -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                </figure>
+
+                <div class="card-body p-5 relative z-10">
+                    <div class="mb-2 flex items-center">
+                    <div class="badge badge-ghost bg-gradient-to-r from-base-300/80 to-base-200/80 backdrop-blur-sm border border-base-300 transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-md group-hover:shadow-blue-500/10 text-gray-700 font-medium">{{ product.brand }}</div>
+                    {% if product.is_new %}
+                    <div class="badge badge-accent ml-2 text-xs transform transition-all duration-300 group-hover:scale-108 group-hover:rotate-3 group-hover:shadow-md group-hover:shadow-accent/30 relative overflow-hidden">
+                    <span class="relative z-10 font-semibold">New</span>
+                    <!-- Badge shimmer effect -->
+                    <span class="absolute inset-0 w-full h-full bg-white/30 transform -translate-x-full group-hover:translate-x-full transition-all duration-1000 ease-in-out"></span>
+                    </div>
+                    {% endif %}
+                    </div>
+
+                    <h2 class="card-title text-base h-12 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300 relative font-bold">
+                    <span class="relative z-10">{{ product.model }}</span>
+                    <!-- Text glow effect on hover -->
+                    <span class="absolute inset-0 bg-blue-400/10 rounded-lg blur-lg opacity-0 group-hover:opacity-80 transition-opacity duration-500 -z-10"></span>
+                    </h2>
+
+                    <!-- Product specs with futuristic tech-panel styling -->
+                    <div class="mt-3.5 space-y-2 text-sm text-gray-600 bg-gradient-to-r from-base-100/80 to-white/70 p-3 rounded-lg border border-base-300/50 transform transition-all duration-500 group-hover:shadow-inner group-hover:border-blue-300/40 group-hover:from-blue-50/20 group-hover:to-indigo-50/10">
+                    {% if component_type == 'CPU' %}
+                    <div class="flex justify-between items-center transition-transform duration-300 group-hover:translate-x-1 hover:text-blue-700">
+                    <span class="inline-flex items-center"><i class="lni lni-network mr-1.5 text-blue-500 group-hover:animate-pulse-slow"></i> Socket:</span>
+                    <span class="font-medium">{{ product.socket }}</span>
+                    </div>
+                    <div class="flex justify-between items-center transition-transform duration-500 delay-75 group-hover:translate-x-1 hover:text-indigo-700">
+                    <span class="inline-flex items-center"><i class="lni lni-grid-alt mr-1.5 text-indigo-500 group-hover:animate-pulse-slow"></i> Cores/Threads:</span>
+                    <span class="font-medium">{{ product.cores }}C/{{ product.threads }}T</span>
+                    </div>
+                    <div class="flex justify-between items-center transition-transform duration-700 delay-150 group-hover:translate-x-1 hover:text-amber-700">
+                    <span class="inline-flex items-center"><i class="lni lni-bolt mr-1.5 text-amber-500 group-hover:animate-pulse-slow"></i> Base/Boost:</span>
+                    <span class="font-medium">{{ product.base_frequency }}/{{ product.boost_frequency }}GHz</span>
+                </div>
+                {% endif %}
+
+                        {% if component_type == 'Motherboard' %}
+                        <div class="flex justify-between items-center transition-transform duration-300 group-hover:translate-x-1 hover:text-indigo-700">
+                            <span class="inline-flex items-center"><i class="lni lni-network mr-1.5 text-indigo-500 group-hover:animate-pulse-slow"></i> Socket:</span>
+                            <span class="font-medium">{{ product.socket }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-500 delay-75 group-hover:translate-x-1 hover:text-blue-700">
+                            <span class="inline-flex items-center"><i class="lni lni-chip mr-1.5 text-blue-500 group-hover:animate-pulse-slow"></i> Chipset:</span>
+                            <span class="font-medium">{{ product.chipset }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-700 delay-150 group-hover:translate-x-1 hover:text-purple-700">
+                            <span class="inline-flex items-center"><i class="lni lni-layout mr-1.5 text-purple-500 group-hover:animate-pulse-slow"></i> Form Factor:</span>
+                            <span class="font-medium">{{ product.form_factor }}</span>
+                        </div>
+                        {% endif %}
+
+                        {% if component_type == 'RAM' %}
+                        <div class="flex justify-between items-center transition-transform duration-300 group-hover:translate-x-1 hover:text-purple-700">
+                            <span class="inline-flex items-center"><i class="lni lni-database mr-1.5 text-purple-500 group-hover:animate-pulse-slow"></i> Capacity:</span>
+                            <span class="font-medium">{{ product.memory_capacity }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-500 delay-75 group-hover:translate-x-1 hover:text-blue-700">
+                            <span class="inline-flex items-center"><i class="lni lni-chip mr-1.5 text-blue-500 group-hover:animate-pulse-slow"></i> Type:</span>
+                            <span class="font-medium">{{ product.ram_type }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-700 delay-150 group-hover:translate-x-1 hover:text-amber-700">
+                            <span class="inline-flex items-center"><i class="lni lni-bolt mr-1.5 text-amber-500 group-hover:animate-pulse-slow"></i> Frequency:</span>
+                            <span class="font-medium">{{ product.frequency }}</span>
+                        </div>
+                        {% endif %}
+
+                        {% if component_type == 'GPU' %}
+                        <div class="flex justify-between items-center transition-transform duration-300 group-hover:translate-x-1 hover:text-red-700">
+                            <span class="inline-flex items-center"><i class="lni lni-database mr-1.5 text-red-500 group-hover:animate-pulse-slow"></i> VRAM:</span>
+                            <span class="font-medium">{{ product.vram_capacity }} {{ product.memory_type }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-500 delay-75 group-hover:translate-x-1 hover:text-orange-700">
+                            <span class="inline-flex items-center"><i class="lni lni-network mr-1.5 text-orange-500 group-hover:animate-pulse-slow"></i> Memory Bus:</span>
+                            <span class="font-medium">{{ product.memory_bus }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-700 delay-150 group-hover:translate-x-1 hover:text-amber-700">
+                            <span class="inline-flex items-center"><i class="lni lni-bolt mr-1.5 text-amber-500 group-hover:animate-pulse-slow"></i> TDP:</span>
+                            <span class="font-medium">{{ product.tdp }}W</span>
+                        </div>
+                        {% endif %}
+
+                        {% if component_type == 'Storage' %}
+                        {% if product.storage_type == 'SSD' %}
+                        <div class="flex justify-between items-center transition-transform duration-300 group-hover:translate-x-1 hover:text-blue-700">
+                            <span class="inline-flex items-center"><i class="lni lni-database mr-1.5 text-blue-500 group-hover:animate-pulse-slow"></i> Capacity:</span>
+                            <span class="font-medium">{{ product.storage_capacity }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-500 delay-75 group-hover:translate-x-1 hover:text-indigo-700">
+                            <span class="inline-flex items-center"><i class="lni lni-network mr-1.5 text-indigo-500 group-hover:animate-pulse-slow"></i> Interface:</span>
+                            <span class="font-medium">{{ product.interface }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-700 delay-150 group-hover:translate-x-1 hover:text-purple-700">
+                            <span class="inline-flex items-center"><i class="lni lni-layout mr-1.5 text-purple-500 group-hover:animate-pulse-slow"></i> Form Factor:</span>
+                            <span class="font-medium">{{ product.form_factor }}</span>
+                        </div>
+                        {% elif product.storage_type == 'HDD' %}
+                        <div class="flex justify-between items-center transition-transform duration-300 group-hover:translate-x-1 hover:text-amber-700">
+                            <span class="inline-flex items-center"><i class="lni lni-database mr-1.5 text-amber-500 group-hover:animate-pulse-slow"></i> Capacity:</span>
+                            <span class="font-medium">{{ product.storage_capacity }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-500 delay-75 group-hover:translate-x-1 hover:text-orange-700">
+                            <span class="inline-flex items-center"><i class="lni lni-reload mr-1.5 text-orange-500 group-hover:animate-pulse-slow"></i> RPM:</span>
+                            <span class="font-medium">{{ product.rpm }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-700 delay-150 group-hover:translate-x-1 hover:text-amber-800">
+                            <span class="inline-flex items-center"><i class="lni lni-layout mr-1.5 text-amber-700 group-hover:animate-pulse-slow"></i> Form Factor:</span>
+                            <span class="font-medium">{{ product.form_factor }}</span>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if component_type == 'Power Supply' %}
+                        <div class="flex justify-between items-center transition-transform duration-300 group-hover:translate-x-1 hover:text-green-700">
+                            <span class="inline-flex items-center"><i class="lni lni-bolt mr-1.5 text-green-500 group-hover:animate-pulse-slow"></i> Wattage:</span>
+                            <span class="font-medium">{{ product.wattage }}W</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-500 delay-75 group-hover:translate-x-1 hover:text-amber-700">
+                            <span class="inline-flex items-center"><i class="lni lni-star-filled mr-1.5 text-amber-500 group-hover:animate-pulse-slow"></i> Efficiency:</span>
+                            <span class="font-medium">{{ product.efficiency }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-700 delay-150 group-hover:translate-x-1 hover:text-teal-700">
+                            <span class="inline-flex items-center"><i class="lni lni-network mr-1.5 text-teal-500 group-hover:animate-pulse-slow"></i> Modularity:</span>
+                            <span class="font-medium">{{ product.modularity }}</span>
+                        </div>
+                        {% endif %}
+
+                        {% if component_type == 'Casing' %}
+                        <div class="flex justify-between items-center transition-transform duration-300 group-hover:translate-x-1 hover:text-slate-700">
+                            <span class="inline-flex items-center"><i class="lni lni-layout mr-1.5 text-slate-500 group-hover:animate-pulse-slow"></i> Form Factor:</span>
+                            <span class="font-medium">{{ product.form_factor }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-500 delay-75 group-hover:translate-x-1 hover:text-gray-700">
+                            <span class="inline-flex items-center"><i class="lni lni-tag mr-1.5 text-gray-500 group-hover:animate-pulse-slow"></i> Type:</span>
+                            <span class="font-medium">{{ product.type }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-700 delay-150 group-hover:translate-x-1 {% if product.rgb %}hover:text-purple-700{% else %}hover:text-gray-700{% endif %}">
+                            <span class="inline-flex items-center"><i class="lni lni-fan mr-1.5 {% if product.rgb %}text-purple-500{% else %}text-gray-500{% endif %} group-hover:animate-pulse-slow"></i> RGB:</span>
+                            <span class="font-medium">{% if product.rgb %}<span class="text-purple-600">Yes</span>{% else %}No{% endif %}</span>
+                        </div>
+                        {% endif %}
+
+                        {% if component_type == 'Monitor' %}
+                        <div class="flex justify-between items-center transition-transform duration-300 group-hover:translate-x-1 hover:text-blue-700">
+                            <span class="inline-flex items-center"><i class="lni lni-display mr-1.5 text-blue-500 group-hover:animate-pulse-slow"></i> Size:</span>
+                            <span class="font-medium">{{ product.screen_size }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-500 delay-75 group-hover:translate-x-1 hover:text-indigo-700">
+                            <span class="inline-flex items-center"><i class="lni lni-grid-alt mr-1.5 text-indigo-500 group-hover:animate-pulse-slow"></i> Resolution:</span>
+                            <span class="font-medium">{{ product.resolution }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-700 delay-150 group-hover:translate-x-1 hover:text-cyan-700">
+                            <span class="inline-flex items-center"><i class="lni lni-reload mr-1.5 text-cyan-500 group-hover:animate-pulse-slow"></i> Refresh Rate:</span>
+                            <span class="font-medium">{{ product.refresh_rate }}Hz</span>
+                        </div>
+                        {% endif %}
+
+                        {% if component_type == 'Cooler' %}
+                        <div class="flex justify-between items-center transition-transform duration-300 group-hover:translate-x-1 hover:text-teal-700">
+                            <span class="inline-flex items-center"><i class="lni lni-tag mr-1.5 text-teal-500 group-hover:animate-pulse-slow"></i> Type:</span>
+                            <span class="font-medium">{{ product.cooler_type }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-500 delay-75 group-hover:translate-x-1 hover:text-cyan-700">
+                            <span class="inline-flex items-center"><i class="lni lni-network mr-1.5 text-cyan-500 group-hover:animate-pulse-slow"></i> Socket:</span>
+                            <span class="font-medium">{{ product.socket_support }}</span>
+                        </div>
+                        <div class="flex justify-between items-center transition-transform duration-700 delay-150 group-hover:translate-x-1 {% if product.rgb %}hover:text-purple-700{% else %}hover:text-gray-700{% endif %}">
+                            <span class="inline-flex items-center"><i class="lni lni-fan mr-1.5 {% if product.rgb %}text-purple-500{% else %}text-gray-500{% endif %} group-hover:animate-pulse-slow"></i> RGB:</span>
+                            <span class="font-medium">{% if product.rgb %}<span class="text-purple-600">Yes</span>{% else %}No{% endif %}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Premium Price and CTA with enhanced visual effects and animations -->
+                    <div class="mt-6 flex items-center justify-between relative">
+                        <!-- Enhanced decorative accent lines with glow effect -->
+                        <div class="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-blue-300/40 to-transparent animate-pulse-slow"></div>
+
+                        <!-- Price display with luxurious 3D styling and particle effects -->
+                        <div class="relative group/price">
+                            <!-- Ambient glow effect behind price -->
+                            <div class="absolute -inset-1.5 bg-gradient-to-r from-blue-600/15 via-indigo-600/20 to-purple-600/15 rounded-lg blur-lg opacity-0 group-hover/price:opacity-100 transition-all duration-700 ease-out"></div>
+
+                            <!-- 3D price container with depth effect -->
+                            <div class="relative font-extrabold bg-clip-text text-transparent bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 text-xl transform transition-all duration-500 ease-out group-hover/price:scale-110 group-hover/price:-translate-y-0.5 flex items-center"
+                                 style="text-shadow: 0px 1px 1px rgba(120,120,255,0.4), 0px 2px 6px rgba(86,91,255,0.1);">
+                                <span class="text-base mr-1 opacity-100 group-hover/price:animate-bounce animation-delay-300">৳</span>
+                                {{ product.price|floatformat:0 }}
+
+                                <!-- Enhanced floating particle effects on hover -->
+                                <span class="absolute -top-1 -right-1 w-2 h-2 bg-purple-400 rounded-full opacity-0 group-hover/price:opacity-70 animate-ping-slow"></span>
+                                <span class="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-blue-400 rounded-full opacity-0 group-hover/price:opacity-70 animate-ping-slow animation-delay-700"></span>
+                                <span class="absolute top-1/2 right-1/3 w-1 h-1 bg-indigo-400 rounded-full opacity-0 group-hover/price:opacity-60 animate-ping-slow animation-delay-1200"></span>
+                            </div>
+                        </div>
+
+                        {% if not product.is_compatible and compatibility_filtered %}
+                        <!-- Enhanced incompatibility indicator with cybernetic warning design -->
+                        <div class="px-3 py-1.5 bg-gradient-to-r from-red-50 to-red-100 border border-red-200 rounded-lg shadow-md group/warning relative overflow-hidden transform transition-all duration-300 hover:shadow-red-300/50 hover:-translate-y-0.5">
+                            <!-- Animated warning pattern background -->
+                            <div class="absolute inset-0 opacity-10">
+                                <div class="absolute inset-0 bg-red-500/10 translate-y-full animate-scan"></div>
+                                <div class="h-full w-full" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,0,0,0.05) 5px, rgba(255,0,0,0.05) 10px);"></div>
+                            </div>
+
+                            <span class="text-xs text-red-600 font-semibold inline-flex items-center relative">
+                                <div class="w-4 h-4 mr-1.5 relative">
+                                    <i class="lni lni-warning absolute inset-0 flex items-center justify-center animate-pulse-slow"></i>
+                                    <div class="absolute inset-0 rounded-full border border-red-300 animate-ping opacity-70"></div>
+                                </div>
+                                <span class="relative">Not compatible</span>
+                            </span>
+                        </div>
+                        {% else %}
+                        <!-- Premium animated Select Button with advanced hover effects and cybernetic design -->
+                        <form method="post" action="{% url 'add_component_to_build' %}" class="component-form">
+                            {% csrf_token %}
+                            {% if component_type == 'Storage' and product.storage_type %}
+                                <input type="hidden" name="component_type" value="{{ product.storage_type }}">
+                            {% else %}
+                                <input type="hidden" name="component_type" value="{{ component_type }}">
+                            {% endif %}
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+
+                            <button type="submit" class="relative px-5 py-2.5 overflow-hidden group/btn bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl hover:shadow-blue-500/40 transition-all duration-500 transform hover:scale-[1.03] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]">
+                                <!-- Enhanced background pulse effect -->
+                                <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"></span>
+
+                                <!-- Electric border effect -->
+                                <span class="absolute inset-0 border border-white/10 rounded-lg opacity-0 group-hover/btn:opacity-100"></span>
+
+                                <!-- Improved moving highlight/gleam effect -->
+                                <span class="absolute inset-0 w-1/4 h-full bg-white/30 skew-x-[-45deg] -translate-x-full group-hover/btn:translate-x-[400%] transition-all duration-1000 ease-in-out"></span>
+
+                                <!-- Subtle animated particle effect -->
+                                <div class="absolute inset-0 opacity-0 group-hover/btn:opacity-100">
+                                    <div class="absolute top-1/4 left-1/4 w-1 h-1 bg-white/60 rounded-full animate-ping-slow"></div>
+                                    <div class="absolute bottom-1/4 right-1/3 w-1 h-1 bg-white/60 rounded-full animate-ping-slow animation-delay-700"></div>
+                                </div>
+
+                                <!-- Button content with animated icon and text glow -->
+                                <span class="relative z-10 flex items-center">
+                                    <i class="lni lni-plus text-lg mr-1.5 group-hover/btn:rotate-180 transition-transform duration-500"></i>
+                                    <span class="tracking-wide group-hover/btn:text-white/95 transition-colors duration-300"
+                                          style="text-shadow: 0 0 5px rgba(255,255,255,0.5);">Select</span>
+                                </span>
+
+                                <!-- Bottom border animation with glow -->
+                                <span class="absolute bottom-0 left-0 w-full h-[2px] bg-white/50 scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-500 origin-left group-hover/btn:shadow-glow"></span>
+                            </button>
+                        </form>
+                        {% endif %}
+
+                        <!-- Enhanced decorative accent line with animated gradient -->
+                        <div class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-blue-300/40 to-transparent group-hover:via-blue-400/60 transition-colors duration-500"></div>
+                    </div>
+
+                    <!-- Compatibility issues with enhanced styling -->
+                    {% if not product.is_compatible and compatibility_issues %}
+                    <div class="mt-2">
+                        <div class="collapse collapse-arrow bg-red-50 rounded-lg border border-red-200">
+                            <input type="checkbox" class="peer" />
+                            <div class="collapse-title text-xs text-red-600 py-2 px-3 flex items-center">
+                                <i class="lni lni-warning mr-1.5"></i> Compatibility Issues
+                            </div>
+                            <div class="collapse-content text-xs bg-white px-3 pt-2 pb-3">
+                                <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                    {% for issue in product.compatibility_issues %}
+                                    <li>{{ issue }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <!-- Ultra-Premium Empty State with Advanced Visual Effects -->
+            <div class="col-span-full">
+                <div class="flex flex-col items-center justify-center py-20 px-6 bg-gradient-to-br from-base-200/60 via-base-100/40 to-base-200/50 backdrop-blur-lg rounded-2xl border border-base-300/40 shadow-xl hover:shadow-2xl transition-all duration-700 text-center relative overflow-hidden group">
+                    <!-- Enhanced decorative elements with dynamic interactions -->
+                    <div class="absolute -top-32 -right-32 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-cyan-500/5 rounded-full blur-3xl opacity-70 group-hover:opacity-100 group-hover:scale-125 transition-all duration-1000"></div>
+                    <div class="absolute -bottom-32 -left-32 w-64 h-64 bg-gradient-to-tr from-purple-500/10 to-indigo-500/5 rounded-full blur-3xl opacity-70 group-hover:opacity-100 group-hover:scale-125 transition-all duration-1000"></div>
+
+                    <!-- Cybernetic circuit pattern overlay -->
+                    <div class="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-1000"
+                         style="background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOHYxMmg2djZoLTZ2MTJoLTZ2LTEyaC0xMnYtNmgxMlYxOGg2eiIgc3Ryb2tlPSIjODg4IiBzdHJva2Utb3BhY2l0eT0iLjUiLz48cGF0aCBkPSJNMTIgMTJoNnY2aC02di02em0wIDEyaDZ2NmgtNnYtNnptMCAxMmg2djZoLTZ2LTZ6bTEyLTI0aDZ2NmgtNnYtNnptMTIgMGg2djZoLTZ2LTZ6bTEyIDBoNnY2aC02di02em0tMjQgMjRoNnY2aC02di02em0xMiAwaDZ2NmgtNnYtNnptMTIgMGg2djZoLTZ2LTZ6IiBmaWxsPSIjODg4IiBmaWxsLW9wYWNpdHk9Ii4yIi8+PC9nPjwvc3ZnPg=='); background-repeat: repeat;"></div>
+
+                    <!-- Scanning line effect -->
+                    <div class="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+                        <div class="absolute top-0 left-0 w-full h-1/5 bg-gradient-to-b from-transparent via-blue-400/10 to-transparent -translate-y-full group-hover:translate-y-[500%] transition-all duration-2500 ease-in-out transform"></div>
+                    </div>
+
+                    <!-- Premium 3D icon container with advanced effects -->
+                    <div class="w-28 h-28 bg-gradient-to-br from-gray-50 via-gray-100 to-white dark:from-gray-800 dark:via-gray-700 dark:to-gray-900 rounded-full flex items-center justify-center mb-8 shadow-lg group-hover:shadow-xl transform transition-all duration-700 group-hover:scale-110 relative">
+                        <!-- Multiple pulsing rings with varied animations -->
+                        <div class="absolute inset-0 rounded-full border-2 border-blue-300/30 dark:border-blue-500/30 animate-ping opacity-70 scale-105"></div>
+                        <div class="absolute inset-0 rounded-full border-2 border-purple-300/20 dark:border-purple-500/20 animate-ping opacity-60 scale-110 animation-delay-700"></div>
+                        <div class="absolute inset-0 rounded-full border-2 border-indigo-300/10 dark:border-indigo-500/10 animate-ping opacity-50 scale-125 animation-delay-1500"></div>
+
+                        <!-- Inner glow effect -->
+                        <div class="absolute inset-2 rounded-full bg-gradient-to-br from-blue-500/5 to-purple-500/5 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+
+                        <!-- Icon with enhanced animation -->
+                        <div class="relative">
+                            <i class="lni lni-search-alt text-6xl text-gray-400/90 dark:text-gray-400/80 group-hover:text-blue-500/90 dark:group-hover:text-blue-400/90 transition-colors duration-700"></i>
+
+                            <!-- Floating particles around the icon -->
+                            <span class="absolute top-1 right-1 w-2 h-2 bg-blue-400/70 rounded-full opacity-0 group-hover:opacity-100 animate-float-slow"></span>
+                            <span class="absolute bottom-2 left-0 w-1.5 h-1.5 bg-purple-400/70 rounded-full opacity-0 group-hover:opacity-100 animate-float-slow animation-delay-700"></span>
+                            <span class="absolute top-3 left-2 w-1 h-1 bg-indigo-400/70 rounded-full opacity-0 group-hover:opacity-100 animate-float-slow animation-delay-1500"></span>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced typography with premium styling -->
+                    <h3 class="text-3xl font-extrabold bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 dark:from-gray-300 dark:via-gray-400 dark:to-gray-300 bg-clip-text text-transparent mb-4 group-hover:scale-105 transition-transform duration-700"
+                        style="text-shadow: 0px 2px 4px rgba(0,0,0,0.1);">
+                        No Components Found
+                    </h3>
+
+                    <!-- Sophisticated separator with animated gradient -->
+                    <div class="flex items-center justify-center w-32 my-3 group-hover:w-40 transition-all duration-700">
+                        <div class="h-0.5 w-full bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent rounded-full relative overflow-hidden">
+                            <div class="absolute inset-0 w-1/2 bg-gradient-to-r from-blue-400/0 via-blue-400/70 to-purple-400/0 -translate-x-full group-hover:translate-x-full transition-all duration-2000 ease-in-out"></div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced message with improved typography -->
+                    <p class="text-gray-600 dark:text-gray-400 max-w-xl mb-10 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-500 text-lg">
+                        {% if compatibility_filtered %}
+                        No compatible components match your current build configuration. Try disabling the compatibility filter or adjust your existing components.
+                        {% else %}
+                        We couldn't find any components matching your search criteria. Try different search terms or clear some filters to see more options.
+                        {% endif %}
+                    </p>
+
+                    <!-- Ultra-premium button with advanced hover effects -->
+                    <a href="{% url 'select_component' component_type %}"
+                       class="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-medium rounded-xl shadow-lg hover:shadow-indigo-500/40 transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 relative overflow-hidden group/btn">
+                        <!-- Multiple layered effects for depth -->
+                        <span class="absolute inset-0 bg-white/20 transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-1000 origin-left"></span>
+                        <span class="absolute inset-0 w-1/4 h-full bg-white/30 skew-x-[-45deg] -translate-x-full group-hover/btn:translate-x-[400%] transition-all duration-1000 ease-in-out"></span>
+                        <span class="absolute bottom-0 left-0 right-0 h-1 bg-white/40 transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-700 ease-in-out"></span>
+
+                        <!-- Button content with animated icon -->
+                        <span class="relative flex items-center">
+                            <i class="lni lni-reload mr-2 group-hover/btn:animate-spin"></i>
+                            <span class="relative z-10">Clear All Filters</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Premium Ultra Pagination with luxurious styling and advanced interactivity -->
+        {% if products.paginator.num_pages > 1 %}
+        <div class="flex justify-center mt-12">
+            <div class="relative group">
+                <!-- Enhanced decorative accent elements with more sophisticated effects -->
+                <div class="absolute -inset-4 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-indigo-500/10 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-1000 -z-10 animate-pulse-slow"></div>
+                <div class="absolute -inset-2 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700 -z-10 animate-pulse-slow animation-delay-700"></div>
+
+                <!-- Subtle particle effects -->
+                <div class="absolute -top-4 -right-4 w-12 h-12 bg-blue-400/20 rounded-full blur-xl opacity-0 group-hover:opacity-70 transition-all duration-1000 -z-10 animate-float-slow"></div>
+                <div class="absolute -bottom-4 -left-4 w-12 h-12 bg-purple-400/20 rounded-full blur-xl opacity-0 group-hover:opacity-70 transition-all duration-1000 -z-10 animate-float-slow animation-delay-1000"></div>
+
+                <div class="join shadow-xl backdrop-blur-sm bg-white/90 dark:bg-gray-800/90 border border-blue-200/30 dark:border-blue-700/30 rounded-xl overflow-hidden transform transition-all duration-500 group-hover:scale-[1.02] hover:shadow-blue-500/20 group-hover:border-blue-300/50">
+                    {% if products.has_previous %}
+                    <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if selected_socket %}&filter_socket={{ selected_socket }}{% endif %}{% if selected_form_factor %}&filter_form_factor={{ selected_form_factor }}{% endif %}{% if selected_ram_type %}&filter_ram_type={{ selected_ram_type }}{% endif %}{% if storage_type %}&storage_type={{ storage_type }}{% endif %}"
+                       class="join-item btn bg-gradient-to-br from-base-100 to-base-50 hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 border-r border-base-200 hover:text-blue-600 transition-all duration-300 group/btn relative overflow-hidden">
+                        <!-- Enhanced highlight animation -->
+                        <span class="absolute inset-0 w-1/2 h-full bg-blue-400/10 -translate-x-full group-hover/btn:translate-x-[200%] transition-all duration-700 ease-in-out skew-x-[-30deg]"></span>
+                        <i class="lni lni-angle-double-left group-hover/btn:animate-pulse relative z-10 transition-transform duration-300 group-hover/btn:-translate-x-0.5"></i>
+                    </a>
+                    <a href="?page={{ products.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if selected_socket %}&filter_socket={{ selected_socket }}{% endif %}{% if selected_form_factor %}&filter_form_factor={{ selected_form_factor }}{% endif %}{% if selected_ram_type %}&filter_ram_type={{ selected_ram_type }}{% endif %}{% if storage_type %}&storage_type={{ storage_type }}{% endif %}"
+                       class="join-item btn bg-gradient-to-br from-base-100 to-base-50 hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 border-r border-base-200 hover:text-blue-600 transition-all duration-300 group/btn relative overflow-hidden">
+                        <span class="absolute inset-0 w-1/3 h-full bg-blue-400/10 -translate-x-full group-hover/btn:translate-x-[300%] transition-all duration-700 ease-in-out skew-x-[-30deg]"></span>
+                        <i class="lni lni-chevron-left group-hover/btn:animate-pulse relative z-10 transition-transform duration-300 group-hover/btn:-translate-x-0.5"></i>
+                    </a>
+                    {% endif %}
+
+                    {% for i in products.paginator.page_range %}
+                        {% if products.number == i %}
+                        <a class="join-item btn bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:shadow-md hover:shadow-blue-500/30 transition-all duration-500 transform hover:scale-105 border-r border-blue-300/30 relative overflow-hidden group/active">
+                            <!-- Enhanced floating particle effects -->
+                            <span class="absolute top-1 right-1 w-1 h-1 bg-white/70 rounded-full animate-ping-slow"></span>
+                            <span class="absolute bottom-1 left-1 w-0.5 h-0.5 bg-white/50 rounded-full animate-ping-slow animation-delay-700"></span>
+                            <span class="absolute top-1/2 left-1/3 w-0.5 h-0.5 bg-white/50 rounded-full animate-ping-slow animation-delay-1500"></span>
+                            <!-- Improved shimmer effect -->
+                            <span class="absolute inset-0 w-1/2 h-full bg-white/20 -translate-x-full group-hover/active:translate-x-[200%] transition-all duration-1000 ease-in-out transform skew-x-[-45deg]"></span>
+                            <!-- Subtle glow effect -->
+                            <span class="absolute inset-0 bg-blue-500/20 opacity-0 group-hover/active:opacity-100 blur-md transition-opacity duration-500"></span>
+                            <span class="relative z-10 font-medium">{{ i }}</span>
+                        </a>
+                        {% elif i > products.number|add:'-3' and i < products.number|add:'3' %}
+                        <a href="?page={{ i }}{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if selected_socket %}&filter_socket={{ selected_socket }}{% endif %}{% if selected_form_factor %}&filter_form_factor={{ selected_form_factor }}{% endif %}{% if selected_ram_type %}&filter_ram_type={{ selected_ram_type }}{% endif %}{% if storage_type %}&storage_type={{ storage_type }}{% endif %}"
+                           class="join-item btn bg-gradient-to-br from-base-100 to-base-50 hover:bg-gradient-to-r hover:from-blue-50/80 hover:to-blue-100/80 border-r border-base-200 hover:text-blue-600 transition-all duration-300 transform hover:scale-105 relative overflow-hidden group/num">
+                            <!-- Enhanced highlight effect -->
+                            <span class="absolute inset-0 w-1/3 h-full bg-blue-400/10 -translate-x-full group-hover/num:translate-x-[300%] transition-all duration-500 ease-in-out skew-x-[-30deg]"></span>
+                            <!-- Subtle border highlight on hover -->
+                            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400/40 scale-x-0 group-hover/num:scale-x-100 transition-transform duration-300 origin-left"></span>
+                            <span class="relative z-10">{{ i }}</span>
+                        </a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if products.has_next %}
+                    <a href="?page={{ products.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if selected_socket %}&filter_socket={{ selected_socket }}{% endif %}{% if selected_form_factor %}&filter_form_factor={{ selected_form_factor }}{% endif %}{% if selected_ram_type %}&filter_ram_type={{ selected_ram_type }}{% endif %}{% if storage_type %}&storage_type={{ storage_type }}{% endif %}"
+                       class="join-item btn bg-gradient-to-br from-base-100 to-base-50 hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 border-r border-base-200 hover:text-blue-600 transition-all duration-300 group/btn relative overflow-hidden">
+                        <span class="absolute inset-0 w-1/3 h-full bg-blue-400/10 -translate-x-full group-hover/btn:translate-x-[300%] transition-all duration-700 ease-in-out skew-x-[-30deg]"></span>
+                        <i class="lni lni-chevron-right group-hover/btn:animate-pulse relative z-10 transition-transform duration-300 group-hover/btn:translate-x-0.5"></i>
+                    </a>
+                    <a href="?page={{ products.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if compatibility_filtered %}&compatibility_filter=on{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if selected_socket %}&filter_socket={{ selected_socket }}{% endif %}{% if selected_form_factor %}&filter_form_factor={{ selected_form_factor }}{% endif %}{% if selected_ram_type %}&filter_ram_type={{ selected_ram_type }}{% endif %}{% if storage_type %}&storage_type={{ storage_type }}{% endif %}"
+                       class="join-item btn bg-gradient-to-br from-base-100 to-base-50 hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 hover:text-blue-600 transition-all duration-300 group/btn relative overflow-hidden">
+                        <span class="absolute inset-0 w-1/2 h-full bg-blue-400/10 -translate-x-full group-hover/btn:translate-x-[200%] transition-all duration-700 ease-in-out skew-x-[-30deg]"></span>
+                        <i class="lni lni-angle-double-right group-hover/btn:animate-pulse relative z-10 transition-transform duration-300 group-hover/btn:translate-x-0.5"></i>
+                    </a>
+                    {% endif %}
+                </div>
+
+                <!-- Enhanced pagination info with luxurious styling -->
+                <div class="text-center mt-4 text-sm opacity-80 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:translate-y-0.5 transition-transform">
+                    <div class="inline-flex items-center px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-50/70 to-indigo-50/70 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-100/30 dark:border-blue-800/30 shadow-sm group-hover:shadow-md group-hover:shadow-blue-500/10 transition-all duration-500">
+                        <span class="inline-flex items-center space-x-1.5">
+                            <span class="px-2.5 py-1 rounded-md bg-gradient-to-r from-blue-500/90 to-blue-600/90 text-white mr-1.5 font-medium shadow-sm relative overflow-hidden group-hover:shadow-blue-500/30 transition-all duration-300">
+                                <!-- Shimmer effect -->
+                                <span class="absolute inset-0 w-1/2 h-full bg-white/20 -translate-x-full group-hover:translate-x-[200%] transition-all duration-1000 ease-in-out transform skew-x-[-45deg]"></span>
+                                <span class="relative">{{ products.number }}</span>
+                            </span>
+                            <span class="text-gray-500 dark:text-gray-400">of</span>
+                            <span class="px-2.5 py-1 rounded-md bg-gradient-to-r from-indigo-500/90 to-indigo-600/90 text-white ml-1.5 font-medium shadow-sm relative overflow-hidden group-hover:shadow-indigo-500/30 transition-all duration-300">
+                                <!-- Shimmer effect -->
+                                <span class="absolute inset-0 w-1/2 h-full bg-white/20 -translate-x-full group-hover:translate-x-[200%] transition-all duration-1000 ease-in-out transform skew-x-[-45deg] animation-delay-500"></span>
+                                <span class="relative">{{ products.paginator.num_pages }}</span>
+                            </span>
+                            <span class="ml-1.5 text-gray-500 dark:text-gray-400 flex items-center">
+                                <span>pages</span>
+                                <i class="lni lni-pagination ml-1.5 text-blue-500/70 group-hover:animate-pulse-slow"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        </div>
+        </section>
+        <!-- End Component Selection Area -->
+
+<!-- Ultra Premium Loading Indicator with advanced effects and animations -->
+<div id="loading-indicator" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+    <!-- Enhanced backdrop with multi-layered blur effect -->
+    <div class="absolute inset-0 bg-gradient-to-br from-base-300/80 via-base-200/75 to-base-300/80 backdrop-blur-md animate-fadeIn"></div>
+    <div class="absolute inset-0 bg-blue-500/5 mix-blend-overlay animate-pulse-slow"></div>
+
+    <!-- Animated particle background -->
+    <div class="absolute inset-0 overflow-hidden opacity-30">
+        <div class="absolute h-2 w-2 rounded-full bg-blue-400/70 top-1/4 left-1/3 animate-float-slow"></div>
+        <div class="absolute h-3 w-3 rounded-full bg-indigo-400/70 top-2/3 right-1/4 animate-float-slow animation-delay-1500"></div>
+        <div class="absolute h-2 w-2 rounded-full bg-purple-400/70 bottom-1/3 left-1/2 animate-float-slow animation-delay-2000"></div>
+        <div class="absolute h-1.5 w-1.5 rounded-full bg-blue-300/70 top-1/2 right-1/3 animate-float-slow animation-delay-2500"></div>
+    </div>
+
+    <!-- Loading content with cybernetic futuristic design -->
+    <div class="relative z-10 bg-gradient-to-br from-white/95 to-white/85 dark:from-gray-900/90 dark:to-gray-800/80 p-10 rounded-2xl shadow-[0_10px_50px_rgba(59,130,246,0.3)] border border-blue-200/40 dark:border-blue-700/30 transform transition-all duration-1000 animate-float-gentle">
+        <!-- Enhanced decorative glowing orbs with depth -->
+        <div class="absolute -top-12 -right-12 w-40 h-40 bg-gradient-to-br from-blue-500/25 to-cyan-500/20 rounded-full blur-3xl opacity-80 animate-pulse-slow"></div>
+        <div class="absolute -bottom-12 -left-12 w-40 h-40 bg-gradient-to-tr from-purple-500/25 to-fuchsia-500/20 rounded-full blur-3xl opacity-80 animate-pulse-slow animation-delay-1000"></div>
+
+        <!-- Cybernetic circuit pattern overlay -->
+        <div class="absolute inset-2 rounded-xl opacity-10 pointer-events-none"
+             style="background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOHYxMmg2djZoLTZ2MTJoLTZ2LTEyaC0xMnYtNmgxMlYxOGg2eiIgc3Ryb2tlPSIjODg4IiBzdHJva2Utb3BhY2l0eT0iLjUiLz48cGF0aCBkPSJNMTIgMTJoNnY2aC02di02em0wIDEyaDZ2NmgtNnYtNnptMCAxMmg2djZoLTZ2LTZ6bTEyLTI0aDZ2NmgtNnYtNnptMTIgMGg2djZoLTZ2LTZ6bTEyIDBoNnY2aC02di02em0tMjQgMjRoNnY2aC02di02em0xMiAwaDZ2NmgtNnYtNnptMTIgMGg2djZoLTZ2LTZ6IiBmaWxsPSIjODg4IiBmaWxsLW9wYWNpdHk9Ii4yIi8+PC9nPjwvc3ZnPg=='); background-repeat: repeat;"></div>
+
+        <!-- Scanning line effect -->
+        <div class="absolute inset-0 overflow-hidden rounded-2xl">
+            <div class="absolute top-0 left-0 w-full h-1/5 bg-gradient-to-b from-transparent via-blue-400/10 to-transparent -translate-y-full animate-scanning-line-slow"></div>
+        </div>
+
+        <!-- Premium holographic spinner with multi-layered effects -->
+        <div class="flex flex-col items-center justify-center relative">
+            <div class="relative w-24 h-24 mb-6">
+                <!-- Primary spinning rings with gradient borders -->
+                <div class="absolute inset-0 rounded-full border-t-3 border-r-3 border-b-3 border-l-transparent border-blue-600 opacity-90 animate-spin-slow"></div>
+                <div class="absolute inset-1 rounded-full border-t-transparent border-r-3 border-b-3 border-l-3 border-indigo-600 opacity-80 animate-reverse-spin-slow animation-delay-500"></div>
+                <div class="absolute inset-2 rounded-full border-t-3 border-r-transparent border-b-3 border-l-3 border-violet-600 opacity-70 animate-spin-slow animation-delay-750"></div>
+                <div class="absolute inset-3 rounded-full border-t-3 border-r-3 border-b-transparent border-l-3 border-purple-600 opacity-60 animate-reverse-spin-slow animation-delay-1000"></div>
+
+                <!-- Enhanced central glow effect -->
+                <div class="absolute inset-4 rounded-full bg-gradient-to-br from-blue-500/30 via-indigo-500/20 to-purple-500/30 blur-md animate-pulse-slow"></div>
+
+                <!-- Orbiting particles -->
+                <div class="absolute h-2 w-2 rounded-full bg-blue-400 top-0 left-1/2 -translate-x-1/2 animate-orbit-slow"></div>
+                <div class="absolute h-2 w-2 rounded-full bg-purple-400 bottom-0 left-1/2 -translate-x-1/2 animate-orbit-slow animation-delay-1500"></div>
+                <div class="absolute h-2 w-2 rounded-full bg-indigo-400 left-0 top-1/2 -translate-y-1/2 animate-orbit-slow animation-delay-750"></div>
+                <div class="absolute h-2 w-2 rounded-full bg-cyan-400 right-0 top-1/2 -translate-y-1/2 animate-orbit-slow animation-delay-2000"></div>
+
+                <!-- Core icon -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-blue-500 dark:text-blue-400 animate-pulse-slow">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced message with 3D text effect and animation -->
+            <h3 class="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 mb-3 transform transition-all duration-1000 hover:scale-105 animate-pulse-slow"
+                style="text-shadow: 0px 1px 1px rgba(59,130,246,0.3), 0px 3px 7px rgba(99,102,241,0.2);">
+                Optimizing Your Build
+            </h3>
+
+            <!-- Sophisticated separator with animated gradient -->
+            <div class="flex items-center justify-center w-36 my-2">
+                <div class="h-0.5 w-full bg-gradient-to-r from-transparent via-blue-300/50 to-transparent rounded-full relative overflow-hidden">
+                    <div class="absolute inset-0 w-1/2 bg-gradient-to-r from-blue-400/0 via-blue-400/70 to-indigo-400/0 -translate-x-full animate-shimmer-slow"></div>
+                </div>
+            </div>
+
+            <!-- Enhanced message with dynamic text animation -->
+            <p class="text-gray-600 dark:text-gray-300 text-center max-w-xs">
+                <span class="inline-block animate-fade-in-up">Analyzing compatibility</span>
+                <span class="inline-block">
+                    <span class="inline-block w-1 h-1 bg-blue-500 rounded-full animate-bounce-slow mx-0.5"></span>
+                    <span class="inline-block w-1 h-1 bg-indigo-500 rounded-full animate-bounce-slow animation-delay-300 mx-0.5"></span>
+                    <span class="inline-block w-1 h-1 bg-purple-500 rounded-full animate-bounce-slow animation-delay-600 mx-0.5"></span>
+                </span>
+            </p>
+
+            <!-- Performance indicator -->
+            <div class="mt-5 w-48 h-1.5 bg-gray-200/60 dark:bg-gray-700/60 rounded-full overflow-hidden">
+                <div class="h-full w-2/3 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-full animate-progress-indeterminate-slow"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle component form submissions
+    const componentForms = document.querySelectorAll('.component-form');
+
+    componentForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent normal form submission
+
+            // Show loading indicator
+            document.getElementById('loading-indicator').classList.remove('hidden');
+
+            // Get form data
+            const formData = new FormData(form);
+
+            // Fix for CPU Cooler - map to Cooler if needed
+            const componentType = formData.get('component_type');
+            if (componentType === 'CPU Cooler') {
+                formData.set('component_type', 'Cooler');
+            }
+
+            // Send AJAX request
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loading indicator
+                document.getElementById('loading-indicator').classList.add('hidden');                if (data.status === 'success') {
+                    // Show toast notification instead of alert
+                    showToast('Component Added', data.message, 'success');
+
+                    // Redirect back to PC builder page immediately
+                    window.location.href = '{% url "pc_builder" %}';
+                } else {
+                    // Show error toast
+                    showToast('Action Failed', data.message || 'An error occurred', 'error');
+                }
+            })
+            .catch(error => {
+                // Hide loading indicator
+                document.getElementById('loading-indicator').classList.add('hidden');
+                showToast('Connection Error', 'An error occurred while processing your request.', 'error');
+                console.error('Error:', error);
+            });
+        });
+    });
+
+    // Ultra-premium toast notification function with advanced animations and effects
+    function showToast(title, message, type = 'info') {
+        // Check if toast container exists, if not create it
+        let toastContainer = document.getElementById('toast-container');
+        if (!toastContainer) {
+            toastContainer = document.createElement('div');
+            toastContainer.id = 'toast-container';
+            toastContainer.className = 'fixed bottom-6 right-6 z-50 flex flex-col gap-4';
+            document.body.appendChild(toastContainer);
+        }
+
+        // Create toast element with premium styling
+        const toast = document.createElement('div');
+        toast.className = `transform translate-y-8 opacity-0 transition-all duration-500 max-w-md w-full overflow-hidden rounded-xl shadow-2xl pointer-events-auto relative group`;
+
+        // Set different styles based on type
+        let bgGradient, icon, iconColor, borderColor, accentColor, ringColor;
+        if (type === 'success') {
+            bgGradient = 'from-green-50 to-emerald-50 dark:from-green-900/60 dark:to-emerald-800/40';
+            borderColor = 'border-green-200/70 dark:border-green-700/40';
+            icon = 'lni-checkmark-circle';
+            iconColor = 'text-green-500 dark:text-green-400';
+            accentColor = 'bg-gradient-to-r from-green-500 to-emerald-500';
+            ringColor = 'group-hover:ring-green-500/30';
+        } else if (type === 'error') {
+            bgGradient = 'from-red-50 to-rose-50 dark:from-red-900/60 dark:to-rose-800/40';
+            borderColor = 'border-red-200/70 dark:border-red-700/40';
+            icon = 'lni-warning';
+            iconColor = 'text-red-500 dark:text-red-400';
+            accentColor = 'bg-gradient-to-r from-red-500 to-rose-500';
+            ringColor = 'group-hover:ring-red-500/30';
+        } else {
+            bgGradient = 'from-blue-50 to-indigo-50 dark:from-blue-900/60 dark:to-indigo-800/40';
+            borderColor = 'border-blue-200/70 dark:border-blue-700/40';
+            icon = 'lni-information';
+            iconColor = 'text-blue-500 dark:text-blue-400';
+            accentColor = 'bg-gradient-to-r from-blue-500 to-indigo-500';
+            ringColor = 'group-hover:ring-blue-500/30';
+        }
+
+        toast.innerHTML = `
+            <div class="bg-gradient-to-r ${bgGradient} border ${borderColor} backdrop-blur-sm p-0.5 flex flex-col ring-1 ring-white/20 ring-inset ${ringColor} transition-all duration-300 group-hover:shadow-lg group-hover:-translate-y-0.5">
+                <!-- Decorative top accent bar with glossy effect -->
+                <div class="${accentColor} h-1 w-full rounded-t-lg relative overflow-hidden">
+                    <div class="absolute inset-0 w-1/2 h-full bg-white/20 -translate-x-full group-hover:translate-x-[200%] transition-all duration-1000 ease-in-out transform skew-x-[-45deg]"></div>
+                </div>
+
+                <div class="p-4 flex items-start">
+                    <div class="flex-shrink-0 relative">
+                        <!-- Premium icon with pulsing halo effect -->
+                        <div class="absolute inset-0 rounded-full ${iconColor} opacity-20 group-hover:opacity-30 blur-sm animate-pulse-slow"></div>
+                        <div class="relative">
+                            <i class="lni ${icon} ${iconColor} text-xl mt-0.5 group-hover:animate-bounce-gentle"></i>
+                        </div>
+                    </div>
+                    <div class="ml-3.5 flex-1">
+                        <!-- Enhanced title with gradient text -->
+                        <p class="font-bold text-base ${type === 'success' ? 'text-green-800 dark:text-green-200' : type === 'error' ? 'text-red-800 dark:text-red-200' : 'text-blue-800 dark:text-blue-200'} group-hover:scale-[1.02] transition-transform origin-left">${title}</p>
+                        <!-- Message with improved readability -->
+                        <p class="mt-1 text-sm text-gray-700 dark:text-gray-200">${message}</p>
+                    </div>
+                    <div class="ml-4 flex-shrink-0 flex">
+                        <!-- Enhanced close button with hover effects -->
+                        <button class="inline-flex text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors duration-200 rounded-full p-1 hover:bg-black/5 dark:hover:bg-white/10">
+                            <i class="lni lni-close"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Add premium progress bar with animation
+        const progressContainer = document.createElement('div');
+        progressContainer.className = `h-1 w-full bg-gray-200/50 dark:bg-gray-700/50 relative overflow-hidden`;
+
+        const progressBar = document.createElement('div');
+        progressBar.className = `h-full ${accentColor} transition-all duration-3000 ease-linear relative`;
+        progressBar.style.width = '100%';
+
+        // Add shine effect to progress bar
+        const progressShine = document.createElement('div');
+        progressShine.className = "absolute inset-0 w-1/4 h-full bg-white/30 skew-x-[-45deg] -translate-x-full animate-shimmer-slow";
+        progressBar.appendChild(progressShine);
+
+        progressContainer.appendChild(progressBar);
+        toast.appendChild(progressContainer);
+
+        // Add to container with staggered animation if multiple toasts
+        const existingToasts = toastContainer.querySelectorAll('div').length;
+        const animationDelay = existingToasts * 150; // stagger effect
+        toastContainer.appendChild(toast);
+
+        // Animate in with slight bounce effect
+        setTimeout(() => {
+            toast.classList.add('transition-all', 'duration-500', 'ease-out');
+            toast.classList.replace('translate-y-8', 'translate-y-0');
+            toast.classList.replace('opacity-0', 'opacity-100');
+        }, 10 + animationDelay);
+
+        // Animate progress bar
+        setTimeout(() => {
+            progressBar.style.width = '0';
+        }, 50 + animationDelay);
+
+        // Close button functionality
+        const closeButton = toast.querySelector('button');
+        closeButton.addEventListener('click', () => {
+            removeToast(toast);
+        });
+
+        // Auto remove after duration (longer for success, shorter for errors)
+        const duration = type === 'success' ? 3500 : 3000;
+        setTimeout(() => {
+            removeToast(toast);
+        }, duration);
+
+        // Helper function to remove toast with enhanced animation
+        function removeToast(toast) {
+            toast.classList.add('transition-all', 'duration-300', 'ease-in');
+            toast.classList.replace('translate-y-0', 'translate-y-2');
+            toast.classList.replace('opacity-100', 'opacity-0');
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    // Add fade-out animation before removal
+                    toast.classList.add('scale-95');
+                    setTimeout(() => {
+                        toast.parentNode.removeChild(toast);
+                    }, 100);
+                }
+            }, 200);
+        }
+    }
+});
+</script>
+
+<!-- Add required animations to your tailwind.config.js or include them inline here -->
+<style>
+@keyframes shimmer-slow {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
+}
+@keyframes bounce-gentle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+.animate-shimmer-slow {
+    animation: shimmer-slow 3s infinite;
+}
+.animate-bounce-gentle {
+    animation: bounce-gentle 1s ease-in-out infinite;
+}
+.animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+</style>
+
+{% endblock %}

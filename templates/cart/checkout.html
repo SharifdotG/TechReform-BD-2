@@ -1,0 +1,782 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_filters %}
+{% block title %}Checkout - TechReform BD{% endblock %}
+
+{% block content %}
+<!-- Checkout Section -->
+<section class="py-16 bg-base-100 overflow-hidden">
+    <div class="container mx-auto px-6 relative">
+        <!-- Animated background elements with enhanced animation -->
+        <div class="absolute inset-0 overflow-hidden opacity-10 pointer-events-none z-0">
+            <div class="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-primary via-secondary to-yellow-400 rounded-full blur-3xl animate-pulse-slow"></div>
+            <div class="absolute top-1/2 -left-48 w-96 h-96 bg-gradient-to-tr from-secondary via-primary to-pink-400 rounded-full blur-3xl animate-pulse-slow delay-200"></div>
+            <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-72 h-72 bg-gradient-to-tl from-yellow-300 via-primary to-secondary rounded-full blur-2xl animate-float"></div>
+        </div>
+
+        <!-- Enhanced Section Heading with Animation and Modern Design -->
+        <div class="relative z-10 text-center mb-14">
+            <span class="inline-flex items-center gap-2 bg-gradient-to-r from-primary/30 via-secondary/30 to-yellow-200/30 text-primary font-semibold py-2 px-8 rounded-full text-base shadow-xl animate-fade-in-up border border-primary/10 backdrop-blur-sm">
+            <i class="lni lni-bolt text-yellow-400 text-xl animate-bounce"></i>
+            <span class="tracking-wide uppercase">Almost There</span>
+            </span>
+            <h2 class="mt-5 text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-primary via-secondary to-yellow-400 bg-clip-text text-transparent drop-shadow-2xl animate-gradient-move tracking-tight">
+            Checkout
+            </h2>
+            <div class="w-40 h-2 bg-gradient-to-r from-yellow-400 via-primary to-secondary mx-auto mt-7 rounded-full animate-wiggle shadow-lg"></div>
+            <p class="mt-6 text-gray-600 text-xl max-w-2xl mx-auto animate-fade-in-up delay-200 leading-relaxed font-medium">
+            Securely complete your order and enjoy <span class="text-primary font-semibold">fast delivery</span>. <br>
+            <span class="text-secondary">We ensure a smooth and safe checkout experience for you!</span>
+            </p>
+        </div>
+
+        <!-- Custom Animations -->
+        <style>
+            @keyframes pulse-slow {
+            0%, 100% { opacity: 0.7; transform: scale(1);}
+            50% { opacity: 1; transform: scale(1.08);}
+            }
+            .animate-pulse-slow {
+            animation: pulse-slow 6s ease-in-out infinite;
+            }
+            @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1);}
+            50% { transform: translateY(-20px) scale(1.04);}
+            }
+            .animate-float {
+            animation: float 7s ease-in-out infinite;
+            }
+            @keyframes fade-in-up {
+            0% { opacity: 0; transform: translateY(30px);}
+            100% { opacity: 1; transform: translateY(0);}
+            }
+            .animate-fade-in-up {
+            animation: fade-in-up 1.2s cubic-bezier(0.23, 1, 0.32, 1) both;
+            }
+            .delay-200 {
+            animation-delay: 0.2s;
+            }
+            @keyframes gradient-move {
+            0% { background-position: 0% 50%;}
+            100% { background-position: 100% 50%;}
+            }
+            .animate-gradient-move {
+            background-size: 200% 200%;
+            animation: gradient-move 3s linear infinite alternate;
+            }
+            @keyframes wiggle {
+            0%, 100% { transform: rotate(-2deg);}
+            50% { transform: rotate(2deg);}
+            }
+            .animate-wiggle {
+            animation: wiggle 2s ease-in-out infinite;
+            }
+        </style>
+
+        <!-- Animated Checkout Steps -->
+        <div class="flex justify-center mb-14">
+            <div class="flex items-center justify-between max-w-3xl w-full mx-auto px-4 sm:px-8 relative z-10">
+            <!-- Step 1: Cart -->
+            <div class="flex flex-col items-center group">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary via-secondary to-yellow-400 text-white flex items-center justify-center shadow-lg ring-4 ring-primary/20 animate-step-pop">
+                <i class="lni lni-cart text-2xl animate-bounce-short"></i>
+                </div>
+                <span class="text-xs mt-2 text-primary font-semibold tracking-wide uppercase animate-fade-in-up">Cart</span>
+            </div>
+            <!-- Animated Connector -->
+            <div class="flex-1 h-1 mx-2 bg-gradient-to-r from-primary via-secondary to-yellow-400 rounded-full relative overflow-hidden animate-gradient-move"></div>
+            <!-- Step 2: Checkout (Active) -->
+            <div class="flex flex-col items-center group">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 via-primary to-secondary text-white flex items-center justify-center shadow-lg ring-4 ring-yellow-400/30 animate-step-pop delay-100">
+                <i class="lni lni-credit-cards text-2xl animate-bounce-short"></i>
+                </div>
+                <span class="text-xs mt-2 text-yellow-500 font-bold tracking-wide uppercase animate-fade-in-up delay-100">Checkout</span>
+            </div>
+            <!-- Animated Connector -->
+            <div class="flex-1 h-1 mx-2 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-full relative overflow-hidden animate-fade-in-up delay-200"></div>
+            <!-- Step 3: Complete -->
+            <div class="flex flex-col items-center group">
+                <div class="w-12 h-12 rounded-full bg-gray-200 text-gray-400 flex items-center justify-center shadow ring-2 ring-gray-300 animate-step-pop delay-200">
+                <i class="lni lni-checkmark-circle text-2xl"></i>
+                </div>
+                <span class="text-xs mt-2 text-gray-400 font-semibold tracking-wide uppercase animate-fade-in-up delay-200">Complete</span>
+            </div>
+            </div>
+        </div>
+        <style>
+            @keyframes step-pop {
+            0% { transform: scale(0.7); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+            }
+            .animate-step-pop {
+            animation: step-pop 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+            }
+            .animate-step-pop.delay-100 {
+            animation-delay: 0.1s;
+            }
+            .animate-step-pop.delay-200 {
+            animation-delay: 0.2s;
+            }
+            @keyframes bounce-short {
+            0%, 100% { transform: translateY(0);}
+            50% { transform: translateY(-7px);}
+            }
+            .animate-bounce-short {
+            animation: bounce-short 1.2s infinite;
+            }
+        </style>
+
+        <!-- Checkout Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Shipping Information Form -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden p-8 relative animate-fade-in-up transition-all duration-700 group hover:shadow-primary/30">
+                    <!-- Decorative Animated Accent -->
+                    <div class="absolute -top-8 -left-8 w-28 h-28 bg-gradient-to-br from-primary via-secondary to-yellow-400 opacity-30 rounded-full blur-3xl animate-pulse-slow pointer-events-none"></div>
+                    <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-gradient-to-tr from-yellow-400 via-primary to-secondary opacity-30 rounded-full blur-3xl animate-float pointer-events-none"></div>
+
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-yellow-400 via-primary to-secondary shadow-lg ring-4 ring-yellow-400/30 animate-step-pop">
+                            <i class="lni lni-map-marker text-3xl text-white animate-bounce-short"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-extrabold bg-gradient-to-r from-primary via-secondary to-yellow-400 bg-clip-text text-transparent animate-gradient-move tracking-tight">
+                                Shipping Information
+                            </h3>
+                            <p class="text-sm text-gray-500 mt-1 font-medium animate-fade-in-up delay-100">
+                                Enter your delivery details below. All fields marked <span class="text-red-500">*</span> are required.
+                            </p>
+                        </div>
+                    </div>
+
+                    <form action="{% url 'checkout' %}" method="POST" id="checkoutForm" class="space-y-8 animate-fade-in-up delay-200">
+                        {% csrf_token %}
+
+                        {% if messages %}
+                        <div class="mb-8">
+                            {% for message in messages %}
+                            <div class="flex items-center gap-3 p-4 transition-all duration-500 rounded-xl shadow-lg border
+                                {% if message.tags == 'error' %}
+                                    bg-red-50 text-red-700 border-red-200 animate-shake
+                                {% elif message.tags == 'success' %}
+                                    bg-green-50 text-green-700 border-green-200 animate-fade-in-up
+                                {% else %}
+                                    bg-blue-50 text-blue-700 border-blue-200 animate-fade-in-up
+                                {% endif %}
+                            ">
+                                <span>
+                                    {% if message.tags == 'error' %}
+                                        <i class="lni lni-warning text-2xl text-red-400"></i>
+                                    {% elif message.tags == 'success' %}
+                                        <i class="lni lni-checkmark-circle text-2xl text-green-400"></i>
+                                    {% else %}
+                                        <i class="lni lni-info-circle text-2xl text-blue-400"></i>
+                                    {% endif %}
+                                </span>
+                                <span class="flex-1 font-medium">{{ message }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Full Name Field -->
+                            <div class="form-control w-full animate-fade-in-up">
+                                <label class="label">
+                                    <span class="label-text font-semibold text-primary flex items-center gap-1">
+                                        <i class="lni lni-user text-lg text-primary"></i>
+                                        Full Name <span class="text-red-500">*</span>
+                                    </span>
+                                </label>
+                                <div class="relative">
+                                    <input
+                                        type="text"
+                                        name="full_name"
+                                        placeholder="John Doe"
+                                        class="input input-bordered w-full focus:ring-2 focus:ring-primary/40 transition-all duration-300 font-medium bg-gradient-to-br from-primary/5 to-yellow-100/10 pr-12"
+                                        value="{{ request.user.get_full_name }}"
+                                        required
+                                    />
+                                    <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                                        <i class="lni lni-user text-primary text-xl opacity-70"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Phone Number Field -->
+                            <div class="form-control w-full animate-fade-in-up delay-100">
+                                <label class="label">
+                                    <span class="label-text font-semibold text-primary flex items-center gap-1">
+                                        <i class="lni lni-mobile text-lg text-primary"></i>
+                                        Phone Number <span class="text-red-500">*</span>
+                                    </span>
+                                </label>
+                                <div class="relative">
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        placeholder="+880 1712345678"
+                                        class="input input-bordered w-full focus:ring-2 focus:ring-primary/40 transition-all duration-300 font-medium bg-gradient-to-br from-primary/5 to-yellow-100/10 pr-12"
+                                        value="{{ request.user.profile.phone_number|default:'' }}"
+                                        required
+                                    />
+                                    <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                                        <i class="lni lni-mobile text-primary text-xl opacity-70"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-control w-full animate-fade-in-up delay-200">
+                            <label class="label">
+                                <span class="label-text font-semibold text-primary flex items-center gap-1">
+                                    <i class="lni lni-envelope text-lg text-primary"></i>
+                                    Email Address <span class="text-red-500">*</span>
+                                </span>
+                            </label>
+                            <div class="relative">
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="johndoe@example.com"
+                                    class="input input-bordered w-full focus:ring-2 focus:ring-primary/40 transition-all duration-300 font-medium bg-gradient-to-br from-primary/5 to-yellow-100/10 pr-12"
+                                    value="{{ request.user.email }}"
+                                    required
+                                />
+                                <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                                    <i class="lni lni-envelope text-primary text-xl opacity-70"></i>
+                                </span>
+                            </div>
+                            <span class="text-xs text-gray-500 mt-1 ml-1 flex items-center gap-1 animate-fade-in-up delay-100">
+                                <i class="lni lni-lock-alt text-xs text-gray-400"></i>
+                                We'll never share your email.
+                            </span>
+                        </div>
+
+                        <div class="form-control w-full animate-fade-in-up delay-300">
+                            <label class="label">
+                                <span class="label-text font-semibold text-primary flex items-center gap-1">
+                                    <i class="lni lni-home text-lg text-primary"></i>
+                                    Address Line 1 <span class="text-red-500">*</span>
+                                </span>
+                            </label>
+                            <div class="relative">
+                                <input
+                                    type="text"
+                                    name="address_line1"
+                                    placeholder="House number, street, road, etc."
+                                    class="input input-bordered w-full focus:ring-2 focus:ring-primary/40 transition-all duration-300 font-medium bg-gradient-to-br from-primary/5 to-yellow-100/10 pr-12"
+                                    required
+                                />
+                                <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                                    <i class="lni lni-map-marker text-primary text-xl opacity-70"></i>
+                                </span>
+                            </div>
+                            <span class="text-xs text-gray-500 mt-1 ml-1 flex items-center gap-1 animate-fade-in-up delay-100">
+                                <i class="lni lni-info-circle text-xs text-gray-400"></i>
+                                Please enter your full street address.
+                            </span>
+                        </div>
+
+                        <div class="form-control w-full animate-fade-in-up delay-400">
+                            <label class="label">
+                                <span class="label-text font-semibold text-primary flex items-center gap-1">
+                                    <i class="lni lni-home text-lg text-primary"></i>
+                                    Address Line 2 <span class="text-gray-400">(Optional)</span>
+                                </span>
+                            </label>
+                            <div class="relative">
+                                <input
+                                    type="text"
+                                    name="address_line2"
+                                    placeholder="Apartment, suite, unit, building, floor, etc."
+                                    class="input input-bordered w-full focus:ring-2 focus:ring-primary/40 transition-all duration-300 font-medium bg-gradient-to-br from-primary/5 to-yellow-100/10 pr-12"
+                                />
+                                <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                                    <i class="lni lni-building text-primary text-xl opacity-70"></i>
+                                </span>
+                            </div>
+                            <span class="text-xs text-gray-500 mt-1 ml-1 flex items-center gap-1 animate-fade-in-up delay-100">
+                                <i class="lni lni-info-circle text-xs text-gray-400"></i>
+                                Add details like apartment, suite, or floor if applicable.
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- City Field -->
+                            <div class="form-control w-full animate-fade-in-up delay-500">
+                                <label class="label">
+                                    <span class="label-text font-semibold text-primary flex items-center gap-1">
+                                        <i class="lni lni-map-marker text-lg text-primary"></i>
+                                        City <span class="text-red-500">*</span>
+                                    </span>
+                                </label>
+                                <div class="relative">
+                                    <input
+                                        type="text"
+                                        name="city"
+                                        placeholder="Dhaka"
+                                        class="input input-bordered w-full focus:ring-2 focus:ring-primary/40 transition-all duration-300 font-medium bg-gradient-to-br from-primary/5 to-yellow-100/10 pr-12"
+                                        required
+                                    />
+                                    <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                                        <i class="lni lni-map text-primary text-xl opacity-70"></i>
+                                    </span>
+                                </div>
+                                <span class="text-xs text-gray-500 mt-1 ml-1 flex items-center gap-1 animate-fade-in-up delay-100">
+                                    <i class="lni lni-info-circle text-xs text-gray-400"></i>
+                                    Enter your city/town name.
+                                </span>
+                            </div>
+
+                            <!-- State/Division Field -->
+                            <div class="form-control w-full animate-fade-in-up delay-600">
+                                <label class="label">
+                                    <span class="label-text font-semibold text-primary flex items-center gap-1">
+                                        <i class="lni lni-direction text-lg text-primary"></i>
+                                        State/Division <span class="text-red-500">*</span>
+                                    </span>
+                                </label>
+                                <div class="relative">
+                                    <select
+                                        name="state"
+                                        class="select select-bordered w-full focus:ring-2 focus:ring-primary/40 transition-all duration-300 font-medium bg-gradient-to-br from-primary/5 to-yellow-100/10 pr-8"
+                                        required
+                                    >
+                                        <option value="" disabled selected>Select division</option>
+                                        <option value="Dhaka">Dhaka</option>
+                                        <option value="Chittagong">Chittagong</option>
+                                        <option value="Khulna">Khulna</option>
+                                        <option value="Rajshahi">Rajshahi</option>
+                                        <option value="Barisal">Barisal</option>
+                                        <option value="Sylhet">Sylhet</option>
+                                        <option value="Rangpur">Rangpur</option>
+                                        <option value="Mymensingh">Mymensingh</option>
+                                    </select>
+                                    <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                                        <i class="lni lni-map-marker text-primary text-xl opacity-70"></i>
+                                    </span>
+                                </div>
+                                <span class="text-xs text-gray-500 mt-1 ml-1 flex items-center gap-1 animate-fade-in-up delay-100">
+                                    <i class="lni lni-info-circle text-xs text-gray-400"></i>
+                                    Select your division for accurate delivery.
+                                </span>
+                            </div>
+
+                            <!-- Postal Code Field -->
+                            <div class="form-control w-full animate-fade-in-up delay-700">
+                                <label class="label">
+                                    <span class="label-text font-semibold text-primary flex items-center gap-1">
+                                        <i class="lni lni-postcard text-lg text-primary"></i>
+                                        Postal Code <span class="text-red-500">*</span>
+                                    </span>
+                                </label>
+                                <div class="relative">
+                                    <input
+                                        type="text"
+                                        name="postal_code"
+                                        placeholder="1000"
+                                        class="input input-bordered w-full focus:ring-2 focus:ring-primary/40 transition-all duration-300 font-medium bg-gradient-to-br from-primary/5 to-yellow-100/10 pr-12"
+                                        required
+                                    />
+                                    <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                                        <i class="lni lni-envelope text-primary text-xl opacity-70"></i>
+                                    </span>
+                                </div>
+                                <span class="text-xs text-gray-500 mt-1 ml-1 flex items-center gap-1 animate-fade-in-up delay-100">
+                                    <i class="lni lni-info-circle text-xs text-gray-400"></i>
+                                    Provide your area postal/ZIP code.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-control animate-fade-in-up delay-800">
+                            <label class="label">
+                                <span class="label-text font-semibold text-primary flex items-center gap-1">
+                                    <i class="lni lni-comments-alt text-lg text-primary"></i>
+                                    Order Notes <span class="text-gray-400 font-normal">(Optional)</span>
+                                </span>
+                            </label>
+                            <div class="relative">
+                                <textarea
+                                    name="notes"
+                                    placeholder="Special instructions for delivery, preferred time, or anything else we should know..."
+                                    class="textarea textarea-bordered w-full h-28 resize-none focus:ring-2 focus:ring-primary/40 transition-all duration-300 font-medium bg-gradient-to-br from-primary/5 to-yellow-100/10 pr-12 rounded-xl shadow-sm"
+                                ></textarea>
+                                <span class="absolute bottom-3 right-4 flex items-center pointer-events-none">
+                                    <i class="lni lni-pencil-alt text-primary text-xl opacity-60"></i>
+                                </span>
+                            </div>
+                            <span class="text-xs text-gray-500 mt-1 ml-1 flex items-center gap-1 animate-fade-in-up delay-100">
+                                <i class="lni lni-info-circle text-xs text-gray-400"></i>
+                                Add any special delivery instructions or requests here.
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <style>
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0);}
+                    15%, 45%, 75% { transform: translateX(-6px);}
+                    30%, 60%, 90% { transform: translateX(6px);}
+                }
+                .animate-shake {
+                    animation: shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+                    background: linear-gradient(90deg, #ffe5e5 0%, #fff7f7 100%);
+                    box-shadow: 0 2px 16px 0 rgba(255, 0, 0, 0.08);
+                    border-left: 4px solid #f87171;
+                }
+                </style>
+
+                <!-- Payment Methods (Enhanced Design & Animation) -->
+                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden p-8 mt-10 relative animate-fade-in-up transition-all duration-700 group hover:shadow-primary/30">
+                    <!-- Decorative Animated Accent -->
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-primary via-secondary to-yellow-400 opacity-25 rounded-full blur-3xl animate-pulse-slow pointer-events-none"></div>
+                    <div class="absolute -bottom-10 -left-10 w-36 h-36 bg-gradient-to-tr from-yellow-400 via-primary to-secondary opacity-25 rounded-full blur-3xl animate-float pointer-events-none"></div>
+
+                    <div class="flex items-center gap-5 mb-10">
+                        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary via-secondary to-yellow-400 shadow-xl ring-4 ring-primary/30 animate-step-pop">
+                            <i class="lni lni-wallet text-4xl text-white animate-bounce-short"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-4xl font-extrabold bg-gradient-to-r from-primary via-secondary to-yellow-400 bg-clip-text text-transparent animate-gradient-move tracking-tight drop-shadow-lg">
+                                Payment Method
+                            </h3>
+                            <p class="text-base text-gray-600 mt-2 font-medium animate-fade-in-up delay-100 leading-relaxed">
+                                Select your <span class="text-primary font-semibold">preferred payment option</span> below.<br>
+                                <span class="inline-flex items-center gap-1">
+                                    <i class="lni lni-lock-alt text-primary"></i>
+                                    <span class="text-secondary font-semibold">100% Secure &amp; Encrypted</span>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Cash on Delivery -->
+                        <label class="relative cursor-pointer group block transition-all duration-300 hover:scale-[1.04]">
+                            <input type="radio" name="payment_method" value="cash_on_delivery" class="peer sr-only" checked form="checkoutForm"/>
+                            <div class="flex items-center gap-5 bg-gradient-to-br from-primary/10 via-yellow-100/20 to-secondary/10 border-2 border-transparent peer-checked:border-primary rounded-2xl px-6 py-5 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:border-primary/40 animate-fade-in-up">
+                                <span class="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-primary via-secondary to-yellow-400 shadow ring-2 ring-primary/20 animate-step-pop">
+                                    <i class="lni lni-delivery text-3xl text-white animate-bounce-short"></i>
+                                </span>
+                                <div class="flex-1">
+                                    <span class="block font-bold text-primary text-lg">Cash on Delivery</span>
+                                    <span class="block text-xs text-gray-500">Pay when you receive</span>
+                                </div>
+                                <span class="ml-2">
+                                    <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center transition-all duration-200
+                                        peer-checked:bg-primary peer-checked:border-primary bg-white shadow"></span>
+                                </span>
+                            </div>
+                        </label>
+
+                        <!-- bKash -->
+                        <label class="relative cursor-pointer group block transition-all duration-300 hover:scale-[1.04] delay-100">
+                            <input type="radio" name="payment_method" value="bkash" class="peer sr-only" form="checkoutForm"/>
+                            <div class="flex items-center gap-5 bg-gradient-to-br from-pink-100/40 via-white to-primary/10 border-2 border-transparent peer-checked:border-pink-500 rounded-2xl px-6 py-5 shadow-lg transition-all duration-300 hover:shadow-pink-200 hover:border-pink-400/40 animate-fade-in-up delay-100">
+                                <span class="flex items-center justify-center w-14 h-14 rounded-full bg-white shadow ring-2 ring-pink-200 animate-step-pop">
+                                    <img src="https://img.icons8.com/color/48/000000/bkash.png" alt="bKash" class="w-9 h-9"/>
+                                </span>
+                                <div class="flex-1">
+                                    <span class="block font-bold text-pink-600 text-lg">bKash</span>
+                                    <span class="block text-xs text-gray-500">Mobile financial service</span>
+                                </div>
+                                <span class="ml-2">
+                                    <span class="w-6 h-6 rounded-full border-2 border-pink-500 flex items-center justify-center transition-all duration-200
+                                        peer-checked:bg-pink-500 peer-checked:border-pink-500 bg-white shadow"></span>
+                                </span>
+                            </div>
+                        </label>
+
+                        <!-- Nagad -->
+                        <label class="relative cursor-pointer group block transition-all duration-300 hover:scale-[1.04] delay-200">
+                            <input type="radio" name="payment_method" value="nagad" class="peer sr-only" form="checkoutForm"/>
+                            <div class="flex items-center gap-5 bg-gradient-to-br from-yellow-100/50 via-white to-primary/10 border-2 border-transparent peer-checked:border-yellow-500 rounded-2xl px-6 py-5 shadow-lg transition-all duration-300 hover:shadow-yellow-200 hover:border-yellow-400/40 animate-fade-in-up delay-200">
+                                <span class="flex items-center justify-center w-14 h-14 rounded-full bg-white shadow ring-2 ring-yellow-200 animate-step-pop">
+                                    <img src="https://img.icons8.com/color/48/000000/nagad.png" alt="Nagad" class="w-9 h-9"/>
+                                </span>
+                                <div class="flex-1">
+                                    <span class="block font-bold text-yellow-600 text-lg">Nagad</span>
+                                    <span class="block text-xs text-gray-500">Mobile financial service</span>
+                                </div>
+                                <span class="ml-2">
+                                    <span class="w-6 h-6 rounded-full border-2 border-yellow-500 flex items-center justify-center transition-all duration-200
+                                        peer-checked:bg-yellow-500 peer-checked:border-yellow-500 bg-white shadow"></span>
+                                </span>
+                            </div>
+                        </label>
+
+                        <!-- Credit/Debit Card -->
+                        <label class="relative cursor-pointer group block transition-all duration-300 hover:scale-[1.04] delay-300">
+                            <input type="radio" name="payment_method" value="credit_card" class="peer sr-only" form="checkoutForm"/>
+                            <div class="flex items-center gap-5 bg-gradient-to-br from-blue-100/40 via-white to-primary/10 border-2 border-transparent peer-checked:border-blue-500 rounded-2xl px-6 py-5 shadow-lg transition-all duration-300 hover:shadow-blue-200 hover:border-blue-400/40 animate-fade-in-up delay-300">
+                                <span class="flex items-center justify-center w-14 h-14 rounded-full bg-white shadow ring-2 ring-blue-200 animate-step-pop">
+                                    <i class="lni lni-credit-cards text-3xl text-blue-600 animate-bounce-short"></i>
+                                </span>
+                                <div class="flex-1">
+                                    <span class="block font-bold text-blue-600 text-lg">Credit/Debit Card</span>
+                                    <span class="block text-xs text-gray-500">Visa, Mastercard accepted</span>
+                                </div>
+                                <div class="flex gap-1 ml-2">
+                                    <img src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa" class="w-8 h-8"/>
+                                    <img src="https://img.icons8.com/color/48/000000/mastercard.png" alt="Mastercard" class="w-8 h-8"/>
+                                </div>
+                                <span class="ml-2">
+                                    <span class="w-6 h-6 rounded-full border-2 border-blue-500 flex items-center justify-center transition-all duration-200
+                                        peer-checked:bg-blue-500 peer-checked:border-blue-500 bg-white shadow"></span>
+                                </span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <style>
+                /* Enhanced animation for payment methods */
+                .peer:checked ~ div,
+                .peer:checked + div {
+                    box-shadow: 0 0 0 6px rgba(59,130,246,0.18), 0 8px 32px 0 rgba(59,130,246,0.08);
+                    border-color: #2563eb !important;
+                    transform: scale(1.03);
+                    transition: box-shadow 0.3s, border-color 0.3s, transform 0.2s;
+                }
+                .group:hover .peer:checked ~ div,
+                .group:hover .peer:checked + div {
+                    box-shadow: 0 0 0 8px rgba(59,130,246,0.22), 0 12px 40px 0 rgba(59,130,246,0.12);
+                    transform: scale(1.045);
+                }
+                /* Add a subtle glow to checked payment method icon */
+                .peer:checked ~ div span:first-child,
+                .peer:checked + div span:first-child {
+                    filter: drop-shadow(0 0 8px #2563eb55);
+                }
+                </style>
+            </div>
+
+            <!-- Order Summary (Enhanced Design & Animation) -->
+            <div class="lg:col-span-1">
+                <div class="bg-gradient-to-br from-primary/10 via-white to-yellow-50 rounded-2xl shadow-2xl overflow-hidden p-8 sticky top-24 animate-fade-in-up transition-all duration-700 group hover:shadow-primary/30 relative">
+                    <!-- Decorative Animated Accent -->
+                    <div class="absolute -top-8 -right-8 w-24 h-24 bg-gradient-to-br from-yellow-400 via-primary to-secondary opacity-30 rounded-full blur-3xl animate-pulse-slow pointer-events-none"></div>
+                    <div class="absolute -bottom-8 -left-8 w-28 h-28 bg-gradient-to-tr from-primary via-secondary to-yellow-400 opacity-25 rounded-full blur-3xl animate-float pointer-events-none"></div>
+
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-yellow-400 via-primary to-secondary shadow-lg ring-4 ring-yellow-400/30 animate-step-pop">
+                            <!-- SVG alternative for receipt icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white animate-bounce-short" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <path d="M9 7h6M9 11h6M9 15h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-3xl font-extrabold bg-gradient-to-r from-primary via-secondary to-yellow-400 bg-clip-text text-transparent tracking-tight animate-gradient-move drop-shadow-lg">
+                            Order Summary
+                        </h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-4 font-medium animate-fade-in-up delay-100 flex items-center gap-2">
+                        <i class="lni lni-info-circle text-base text-primary"></i>
+                        Review your items and total before placing your order.
+                    </p>
+
+                    <div class="max-h-80 overflow-y-auto mb-6 pr-2 space-y-4 animate-fade-in-up delay-100">
+                        {% for item in cart_items %}
+                        <div class="flex gap-4 items-center py-4 px-3 rounded-2xl bg-gradient-to-r from-primary/5 via-white to-yellow-50 shadow-lg border border-primary/10 hover:shadow-primary/20 transition-all duration-300 group animate-fade-in-up {% if not forloop.last %}mb-2{% endif %}">
+                            {% if item.product.image1 %}
+                            <div class="relative">
+                                <img src="{{ item.product.image1.url }}" alt="{{ item.product.model }}" class="w-14 h-14 object-cover rounded-xl shadow-md border-2 border-primary/20 group-hover:scale-110 transition-transform duration-200">
+                                <span class="absolute -top-2 -right-2 bg-primary text-white text-xs font-bold px-2 py-0.5 rounded-full shadow animate-bounce-short">{{ item.quantity }}</span>
+                            </div>
+                            {% else %}
+                            <div class="w-14 h-14 bg-gray-200 rounded-xl flex items-center justify-center border-2 border-gray-300">
+                                <i class="lni lni-package text-gray-400 text-2xl"></i>
+                                <span class="absolute -top-2 -right-2 bg-primary text-white text-xs font-bold px-2 py-0.5 rounded-full shadow animate-bounce-short">{{ item.quantity }}</span>
+                            </div>
+                            {% endif %}
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-base font-bold text-primary flex flex-col items-start gap-1 break-words whitespace-normal">
+                                    <span>{{ item.product.brand }}</span>
+                                    <span class="text-gray-700 font-semibold">{{ item.product.model }}</span>
+                                </h4>
+                                <div class="text-xs text-gray-500 mt-1 flex items-center gap-2">
+                                    <span class="bg-primary/10 text-primary px-2 py-0.5 rounded font-semibold">৳{{ item.price|floatformat:0|intcomma }}</span>
+                                    <span class="text-gray-400">×</span>
+                                    <span class="font-medium">{{ item.quantity }}</span>
+                                </div>
+                            </div>
+                            <div class="text-lg font-extrabold text-yellow-600 animate-fade-in-up delay-100 drop-shadow">
+                                ৳{{ item.get_total|floatformat:0|intcomma }}
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="text-center text-gray-400 py-8">
+                            <i class="lni lni-cart text-4xl mb-2"></i>
+                            <div class="font-semibold">Your cart is empty.</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="space-y-3 pt-6 border-t-2 border-primary/20 bg-gradient-to-r from-yellow-50 via-white to-primary/5 rounded-xl shadow-inner animate-fade-in-up delay-200 px-3 pb-2">
+                        <!-- Subtotal -->
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-base font-semibold text-primary flex items-center gap-2">
+                                <i class="lni lni-calculator text-xl text-primary"></i>
+                                Subtotal
+                            </span>
+                            <span class="text-lg font-bold text-gray-800 tracking-wide">
+                                ৳{{ cart.get_cart_total|floatformat:0|intcomma }}
+                            </span>
+                        </div>
+                        <!-- Shipping -->
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-base font-semibold text-yellow-600 flex items-center gap-2">
+                                <i class="lni lni-delivery text-xl text-yellow-500"></i>
+                                Shipping
+                            </span>
+                            <span class="text-lg font-bold">
+                                {% if cart.get_cart_total > 10000 %}
+                                    <span class="text-green-600 animate-pulse flex items-center gap-1">
+                                        <i class="lni lni-checkmark-circle text-green-500"></i> Free
+                                    </span>
+                                {% else %}
+                                    <span class="text-yellow-600 flex items-center gap-1">
+                                        <i class="lni lni-coin"></i> ৳200
+                                    </span>
+                                {% endif %}
+                            </span>
+                        </div>
+                        <!-- Divider -->
+                        <div class="border-t border-dashed border-primary/20 my-2"></div>
+                        <!-- Total -->
+                        <div class="flex justify-between items-center pt-2 animate-fade-in-up delay-300">
+                            <span class="text-xl font-extrabold text-primary flex items-center gap-2 tracking-tight drop-shadow">
+                                <i class="lni lni-money-protection text-2xl text-primary"></i>
+                                Total
+                            </span>
+                            <span class="text-2xl font-black text-yellow-600 drop-shadow-lg flex items-center gap-1">
+                                {% if cart.get_cart_total > 10000 %}
+                                    ৳{{ cart.get_cart_total|floatformat:0|intcomma }}
+                                {% else %}
+                                    ৳{{ cart.get_cart_total|add:200|floatformat:0|intcomma }}
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+
+                    <button type="submit" form="checkoutForm" class="btn btn-primary w-full mt-8 flex items-center justify-center gap-3 shadow-xl shadow-primary/30 hover:shadow-yellow-400/40 hover:-translate-y-1 hover:scale-105 transition-all duration-300 text-xl font-extrabold rounded-2xl py-4 animate-fade-in-up delay-400 group relative overflow-hidden">
+                        <!-- Animated Glow Accent -->
+                        <span class="absolute inset-0 bg-gradient-to-r from-yellow-400/30 via-primary/20 to-secondary/20 opacity-60 blur-2xl pointer-events-none group-hover:opacity-80 transition-all duration-300"></span>
+                        <span class="relative flex items-center z-10">
+                            <i class="lni lni-checkmark-circle animate-bounce-short text-2xl text-white drop-shadow"></i>
+                            <span class="ml-3 tracking-wide">Place Order</span>
+                        </span>
+                    </button>
+
+                    <div class="mt-8 flex justify-center animate-fade-in-up delay-500">
+                        <a href="{% url 'view_cart' %}" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-primary/10 via-yellow-100/40 to-secondary/10 text-primary font-bold shadow-lg border border-primary/20 hover:bg-primary hover:text-white hover:shadow-primary/30 transition-all duration-300 group text-lg">
+                            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 group-hover:bg-white">
+                                <i class="lni lni-arrow-left text-xl group-hover:-translate-x-1 transition-transform"></i>
+                            </span>
+                            <span class="tracking-wide">Back to Cart</span>
+                        </a>
+                    </div>
+
+                    <div class="mt-8 p-5 bg-gradient-to-r from-blue-50 via-white to-blue-100 rounded-2xl border-2 border-blue-200 shadow-xl animate-fade-in-up delay-600 flex items-center gap-4 relative overflow-hidden group hover:shadow-blue-300 transition-all duration-300">
+                        <!-- Animated Glow Accent -->
+                        <span class="absolute inset-0 bg-gradient-to-r from-blue-200/30 via-blue-100/20 to-blue-400/10 opacity-60 blur-2xl pointer-events-none group-hover:opacity-80 transition-all duration-300"></span>
+                        <div class="relative z-10 flex-shrink-0 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 shadow-lg ring-4 ring-blue-300/30 animate-step-pop">
+                            <i class="lni lni-shield text-white text-3xl animate-bounce-short"></i>
+                        </div>
+                        <div class="relative z-10">
+                            <h4 class="text-lg font-bold text-blue-800 flex items-center gap-2">
+                                <i class="lni lni-lock-alt text-blue-500 text-xl"></i>
+                                Secure Checkout
+                            </h4>
+                            <p class="mt-1 text-sm text-blue-700 font-medium leading-relaxed">
+                                Your payment is <span class="font-semibold text-blue-600">encrypted &amp; protected</span>. <br>
+                                <span class="text-blue-500">We never store your card details.</span>
+                            </p>
+                        </div>
+                        <div class="absolute -top-6 -right-6 w-20 h-20 bg-gradient-to-br from-blue-400 via-blue-200 to-blue-100 opacity-20 rounded-full blur-2xl animate-pulse-slow pointer-events-none"></div>
+                    </div>
+                </div>
+                <style>
+                /* Enhanced Animations for Order Summary */
+                @keyframes fade-in-up {
+                    0% { opacity: 0; transform: translateY(40px) scale(0.98);}
+                    80% { opacity: 0.8; transform: translateY(-6px) scale(1.02);}
+                    100% { opacity: 1; transform: translateY(0) scale(1);}
+                }
+                .animate-fade-in-up { animation: fade-in-up 1.1s cubic-bezier(0.23, 1, 0.32, 1) both; }
+                .animate-fade-in-up.delay-100 { animation-delay: 0.1s; }
+                .animate-fade-in-up.delay-200 { animation-delay: 0.2s; }
+                .animate-fade-in-up.delay-300 { animation-delay: 0.3s; }
+                .animate-fade-in-up.delay-400 { animation-delay: 0.4s; }
+                .animate-fade-in-up.delay-500 { animation-delay: 0.5s; }
+                .animate-fade-in-up.delay-600 { animation-delay: 0.6s; }
+
+                @keyframes pulse-slow {
+                    0%, 100% { opacity: 0.7; transform: scale(1);}
+                    50% { opacity: 1; transform: scale(1.12);}
+                }
+                .animate-pulse-slow { animation: pulse-slow 7s ease-in-out infinite; }
+
+                @keyframes float {
+                    0%, 100% { transform: translateY(0) scale(1);}
+                    50% { transform: translateY(-24px) scale(1.06);}
+                }
+                .animate-float { animation: float 8s cubic-bezier(0.4, 0.2, 0.2, 1) infinite; }
+
+                @keyframes gradient-move {
+                    0% { background-position: 0% 50%;}
+                    100% { background-position: 100% 50%;}
+                }
+                .animate-gradient-move {
+                    background-size: 220% 220%;
+                    animation: gradient-move 3.5s linear infinite alternate;
+                }
+
+                @keyframes bounce-short {
+                    0%, 100% { transform: translateY(0);}
+                    50% { transform: translateY(-10px);}
+                }
+                .animate-bounce-short { animation: bounce-short 1.1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite; }
+
+                /* Subtle shadow and border for summary card on hover */
+                .group:hover {
+                    box-shadow: 0 8px 32px 0 rgba(251, 191, 36, 0.18), 0 2px 8px 0 rgba(59,130,246,0.08);
+                    border-color: #facc15 !important;
+                    transition: box-shadow 0.3s, border-color 0.3s;
+                }
+                </style>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript to calculate correct totals on page load -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Calculate correct totals on page load - no tax calculation
+        const subtotal = parseFloat('{{ cart.get_cart_total }}');
+
+        let shippingCost = 200;
+        if (subtotal > 10000) {
+            shippingCost = 0;
+        }
+
+        // Calculate grand total (without tax)
+        const grandTotal = subtotal + shippingCost;
+
+        // Format with commas
+        function numberWithCommas(x) {
+            return Math.round(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // Update elements if necessary
+        const totalElement = document.querySelector('.space-y-3 .flex:nth-child(3) .text-lg.font-bold.text-primary');
+        if (totalElement) {
+            totalElement.textContent = `৳${numberWithCommas(grandTotal)}`;
+        }
+    });
+</script>
+{% endblock content %}

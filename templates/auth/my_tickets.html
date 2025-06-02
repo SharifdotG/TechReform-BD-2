@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}My Support Tickets - TechReform BD{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-base-100 py-8">
+    <div class="container mx-auto px-4">
+        <!-- Header Section -->
+        <div class="mb-12">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-8">
+            <div class="flex items-center gap-5">
+                <div class="bg-gradient-to-br from-primary/20 to-primary/10 rounded-full p-4 shadow-lg ring-2 ring-primary/20">
+                <i class="lni lni-support text-4xl text-primary drop-shadow"></i>
+                </div>
+                <div>
+                <h1 class="text-4xl font-black text-base-content tracking-tight leading-tight mb-1">
+                    My Support Tickets
+                </h1>
+                <p class="text-base-content/70 text-lg">
+                    Track and manage your support requests efficiently
+                </p>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <a href="{% url 'contact' %}" class="btn btn-primary btn-lg shadow-xl hover:scale-105 hover:shadow-2xl transition-all duration-200 font-semibold px-7 py-3">
+                <i class="lni lni-plus mr-2 text-lg"></i>
+                Create New Ticket
+                </a>
+            </div>
+            </div>
+            <div class="mt-8 border-t-2 border-dashed border-primary/20"></div>
+        </div>
+
+        {% if page_obj %}
+            <!-- Tickets Grid -->
+            <div class="grid gap-8 md:grid-cols-2 xl:grid-cols-3">                {% for ticket in page_obj %}
+                    <div class="card bg-base-200 shadow-xl border border-primary/10 hover:scale-[1.02] hover:shadow-2xl transition-all duration-300 group relative overflow-hidden cursor-pointer"
+                         onclick="window.location.href='{% url 'customer_ticket_detail' ticket.ticket_id %}'">
+                        <!-- Decorative Gradient Bar -->
+                        <div class="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary/80 to-primary/30 rounded-l"></div>
+                        <div class="card-body relative z-10">
+                            <div class="flex flex-col sm:flex-row justify-between items-start gap-4">
+                                <!-- Ticket Info -->
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <h3 class="text-xl font-bold text-primary tracking-wide">
+                                            #{{ ticket.ticket_id }}
+                                        </h3>
+                                        <!-- Status Badge -->
+                                        <div class="badge
+                                            {% if ticket.status == 'open' %}badge-info bg-info/20 text-info{% endif %}
+                                            {% if ticket.status == 'in_progress' %}badge-warning bg-warning/20 text-warning{% endif %}
+                                            {% if ticket.status == 'pending_customer' %}badge-accent bg-accent/20 text-accent{% endif %}
+                                            {% if ticket.status == 'resolved' %}badge-success bg-success/20 text-success{% endif %}
+                                            {% if ticket.status == 'closed' %}badge-ghost bg-base-300/40 text-base-content/60{% endif %}
+                                            badge-lg font-semibold px-3 py-1 border-0 shadow-sm">
+                                            {{ ticket.get_status_display }}
+                                        </div>
+                                        <!-- Priority Badge -->
+                                        <div class="badge
+                                            {% if ticket.priority == 'low' %}badge-ghost bg-base-300/40 text-base-content/60{% endif %}
+                                            {% if ticket.priority == 'medium' %}badge-info bg-info/10 text-info{% endif %}
+                                            {% if ticket.priority == 'high' %}badge-warning bg-warning/10 text-warning{% endif %}
+                                            {% if ticket.priority == 'urgent' %}badge-error bg-error/10 text-error{% endif %}
+                                            badge-outline font-semibold px-2 py-1 border-0">
+                                            {{ ticket.get_priority_display }}
+                                        </div>
+                                    </div>
+
+                                    <h4 class="text-lg font-semibold text-base-content mb-2 group-hover:text-primary transition-colors">
+                                        {{ ticket.subject }}
+                                    </h4>
+
+                                    <p class="text-base-content/70 text-sm mb-3 line-clamp-2">
+                                        {{ ticket.description|truncatewords:20 }}
+                                    </p>
+
+                                    <div class="flex flex-wrap gap-4 text-xs text-base-content/60 font-medium">
+                                        <div class="flex items-center gap-1">
+                                            <i class="lni lni-calendar text-primary"></i>
+                                            <span>{{ ticket.created_at|date:"M d, Y" }}</span>
+                                        </div>
+                                        {% if ticket.category %}
+                                            <div class="flex items-center gap-1">
+                                                <i class="lni lni-tag text-accent"></i>
+                                                <span>{{ ticket.category.name }}</span>
+                                            </div>
+                                        {% endif %}
+                                        {% if ticket.assigned_staff %}
+                                            <div class="flex items-center gap-1">
+                                                <i class="lni lni-user text-info"></i>
+                                                <span>Assigned to {{ ticket.assigned_staff.get_full_name|default:ticket.assigned_staff.username }}</span>
+                                            </div>
+                                        {% endif %}
+                                        <div class="flex items-center gap-1">
+                                            <i class="lni lni-comments text-warning"></i>
+                                            <span>{{ ticket.responses.count }} response{{ ticket.responses.count|pluralize }}</span>
+                                        </div>
+                                    </div>
+                                </div>                                <!-- Action Buttons -->
+                                <div class="flex flex-col gap-2 min-w-[140px] items-end">                                    <a href="{% url 'customer_ticket_detail' ticket.ticket_id %}"
+                                       class="btn btn-primary btn-md shadow-lg hover:scale-105 transition-transform duration-150 font-semibold"
+                                       onclick="event.stopPropagation();">
+                                        <i class="lni lni-eye mr-2"></i>
+                                        View Details
+                                    </a>
+                                    {% if ticket.status in 'open,in_progress,pending_customer' %}
+                                        <div class="text-xs text-center mt-1">
+                                            {% if ticket.is_overdue %}
+                                                <span class="text-error font-semibold animate-pulse">⚠️ Overdue</span>
+                                            {% else %}
+                                                <span class="text-success font-semibold">✓ Active</span>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Subtle hover overlay -->
+                        <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Enhanced Pagination -->
+            {% if page_obj.has_other_pages %}
+                <div class="flex justify-center mt-10">
+                    <nav class="inline-flex items-center gap-1 rounded-xl bg-base-200 shadow-md px-4 py-2" aria-label="Pagination">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1" class="btn btn-sm btn-ghost join-item rounded-l-xl" title="First Page">
+                                <i class="lni lni-angle-double-left"></i>
+                            </a>
+                            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-sm btn-ghost join-item" title="Previous Page">
+                                <i class="lni lni-chevron-left"></i>
+                            </a>
+                        {% else %}
+                            <button class="btn btn-sm btn-ghost join-item rounded-l-xl opacity-50 cursor-not-allowed" disabled>
+                                <i class="lni lni-angle-double-left"></i>
+                            </button>
+                            <button class="btn btn-sm btn-ghost join-item opacity-50 cursor-not-allowed" disabled>
+                                <i class="lni lni-chevron-left"></i>
+                            </button>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if num == page_obj.number %}
+                                <button class="btn btn-sm btn-primary join-item font-bold scale-110 shadow-lg cursor-default" disabled>{{ num }}</button>
+                            {% elif num >= page_obj.number|add:'-2' and num <= page_obj.number|add:'2' %}
+                                <a href="?page={{ num }}" class="btn btn-sm btn-ghost join-item hover:bg-primary/10 transition-colors">{{ num }}</a>
+                            {% elif num == 1 or num == page_obj.paginator.num_pages %}
+                                <a href="?page={{ num }}" class="btn btn-sm btn-ghost join-item">{{ num }}</a>
+                            {% elif num == page_obj.number|add:'-3' or num == page_obj.number|add:'3' %}
+                                <span class="join-item px-2 text-base-content/40">…</span>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-sm btn-ghost join-item" title="Next Page">
+                                <i class="lni lni-chevron-right"></i>
+                            </a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-sm btn-ghost join-item rounded-r-xl" title="Last Page">
+                                <i class="lni lni-angle-double-right"></i>
+                            </a>
+                        {% else %}
+                            <button class="btn btn-sm btn-ghost join-item opacity-50 cursor-not-allowed" disabled>
+                                <i class="lni lni-chevron-right"></i>
+                            </button>
+                            <button class="btn btn-sm btn-ghost join-item rounded-r-xl opacity-50 cursor-not-allowed" disabled>
+                                <i class="lni lni-angle-double-right"></i>
+                            </button>
+                        {% endif %}
+                    </nav>
+                </div>
+            {% endif %}
+
+        {% else %}
+            <!-- Enhanced Empty State -->
+            <div class="flex flex-col items-center justify-center py-20">
+                <div class="relative w-28 h-28 mb-8">
+                    <div class="absolute inset-0 rounded-full bg-gradient-to-br from-primary/10 to-accent/10 animate-pulse"></div>
+                    <div class="relative w-full h-full flex items-center justify-center rounded-full bg-base-200 shadow-lg ring-4 ring-primary/10">
+                        <i class="lni lni-support text-5xl text-primary drop-shadow"></i>
+                    </div>
+                    <div class="absolute -bottom-3 right-0 bg-success/90 text-white rounded-full px-2 py-1 text-xs font-bold shadow">
+                        New!
+                    </div>
+                </div>
+                <h3 class="text-3xl font-extrabold text-base-content mb-3 tracking-tight">No Support Tickets Yet</h3>
+                <p class="text-base-content/70 mb-7 max-w-md mx-auto text-lg">
+                    You haven't created any support tickets. If you need help or have a question, our team is here for you!
+                </p>
+                <a href="{% url 'contact' %}" class="btn btn-primary btn-lg shadow-xl hover:scale-105 hover:shadow-2xl transition-all duration-200 font-semibold px-8 py-3 flex items-center gap-2">
+                    <i class="lni lni-plus text-xl"></i>
+                    Create Your First Ticket
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card.cursor-pointer:hover {
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.card.cursor-pointer:hover::after {
+    content: '👆 Click to view details';
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    z-index: 20;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+{% endblock %}

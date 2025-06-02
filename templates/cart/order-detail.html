@@ -1,0 +1,644 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_filters %}
+{% block title %}Order #{{ order.id|truncatechars:8 }} - TechReform BD{% endblock %}
+
+{% block content %}
+<!-- Order Detail Section -->
+<section class="py-16 bg-base-100 overflow-hidden">
+    <div class="container mx-auto px-6 relative">
+        <!-- Animated background elements (improved with more dynamic shapes and gradients) -->
+        <div class="absolute inset-0 overflow-hidden opacity-30 pointer-events-none z-0">
+            <div class="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-primary via-accent to-secondary rounded-full blur-3xl animate-[pulse_4s_ease-in-out_infinite]"></div>
+            <div class="absolute top-1/3 -left-40 w-80 h-80 bg-gradient-to-tr from-secondary via-primary to-accent rounded-full blur-2xl animate-[spin_18s_linear_infinite]"></div>
+            <div class="absolute bottom-10 right-1/4 w-64 h-64 bg-gradient-to-br from-accent via-secondary to-primary rounded-full blur-2xl animate-[pulse_6s_ease-in-out_infinite]"></div>
+            <div class="absolute top-1/2 left-1/2 w-40 h-40 bg-gradient-to-tl from-primary/70 to-secondary/70 rounded-full blur-xl animate-[bounce_8s_infinite]"></div>
+        </div>
+
+        <!-- Section heading with animation and enhanced design -->
+        <div class="relative z-10 text-center mb-12 animate-fade-in-up">
+            <div class="flex flex-col items-center gap-4">
+                <span class="inline-flex items-center gap-3 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 text-primary font-bold py-2 px-8 rounded-full text-lg shadow-xl border border-primary/20 animate-fade-in-down">
+                    <i class="lni lni-package animate-bounce text-2xl"></i>
+                    <span class="tracking-widest uppercase">Order #{{ order.id|truncatechars:8 }}</span>
+                </span>
+                <h2 class="mt-4 text-4xl lg:text-5xl font-extrabold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent drop-shadow-2xl animate-fade-in-up">
+                    <span class="inline-block animate-gradient-x">{{ order.user.first_name|default:"Customer" }}'s <span class="text-base-content/80 font-light">Order Details</span></span>
+                </h2>
+            </div>
+            <div class="w-40 h-2 bg-gradient-to-r from-primary via-accent to-secondary mx-auto mt-8 rounded-full shadow-lg animate-gradient-x"></div>
+            <div class="flex flex-col items-center mt-8 gap-2 animate-fade-in-up">
+                <div class="flex items-center gap-3 text-base-content/70 text-lg">
+                    <span class="inline-flex items-center gap-2 px-3 py-1 bg-base-200/60 rounded-full shadow-sm">
+                        <i class="lni lni-calendar text-primary"></i>
+                        <span>Placed on</span>
+                        <span class="font-semibold text-base-content">{{ order.created_at|date:"F d, Y" }}</span>
+                    </span>
+                    <span class="inline-flex items-center gap-2 px-3 py-1 bg-base-200/60 rounded-full shadow-sm">
+                        <i class="lni lni-timer text-accent"></i>
+                        <span>at</span>
+                        <span class="font-semibold text-base-content">{{ order.created_at|time:"g:i A" }}</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <style>
+            @keyframes fade-in-up {
+            0% { opacity: 0; transform: translateY(60px) scale(0.98);}
+            60% { opacity: 0.7; transform: translateY(10px) scale(1.02);}
+            100% { opacity: 1; transform: translateY(0) scale(1);}
+            }
+            @keyframes fade-in-down {
+            0% { opacity: 0; transform: translateY(-60px) scale(0.98);}
+            60% { opacity: 0.7; transform: translateY(-10px) scale(1.02);}
+            100% { opacity: 1; transform: translateY(0) scale(1);}
+            }
+            @keyframes gradient-x {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            }
+            @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(59,130,246,0.2);}
+            50% { box-shadow: 0 0 24px 8px rgba(59,130,246,0.15);}
+            }
+            .animate-fade-in-up {
+            animation: fade-in-up 1.1s cubic-bezier(.4,0,.2,1) both;
+            }
+            .animate-fade-in-down {
+            animation: fade-in-down 1.1s cubic-bezier(.4,0,.2,1) both;
+            }
+            .animate-gradient-x {
+            animation: gradient-x 4s ease-in-out infinite;
+            background-size: 200% 200%;
+            }
+            .glow-effect {
+            animation: pulse-glow 2.5s infinite;
+            border-radius: 1rem;
+            }
+            /* Subtle glassmorphism for cards */
+            .glass-card {
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(200,200,255,0.08);
+            }
+        </style>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Order Summary -->
+            <div class="lg:col-span-2">
+                <div class="bg-white glass-card rounded-2xl shadow-xl overflow-hidden transform transition-transform hover:shadow-2xl duration-300 border border-primary/10">
+                    <div class="p-8 border-b border-primary/10 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 flex items-center gap-5 rounded-t-2xl shadow-lg relative overflow-hidden">
+                        <!-- Decorative Gradient Glow -->
+                        <div class="absolute -top-8 -left-8 w-24 h-24 bg-gradient-to-br from-primary/30 via-accent/20 to-secondary/30 rounded-full blur-2xl opacity-60 pointer-events-none"></div>
+                        <span class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/20 shadow-lg mr-4 glow-effect border-2 border-primary/30">
+                            <i class="lni lni-package text-primary text-3xl"></i>
+                        </span>
+                        <div>
+                            <h3 class="font-extrabold text-3xl text-gray-900 tracking-tight bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent animate-gradient-x drop-shadow-lg">
+                                Order Items
+                            </h3>
+                            <p class="text-base text-gray-500 mt-1 font-medium">A summary of everything in your order</p>
+                        </div>
+                    </div>
+                    <div class="divide-y divide-gray-100">
+                        {% for item in order_items %}
+                        <div class="p-6 flex flex-col sm:flex-row items-start sm:items-center gap-6 hover:bg-primary/5 transition-colors duration-200 group">
+                            <div class="w-28 h-28 rounded-2xl bg-gradient-to-br from-primary/10 via-accent/10 to-secondary/10 overflow-hidden flex-shrink-0 shadow-xl border-2 border-primary/20 group-hover:scale-105 group-hover:shadow-2xl transition-all duration-300 relative">
+                                {% if item.product_category and item.product_id %}
+                                    {% get_product_image item.product_category item.product_id as product_image %}
+                                    {% if product_image %}
+                                    <img src="{{ product_image }}" alt="{{ item.product_name }}" class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-110">
+                                    {% else %}
+                                    <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                        <i class="lni lni-package text-gray-300 text-4xl"></i>
+                                    </div>
+                                    {% endif %}
+                                {% else %}
+                                <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                    <i class="lni lni-package text-gray-300 text-4xl"></i>
+                                </div>
+                                {% endif %}
+                                <div class="absolute bottom-2 right-2 bg-white/80 px-2 py-0.5 rounded-full text-xs font-semibold text-primary shadow-md border border-primary/10">
+                                    {{ item.quantity }}x
+                                </div>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-semibold text-gray-900 text-lg group-hover:text-primary transition-colors truncate flex items-center gap-2">
+                                    {{ item.product_name }}
+                                    {% if item.product_variant %}
+                                        <span class="ml-2 text-xs bg-gradient-to-r from-primary/20 via-accent/20 to-secondary/20 text-primary px-2 py-0.5 rounded-full font-semibold tracking-wide border border-primary/20 shadow-sm">
+                                            {{ item.product_variant }}
+                                        </span>
+                                    {% endif %}
+                                </h4>
+                                <div class="flex flex-wrap gap-2 mt-2">
+                                    <span class="text-xs bg-gradient-to-r from-secondary/10 via-primary/10 to-accent/10 text-secondary px-2 py-1 rounded-full font-medium border border-secondary/20 shadow">
+                                        <i class="lni lni-tag text-secondary mr-1"></i>{{ item.product_category }}
+                                    </span>
+                                </div>
+                                <div class="flex justify-between items-end mt-4">
+                                    <span class="text-sm text-gray-500 flex items-center gap-1">
+                                        <i class="lni lni-cart text-primary"></i>
+                                        <span class="font-semibold text-gray-700 ml-1">{{ item.quantity }}</span>
+                                        <span class="mx-1 text-gray-400">×</span>
+                                        <span class="font-semibold text-primary ml-1">৳{{ item.price|floatformat:0|intcomma }}</span>
+                                    </span>
+                                    <span class="font-extrabold text-xl bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent drop-shadow animate-gradient-x">
+                                        ৳{{ item.get_total|floatformat:0|intcomma }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="p-8 bg-gradient-to-r from-primary/5 via-accent/5 to-secondary/5 border-t border-primary/10 rounded-b-2xl">
+                        <div class="flex flex-col gap-3">
+                            <div class="flex justify-between items-center py-2">
+                                <span class="text-base text-gray-600 font-semibold flex items-center gap-2">
+                                    <i class="lni lni-calculator text-primary"></i> Subtotal
+                                </span>
+                                <span class="font-bold text-lg text-gray-900">৳{{ order.total_price|sub:order.shipping_cost|floatformat:0|intcomma }}</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2">
+                                <span class="text-base text-gray-600 font-semibold flex items-center gap-2">
+                                    <i class="lni lni-delivery text-secondary"></i> Shipping
+                                </span>
+                                <span class="font-bold text-lg">
+                                    {% if order.shipping_cost == 0 %}
+                                    <span class="text-success flex items-center gap-1"><i class="lni lni-checkmark-circle"></i> Free</span>
+                                    {% else %}
+                                    <span class="text-secondary">৳{{ order.shipping_cost|floatformat:0|intcomma }}</span>
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="flex justify-between items-center py-4 border-t border-gray-200 mt-2">
+                                <span class="text-2xl font-extrabold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent flex items-center gap-2">
+                                    <i class="lni lni-wallet"></i> Total
+                                </span>
+                                <span class="text-2xl font-extrabold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent drop-shadow animate-gradient-x">
+                                    ৳{{ order.total_price|floatformat:0|intcomma }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Timeline -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden mt-8 transform transition-transform hover:shadow-xl duration-300">
+                    <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 relative overflow-hidden">
+                        <!-- Decorative Timeline Icon Glow -->
+                        <div class="absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-primary/20 via-accent/10 to-secondary/20 rounded-full blur-xl opacity-40 pointer-events-none"></div>
+                        <h3 class="font-extrabold text-2xl text-gray-900 flex items-center gap-3 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent drop-shadow animate-gradient-x">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/20 shadow-lg mr-2 glow-effect border-2 border-primary/30">
+                                <i class="lni lni-timer text-primary text-xl animate-pulse"></i>
+                            </span>
+                            Order Timeline
+                        </h3>
+                        <p class="text-base text-gray-500 mt-2 font-medium ml-14">Track your order's progress step by step</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="relative">
+                            <!-- Timeline Line -->
+                            <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+
+                            <!-- Timeline Steps -->
+                            <div class="space-y-8 relative">
+                                <!-- Step 1: Order Placed -->
+                                <div class="flex gap-4 items-start group">
+                                    <div class="relative">
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary via-accent to-secondary flex items-center justify-center z-10 shadow-lg border-2 border-primary/40 group-hover:scale-110 transition-transform duration-300">
+                                            <i class="lni lni-checkmark-circle text-white text-lg animate-pulse"></i>
+                                        </div>
+                                        <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 text-xs bg-primary/90 text-white px-2 py-0.5 rounded-full shadow-md font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                                            Placed
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-primary text-lg flex items-center gap-2">
+                                            Order Placed
+                                            <span class="ml-2 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20 shadow-sm">#{{ order.id|truncatechars:8 }}</span>
+                                        </h4>
+                                        <p class="text-sm text-gray-500 flex items-center gap-2 mt-1">
+                                            <i class="lni lni-calendar text-primary"></i>
+                                            <span>{{ order.created_at|date:"F d, Y" }}</span>
+                                            <span class="mx-1 text-gray-400">|</span>
+                                            <i class="lni lni-timer text-accent"></i>
+                                            <span>{{ order.created_at|time:"g:i A" }}</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2: Processing -->
+                                <div class="flex gap-4 items-start group">                                    <div class="relative">
+                                        <div class="w-8 h-8 rounded-full
+                                            {% if order.status == 'processing' or order.status == 'shipped' or order.status == 'delivered' %}
+                                                bg-gradient-to-br from-accent via-primary to-secondary
+                                            {% else %}
+                                                bg-gray-300
+                                            {% endif %}
+                                            flex items-center justify-center z-10 shadow-lg border-2 border-accent/40 group-hover:scale-110 transition-transform duration-300">
+                                            <i class="lni lni-{% if order.status == 'processing' or order.status == 'shipped' or order.status == 'delivered' %}checkmark-circle{% else %}spinner-solid animate-spin{% endif %} text-white text-lg"></i>
+                                        </div>
+                                        <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 text-xs bg-accent/90 text-white px-2 py-0.5 rounded-full shadow-md font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                                            Processing
+                                        </span>
+                                    </div>
+                                    <div>                                        <h4 class="font-semibold text-accent text-lg flex items-center gap-2">
+                                            Processing
+                                            {% if order.status == 'processing' or order.status == 'shipped' or order.status == 'delivered' %}
+                                                <span class="ml-2 px-2 py-0.5 rounded-full bg-accent/10 text-accent text-xs font-bold border border-accent/20 shadow-sm">In Progress</span>
+                                            {% endif %}
+                                        </h4>
+                                        <p class="text-sm text-gray-500 flex items-center gap-2 mt-1">
+                                            <i class="lni lni-cog text-accent"></i>
+                                            {% if order.status == 'processing' or order.status == 'shipped' or order.status == 'delivered' %}
+                                                Started processing
+                                            {% else %}
+                                                Waiting to be processed
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Step 3: Shipped -->
+                                <div class="flex gap-4 items-start group">                                    <div class="relative">
+                                        <div class="w-8 h-8 rounded-full
+                                            {% if order.status == 'shipped' or order.status == 'delivered' %}
+                                                bg-gradient-to-br from-secondary via-accent to-primary
+                                            {% else %}
+                                                bg-gray-300
+                                            {% endif %}
+                                            flex items-center justify-center z-10 shadow-lg border-2 border-secondary/40 group-hover:scale-110 transition-transform duration-300">
+                                            <i class="lni lni-{% if order.status == 'shipped' or order.status == 'delivered' %}checkmark-circle{% else %}ship{% endif %} text-white text-lg"></i>
+                                        </div>
+                                        <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 text-xs bg-secondary/90 text-white px-2 py-0.5 rounded-full shadow-md font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                                            Shipped
+                                        </span>
+                                    </div>
+                                    <div>                                        <h4 class="font-semibold text-secondary text-lg flex items-center gap-2">
+                                            Shipped
+                                            {% if order.status == 'shipped' or order.status == 'delivered' %}
+                                                <span class="ml-2 px-2 py-0.5 rounded-full bg-secondary/10 text-secondary text-xs font-bold border border-secondary/20 shadow-sm">On the Way</span>
+                                            {% endif %}
+                                        </h4>
+                                        <p class="text-sm text-gray-500 flex items-center gap-2 mt-1">
+                                            <i class="lni lni-ship text-secondary"></i>
+                                            {% if order.status == 'shipped' or order.status == 'delivered' %}
+                                                Your order is on the way
+                                            {% else %}
+                                                Waiting to be shipped
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Step 4: Delivered -->
+                                <div class="flex gap-4 items-start group">                                    <div>
+                                        <div class="w-8 h-8 rounded-full
+                                            {% if order.status == 'delivered' %}
+                                                bg-gradient-to-br from-success via-primary to-accent
+                                            {% else %}
+                                                bg-gray-300
+                                            {% endif %}
+                                            flex items-center justify-center z-10 shadow-lg border-2 border-success/40 group-hover:scale-110 transition-transform duration-300">
+                                            <i class="lni lni-{% if order.status == 'delivered' %}checkmark-circle{% else %}package{% endif %} text-white text-lg animate-{% if order.status == 'delivered' %}pulse{% endif %}"></i>
+                                        </div>
+                                        <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 text-xs bg-success/90 text-white px-2 py-0.5 rounded-full shadow-md font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                                            Delivered
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-success text-lg flex items-center gap-2">
+                                            Delivered
+                                            {% if order.status == 'delivered' %}
+                                                <span class="ml-2 px-2 py-0.5 rounded-full bg-success/10 text-success text-xs font-bold border border-success/20 shadow-sm">Completed</span>
+                                            {% endif %}
+                                        </h4>
+                                        <p class="text-sm text-gray-500 flex items-center gap-2 mt-1">
+                                            <i class="lni lni-package text-success"></i>
+                                            {% if order.status == 'delivered' %}
+                                                Successfully delivered
+                                            {% else %}
+                                                Waiting to be delivered
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Information -->
+            <div class="lg:col-span-1">
+                <!-- Status Card -->
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-8 transform transition-transform hover:shadow-2xl duration-300 glass-card border border-primary/10">
+                    <div class="p-6 border-b border-primary/10 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 flex items-center gap-3 rounded-t-2xl shadow-lg relative overflow-hidden">
+                        <!-- Decorative Glow -->
+                        <div class="absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-primary/20 via-accent/10 to-secondary/20 rounded-full blur-xl opacity-40 pointer-events-none"></div>                        <span class="inline-flex items-center justify-center w-12 h-12 rounded-full
+                            {% if order.status == 'pending' %}bg-warning/20
+                            {% elif order.status == 'processing' %}bg-info/20
+                            {% elif order.status == 'shipped' %}bg-secondary/20
+                            {% elif order.status == 'delivered' %}bg-success/20
+                            {% else %}bg-neutral/20{% endif %}
+                            shadow-lg mr-3 border-2 border-primary/20 glow-effect">
+                            <i class="lni lni-{% if order.status == 'pending' %}timer
+                                {% elif order.status == 'processing' %}cog
+                                {% elif order.status == 'shipped' %}ship
+                                {% elif order.status == 'delivered' %}checkmark-circle
+                                {% else %}question-circle{% endif %}
+                                {% if order.status == 'pending' %} text-warning
+                                {% elif order.status == 'processing' %} text-info
+                                {% elif order.status == 'shipped' %} text-secondary
+                                {% elif order.status == 'delivered' %} text-success
+                                {% else %} text-neutral{% endif %} text-2xl"></i>
+                        </span>
+                        <div>
+                            <h3 class="font-extrabold text-2xl text-gray-900 tracking-tight bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent animate-gradient-x drop-shadow-lg">
+                                Order Status
+                            </h3>                            <span class="inline-block mt-1 px-3 py-1 rounded-full text-sm font-semibold tracking-wide
+                                {% if order.status == 'pending' %}bg-warning/10 text-warning
+                                {% elif order.status == 'processing' %}bg-info/10 text-info
+                                {% elif order.status == 'shipped' %}bg-secondary/10 text-secondary
+                                {% elif order.status == 'delivered' %}bg-success/10 text-success
+                                {% else %}bg-neutral/10 text-neutral{% endif %}
+                                border border-primary/10 shadow-sm">
+                                {{ order.status|upper }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-3">
+                            <span class="text-base-content/70 text-sm flex items-center gap-2">
+                                <i class="lni lni-calendar text-primary"></i>
+                                Last updated:
+                                <span class="font-semibold text-base-content">{{ order.updated_at|date:"F d, Y" }}</span>
+                            </span>
+                        </div>                        <div class="mt-4">
+                            {% if order.status == 'pending' %}
+                                <p class="text-warning font-medium flex items-center gap-2">
+                                    <i class="lni lni-timer"></i> Your order is awaiting confirmation.
+                                </p>
+                            {% elif order.status == 'processing' %}
+                                <p class="text-info font-medium flex items-center gap-2">
+                                    <i class="lni lni-cog"></i> We are preparing your order for shipment.
+                                </p>
+                            {% elif order.status == 'shipped' %}
+                                <p class="text-secondary font-medium flex items-center gap-2">
+                                    <i class="lni lni-ship"></i> Your order is on the way!
+                                </p>
+                            {% elif order.status == 'delivered' %}
+                                <p class="text-success font-medium flex items-center gap-2">
+                                    <i class="lni lni-checkmark-circle"></i> Your order has been delivered. Thank you!
+                                </p>
+                            {% else %}
+                                <p class="text-neutral font-medium flex items-center gap-2">
+                                    <i class="lni lni-question-circle"></i> Status: {{ order.status }}
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shipping Information -->
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-8 transform transition-transform hover:shadow-2xl duration-300 glass-card border border-primary/10">
+                    <div class="p-6 border-b border-primary/10 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 flex items-center gap-3 rounded-t-2xl shadow-lg relative overflow-hidden">
+                        <!-- Decorative Glow -->
+                        <div class="absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-primary/20 via-accent/10 to-secondary/20 rounded-full blur-xl opacity-40 pointer-events-none"></div>
+                        <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-secondary/20 shadow-lg mr-3 border-2 border-secondary/20 glow-effect">
+                            <i class="lni lni-delivery text-secondary text-2xl"></i>
+                        </span>
+                        <div>
+                            <h3 class="font-extrabold text-2xl text-gray-900 tracking-tight bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent animate-gradient-x drop-shadow-lg">
+                                Shipping Information
+                            </h3>
+                            <span class="inline-block mt-1 px-3 py-1 rounded-full text-sm font-semibold tracking-wide bg-secondary/10 text-secondary border border-secondary/10 shadow-sm">
+                                Delivery Address
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shadow-md">
+                                <i class="lni lni-user text-blue-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900 text-lg">{{ order.shipping_address.name }}</p>
+                                <p class="text-xs text-gray-400">{{ order.user.email }}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary/10 via-accent/10 to-secondary/10 flex items-center justify-center shadow-md mt-1">
+                                <i class="lni lni-map-marker text-primary"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="bg-base-200/60 rounded-xl p-4 border border-primary/10 shadow-sm">
+                                    <p class="text-gray-700 font-medium">{{ order.shipping_address.address_line1 }}</p>
+                                    {% if order.shipping_address.address_line2 %}
+                                    <p class="text-gray-600">{{ order.shipping_address.address_line2 }}</p>
+                                    {% endif %}
+                                    <p class="text-gray-600">{{ order.shipping_address.city }}, {{ order.shipping_address.region }} {{ order.shipping_address.postal_code }}</p>
+                                    <p class="text-gray-500">{{ order.shipping_address.country }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center shadow-md">
+                                <i class="lni lni-phone text-green-600"></i>
+                            </div>
+                            <p class="text-gray-700 font-medium">{{ order.shipping_address.phone }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Information -->
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-8 transform transition-transform hover:shadow-2xl duration-300 glass-card border border-primary/10">
+                    <div class="p-6 border-b border-primary/10 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 flex items-center gap-3 rounded-t-2xl shadow-lg relative overflow-hidden">
+                        <!-- Decorative Glow -->
+                        <div class="absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-primary/20 via-accent/10 to-secondary/20 rounded-full blur-xl opacity-40 pointer-events-none"></div>
+                        <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/20 shadow-lg mr-3 border-2 border-primary/20 glow-effect">
+                            <i class="{% if order.payment_method == 'cash_on_delivery' %}lni lni-delivery
+                                {% elif order.payment_method == 'bkash' %}lni lni-wallet
+                                {% elif order.payment_method == 'nagad' %}lni lni-wallet
+                                {% elif order.payment_method == 'credit_card' %}lni lni-credit-cards
+                                {% else %}lni lni-credit-cards{% endif %} text-primary text-2xl"></i>
+                        </span>
+                        <div>
+                            <h3 class="font-extrabold text-2xl text-gray-900 tracking-tight bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent animate-gradient-x drop-shadow-lg">
+                                Payment Information
+                            </h3>
+                            <span class="inline-block mt-1 px-3 py-1 rounded-full text-sm font-semibold tracking-wide bg-primary/10 text-primary border border-primary/10 shadow-sm">
+                                {% if order.payment_method == 'cash_on_delivery' %}Cash on Delivery
+                                {% elif order.payment_method == 'bkash' %}bKash
+                                {% elif order.payment_method == 'nagad' %}Nagad
+                                {% elif order.payment_method == 'credit_card' %}Credit/Debit Card
+                                {% else %}{{ order.payment_method|title }}{% endif %}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            {% if order.transaction_id %}
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs bg-secondary/10 text-secondary px-2 py-1 rounded-full font-semibold shadow border border-secondary/20">
+                                    TrxID: {{ order.transaction_id }}
+                                </span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary/10 via-accent/10 to-secondary/10 flex items-center justify-center shadow-md">
+                                <i class="lni lni-shield text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <span class="text-sm text-gray-600 font-medium">Payment Status:</span>
+                                <span class="inline-block ml-2 px-3 py-1 rounded-full text-sm font-semibold tracking-wide
+                                    {% if order.payment_status == 'Paid' %}bg-success/10 text-success border-success/20
+                                    {% elif order.payment_status == 'Pending' %}bg-warning/10 text-warning border-warning/20
+                                    {% else %}bg-neutral/10 text-neutral border-neutral/20{% endif %}
+                                    border shadow-sm">
+                                    <i class="lni lni-{% if order.payment_status == 'Paid' %}checkmark-circle
+                                        {% elif order.payment_status == 'Pending' %}timer
+                                        {% else %}question-circle{% endif %} mr-1"></i>
+                                    {% if order.payment_status == 'Paid' %}
+                                        Payment Completed
+                                    {% elif order.payment_status == 'Pending' %}
+                                        Payment Pending
+                                    {% else %}
+                                        {{ order.payment_status }}
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                        {% if order.payment_status == 'Pending' and order.payment_method != 'cash_on_delivery' %}
+                        <div class="mt-4 p-4 bg-info/10 border border-info/20 rounded-xl flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-info/20 flex items-center justify-center shadow">
+                                <i class="lni lni-information text-info text-lg"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-base font-semibold text-info mb-1">Payment Instructions</h5>
+                                <p class="text-xs text-gray-600">Please complete your payment to process your order. If you've already paid, your order will be updated shortly.</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Support Section -->
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-transform hover:shadow-2xl duration-300 glass-card border border-primary/10">
+                    <div class="p-6 border-b border-primary/10 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 flex items-center gap-3 rounded-t-2xl shadow-lg relative overflow-hidden">
+                        <!-- Decorative Glow -->
+                        <div class="absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-primary/20 via-accent/10 to-secondary/20 rounded-full blur-xl opacity-40 pointer-events-none"></div>
+                        <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent/20 shadow-lg mr-3 border-2 border-accent/20 glow-effect">
+                            <i class="lni lni-support text-accent text-2xl"></i>
+                        </span>
+                        <div>
+                            <h3 class="font-extrabold text-2xl text-gray-900 tracking-tight bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent animate-gradient-x drop-shadow-lg">
+                                Need Help?
+                            </h3>
+                            <span class="inline-block mt-1 px-3 py-1 rounded-full text-sm font-semibold tracking-wide bg-accent/10 text-accent border border-accent/10 shadow-sm">
+                                Customer Support
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex flex-col gap-4">
+                            <a href="mailto:support@techreform.bd" class="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-primary/5 via-accent/5 to-secondary/5 hover:bg-primary/10 transition-colors shadow group border border-primary/10">
+                                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 shadow-md group-hover:bg-primary/20 transition-all">
+                                    <i class="lni lni-envelope text-primary text-xl group-hover:scale-110 transition-transform"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-primary group-hover:text-primary/80 transition-colors">Email Us</h4>
+                                    <p class="text-sm text-gray-500 group-hover:text-primary/70 transition-colors">support@techreform.bd</p>
+                                </div>
+                            </a>
+                            <a href="tel:+8801234567890" class="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-secondary/5 via-accent/5 to-primary/5 hover:bg-secondary/10 transition-colors shadow group border border-secondary/10">
+                                <div class="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center flex-shrink-0 shadow-md group-hover:bg-secondary/20 transition-all">
+                                    <i class="lni lni-phone text-secondary text-xl group-hover:scale-110 transition-transform"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-secondary group-hover:text-secondary/80 transition-colors">Call Us</h4>
+                                    <p class="text-sm text-gray-500 group-hover:text-secondary/70 transition-colors">+880 1234 567890</p>
+                                </div>
+                            </a>
+                            <div class="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-accent/5 via-primary/5 to-secondary/5 shadow border border-accent/10">
+                                <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                                    <i class="lni lni-comments-alt text-accent text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-accent">Live Chat</h4>
+                                    <p class="text-sm text-gray-500">Chat with us (Coming Soon)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 flex flex-col sm:flex-row justify-center gap-4 items-center">
+            <a href="{% url 'my_orders' %}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-primary border border-primary bg-white hover:bg-primary hover:text-white shadow-lg transition-all duration-300 group">
+            <i class="lni lni-arrow-left text-xl group-hover:animate-bounce"></i>
+            <span>Back to My Orders</span>
+            </a>
+
+            {% if order.status != 'Delivered' %}
+            <a href="#" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-primary via-accent to-secondary shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 group">
+            <i class="lni lni-question-circle text-xl group-hover:animate-pulse"></i>
+            <span>Track Order</span>
+            </a>
+            {% endif %}
+
+            {% if order.status == 'Delivered' %}
+            <a href="#" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-success bg-success/10 border border-success hover:bg-success hover:text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 group">
+            <i class="lni lni-star text-xl group-hover:animate-bounce"></i>
+            <span>Write a Review</span>
+            </a>
+            {% endif %}
+
+            <a href="#" onclick="window.print(); return false;" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-neutral border border-neutral bg-white hover:bg-neutral hover:text-white shadow-lg transition-all duration-300 group">
+            <i class="lni lni-printer text-xl group-hover:animate-pulse"></i>
+            <span>Print Order</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Print Styles (hidden in normal view) -->
+<style media="print">
+    nav, footer, .btn, script, .bg-base-100 > .container > .absolute {
+        display: none !important;
+    }
+    .bg-base-100 {
+        background: white !important;
+        padding: 0 !important;
+    }
+    .shadow-lg, .shadow-md, .hover\:shadow-lg, .hover\:shadow-xl {
+        box-shadow: none !important;
+    }
+    .transform, .hover\:-translate-y-1 {
+        transform: none !important;
+    }
+    .container {
+        max-width: 100% !important;
+        padding: 0 20px !important;
+    }
+    .py-16 {
+        padding-top: 20px !important;
+        padding-bottom: 20px !important;
+    }
+    @page {
+        margin: 1cm;
+    }
+    .bg-white {
+        background: white !important;
+        border: 1px solid #ddd !important;
+        margin-bottom: 15px !important;
+    }
+    h2 {
+        color: black !important;
+    }
+</style>
+{% endblock content %}

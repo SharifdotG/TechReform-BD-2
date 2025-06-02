@@ -1,0 +1,364 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Create New Blog Post | TechReform BD{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Enhanced Breadcrumbs -->
+        <nav aria-label="Breadcrumb" class="mb-10">
+            <ol class="flex items-center space-x-2 text-sm bg-gradient-to-r from-base-200/80 to-base-100/80 rounded-xl border border-base-300 shadow-sm px-6 py-4">
+            <li class="flex items-center group">
+                <a href="{% url 'index' %}" class="flex items-center gap-1 text-base-content/80 hover:text-primary font-medium transition-colors duration-200">
+                <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary/10 group-hover:bg-primary/20 transition">
+                    <i class="lni lni-home text-primary"></i>
+                </span>
+                <span class="ml-1">Home</span>
+                </a>
+            </li>
+            <li>
+                <span class="mx-2 text-base-content/40">
+                <i class="lni lni-chevron-right"></i>
+                </span>
+            </li>
+            <li class="flex items-center group">
+                <a href="{% url 'blog:blog_list' %}" class="flex items-center gap-1 text-base-content/80 hover:text-primary font-medium transition-colors duration-200">
+                <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary/10 group-hover:bg-primary/20 transition">
+                    <i class="lni lni-laptop text-primary"></i>
+                </span>
+                <span class="ml-1">Blog</span>
+                </a>
+            </li>
+            <li>
+                <span class="mx-2 text-base-content/40">
+                <i class="lni lni-chevron-right"></i>
+                </span>
+            </li>
+            <li class="flex items-center group">
+                <a href="{% url 'blog:my_posts' %}" class="flex items-center gap-1 text-base-content/80 hover:text-primary font-medium transition-colors duration-200">
+                <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary/10 group-hover:bg-primary/20 transition">
+                    <i class="lni lni-files text-primary"></i>
+                </span>
+                <span class="ml-1">My Posts</span>
+                </a>
+            </li>
+            <li>
+                <span class="mx-2 text-base-content/40">
+                <i class="lni lni-chevron-right"></i>
+                </span>
+            </li>
+            <li class="flex items-center">
+                <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-accent/10">
+                <i class="lni lni-plus text-accent"></i>
+                </span>
+                <span class="ml-1 text-accent font-semibold">Create New Post</span>
+            </li>
+            </ol>
+        </nav>
+
+        <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+                <div class="flex items-center mb-10 bg-gradient-to-r from-primary/10 via-accent/5 to-base-100/80 rounded-xl p-6 shadow-lg border border-base-200">
+                    <div class="flex-shrink-0 bg-primary/20 rounded-full p-4 shadow-md mr-6 flex items-center justify-center h-16 w-16">
+                        <i class="lni lni-pencil text-4xl text-primary drop-shadow"></i>
+                    </div>
+                    <div>
+                        <h1 class="card-title text-4xl font-extrabold text-base-content mb-2 tracking-tight">
+                            Create New Blog Post
+                        </h1>
+                        <p class="text-base-content/70 text-lg font-medium">
+                            Share your thoughts and insights with the <span class="text-accent font-semibold">TechReform BD</span> community.
+                        </p>
+                    </div>
+                </div>
+
+                <form method="post" enctype="multipart/form-data" class="space-y-6">
+                    {% csrf_token %}
+
+                    <!-- Form errors -->
+                    {% if form.errors %}
+                    <div class="alert alert-error shadow-lg border-2 border-error/40 bg-gradient-to-r from-error/10 via-base-100/80 to-error/5 rounded-xl mb-6">
+                        <div class="flex items-center gap-3">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-error/20 shadow">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-error flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </span>
+                            <div>
+                                <span class="font-semibold text-error text-lg block">Please correct the errors below.</span>
+                                <span class="text-base-content/70 text-sm block mt-1">Your submission could not be processed. Review the highlighted fields.</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Title Field -->
+                    <div class="form-control mb-6">
+                        <label class="label" for="id_title">
+                            <span class="label-text font-bold text-lg text-primary flex items-center gap-2">
+                                <i class="lni lni-text-format text-xl"></i>
+                                Title <span class="text-error">*</span>
+                            </span>
+                            <span class="label-text-alt text-base-content/60">Be descriptive and concise</span>
+                        </label>
+                        <div class="relative">
+                            {{ form.title }}
+                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-primary/60 pointer-events-none">
+                                <i class="lni lni-pencil"></i>
+                            </span>
+                        </div>
+                        {% if form.title.errors %}
+                        <label class="label mt-1">
+                            <span class="label-text-alt text-error text-sm flex items-center gap-1">
+                                <i class="lni lni-warning"></i>
+                                {{ form.title.errors.0 }}
+                            </span>
+                        </label>
+                        {% endif %}
+                    </div>
+
+                    <!-- Slug Field -->
+                    <div class="form-control mb-6">
+                        <label class="label" for="id_slug">
+                            <span class="label-text font-bold text-lg text-accent flex items-center gap-2">
+                                <i class="lni lni-link text-xl"></i>
+                                Slug <span class="text-error">*</span>
+                            </span>
+                            <span class="label-text-alt text-base-content/60">
+                                Auto-generated from title if left blank
+                            </span>
+                        </label>
+                        <div class="relative">
+                            {{ form.slug }}
+                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-accent/60 pointer-events-none">
+                                <i class="lni lni-hashtag"></i>
+                            </span>
+                        </div>
+                        {% if form.slug.errors %}
+                        <label class="label mt-1">
+                            <span class="label-text-alt text-error text-sm flex items-center gap-1">
+                                <i class="lni lni-warning"></i>
+                                {{ form.slug.errors.0 }}
+                            </span>
+                        </label>
+                        {% endif %}
+                    </div>
+
+                    <!-- Category Field -->
+                    <div class="form-control mb-6">
+                        <label class="label" for="id_category">
+                            <span class="label-text font-bold text-lg text-secondary flex items-center gap-2">
+                                <i class="lni lni-folder text-xl"></i>
+                                Category <span class="text-error">*</span>
+                            </span>
+                            <span class="label-text-alt text-base-content/60">Choose the most relevant category</span>
+                        </label>
+                        <div class="relative">
+                            {{ form.category }}
+                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-secondary/60 pointer-events-none">
+                                <i class="lni lni-chevron-down"></i>
+                            </span>
+                        </div>
+                        {% if form.category.errors %}
+                        <label class="label mt-1">
+                            <span class="label-text-alt text-error text-sm flex items-center gap-1">
+                                <i class="lni lni-warning"></i>
+                                {{ form.category.errors.0 }}
+                            </span>
+                        </label>
+                        {% endif %}
+                    </div>
+
+                    <!-- Tags Field -->
+                    <div class="form-control mb-6">
+                        <label class="label" for="id_tags">
+                            <span class="label-text font-bold text-lg text-info flex items-center gap-2">
+                                <i class="lni lni-tags text-xl"></i>
+                                Tags
+                            </span>
+                            <span class="label-text-alt text-base-content/60">
+                                Hold <kbd class="kbd kbd-xs">Ctrl</kbd>/<kbd class="kbd kbd-xs">Cmd</kbd> to select multiple
+                            </span>
+                        </label>
+                        <div class="relative">
+                            {{ form.tags }}
+                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-info/60 pointer-events-none">
+                                <i class="lni lni-chevron-down"></i>
+                            </span>
+                        </div>
+                        {% if form.tags.errors %}
+                        <label class="label mt-1">
+                            <span class="label-text-alt text-error text-sm flex items-center gap-1">
+                                <i class="lni lni-warning"></i>
+                                {{ form.tags.errors.0 }}
+                            </span>
+                        </label>
+                        {% endif %}
+                        <span class="text-xs text-base-content/50 mt-1 block">
+                            Add relevant keywords to help others find your post.
+                        </span>
+                    </div>
+
+                    <!-- Summary Field -->
+                    <div class="form-control mb-6">
+                        <label class="label" for="id_summary">
+                            <span class="label-text font-bold text-lg text-warning flex items-center gap-2">
+                                <i class="lni lni-bulleted-list text-xl"></i>
+                                Summary <span class="text-error">*</span>
+                            </span>
+                            <span class="label-text-alt text-base-content/60">
+                                Brief description (max 200 chars)
+                            </span>
+                        </label>
+                        <div class="relative">
+                            {{ form.summary }}
+                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-warning/60 pointer-events-none">
+                                <i class="lni lni-shortcode"></i>
+                            </span>
+                        </div>
+                        {% if form.summary.errors %}
+                        <label class="label mt-1">
+                            <span class="label-text-alt text-error text-sm flex items-center gap-1">
+                                <i class="lni lni-warning"></i>
+                                {{ form.summary.errors.0 }}
+                            </span>
+                        </label>
+                        {% endif %}
+                        <span class="text-xs text-base-content/50 mt-1 block">
+                            This summary will appear in blog listings and previews.
+                        </span>
+                    </div>
+
+                    <!-- Content Field -->
+                    <div class="form-control mb-8">
+                        <label class="label" for="id_content">
+                            <span class="label-text font-bold text-lg text-success flex items-center gap-2">
+                                <i class="lni lni-write text-xl"></i>
+                                Content <span class="text-error">*</span>
+                            </span>
+                            <span class="label-text-alt text-base-content/60">
+                                Write your full blog post here. Markdown &amp; basic HTML supported.
+                            </span>
+                        </label>
+                        <div class="relative">
+                            {{ form.content }}
+                            <span class="absolute right-3 top-3 text-success/60 pointer-events-none">
+                                <i class="lni lni-text-align-left"></i>
+                            </span>
+                        </div>
+                        {% if form.content.errors %}
+                        <label class="label mt-1">
+                            <span class="label-text-alt text-error text-sm flex items-center gap-1">
+                                <i class="lni lni-warning"></i>
+                                {{ form.content.errors.0 }}
+                            </span>
+                        </label>
+                        {% endif %}
+                        <span class="text-xs text-base-content/50 mt-1 block">
+                            Make your post engaging and informative. Use formatting for clarity.
+                        </span>
+                    </div>
+
+                    <!-- Featured Image Field -->
+                    <div class="form-control mb-8">
+                        <label class="label" for="id_featured_image">
+                            <span class="label-text font-bold text-lg text-pink-600 flex items-center gap-2">
+                                <i class="lni lni-image text-xl"></i>
+                                Featured Image
+                            </span>
+                            <span class="label-text-alt text-base-content/60">
+                                Optional. Upload an eye-catching image for your post.
+                            </span>
+                        </label>
+                        <div class="relative flex items-center gap-4">
+                            {{ form.featured_image }}
+                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-pink-400/60 pointer-events-none">
+                                <i class="lni lni-camera"></i>
+                            </span>
+                        </div>
+                        {% if form.featured_image.errors %}
+                        <label class="label mt-1">
+                            <span class="label-text-alt text-error text-sm flex items-center gap-1">
+                                <i class="lni lni-warning"></i>
+                                {{ form.featured_image.errors.0 }}
+                            </span>
+                        </label>
+                        {% endif %}
+                        <span class="text-xs text-base-content/50 mt-1 block">
+                            Recommended size: 1200x630px. Supported formats: JPG, PNG, GIF.
+                        </span>
+                    </div>
+
+                    <!-- Is Featured Field -->
+                    <div class="form-control mb-8">
+                        <label class="label cursor-pointer items-center gap-4 bg-gradient-to-r from-accent/10 via-base-100/80 to-primary/5 rounded-xl px-5 py-4 shadow border border-accent/20">
+                            <span class="relative flex items-center">
+                                <input type="checkbox" class="checkbox checkbox-accent" name="{{ form.is_featured.name }}" id="{{ form.is_featured.id_for_label }}" {% if form.is_featured.value %}checked{% endif %}>
+                                <span class="ml-3 text-lg font-bold text-accent flex items-center gap-2">
+                                    <i class="lni lni-star-filled text-yellow-400 drop-shadow"></i>
+                                    Featured Post
+                                    {% if form.is_featured.value %}
+                                        <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded bg-yellow-100 text-yellow-800 text-xs font-semibold">
+                                            Selected
+                                            <i class="lni lni-checkmark ml-1"></i>
+                                        </span>
+                                    {% endif %}
+                                </span>
+                            </span>
+                            <span class="label-text-alt text-base-content/60 ml-6">
+                                <i class="lni lni-bolt text-accent mr-1"></i>
+                                Highlighted on the blog homepage
+                            </span>
+                        </label>
+                        {% if form.is_featured.errors %}
+                        <label class="label mt-1">
+                            <span class="label-text-alt text-error text-sm flex items-center gap-1">
+                                <i class="lni lni-warning"></i>
+                                {{ form.is_featured.errors.0 }}
+                            </span>
+                        </label>
+                        {% endif %}
+                    </div>
+
+                    <!-- Form Buttons -->
+                    <div class="flex justify-end space-x-4 mt-10">
+                        <a href="{% url 'blog:my_posts' %}" class="btn btn-ghost border border-base-300 bg-gradient-to-r from-base-100/80 to-base-200/80 text-base-content/80 hover:bg-error/10 hover:text-error hover:border-error/40 transition-all duration-200 font-semibold px-6 py-2 rounded-lg shadow-sm flex items-center gap-2">
+                            <i class="lni lni-close text-lg"></i>
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary bg-gradient-to-r from-primary to-accent text-white font-bold px-8 py-2 rounded-lg shadow-lg flex items-center gap-2 hover:scale-105 hover:shadow-xl transition-all duration-200">
+                            <i class="lni lni-save mr-1 text-lg"></i>
+                            Submit Post
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Auto-generate slug from title
+    document.addEventListener('DOMContentLoaded', function() {
+        const titleInput = document.getElementById('id_title');
+        const slugInput = document.getElementById('id_slug');
+
+        if (titleInput && slugInput) {
+            titleInput.addEventListener('keyup', function() {
+                if (!slugInput.value) {
+                    // Convert title to slug: lowercase, replace spaces with hyphens, remove special chars
+                    const slug = this.value.toLowerCase()
+                        .replace(/[^\w\s-]/g, '')  // Remove special characters
+                        .replace(/\s+/g, '-')      // Replace spaces with hyphens
+                        .replace(/-+/g, '-');      // Replace multiple hyphens with single hyphen
+
+                    slugInput.value = slug;
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

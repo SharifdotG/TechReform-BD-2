@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit Blog Post | TechReform BD{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Enhanced Breadcrumbs -->
+        <nav aria-label="Breadcrumb" class="mb-10">
+            <ol class="flex items-center space-x-2 text-sm bg-gradient-to-r from-base-200/80 to-base-100/80 rounded-xl border border-base-300 shadow-sm px-6 py-4">
+            <li class="flex items-center group">
+                <a href="{% url 'index' %}" class="flex items-center gap-1 text-base-content/80 hover:text-primary font-medium transition-colors duration-200">
+                <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary/10 group-hover:bg-primary/20 transition">
+                    <i class="lni lni-home text-primary"></i>
+                </span>
+                <span class="ml-1">Home</span>
+                </a>
+            </li>
+            <li>
+                <span class="mx-2 text-base-content/40">
+                <i class="lni lni-chevron-right"></i>
+                </span>
+            </li>
+            <li class="flex items-center group">
+                <a href="{% url 'blog:blog_list' %}" class="flex items-center gap-1 text-base-content/80 hover:text-primary font-medium transition-colors duration-200">
+                <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary/10 group-hover:bg-primary/20 transition">
+                    <i class="lni lni-laptop text-primary"></i>
+                </span>
+                <span class="ml-1">Blog</span>
+                </a>
+            </li>
+            <li>
+                <span class="mx-2 text-base-content/40">
+                <i class="lni lni-chevron-right"></i>
+                </span>
+            </li>
+            <li class="flex items-center group">
+                <a href="{% url 'blog:my_posts' %}" class="flex items-center gap-1 text-base-content/80 hover:text-primary font-medium transition-colors duration-200">
+                <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary/10 group-hover:bg-primary/20 transition">
+                    <i class="lni lni-files text-primary"></i>
+                </span>
+                <span class="ml-1">My Posts</span>
+                </a>
+            </li>
+            <li>
+                <span class="mx-2 text-base-content/40">
+                <i class="lni lni-chevron-right"></i>
+                </span>
+            </li>
+            <li class="flex items-center">
+                <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-accent/10">
+                <i class="lni lni-pencil text-accent"></i>
+                </span>
+                <span class="ml-1 text-accent font-semibold">Edit Post</span>
+            </li>
+            </ol>
+        </nav>
+
+        <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+                <div class="flex items-center mb-10 bg-gradient-to-r from-primary/10 via-accent/5 to-base-100/80 rounded-xl p-6 shadow-lg border border-base-200">
+                    <div class="flex-shrink-0 bg-primary/20 rounded-full p-4 shadow-md mr-6 flex items-center justify-center h-16 w-16">
+                        <i class="lni lni-pencil text-4xl text-primary drop-shadow"></i>
+                    </div>
+                    <div>
+                        <h1 class="card-title text-4xl font-extrabold text-base-content mb-2 tracking-tight">
+                            Edit Blog Post
+                        </h1>
+                        <p class="text-base-content/70 text-lg font-medium">
+                            Update your post on <span class="text-accent font-semibold">TechReform BD</span> community.
+                        </p>
+                    </div>
+                </div>
+
+                <form method="POST" enctype="multipart/form-data" class="space-y-6">
+                    {% csrf_token %}
+
+                    <!-- Form errors -->
+                    {% if form.errors %}
+                    <div class="alert alert-error shadow-lg border-2 border-error/40 bg-gradient-to-r from-error/10 via-base-100/80 to-error/5 rounded-xl mb-6">
+                        <div class="flex items-center gap-3">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-error/20 shadow">
+                                <i class="lni lni-warning text-2xl text-error"></i>
+                            </span>
+                            <div>
+                                <h3 class="font-bold">Please correct the errors below</h3>
+                                <div class="text-sm">Review the form and fix the highlighted issues</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Title Field -->
+                    <div class="form-control mb-6">
+                        <label class="label" for="id_title">
+                            <span class="label-text font-bold text-lg text-primary flex items-center gap-2">
+                                <i class="lni lni-text-format"></i> Title <span class="text-error">*</span>
+                            </span>
+                            <span class="label-text-alt text-base-content/60">Be descriptive and concise</span>
+                        </label>
+                        <div class="relative">
+                            {{ form.title }}
+                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-primary/60 pointer-events-none">
+                                <i class="lni lni-heading"></i>
+                            </span>
+                        </div>
+                        {% if form.title.errors %}
+                        <label class="label mt-1">
+                            <span class="label-text-alt text-error">{{ form.title.errors.0 }}</span>
+                        </label>
+                        {% endif %}
+                    </div>
+
+                    <!-- Category Field -->
+                    <div class="form-control mb-6">
+                        <label class="label" for="id_category">
+                            <span class="label-text font-bold text-lg text-primary flex items-center gap-2">
+                                <i class="lni lni-folder"></i> Category <span class="text-error">*</span>
+                            </span>
+                            <span class="label-text-alt text-base-content/60">Select the most relevant category</span>
+                        </label>
+                        <div class="relative">
+                            {{ form.category }}
+                        </div>
+                        {% if form.category.errors %}
+                        <label class="label mt-1">
+                            <span class="label-text-alt text-error">{{ form.category.errors.0 }}</span>
+                        </label>
+                        {% endif %}
+                    </div>
+
+                    <!-- Tags Field -->
+                    <div class="form-control mb-6">
+                        <label class="label" for="id_tags">
+                            <span class="label-text font-bold text-lg text-primary flex items-center gap-2">
+                                <i class="lni lni-tag"></i> Tags
+                            </span>
+                            <span class="label-text-alt text-base-content/60">Choose relevant tags</span>
+                        </label>
+                        <div class="relative">
+                            {{ form.tags }}
+                        </div>
+                        {% if form.tags.errors %}
+                        <label class="label mt-1">
+                            <span class="label-text-alt text-error">{{ form.tags.errors.0 }}</span>
+                        </label>
+                        {% endif %}
+                        <span class="text-xs text-base-content/50 mt-1 block">
+                            Hold Ctrl to select multiple tags
+                        </span>
+                    </div>
+
+                    <!-- Featured Image Field -->
+                    <div class="form-control mb-8">
+                        <label class="label" for="id_featured_image">
+                            <span class="label-text font-bold text-lg text-primary flex items-center gap-2">
+                                <i class="lni lni-image"></i> Featured Image
+                            </span>
+                            <span class="label-text-alt text-base-content/60">Recommended size: 1200×630px</span>
+                        </label>
+                        <div class="relative flex items-center gap-4">
+                            {% if post.featured_image %}
+                            <div class="w-24 h-24 rounded-lg overflow-hidden shadow-md border border-base-300">
+                                <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover">
+                            </div>
+                            <div class="text-sm bg-info/10 text-info px-3 py-1 rounded-md shadow-sm border border-info/30">
+                                <i class="lni lni-checkmark-circle"></i> Current image
+                            </div>
+                            {% endif %}
+                            {{ form.featured_image }}
+                        </div>
+                        {% if form.featured_image.errors %}
+                        <label class="label mt-1">
+                            <span class="label-text-alt text-error">{{ form.featured_image.errors.0 }}</span>
+                        </label>
+                        {% endif %}
+                        <span class="text-xs text-base-content/50 mt-1 block">
+                            Upload a new image to replace the current one, or leave empty to keep the same image
+                        </span>
+                    </div>
+
+                    <!-- Summary Field -->
+                    <div class="form-control mb-6">
+                        <label class="label" for="id_summary">
+                            <span class="label-text font-bold text-lg text-primary flex items-center gap-2">
+                                <i class="lni lni-text-align-justify"></i> Summary <span class="text-error">*</span>
+                            </span>
+                            <span class="label-text-alt text-base-content/60">Briefly describe your post</span>
+                        </label>
+                        <div class="relative">
+                            {{ form.summary }}
+                        </div>
+                        {% if form.summary.errors %}
+                        <label class="label mt-1">
+                            <span class="label-text-alt text-error">{{ form.summary.errors.0 }}</span>
+                        </label>
+                        {% endif %}
+                        <span class="text-xs text-base-content/50 mt-1 block">
+                            Brief summary of your post (max 500 characters)
+                        </span>
+                    </div>
+
+                    <!-- Content Field -->
+                    <div class="form-control mb-8">
+                        <label class="label" for="id_content">
+                            <span class="label-text font-bold text-lg text-primary flex items-center gap-2">
+                                <i class="lni lni-write"></i> Content <span class="text-error">*</span>
+                            </span>
+                            <span class="label-text-alt text-base-content/60">Write your full blog post</span>
+                        </label>
+                        <div class="relative">
+                            {{ form.content }}
+                        </div>
+                        {% if form.content.errors %}
+                        <label class="label mt-1">
+                            <span class="label-text-alt text-error">{{ form.content.errors.0 }}</span>
+                        </label>
+                        {% endif %}
+                        <span class="text-xs text-base-content/50 mt-1 block">
+                            You can use Markdown formatting for rich text
+                        </span>
+                    </div>
+
+                    <!-- Form Buttons -->
+                    <div class="flex justify-end space-x-4 mt-10">
+                        <a href="{% url 'blog:my_posts' %}" class="btn btn-ghost border border-base-300 bg-gradient-to-r from-base-100/80 to-base-200/80 text-base-content/80 hover:bg-error/10 hover:text-error hover:border-error/40 transition-all duration-200 font-semibold px-6 py-2 rounded-lg shadow-sm flex items-center gap-2">
+                            <i class="lni lni-close"></i>
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary bg-gradient-to-r from-primary to-accent text-white font-bold px-8 py-2 rounded-lg shadow-lg flex items-center gap-2 hover:scale-105 hover:shadow-xl transition-all duration-200">
+                            <i class="lni lni-save"></i>
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

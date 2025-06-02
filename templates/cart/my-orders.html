@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}My Orders - TechReform BD{% endblock %}
+
+{% block content %}
+<!-- My Orders Section -->
+<section class="py-16 bg-base-100 overflow-hidden">
+    <div class="container mx-auto px-6 relative">
+        <!-- Animated background elements with subtle animation -->
+        <div class="absolute inset-0 overflow-hidden opacity-10 pointer-events-none z-0">
+            <div class="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-primary via-blue-400 to-secondary rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute top-1/2 -left-32 w-80 h-80 bg-gradient-to-tr from-secondary via-pink-300 to-primary rounded-full filter blur-2xl animate-pulse" style="animation-delay: 1.2s"></div>
+            <div class="absolute bottom-10 right-1/4 w-64 h-64 bg-accent rounded-full filter blur-2xl animate-pulse" style="animation-delay: 0.7s"></div>
+        </div>
+        <style>
+            @media (max-width: 1024px) {
+                .absolute.-top-32, .absolute.-right-32, .absolute.-left-32, .absolute.top-1\/2, .absolute.bottom-10 {
+                    display: none !important;
+                }
+            }
+        </style>
+
+        <!-- Section heading with enhanced animation and style -->
+        <div class="text-center mb-14 relative z-10">
+            <span class="inline-flex items-center gap-2 bg-gradient-to-r from-primary/30 via-accent/20 to-secondary/30 text-primary font-semibold py-2 px-7 rounded-full text-base mb-6 shadow-xl shadow-primary/10 tracking-wide animate-fade-in-down border border-primary/20">
+            <i class="lni lni-archive text-xl align-middle animate-bounce"></i>
+            <span class="tracking-wider">Order History</span>
+            </span>
+            <h2 class="text-5xl lg:text-6xl font-black bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent drop-shadow-2xl animate-fade-in-up">
+            My Orders
+            </h2>
+            <div class="w-40 h-2 bg-gradient-to-r from-primary via-accent to-secondary mx-auto mt-7 rounded-full shadow-lg animate-pulse"></div>
+            <p class="text-base-content/80 mt-5 max-w-2xl mx-auto text-lg animate-fade-in leading-relaxed">
+            Effortlessly track your purchases, review order statuses, and manage your shopping history—all in one beautiful dashboard.
+            </p>
+        </div>
+
+        <!-- Orders Content -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            {% if orders %}
+            <div class="overflow-x-auto">
+                <table class="w-full min-w-full table-auto border-separate border-spacing-y-2">
+                    <thead class="bg-gradient-to-r from-primary/20 via-accent/20 to-secondary/20 text-primary rounded-t-xl shadow-lg">
+                        <tr>
+                            <th class="py-5 px-7 text-left font-extrabold text-xl tracking-wider rounded-l-xl bg-white/60 backdrop-blur border-b-2 border-primary/20 shadow-sm">
+                                <span class="flex items-center gap-2">
+                                    <i class="lni lni-package text-primary text-lg"></i>
+                                    Order
+                                </span>
+                            </th>
+                            <th class="py-5 px-7 text-center font-extrabold text-xl tracking-wider bg-white/60 backdrop-blur border-b-2 border-primary/20 shadow-sm">
+                                <span class="flex items-center gap-2 justify-center">
+                                    <i class="lni lni-calendar text-accent text-lg"></i>
+                                    Date
+                                </span>
+                            </th>
+                            <th class="py-5 px-7 text-center font-extrabold text-xl tracking-wider bg-white/60 backdrop-blur border-b-2 border-primary/20 shadow-sm">
+                                <span class="flex items-center gap-2 justify-center">
+                                    <i class="lni lni-checkmark-circle text-secondary text-lg"></i>
+                                    Status
+                                </span>
+                            </th>
+                            <th class="py-5 px-7 text-center font-extrabold text-xl tracking-wider bg-white/60 backdrop-blur border-b-2 border-primary/20 shadow-sm">
+                                <span class="flex items-center gap-2 justify-center">
+                                    <i class="lni lni-coin text-primary text-lg"></i>
+                                    Total
+                                </span>
+                            </th>
+                            <th class="py-5 px-7 text-center font-extrabold text-xl tracking-wider rounded-r-xl bg-white/60 backdrop-blur border-b-2 border-primary/20 shadow-sm">
+                                <span class="flex items-center gap-2 justify-center">
+                                    <i class="lni lni-cog text-accent text-lg"></i>
+                                    Actions
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr class="bg-white shadow-lg hover:shadow-2xl transition-all duration-200 rounded-xl group border border-primary/10 hover:border-primary/30">
+                            <td class="py-5 px-7 rounded-l-xl align-middle">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-primary/40 via-accent/40 to-secondary/40 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-200">
+                                        <i class="lni lni-package text-3xl text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-extrabold text-gray-900 text-base tracking-wide group-hover:text-primary transition-colors">{{ order.order_number }}</h3>
+                                        <p class="text-xs text-gray-500 mt-1">{{ order.orderitem_set.count }} item{{ order.orderitem_set.count|pluralize }}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-5 px-7 text-center align-middle">
+                                <span class="inline-flex items-center gap-2 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 px-4 py-1 rounded-full text-sm font-bold shadow group-hover:bg-primary/20 transition-colors">
+                                    <i class="lni lni-calendar text-accent text-base"></i>
+                                    <span class="tracking-wide">{{ order.created_at|date:"D, M d, Y" }}</span>
+                                </span>
+                            </td>
+                            <td class="py-5 px-7 text-center align-middle">
+                                <span class="inline-flex items-center gap-2 px-4 py-1 rounded-full font-bold shadow border text-sm transition-colors
+                                    {% if order.status == 'delivered' %}
+                                        bg-green-50 text-green-700 border-green-200 group-hover:bg-green-100
+                                    {% elif order.status == 'shipped' %}
+                                        bg-blue-50 text-blue-700 border-blue-200 group-hover:bg-blue-100
+                                    {% elif order.status == 'processing' %}
+                                        bg-yellow-50 text-yellow-700 border-yellow-200 group-hover:bg-yellow-100
+                                    {% elif order.status == 'cancelled' %}
+                                        bg-red-50 text-red-700 border-red-200 group-hover:bg-red-100
+                                    {% else %}
+                                        bg-gray-50 text-gray-700 border-gray-200 group-hover:bg-gray-100
+                                    {% endif %}
+                                ">
+                                    {% if order.status == 'delivered' %}
+                                        <i class="lni lni-checkmark-circle text-green-500 text-base"></i>
+                                    {% elif order.status == 'shipped' %}
+                                        <i class="lni lni-truck text-blue-500 text-base"></i>
+                                    {% elif order.status == 'processing' %}
+                                        <i class="lni lni-spinner text-yellow-500 text-base animate-spin"></i>
+                                    {% elif order.status == 'cancelled' %}
+                                        <i class="lni lni-close text-red-500 text-base"></i>
+                                    {% else %}
+                                        <i class="lni lni-info-circle text-gray-400 text-base"></i>
+                                    {% endif %}
+                                    <span class="tracking-wide">{{ order.status|title }}</span>
+                                </span>
+                            </td>
+                            <td class="py-5 px-7 text-center font-extrabold text-primary text-lg align-middle">
+                                <span class="inline-flex items-center gap-2 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 px-5 py-2 rounded-full shadow-md group-hover:bg-primary/20 transition-all duration-200">
+                                    <i class="lni lni-coin text-primary text-xl"></i>
+                                    <span class="font-bold text-xl tracking-wide">৳{{ order.total_price|floatformat:0|intcomma }}</span>
+                                </span>
+                            </td>
+                            <td class="py-5 px-7 text-center rounded-r-xl align-middle">
+                                <a href="{% url 'order_detail' order.id %}" class="btn btn-primary btn-sm shadow-md hover:scale-110 hover:shadow-xl transition-all duration-200">
+                                    <i class="lni lni-eye mr-1"></i> View
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            {% if orders.has_other_pages %}
+            <div class="flex justify-center p-8 border-t bg-gradient-to-r from-primary/5 via-accent/5 to-secondary/5 rounded-b-xl">
+                <nav class="inline-flex items-center gap-1 text-lg font-semibold" aria-label="Pagination">
+                    {% if orders.has_previous %}
+                    <a href="?page={{ orders.previous_page_number }}"
+                       class="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-primary/20 text-primary hover:bg-primary hover:text-white shadow transition-all duration-200"
+                       aria-label="Previous Page">
+                        <i class="lni lni-chevron-left"></i>
+                    </a>
+                    {% else %}
+                    <span class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 border border-gray-200 text-gray-400 cursor-not-allowed shadow">
+                        <i class="lni lni-chevron-left"></i>
+                    </span>
+                    {% endif %}
+
+                    {% for i in orders.paginator.page_range %}
+                        {% if orders.number == i %}
+                        <span class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white shadow-lg border-2 border-primary scale-110 transition-all duration-200">{{ i }}</span>
+                        {% elif i >= orders.number|add:'-2' and i <= orders.number|add:'2' %}
+                        <a href="?page={{ i }}"
+                           class="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-primary/10 text-primary hover:bg-primary hover:text-white shadow transition-all duration-200"
+                           aria-label="Go to page {{ i }}">{{ i }}</a>
+                        {% elif i == 1 or i == orders.paginator.num_pages %}
+                        <a href="?page={{ i }}"
+                           class="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-primary/10 text-primary hover:bg-primary hover:text-white shadow transition-all duration-200"
+                           aria-label="Go to page {{ i }}">{{ i }}</a>
+                        {% elif i == orders.number|add:'-3' or i == orders.number|add:'3' %}
+                        <span class="w-10 h-10 flex items-center justify-center text-gray-400">…</span>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if orders.has_next %}
+                    <a href="?page={{ orders.next_page_number }}"
+                       class="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-primary/20 text-primary hover:bg-primary hover:text-white shadow transition-all duration-200"
+                       aria-label="Next Page">
+                        <i class="lni lni-chevron-right"></i>
+                    </a>
+                    {% else %}
+                    <span class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 border border-gray-200 text-gray-400 cursor-not-allowed shadow">
+                        <i class="lni lni-chevron-right"></i>
+                    </span>
+                    {% endif %}
+                </nav>
+            </div>
+            {% endif %}
+            {% else %}
+            <div class="py-24 flex flex-col items-center justify-center text-center animate-fade-in-up">
+                <div class="bg-gradient-to-br from-primary/10 via-accent/10 to-secondary/10 p-8 rounded-full mb-6 shadow-lg">
+                    <i class="lni lni-files text-5xl text-primary drop-shadow-lg animate-bounce"></i>
+                </div>
+                <h3 class="text-3xl font-extrabold text-primary mb-3 tracking-tight drop-shadow-sm">No Orders Yet</h3>
+                <p class="text-base-content/70 max-w-lg mx-auto mb-8 text-lg leading-relaxed">
+                    You haven't placed any orders yet.<br>
+                    Discover amazing products and enjoy a seamless shopping experience!
+                </p>
+                <a href="{% url 'product-list' %}" class="btn btn-primary btn-lg px-8 py-3 rounded-full shadow-xl shadow-primary/20 hover:shadow-primary/40 hover:scale-105 transition-all duration-300 flex items-center gap-2 text-lg font-semibold">
+                    <i class="lni lni-shopping-basket text-2xl"></i>
+                    <span>Start Shopping</span>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock content %}

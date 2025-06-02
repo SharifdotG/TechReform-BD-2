@@ -1,0 +1,558 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Content Analysis | TechReform BD{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-6xl mx-auto">
+        <!-- Breadcrumbs -->
+        <div class="text-sm breadcrumbs mb-8">
+            <ul>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'blog:blog_list' %}">Blog</a></li>
+                <li>Content Analysis</li>
+            </ul>
+        </div>
+
+        <div class="bg-base-100 shadow-xl rounded-lg overflow-hidden">
+            <div class="p-6 border-b border-base-200">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h1 class="text-3xl font-bold flex items-center">
+                            <i class="lni lni-stats-up text-primary mr-3"></i>
+                            Content Analysis Dashboard
+                        </h1>
+                        <p class="text-base-content/70 mt-2">
+                            Analytics and insights about your blog content
+                        </p>
+                    </div>
+
+                    <!-- Export Actions -->
+                    <div class="dropdown dropdown-end">
+                        <label tabindex="0" class="btn btn-primary gap-2">
+                            <i class="lni lni-download"></i>
+                            Export Report
+                        </label>
+                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 mt-2">
+                            <li>
+                                <a href="{% url 'blog:export_content_analysis' format='csv' %}" class="flex items-center gap-2">
+                                    <i class="lni lni-files"></i>
+                                    Export as CSV
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'blog:export_content_analysis' format='json' %}" class="flex items-center gap-2">
+                                    <i class="lni lni-code"></i>
+                                    Export as JSON
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'blog:export_content_analysis' format='pdf' %}" class="flex items-center gap-2">
+                                    <i class="lni lni-pdf"></i>
+                                    Export as PDF
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            {% if messages %}
+            <div class="p-4 pt-6">
+                {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-error{% else %}alert-info{% endif %} mb-4">
+                    <div>
+                        {% if message.tags == 'success' %}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        {% elif message.tags == 'error' %}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        {% endif %}
+                        <span>{{ message }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Statistics Cards -->
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <!-- Total Posts -->
+                    <div class="bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-sm rounded-xl p-6 border border-primary/20 hover:border-primary/40 transition-all duration-300 group">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-primary/70 text-sm font-medium">Total Posts</p>
+                                <p class="text-2xl font-bold text-primary">{{ total_posts }}</p>
+                            </div>
+                            <div class="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                <i class="lni lni-files text-primary text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-xs text-primary/60">
+                            <span class="{% if post_growth > 0 %}text-success{% elif post_growth < 0 %}text-error{% endif %}">
+                                {% if post_growth > 0 %}+{% endif %}{{ post_growth }}%
+                            </span>
+                            from last month
+                        </div>
+                    </div>
+
+                    <!-- Published Posts -->
+                    <div class="bg-gradient-to-br from-success/10 to-success/5 backdrop-blur-sm rounded-xl p-6 border border-success/20 hover:border-success/40 transition-all duration-300 group">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-success/70 text-sm font-medium">Published Posts</p>
+                                <p class="text-2xl font-bold text-success">{{ published_posts }}</p>
+                            </div>
+                            <div class="w-12 h-12 bg-success/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                <i class="lni lni-checkmark-circle text-success text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-xs text-success/60">
+                            {{ published_percent }}% of total posts
+                        </div>
+                    </div>
+
+                    <!-- Pending Posts -->
+                    <div class="bg-gradient-to-br from-warning/10 to-warning/5 backdrop-blur-sm rounded-xl p-6 border border-warning/20 hover:border-warning/40 transition-all duration-300 group">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-warning/70 text-sm font-medium">Pending Posts</p>
+                                <p class="text-2xl font-bold text-warning">{{ pending_posts }}</p>
+                            </div>
+                            <div class="w-12 h-12 bg-warning/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                <i class="lni lni-timer text-warning text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-xs text-warning/60">
+                            {{ pending_percent }}% of total posts
+                        </div>                </div>
+
+                <!-- Rejected Posts -->
+                <div class="bg-gradient-to-br from-error/10 to-error/5 backdrop-blur-sm rounded-xl p-6 border border-error/20 hover:border-error/40 transition-all duration-300 group">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-error/70 text-sm font-medium">Rejected Posts</p>
+                            <p class="text-2xl font-bold text-error">{{ rejected_posts }}</p>
+                        </div>
+                        <div class="w-12 h-12 bg-error/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i class="lni lni-close text-error text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-xs text-error/60">
+                        {{ rejected_percent }}% of total posts
+                    </div>
+                </div>
+                    <div class="bg-gradient-to-br from-info/10 to-info/5 backdrop-blur-sm rounded-xl p-6 border border-info/20 hover:border-info/40 transition-all duration-300 group">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-info/70 text-sm font-medium">Total Views</p>
+                                <p class="text-2xl font-bold text-info">{{ total_views|intcomma }}</p>
+                            </div>
+                            <div class="w-12 h-12 bg-info/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                <i class="lni lni-eye text-info text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-xs text-info/60">
+                            <span class="{% if view_growth > 0 %}text-success{% elif view_growth < 0 %}text-error{% endif %}">
+                                {% if view_growth > 0 %}+{% endif %}{{ view_growth }}%
+                            </span>
+                            from last month
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts and Analytics -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Posts by Category -->
+                    <div class="bg-base-100 shadow-lg rounded-xl p-6 border border-base-200">
+                        <h2 class="text-xl font-bold mb-6 flex items-center">
+                            <i class="lni lni-pie-chart text-primary mr-2"></i>
+                            Posts by Category
+                        </h2>
+                        <div class="h-80 w-full" id="categoryChart"></div>
+                    </div>
+
+                    <!-- Post Performance -->
+                    <div class="bg-base-100 shadow-lg rounded-xl p-6 border border-base-200">
+                        <h2 class="text-xl font-bold mb-6 flex items-center">
+                            <i class="lni lni-bar-chart text-primary mr-2"></i>
+                            Posts Performance
+                        </h2>
+                        <div class="h-80 w-full" id="performanceChart"></div>                    </div>
+                </div>
+
+                <!-- Weekly Statistics -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <!-- This Week's Overview -->
+                    <div class="bg-base-100 shadow-lg rounded-xl p-6 border border-base-200">
+                        <h2 class="text-xl font-bold mb-6 flex items-center">
+                            <i class="lni lni-calendar text-primary mr-2"></i>
+                            This Week's Activity
+                        </h2>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium">New Posts</span>
+                                    <span class="text-sm font-bold">{{ posts_this_week }}</span>
+                                </div>
+                                <div class="w-full bg-base-300 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-primary to-primary/70 h-2 rounded-full"
+                                         style="width: {% widthratio posts_this_week total_posts 100 %}%"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium">Published This Week</span>
+                                    <span class="text-sm font-bold">{{ posts_published_this_week }}</span>
+                                </div>
+                                <div class="w-full bg-base-300 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-success to-success/70 h-2 rounded-full"
+                                         style="width: {% widthratio posts_published_this_week published_posts 100 %}%"></div>
+                                </div>
+                            </div>
+
+                            <div class="pt-4 border-t border-base-200">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-medium">Content Age Distribution</span>
+                                </div>
+                                <div class="grid grid-cols-3 gap-2 mt-3">
+                                    <div class="bg-success/10 p-3 rounded-lg text-center">
+                                        <div class="text-2xl font-bold text-success">{{ content_age.last_week }}</div>
+                                        <div class="text-xs text-base-content/60 mt-1">Last Week</div>
+                                    </div>
+                                    <div class="bg-warning/10 p-3 rounded-lg text-center">
+                                        <div class="text-2xl font-bold text-warning">{{ content_age.last_month }}</div>
+                                        <div class="text-xs text-base-content/60 mt-1">Last Month</div>
+                                    </div>
+                                    <div class="bg-error/10 p-3 rounded-lg text-center">
+                                        <div class="text-2xl font-bold text-error">{{ content_age.older }}</div>
+                                        <div class="text-xs text-base-content/60 mt-1">Older</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Authors -->
+                    <div class="lg:col-span-2 bg-base-100 shadow-lg rounded-xl p-6 border border-base-200">
+                        <h2 class="text-xl font-bold mb-6 flex items-center">
+                            <i class="lni lni-users text-primary mr-2"></i>
+                            Top Content Contributors
+                        </h2>
+                        <div class="overflow-x-auto">
+                            <table class="table w-full">
+                                <thead>
+                                    <tr>
+                                        <th>Author</th>
+                                        <th class="text-center">Posts</th>
+                                        <th class="text-center">Total Views</th>
+                                        <th class="text-center">Avg. Views</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for author in top_authors %}
+                                    <tr class="hover">
+                                        <td class="font-medium">{{ author.author__username }}</td>
+                                        <td class="text-center">{{ author.post_count }}</td>
+                                        <td class="text-center">{{ author.total_views|intcomma }}</td>
+                                        <td class="text-center">
+                                            <span class="font-semibold">{{ author.avg_views|intcomma }}</span>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="4" class="text-center py-4">No author data available</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Performing Content -->
+                <div class="bg-base-100 shadow-lg rounded-xl p-6 border border-base-200 mb-8">
+                    <h2 class="text-xl font-bold mb-6 flex items-center">
+                        <i class="lni lni-star text-primary mr-2"></i>
+                        Top Performing Posts
+                    </h2>
+                    <div class="overflow-x-auto">
+                        <table class="table w-full">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Author</th>
+                                    <th>Published</th>
+                                    <th>Views</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for post in top_posts %}
+                                <tr class="hover">
+                                    <td>
+                                        <a href="{% url 'blog:post_detail' post.slug %}" class="font-medium hover:text-primary">
+                                            {{ post.title|truncatechars:40 }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-sm">{{ post.category.name }}</span>
+                                    </td>
+                                    <td>{{ post.author.username }}</td>
+                                    <td>{{ post.published_at|date:"M d, Y" }}</td>
+                                    <td>
+                                        <span class="font-semibold">{{ post.view_count|intcomma }}</span>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center py-4">No published posts yet</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tags Analysis -->
+                <div class="bg-base-100 shadow-lg rounded-xl p-6 border border-base-200">
+                    <h2 class="text-xl font-bold mb-6 flex items-center">
+                        <i class="lni lni-tag text-primary mr-2"></i>
+                        Popular Tags
+                    </h2>
+                    <div class="flex flex-wrap gap-3">
+                        {% for tag in popular_tags %}
+                        <div class="badge badge-lg p-4 badge-outline" style="font-size: {{ tag.size }}px;">
+                            {{ tag.name }}
+                            <span class="ml-2 opacity-70">({{ tag.post_count }})</span>
+                        </div>
+                        {% empty %}
+                        <div class="w-full text-center py-4">
+                            <p>No tags data available</p>
+                        </div>
+                        {% endfor %}                    </div>
+                </div>
+
+                <!-- Content Recommendations -->
+                <div class="bg-base-100 shadow-lg rounded-xl p-6 border border-base-200 mb-8">
+                    <h2 class="text-xl font-bold mb-6 flex items-center">
+                        <i class="lni lni-bulb text-primary mr-2"></i>
+                        Content Strategy Recommendations
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Category Recommendations -->
+                        <div class="bg-gradient-to-br from-info/10 to-info/5 p-5 rounded-xl border border-info/20">
+                            <h3 class="text-lg font-bold mb-3 flex items-center">
+                                <i class="lni lni-folder text-info mr-2"></i>
+                                Category Focus
+                            </h3>
+                            <p class="text-base-content/70 mb-4 text-sm">
+                                Based on view metrics, consider creating more content in these categories:
+                            </p>
+                            <ul class="space-y-2">
+                                {% for category in categories|slice:":3" %}
+                                <li class="flex items-center">
+                                    <i class="lni lni-chevron-right text-info mr-2"></i>
+                                    <span>{{ category.name }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <!-- Topic Recommendations -->
+                        <div class="bg-gradient-to-br from-success/10 to-success/5 p-5 rounded-xl border border-success/20">
+                            <h3 class="text-lg font-bold mb-3 flex items-center">
+                                <i class="lni lni-keyword-research text-success mr-2"></i>
+                                Popular Tags
+                            </h3>
+                            <p class="text-base-content/70 mb-4 text-sm">
+                                These tags are performing well. Consider focusing on these topics:
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                {% for tag in popular_tags|slice:":5" %}
+                                <span class="badge badge-success badge-outline">{{ tag.name }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- Content Gap Analysis -->
+                        <div class="bg-gradient-to-br from-warning/10 to-warning/5 p-5 rounded-xl border border-warning/20">
+                            <h3 class="text-lg font-bold mb-3 flex items-center">
+                                <i class="lni lni-gap text-warning mr-2"></i>
+                                Content Gaps
+                            </h3>
+                            <p class="text-base-content/70 mb-4 text-sm">
+                                Consider creating content in these underrepresented categories:
+                            </p>
+                            <ul class="space-y-2">
+                                {% for category in categories|slice:"-3:" %}
+                                <li class="flex items-center">
+                                    <i class="lni lni-chevron-right text-warning mr-2"></i>
+                                    <span>{{ category.name }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <!-- Content Freshness -->
+                        <div class="bg-gradient-to-br from-primary/10 to-primary/5 p-5 rounded-xl border border-primary/20">
+                            <h3 class="text-lg font-bold mb-3 flex items-center">
+                                <i class="lni lni-reload text-primary mr-2"></i>
+                                Content Freshness
+                            </h3>
+                            <p class="text-base-content/70 mb-4 text-sm">
+                                {% if content_age.older > content_age.last_month %}
+                                    Consider updating older content to keep it fresh and relevant.
+                                {% else %}
+                                    Your content is relatively fresh. Good job maintaining content!
+                                {% endif %}
+                            </p>
+                            <div class="w-full bg-base-300 rounded-full h-2 mb-2">
+                                <div class="bg-gradient-to-r from-success to-error h-2 rounded-full"
+                                     style="width: {% widthratio content_age.older published_posts 100 %}%"></div>
+                            </div>
+                            <div class="text-xs text-base-content/60">
+                                {{ content_age.older }} posts ({% widthratio content_age.older published_posts 100 %}%) are older than one month
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Category Chart
+    const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+    new Chart(categoryCtx, {
+        type: 'pie',
+        data: {
+            labels: [{% for cat in categories %}
+                     '{{ cat.name }}',
+                     {% endfor %}],
+            datasets: [{
+                label: 'Posts',
+                data: [{% for cat in categories %}
+                       {{ cat.post_count }},
+                       {% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
+                    'rgba(255, 159, 64, 0.7)',
+                    'rgba(199, 199, 199, 0.7)',
+                    'rgba(83, 102, 255, 0.7)',
+                    'rgba(40, 159, 64, 0.7)',
+                    'rgba(210, 199, 199, 0.7)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                }
+            }
+        }
+    });
+
+    // Performance Chart
+    const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+    new Chart(performanceCtx, {
+        type: 'bar',
+        data: {
+            labels: [{% for post in recent_posts %}
+                    '{{ post.title|truncatechars:20 }}',
+                    {% endfor %}],
+            datasets: [{
+                label: 'Views',
+                data: [{% for post in recent_posts %}
+                      {{ post.view_count }},
+                      {% endfor %}],
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Content Age Chart
+    const contentAgeChart = document.createElement('canvas');
+    contentAgeChart.id = 'contentAgeChart';
+    contentAgeChart.height = 200;
+
+    // Insert the new chart where you want it
+    const weeklyStatsSection = document.querySelector('.grid.grid-cols-1.lg\\:grid-cols-3.gap-8.mb-8');
+    const newChartContainer = document.createElement('div');
+    newChartContainer.className = 'bg-base-100 shadow-lg rounded-xl p-6 border border-base-200 mt-6';
+    newChartContainer.innerHTML = `
+        <h2 class="text-xl font-bold mb-6 flex items-center">
+            <i class="lni lni-graph text-primary mr-2"></i>
+            Content Age Distribution
+        </h2>
+    `;
+
+    const chartDiv = document.createElement('div');
+    chartDiv.className = 'h-80 w-full';
+    chartDiv.appendChild(contentAgeChart);
+    newChartContainer.appendChild(chartDiv);
+
+    weeklyStatsSection.parentNode.insertBefore(newChartContainer, weeklyStatsSection.nextSibling);
+
+    // Create content age chart
+    new Chart(contentAgeChart, {
+        type: 'doughnut',
+        data: {
+            labels: ['Last Week', 'Last Month', 'Older'],
+            datasets: [{
+                data: [
+                    {{ content_age.last_week }},
+                    {{ content_age.last_month }},
+                    {{ content_age.older }}
+                ],
+                backgroundColor: [
+                    'rgba(72, 187, 120, 0.7)',  // success/green
+                    'rgba(251, 191, 36, 0.7)',  // warning/yellow
+                    'rgba(239, 68, 68, 0.7)'    // error/red
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

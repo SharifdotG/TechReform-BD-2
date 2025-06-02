@@ -1,0 +1,603 @@
+{% extends "base.html" %} {% load static %} {% block title %}Login - TechReform
+BD{% endblock %} {% block content %}
+<!-- Start Account Login Area -->
+<section
+    class="py-24 lg:py-32 bg-base-100 overflow-hidden min-h-screen flex items-center relative"
+>
+    <div class="container mx-auto px-4 relative z-10">
+        <!-- Enhanced animated background elements with improved visuals -->
+        <div
+            class="absolute inset-0 overflow-hidden opacity-10 pointer-events-none"
+        >
+            <div
+                class="absolute -top-40 -right-40 w-96 h-96 bg-primary/80 rounded-full filter blur-[120px] animate-pulse-slow"
+            ></div>
+            <div
+                class="absolute top-1/2 -left-40 w-96 h-96 bg-secondary/70 rounded-full filter blur-[100px] animate-float"
+            ></div>
+            <div
+                class="absolute bottom-20 right-1/4 w-72 h-72 bg-accent/60 rounded-full filter blur-[80px] animate-spin-slow opacity-40"
+            ></div>
+        </div>
+
+        <!-- Decorative elements with enhanced styling -->
+        <div class="absolute top-20 right-10 w-32 h-32 opacity-10 animate-float">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="text-primary">
+                <path fill="currentColor" d="M42.7,-73.4C55.9,-67.7,67.8,-58.2,76.7,-45.9C85.6,-33.6,91.6,-16.8,92.6,0.6C93.5,18,89.5,35.9,79.3,49.5C69.2,63,53,72.1,36.4,77.8C19.8,83.5,2.8,85.8,-12.8,82.8C-28.5,79.9,-42.8,71.8,-54.8,61C-66.8,50.3,-76.5,36.9,-81.9,21.7C-87.3,6.4,-88.5,-10.7,-83.6,-25.5C-78.7,-40.3,-67.8,-52.7,-54.7,-58.4C-41.7,-64.1,-26.5,-63,-12.7,-60.2C1.1,-57.4,14.3,-53,29.4,-79.1L42.7,-73.4Z" transform="translate(100 100)" />
+            </svg>
+        </div>
+        <div class="absolute bottom-10 left-10 w-40 h-40 opacity-15 animate-spin-slow">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="text-secondary">
+                <path fill="currentColor" d="M45.7,-78.9C58.9,-71.2,69.2,-57.9,76.9,-43.5C84.6,-29.1,89.8,-14.5,88.2,-0.9C86.6,12.7,78.3,25.4,69.7,37.8C61.1,50.3,52.3,62.4,40.3,70.6C28.3,78.7,14.1,82.9,-0.6,83.9C-15.4,84.8,-30.7,82.6,-43.9,75.9C-57.1,69.3,-68.1,58.2,-76.1,45C-84.1,31.7,-89,16.4,-88.4,1.4C-87.9,-13.5,-81.8,-27,-73.8,-39.7C-65.8,-52.5,-55.8,-64.4,-43.1,-72.3C-30.4,-80.1,-15.2,-83.9,0.4,-84.5C15.9,-85,31.8,-82.4,45.7,-78.9Z" transform="translate(100 100)" />
+            </svg>
+        </div>
+        <div class="absolute top-1/2 right-1/3 w-24 h-24 opacity-10 animate-bounce-slow">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="text-accent">
+                <path fill="currentColor" d="M47.7,-73.2C62.1,-65.3,74.5,-51.9,80.8,-36.1C87.2,-20.2,87.6,-2,83.2,14.4C78.8,30.9,69.6,45.7,57,57.4C44.4,69.1,28.3,77.8,11.3,80.1C-5.7,82.5,-23.6,78.7,-37.3,69.8C-51.1,60.9,-60.7,47,-67.3,32C-73.9,17,-77.5,0.9,-75.6,-15.6C-73.6,-32.1,-66.1,-49,-53.7,-57.4C-41.4,-65.9,-24.1,-65.9,-7.2,-65.2C9.7,-64.6,33.3,-81.1,47.7,-73.2Z" transform="translate(100 100)" />
+            </svg>
+        </div>
+
+        <!-- Section heading with advanced styling and animations -->
+        <div
+            class="text-center mb-16"
+        >
+            <span
+                class="bg-gradient-to-r from-primary/20 via-primary/10 to-secondary/20 text-primary font-medium py-2.5 px-8 rounded-full text-sm mb-8 inline-flex items-center gap-2.5 shadow-xl shadow-primary/10 backdrop-blur-sm transform hover:scale-105 transition-all duration-300"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                </svg>
+                Welcome Back
+            </span>
+            <h2
+                class="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent pb-4 relative drop-shadow-lg"
+            >
+                Login to Your Account
+            </h2>
+            <div class="flex items-center justify-center mt-7 mb-5">
+                <div class="h-1 w-16 bg-gradient-to-r from-primary to-transparent rounded-full animate-pulse"></div>
+                <div class="h-2.5 w-24 bg-gradient-to-r from-primary via-secondary to-accent rounded-full mx-2.5 shadow-sm"></div>
+                <div class="h-1 w-16 bg-gradient-to-l from-secondary to-transparent rounded-full animate-pulse"></div>
+            </div>
+            <p class="text-base-content/80 max-w-2xl mx-auto mt-6 leading-relaxed text-lg">
+                Access your personalized dashboard, manage your profile, and explore our premium features by logging in securely to your account
+            </p>
+        </div>
+
+        <!-- Messages with enhanced styling and animations -->
+        {% if messages %}
+        <div class="mb-10">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} shadow-2xl max-w-3xl mx-auto transform hover:scale-[1.02] transition-all duration-300 border border-{{ message.tags }}/20 backdrop-blur-sm">
+            <div class="flex items-center w-full justify-between">
+                <div class="flex items-center gap-3">
+                {% if message.tags == 'success' %}
+                <div class="w-10 h-10 rounded-full bg-success/20 flex items-center justify-center animate-pulse">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                {% elif message.tags == 'error' %}
+                <div class="w-10 h-10 rounded-full bg-error/20 flex items-center justify-center animate-pulse">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                {% elif message.tags == 'warning' %}
+                <div class="w-10 h-10 rounded-full bg-warning/20 flex items-center justify-center animate-pulse">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </div>
+                {% else %}
+                <div class="w-10 h-10 rounded-full bg-info/20 flex items-center justify-center animate-pulse">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                {% endif %}
+                <div>
+                    <h3 class="font-bold text-sm uppercase tracking-wider">{{ message.tags|title }}</h3>
+                    <p class="text-sm opacity-90">{{ message }}</p>
+                </div>
+                </div>
+                <button class="btn btn-circle btn-sm btn-ghost">✕</button>
+            </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Login Form Section -->
+        <div class="flex justify-center">
+            <div
+            class="card w-full max-w-md bg-base-100/80 shadow-2xl backdrop-blur-sm border border-base-300/50 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] relative overflow-visible"
+            >
+            <!-- Enhanced badge with animation and improved visuals -->
+            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 z-10">
+                <span class="px-8 py-3 bg-gradient-to-r from-primary via-primary/90 to-secondary rounded-full text-white font-semibold text-sm shadow-xl flex items-center gap-2 animate-pulse-slow hover:scale-105 transition-transform duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                Secure Login
+                </span>
+            </div>
+
+            <!-- Enhanced decorative elements -->
+            <div class="absolute -top-12 -right-12 w-32 h-32 bg-primary/20 rounded-full filter blur-xl animate-pulse-slow"></div>
+            <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-secondary/20 rounded-full filter blur-xl animate-float"></div>
+            <div class="absolute top-1/2 right-0 transform translate-x-1/2 w-16 h-16 bg-accent/30 rounded-full filter blur-lg animate-bounce-slow"></div>
+
+            <form class="card-body pt-14 pb-8" method="POST">
+                {% csrf_token %}
+
+                <!-- Social Login Section with improved styling -->
+                <div class="text-center mb-5">
+                <h3 class="text-sm uppercase tracking-wider text-base-content/70 mb-3 font-medium flex items-center justify-center gap-2">
+                    <span class="h-px bg-gradient-to-r from-transparent to-base-content/40 w-8"></span>
+                    Sign in with
+                    <span class="h-px bg-gradient-to-l from-transparent to-base-content/40 w-8"></span>
+                </h3>
+                </div>
+                <div
+                class="flex flex-wrap justify-center gap-5 mb-8"
+                >
+                <button
+                    type="button"
+                    class="btn btn-circle bg-gradient-to-br from-blue-600 to-blue-800 border-0 text-white hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-blue-500/50 relative overflow-hidden group"
+                    aria-label="Login with Facebook"
+                >
+                    <span class="absolute inset-0 bg-white/20 transform scale-0 group-hover:scale-100 rounded-full transition-transform duration-500"></span>
+                    <i class="lni lni-facebook text-xl"></i>
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-circle bg-gradient-to-br from-blue-400 to-blue-600 border-0 text-white hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-blue-500/50 relative overflow-hidden group"
+                    aria-label="Login with Twitter"
+                >
+                    <span class="absolute inset-0 bg-white/20 transform scale-0 group-hover:scale-100 rounded-full transition-transform duration-500"></span>
+                    <i class="lni lni-twitter-original text-xl"></i>
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-circle bg-gradient-to-br from-red-500 to-red-700 border-0 text-white hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-red-500/50 relative overflow-hidden group"
+                    aria-label="Login with Google"
+                >
+                    <span class="absolute inset-0 bg-white/20 transform scale-0 group-hover:scale-100 rounded-full transition-transform duration-500"></span>
+                    <i class="lni lni-google text-xl"></i>
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-circle bg-gradient-to-br from-gray-700 to-gray-900 border-0 text-white hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-gray-700/50 relative overflow-hidden group"
+                    aria-label="Login with GitHub"
+                >
+                    <span class="absolute inset-0 bg-white/20 transform scale-0 group-hover:scale-100 rounded-full transition-transform duration-500"></span>
+                    <i class="lni lni-github-original text-xl"></i>
+                </button>
+                </div>
+
+                    <!-- Enhanced Divider with Animation -->
+                    <div class="relative my-6">
+                        <div class="flex items-center justify-center">
+                            <div class="h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent w-full"></div>
+                            <span class="px-4 py-2 bg-gradient-to-r from-primary/10 via-primary/20 to-secondary/10 text-primary font-semibold text-sm rounded-full mx-4 shadow-sm relative z-10 backdrop-blur-sm transform hover:scale-105 transition-all duration-300 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                </svg>
+                                OR
+                            </span>
+                            <div class="h-px bg-gradient-to-l from-transparent via-secondary/30 to-transparent w-full"></div>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5 blur-xl opacity-30 rounded-full"></div>
+                    </div>
+
+                    <!-- Form Errors with enhanced styling -->
+                    {% if form.errors %}
+                    <div class="mb-8 transform hover:scale-[1.01] transition-all duration-300">
+                        <div class="alert alert-error shadow-lg border border-error/20 backdrop-blur-sm bg-error/10">
+                            <div class="flex items-start w-full gap-4">
+                                <div class="w-12 h-12 rounded-full bg-error/20 flex items-center justify-center shrink-0 animate-pulse">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div class="w-full">
+                                    <h3 class="font-bold text-sm uppercase tracking-wider flex items-center gap-2 mb-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                        </svg>
+                                        Please correct the following errors:
+                                    </h3>
+                                    <ul class="space-y-1.5 text-sm">
+                                        {% for field in form %}
+                                            {% for error in field.errors %}
+                                                <li class="flex items-center gap-2 bg-error/10 px-3 py-1.5 rounded-md">
+                                                    <span class="w-1.5 h-1.5 bg-error rounded-full animate-ping"></span>
+                                                    <strong>{{ field.label }}:</strong> {{ error }}
+                                                </li>
+                                            {% endfor %}
+                                        {% endfor %}
+                                        {% for error in form.non_field_errors %}
+                                            <li class="flex items-center gap-2 bg-error/10 px-3 py-1.5 rounded-md">
+                                                <span class="w-1.5 h-1.5 bg-error rounded-full animate-ping"></span>
+                                                {{ error }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <div class="mt-3 flex justify-end">
+                                        <button type="button" class="btn btn-xs btn-outline border-error/40 text-error hover:bg-error hover:text-white" onclick="this.closest('.alert').remove()">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                            Dismiss
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Username Field with premium styling and immersive effects -->
+                    <div
+                        class="form-control"
+                    >
+                        <label class="label" for="id_username">
+                            <span class="label-text font-medium flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 animate-pulse-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                                Username
+                            </span>
+                        </label>
+                        <div class="relative group perspective-500 z-10">
+                            <div class="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-secondary/20 rounded-lg blur transform group-hover:scale-105 transition-all duration-500 opacity-0 group-hover:opacity-100 -z-10"></div>
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-primary transition-all duration-300 group-focus-within:text-primary-focus">
+                                <i class="lni lni-user"></i>
+                            </span>
+                            <input
+                                type="text"
+                                id="id_username"
+                                name="username"
+                                placeholder="Enter your username"
+                                class="input input-bordered w-full pl-10 focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all duration-300 bg-base-200/50 backdrop-blur-sm hover:bg-base-200/70 group-hover:shadow-[0_0_15px_rgba(8,112,184,0.2)] {% if form.username.errors %}input-error{% endif %}"
+                                required
+                                autocomplete="username"
+                                value="{{ form.username.value|default:'' }}"
+                            />
+                            <!-- Animated validation icon -->
+                            <div class="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-110">
+                                <span class="text-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 animate-pulse-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                        {% if form.username.errors %}
+                        <label class="label pt-2">
+                            <span class="label-text-alt text-error flex items-center gap-1.5 bg-error/10 px-3 py-1 rounded-full animate-pulse shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                {{ form.username.errors.0 }}
+                            </span>
+                        </label>
+                        {% else %}
+                        <label class="label pt-1.5">
+                            <span class="label-text-alt text-base-content/70 flex items-center gap-1.5 hover:text-primary/80 transition-colors duration-300 group-hover:bg-base-200/30 px-2 py-0.5 rounded-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-primary/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                </svg>
+                                <span class="group-hover:translate-x-0.5 transition-transform duration-300">Enter your registered username</span>
+                            </span>
+                        </label>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password Field with premium styling and immersive effects -->
+                    <div
+                        class="form-control mt-6"
+                    >
+                        <label class="label" for="id_password">
+                            <span class="label-text font-medium flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 animate-pulse-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                                Password
+                            </span>
+                        </label>
+                        <div class="relative group perspective-500 z-10">
+                            <div class="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-secondary/20 rounded-lg blur transform group-hover:scale-105 transition-all duration-500 opacity-0 group-hover:opacity-100 -z-10"></div>
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-primary transition-all duration-300 group-focus-within:text-primary-focus">
+                                <i class="lni lni-lock-alt"></i>
+                            </span>
+                            <input
+                                type="password"
+                                id="id_password"
+                                name="password"
+                                placeholder="Enter your password"
+                                class="input input-bordered w-full pl-10 focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all duration-300 bg-base-200/50 backdrop-blur-sm hover:bg-base-200/70 group-hover:shadow-[0_0_15px_rgba(8,112,184,0.2)] {% if form.password.errors %}input-error{% endif %}"
+                                required
+                                autocomplete="current-password"
+                            />
+                            <!-- Toggle password visibility button -->
+                            <button
+                                type="button"
+                                class="absolute inset-y-0 right-0 px-3 flex items-center bg-transparent border-0 transition-all duration-300 text-primary/70 hover:text-primary"
+                                onclick="togglePasswordVisibility()"
+                                aria-label="Toggle password visibility"
+                            >
+                                <i class="lni lni-eye" id="passwordToggleIcon"></i>
+                            </button>
+                        </div>
+                        {% if form.password.errors %}
+                        <label class="label pt-2">
+                            <span class="label-text-alt text-error flex items-center gap-1.5 bg-error/10 px-3 py-1 rounded-full animate-pulse shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                {{ form.password.errors.0 }}
+                            </span>
+                        </label>
+                        {% else %}
+                        <label class="label pt-1.5">
+                            <span class="label-text-alt text-base-content/70 flex items-center gap-1.5 hover:text-primary/80 transition-colors duration-300 group-hover:bg-base-200/30 px-2 py-0.5 rounded-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-primary/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                </svg>
+                                <span class="group-hover:translate-x-0.5 transition-transform duration-300">Use a strong, unique password</span>
+                            </span>
+                        </label>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password visibility toggle script -->
+                    <script>
+                        function togglePasswordVisibility() {
+                            const passwordInput = document.getElementById('id_password');
+                            const passwordToggleIcon = document.getElementById('passwordToggleIcon');
+
+                            if (passwordInput.type === 'password') {
+                                passwordInput.type = 'text';
+                                passwordToggleIcon.classList.remove('lni-eye');
+                                passwordToggleIcon.classList.add('lni-eye-alt');
+                            } else {
+                                passwordInput.type = 'password';
+                                passwordToggleIcon.classList.remove('lni-eye-alt');
+                                passwordToggleIcon.classList.add('lni-eye');
+                            }
+                        }
+                    </script>
+
+                    <!-- Remember Me and Forgot Password with premium styling and effects -->
+                    <div
+                        class="flex flex-col sm:flex-row justify-between mt-6 gap-4"
+                    >
+                        <!-- Enhanced Remember Me checkbox with improved styling and effects -->
+                        <label
+                            class="label cursor-pointer bg-gradient-to-r from-base-200/40 to-base-200/20 px-4 py-3 rounded-xl hover:shadow-lg transition-all duration-300 backdrop-blur-sm group flex items-center w-full sm:w-auto border border-base-300/30 hover:border-primary/20"
+                        >
+                            <div class="relative">
+                                <input
+                                    type="checkbox"
+                                    class="checkbox checkbox-primary checkbox-sm mr-3 border-2 focus:ring-2 focus:ring-primary/30 transition-all duration-300"
+                                    id="id_remember_me"
+                                    name="remember_me"
+                                />
+                                <div class="absolute -inset-2 bg-primary/10 rounded-md blur-md opacity-0 group-hover:opacity-70 transition-opacity duration-300 animate-pulse"></div>
+                                <span class="absolute -inset-2 bg-primary/5 rounded-full rotate-45 opacity-0 group-hover:opacity-100 transform scale-0 group-hover:scale-100 transition-all duration-500"></span>
+                            </div>
+                            <span class="label-text flex items-center">
+                                <span class="group-hover:text-primary transition-colors duration-300 font-medium">Remember me</span>
+                            </span>
+                        </label>
+
+                        <!-- Enhanced Forgot Password link with premium styling and hover effects -->
+                        <a
+                            href="#"
+                            class="flex items-center justify-center px-5 py-3 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl text-primary hover:text-primary-focus transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 group relative overflow-hidden w-full sm:w-auto border border-base-300/30 hover:border-primary/20"
+                        >
+                            <!-- Background animation on hover -->
+                            <span class="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></span>
+                            <!-- Sparkling animation effect -->
+                            <span class="absolute top-0 left-0 w-full h-full opacity-0 group-hover:opacity-100">
+                                <span class="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full animate-ping delay-75"></span>
+                                <span class="absolute top-3/4 left-2/3 w-1.5 h-1.5 bg-white rounded-full animate-ping delay-200"></span>
+                                <span class="absolute top-2/3 left-1/3 w-1 h-1 bg-white rounded-full animate-ping delay-300"></span>
+                            </span>
+                            <!-- Icon with enhanced animation -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 group-hover:animate-pulse relative z-10 transition-transform duration-300 group-hover:rotate-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                            </svg>
+                            <!-- Text with hover effect -->
+                            <span class="relative z-10 font-medium group-hover:translate-x-1 transition-transform duration-300">Forgot password?</span>
+                        </a>
+                    </div>
+
+                    <!-- Submit Button with premium styling and advanced animations -->
+                    <div
+                        class="form-control mt-8"
+                    >
+                        <button
+                            class="btn relative overflow-hidden group bg-gradient-to-r from-primary via-primary/90 to-secondary border-0 text-white font-semibold py-4 w-full shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transform hover:scale-[1.02] transition-all duration-500 rounded-xl h-auto"
+                            type="submit"
+                        >
+                            <!-- Advanced animated background effect -->
+                            <span class="absolute inset-0 bg-gradient-to-r from-secondary via-primary to-secondary bg-size-200 animate-gradient-slow opacity-80"></span>
+
+                            <!-- Glass morphism overlay -->
+                            <span class="absolute inset-0 bg-white/10 backdrop-blur-sm opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
+
+                            <!-- Enhanced animated pulse rings -->
+                            <span class="absolute inset-0 -z-10">
+                                <span class="absolute inset-0 rounded-md bg-primary/20 animate-ping-slow opacity-30"></span>
+                                <span class="absolute inset-0 rounded-md bg-secondary/20 animate-pulse opacity-40 delay-300"></span>
+                                <span class="absolute inset-0 rounded-md bg-white/10 animate-ping-slow opacity-20 delay-150 scale-105"></span>
+                            </span>
+
+                            <!-- Improved sparkle effects -->
+                            <span class="absolute top-0 left-1/4 w-1.5 h-1.5 bg-white rounded-full opacity-0 group-hover:opacity-90 group-hover:animate-ping"></span>
+                            <span class="absolute top-1/3 right-1/4 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-90 group-hover:animate-ping delay-150"></span>
+                            <span class="absolute bottom-1/3 left-1/2 w-1.5 h-1.5 bg-white rounded-full opacity-0 group-hover:opacity-90 group-hover:animate-ping delay-300"></span>
+                            <span class="absolute top-2/3 right-1/3 w-1 h-1 bg-white rounded-full opacity-0 group-hover:opacity-90 group-hover:animate-ping delay-200"></span>
+
+                            <!-- Side light beam effect -->
+                            <span class="absolute inset-y-0 left-0 w-1/5 bg-gradient-to-r from-white/40 to-transparent opacity-0 group-hover:opacity-100 blur-sm transform -translate-x-full group-hover:translate-x-full transition-all duration-1000"></span>
+
+                            <!-- Button content with improved animations -->
+                            <span class="relative flex items-center justify-center gap-3 z-10 py-1.5">
+                                <span class="flex items-center justify-center w-8 h-8 bg-white/20 rounded-full backdrop-blur-sm group-hover:scale-110 transition-transform duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                                    </svg>
+                                </span>
+                                <span class="text-lg group-hover:tracking-wider transition-all duration-500 font-medium">
+                                    <span class="inline-block group-hover:transform group-hover:translate-y-[-2px] transition-transform duration-300">Sign In</span>
+                                    <span class="inline-block group-hover:transform group-hover:translate-y-[-2px] transition-transform duration-500 delay-75"> to Your</span>
+                                    <span class="inline-block group-hover:transform group-hover:translate-y-[-2px] transition-transform duration-700 delay-150"> Account</span>
+                                </span>
+                            </span>
+
+                            <!-- Bottom glow effect -->
+                            <span class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></span>
+                        </button>
+
+                        <!-- Button shadow animation -->
+                        <div class="absolute inset-x-0 -bottom-2 h-10 bg-primary/30 blur-xl rounded-full opacity-0 group-hover:opacity-70 transform scale-x-75 group-hover:scale-x-100 transition-all duration-500"></div>
+                    </div>
+
+                    <!-- Enhanced Register Link with premium styling and immersive animations -->
+                    <div
+                        class="text-center mt-8 bg-gradient-to-r from-base-200/40 via-base-200/60 to-base-200/40 py-4 px-3 rounded-2xl border border-base-300/30 shadow-inner backdrop-blur-sm transform hover:scale-[1.02] transition-all duration-500 group relative overflow-hidden"
+                    >
+                        <!-- Improved animated background elements -->
+                        <div class="absolute inset-0 opacity-30 overflow-hidden">
+                            <div class="absolute -top-12 -right-12 w-24 h-24 bg-gradient-to-br from-primary/30 to-primary/10 rounded-full blur-xl group-hover:animate-pulse-slow"></div>
+                            <div class="absolute -bottom-12 -left-12 w-24 h-24 bg-gradient-to-br from-secondary/30 to-secondary/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 group-hover:animate-float"></div>
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-accent/10 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-all duration-700 scale-0 group-hover:scale-100"></div>
+                        </div>
+
+                        <!-- Enhanced divider lines with animations -->
+                        <div class="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700"></div>
+                        <div class="absolute left-0 right-0 bottom-0 h-px bg-gradient-to-r from-transparent via-secondary/30 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 delay-100"></div>
+
+                        <p class="flex flex-col sm:flex-row items-center justify-center gap-3 relative z-10">
+                            <span class="text-base-content/80 group-hover:text-base-content transition-colors duration-300 text-[15px]">Don't have an account yet?</span>
+                            <a
+                                href="{% url 'register' %}"
+                                class="relative inline-flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary font-semibold rounded-full transition-all duration-500 group-hover:shadow-md group-hover:shadow-primary/20"
+                            >
+                                <!-- Button background animation -->
+                                <span class="absolute inset-0 rounded-full bg-gradient-to-r from-primary/20 via-primary/5 to-primary/20 opacity-0 group-hover:opacity-100 animate-gradient-slow"></span>
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform transition-transform duration-500 group-hover:translate-x-1 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="8.5" cy="7" r="4"></circle>
+                                    <line x1="20" y1="8" x2="20" y2="14"></line>
+                                    <line x1="23" y1="11" x2="17" y2="11"></line>
+                                </svg>
+                                <span class="relative z-10">Register now</span>
+
+                                <!-- Sparkle effects -->
+                                <span class="absolute top-1 right-2 w-1.5 h-1.5 bg-white rounded-full opacity-0 group-hover:opacity-90 group-hover:animate-ping delay-100"></span>
+                                <span class="absolute bottom-1 left-2 w-1 h-1 bg-white rounded-full opacity-0 group-hover:opacity-90 group-hover:animate-ping delay-300"></span>
+                            </a>
+                        </p>
+
+                        <!-- Benefits badges -->
+                        <div class="flex flex-wrap items-center justify-center gap-2 mt-4 relative z-10">
+                            <div class="bg-base-300/30 px-2 py-1 rounded-full text-xs flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4" />
+                                </svg>
+                                <span>Free signup</span>
+                            </div>
+                            <div class="bg-base-300/30 px-2 py-1 rounded-full text-xs flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                </svg>
+                                <span>Premium features</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Security badge with premium styling -->
+                    <div
+                        class="mt-8"
+                    >
+                        <div class="flex items-center justify-center gap-3 py-4 px-5 rounded-xl bg-gradient-to-r from-base-200/50 via-base-200/70 to-base-200/50 backdrop-blur-sm border border-base-300/30 shadow-sm group hover:shadow-md hover:shadow-primary/5 transition-all duration-500 relative overflow-hidden">
+                            <!-- Animated glow effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+                            <!-- Shield icon with enhanced animation -->
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-500 relative">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary group-hover:animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                </svg>
+                                <!-- Animated ring -->
+                                <span class="absolute inset-0 rounded-full border border-primary/30 scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 transition-all duration-700 group-hover:animate-ping-slow"></span>
+                            </div>
+
+                            <div class="text-sm text-base-content/80 group-hover:text-base-content transition-colors duration-300">
+                                <p class="font-medium">Secure & Encrypted Login</p>
+                                <p class="text-xs mt-1 leading-relaxed">Your information is protected with industry-standard SSL encryption and advanced security measures.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Security Badge -->
+                    <div
+                        class="mt-8 relative"
+                    >
+                        <div class="flex items-center justify-center py-3.5 px-6 gap-3 bg-gradient-to-r from-primary/5 via-base-200/40 to-secondary/5 rounded-xl backdrop-blur-sm border border-base-300/30 shadow-sm hover:shadow-primary/10 transition-all duration-300 group">
+                            <!-- Animated background effects -->
+                            <div class="absolute inset-0 overflow-hidden rounded-xl">
+                                <div class="absolute -top-12 -right-12 w-24 h-24 bg-primary/10 rounded-full filter blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-300 animate-pulse-slow"></div>
+                                <div class="absolute -bottom-12 -left-12 w-20 h-20 bg-secondary/10 rounded-full filter blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-300 animate-float"></div>
+                            </div>
+
+                            <!-- Shield/Lock Icon with Pulse Animation -->
+                            <div class="relative z-10 w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center shadow-inner group-hover:shadow-primary/20 transition-all duration-300 group-hover:scale-110">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary group-hover:animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                    <path d="M8 11a4 4 0 018 0 4 4 0 01-4 4" />
+                                    <line x1="12" y1="15" x2="12" y2="17" />
+                                </svg>
+                                <!-- Animated ring effect -->
+                                <span class="absolute inset-0 border border-primary/30 rounded-full scale-0 group-hover:scale-110 opacity-0 group-hover:opacity-100 transition-all duration-700 animate-ping-slow"></span>
+                            </div>
+
+                            <!-- Security Text with Gradient -->
+                            <div class="relative z-10 flex flex-col">
+                                <span class="font-medium text-sm bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent group-hover:tracking-wide transition-all duration-300">Secure & Encrypted</span>
+                                <span class="text-xs text-base-content/60 group-hover:text-base-content/80 transition-colors duration-300">Your personal information is protected</span>
+                            </div>
+
+                            <!-- Encryption Symbol with Animation -->
+                            <div class="relative z-10 hidden sm:block">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary/70 group-hover:text-secondary transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                    <path d="M7 11V7a5 5 0 0110 0v4" />
+                                    <path d="M12 14.5v2.5" class="group-hover:animate-pulse" />
+                                    <circle cx="12" cy="16" r="1" />
+                                </svg>
+                                <!-- Binary data animation on hover -->
+                                <div class="absolute -top-7 -right-7 opacity-0 group-hover:opacity-70 transition-opacity duration-500 text-[8px] text-secondary/60 font-mono whitespace-nowrap overflow-hidden group-hover:animate-typing">
+                                    101001010110010101
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Account Login Area -->
+{% endblock content %}

@@ -1,0 +1,802 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load compare_extras %}
+
+{% block title %}Compare Products - TechReform BD{% endblock %}
+
+{% block content %}
+
+<!-- Compare Header Section -->
+<section class="py-16 bg-base-100 overflow-hidden relative">
+    <div class="container mx-auto px-6">
+        <!-- Enhanced animated background elements -->
+        <div class="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
+            <div class="absolute -top-40 -right-40 w-80 h-80 bg-secondary rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-20 -left-20 w-60 h-60 bg-primary rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1.5s"></div>
+            <div class="absolute top-1/3 left-1/4 w-40 h-40 bg-accent rounded-full filter blur-2xl animate-pulse" style="animation-delay: 0.8s"></div>
+            <div class="absolute bottom-1/4 right-1/3 w-52 h-52 bg-info rounded-full filter blur-3xl animate-pulse" style="animation-delay: 2s"></div>
+            <div class="absolute top-3/4 right-1/4 w-36 h-36 bg-purple-500 rounded-full filter blur-2xl animate-pulse" style="animation-delay: 1.2s"></div>
+        </div>
+
+        <!-- Enhanced Breadcrumb -->
+        <nav class="mb-8">
+            <ol class="flex flex-wrap items-center text-sm bg-gradient-to-r from-gray-50 to-transparent p-3 rounded-xl shadow-sm border border-gray-100">
+            <li class="flex items-center">
+                <a href="{% url 'index' %}" class="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center group">
+                <i class="lni lni-home mr-1 group-hover:scale-110 transition-transform"></i>
+                <span class="group-hover:underline">Home</span>
+                </a>
+                <svg class="w-4 h-4 mx-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </li>
+            <li class="font-medium bg-gradient-to-r from-purple-600 to-primary bg-clip-text text-transparent flex items-center">
+                <i class="lni lni-graph mr-2 text-primary"></i>
+                <span>Compare Products</span>
+            </li>
+            </ol>
+        </nav>
+
+        <!-- Section Title -->
+        <div class="mb-12 text-center relative z-10">
+            <!-- Enhanced decorative elements with more variety -->
+            <div class="absolute inset-0 -z-10 opacity-10">
+            <div class="absolute w-24 h-24 rounded-full bg-primary blur-xl -top-6 left-1/4 animate-pulse"></div>
+            <div class="absolute w-32 h-32 rounded-full bg-secondary blur-xl -bottom-8 right-1/3 animate-pulse" style="animation-delay: 1.2s"></div>
+            <div class="absolute w-20 h-20 rounded-full bg-accent blur-xl top-1/2 right-1/4 animate-pulse" style="animation-delay: 0.7s"></div>
+            <div class="absolute w-16 h-16 rounded-full bg-info blur-lg -bottom-4 left-1/3 animate-pulse" style="animation-delay: 1.8s"></div>
+            </div>
+
+            <span class="inline-block text-sm font-semibold bg-gradient-to-r from-purple-600 to-blue-500 text-white px-5 py-1.5 rounded-full mb-4 shadow-lg transform hover:scale-105 transition-all duration-300 hover:shadow-purple-300/30">
+            <i class="lni lni-graph mr-1.5 animate-pulse"></i> Compare & Choose
+            </span>
+
+            <h1 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-purple-700 via-indigo-600 to-blue-600 bg-clip-text text-transparent mb-5 leading-tight drop-shadow-sm">
+            Product Comparison <span class="inline-block animate-bounce delay-300">↓</span>
+            </h1>
+
+            <p class="text-base-content/70 max-w-2xl mx-auto text-lg leading-relaxed">
+            Compare features and specifications side-by-side to find the perfect product for your needs.
+            <span class="block mt-1 text-primary/80 font-medium">Make informed decisions with confidence!</span>
+            </p>
+
+            <!-- Comparison Type Notice with enhanced styling and animations -->
+            {% if products|length >= 2 %}
+            {% if same_category %}
+            <div class="mt-8 bg-gradient-to-r from-green-50 to-green-100 text-green-800 px-6 py-3.5 rounded-2xl inline-flex items-center shadow-md border border-green-200 transform transition-all hover:shadow-lg hover:-translate-y-1 duration-300 group">
+                <div class="p-2 bg-green-600 rounded-full text-white mr-3 group-hover:rotate-12 transition-transform">
+                <i class="lni lni-checkmark-circle text-xl"></i>
+                </div>
+                <span class="font-medium">Comparing <span class="text-green-700 font-bold">{{ products|length }}</span> {{ category }} products with detailed specifications</span>
+            </div>
+            {% else %}
+            <div class="mt-8 bg-gradient-to-r from-blue-50 to-blue-100 text-blue-800 px-6 py-3.5 rounded-2xl inline-flex items-center shadow-md border border-blue-200 transform transition-all hover:shadow-lg hover:-translate-y-1 duration-300 group">
+                <div class="p-2 bg-blue-600 rounded-full text-white mr-3 group-hover:rotate-12 transition-transform">
+                <i class="lni lni-information-circle text-xl"></i>
+                </div>
+                <span class="font-medium">Comparing products from <span class="text-blue-700 font-bold">different categories</span>. Only common specifications are shown.</span>
+            </div>
+            {% endif %}
+            {% endif %}
+        </div>
+
+        <!-- Compare Content -->
+        {% if products %}
+            {% if products|length >= 2 %}
+                <!-- Enhanced Comparison Table -->
+                <div class="bg-gradient-to-b from-white to-gray-50 rounded-3xl shadow-2xl border border-gray-200 overflow-hidden">
+                    <div class="overflow-x-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray-100">
+                        <table class="table w-full border-collapse">
+                            <thead>
+                                <tr class="bg-gradient-to-r from-primary/10 to-secondary/10">
+                                    <th class="bg-gradient-to-r from-gray-50/90 to-white/80 backdrop-blur-sm border-r border-gray-200 min-w-[200px] sticky left-0 z-20 shadow-lg">
+                                        <div class="p-5 font-extrabold text-gray-800 flex items-center justify-center space-x-3 group transition-all duration-300 hover:translate-x-1">
+                                            <div class="flex items-center justify-center p-2.5 bg-primary/10 rounded-full text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                                <i class="lni lni-graph text-lg group-hover:rotate-12 transition-transform"></i>
+                                            </div>
+                                            <span class="bg-gradient-to-r from-primary via-indigo-600 to-secondary bg-clip-text text-transparent text-lg relative">
+                                                Product Comparison
+                                                <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-secondary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                                            </span>
+                                        </div>
+                                    </th>
+                                    {% for product in products %}
+                                    <th class="w-1/{{ products|length|add:1 }} min-w-[280px]">
+                                        <div class="relative p-4">
+                                            <!-- Enhanced Remove Button with Animation and Effects -->
+                                            <form method="POST" action="{% url 'remove_from_compare' %}" class="absolute top-3 right-3 z-10">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="item_id" value="{{ product.compare_item_id }}">
+                                                <button type="submit"
+                                                        class="p-2.5 rounded-full bg-gradient-to-r from-red-100 to-red-200 text-red-600
+                                                               transition-all duration-300 hover:bg-gradient-to-r hover:from-red-600
+                                                               hover:to-red-500 hover:text-white hover:scale-110 shadow-sm
+                                                               group relative overflow-hidden"
+                                                        title="Remove from comparison">
+                                                    <span class="absolute inset-0 w-full h-full bg-red-600 scale-0 rounded-full
+                                                                 group-hover:scale-100 transition-transform duration-300 opacity-20"></span>
+                                                    <i class="lni lni-close relative z-10 group-hover:rotate-90 transition-transform duration-300"></i>
+                                                    <span class="sr-only">Remove from comparison</span>
+                                                </button>
+                                            </form>
+
+                                            <!-- Enhanced Product Card with 3D effect and better visuals -->
+                                            <div class="flex flex-col items-center p-5 rounded-2xl transform transition-all hover:scale-105 duration-300 relative group
+                                                        bg-gradient-to-br from-white to-gray-50 hover:from-gray-50 hover:to-white border border-transparent hover:border-gray-200
+                                                        shadow-sm hover:shadow-xl">
+                                                <!-- Decorative animated background elements -->
+                                                <div class="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden rounded-2xl">
+                                                    <div class="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full filter blur-xl animate-pulse"></div>
+                                                    <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-secondary/10 rounded-full filter blur-xl animate-pulse" style="animation-delay: 0.5s"></div>
+                                                </div>
+
+                                                <!-- Product status badge (if needed) -->
+                                                {% if product.discount_percentage > 10 %}
+                                                <div class="absolute -top-3 -left-3 z-20">
+                                                    <div class="bg-gradient-to-r from-primary to-purple-600 text-white px-3 py-1 rounded-lg font-bold text-sm shadow-lg rotate-3 animate-pulse">
+                                                        Hot Deal!
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+
+                                                <!-- Enhanced Product Image with 3D hover effect -->
+                                                <div class="w-40 h-40 relative overflow-hidden mb-5 rounded-xl group-hover:shadow-xl transition-all duration-300
+                                                            bg-white p-3 transform perspective-1000 group-hover:rotate-y-12">
+                                                    <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0
+                                                                group-hover:opacity-100 transition-opacity duration-500 rounded-xl"></div>
+                                                    {% if product.image1 %}
+                                                    <img src="{{ product.image1.url }}" alt="{{ product.brand }} {{ product.model }}"
+                                                         class="w-full h-full object-contain transform transition-all duration-500
+                                                                group-hover:scale-110 group-hover:drop-shadow-lg">
+                                                    {% else %}
+                                                    <img src="{% static 'index/images/placeholder-product.jpg' %}" alt="{{ product.brand }} {{ product.model }}"
+                                                         class="w-full h-full object-contain transform transition-all duration-500
+                                                                group-hover:scale-110 group-hover:drop-shadow-lg">
+                                                    {% endif %}
+                                                </div>
+
+                                                <!-- Enhanced Product Title with animated underline -->
+                                                <a href="{% url 'product-detail' product.id %}"
+                                                   class="font-bold text-lg text-gray-800 hover:text-primary text-center transition-colors duration-300 mb-3 relative group-hover:translate-y-[-2px]">
+                                                    <span class="inline-block">{{ product.brand }}</span>
+                                                    <span class="inline-block font-extrabold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"> {{ product.model }}</span>
+                                                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-secondary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                                                </a>
+
+                                                <!-- Enhanced Product Price with better visual hierarchy -->
+                                                <div class="mb-5 text-center relative">
+                                                    {% if product.regular_price and product.price < product.regular_price %}
+                                                    <div class="text-xs font-semibold bg-gradient-to-r from-green-600 to-teal-500 text-white px-3 py-1
+                                                                rounded-full inline-block mb-2 shadow-md transform hover:scale-105 transition-transform">
+                                                        <span class="animate-pulse">SAVE {{ product.discount_percentage|default:0|floatformat:0 }}%</span>
+                                                    </div>
+                                                    {% endif %}
+                                                    <div class="flex flex-col items-center">
+                                                        <span class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent
+                                                                     drop-shadow-sm transform transition-all duration-300 group-hover:scale-110">
+                                                            ৳{{ product.price|floatformat:0|intcomma }}
+                                                        </span>
+                                                        {% if product.regular_price and product.price < product.regular_price %}
+                                                        <span class="text-sm text-gray-400 line-through mt-1">৳{{ product.regular_price|floatformat:0|intcomma }}</span>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+
+                                                <!-- Enhanced Action Buttons with better hover effects -->
+                                                <div class="grid grid-cols-1 gap-3 w-full">
+                                                    <button class="btn btn-sm btn-primary shadow-lg hover:shadow-primary/30 transition-all duration-300
+                                                                  add-to-cart-btn group overflow-hidden relative"
+                                                            data-product-id="{{ product.id }}"
+                                                            data-product-category="{{ product.category }}"
+                                                            data-csrf-token="{{ csrf_token }}">
+                                                        <span class="absolute inset-0 w-full h-full bg-white opacity-0 group-hover:opacity-20
+                                                                     transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                                                        <i class="lni lni-cart mr-1.5 group-hover:animate-bounce"></i> Add to Cart
+                                                    </button>
+                                                    <a href="{% url 'product-detail' product.id %}"
+                                                       class="btn btn-sm btn-outline btn-secondary shadow-sm hover:shadow-secondary/20 transition-all duration-300
+                                                              group overflow-hidden relative">
+                                                        <span class="absolute inset-0 w-full h-full bg-secondary opacity-0 group-hover:opacity-10
+                                                                     transform translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                                                        <i class="lni lni-eye mr-1.5 group-hover:animate-pulse"></i> View Details
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Basic Details Section -->
+                                <tr class="bg-gradient-to-r from-blue-100/70 to-blue-50/70 hover:from-blue-200/80 hover:to-blue-100/80 transition-colors duration-300">
+                                    <td colspan="{{ products|length|add:1 }}" class="p-5 relative overflow-hidden group">
+                                        <!-- Animated background elements -->
+                                        <div class="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden">
+                                            <div class="absolute -top-20 -right-20 w-40 h-40 bg-blue-400/10 rounded-full filter blur-xl animate-pulse"></div>
+                                            <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-primary/10 rounded-full filter blur-xl animate-pulse" style="animation-delay: 0.5s"></div>
+                                        </div>
+
+                                        <h3 class="font-bold text-blue-800 flex items-center text-lg transform group-hover:translate-x-1 transition-transform duration-300">
+                                            <div class="p-2 bg-blue-100 group-hover:bg-blue-200 rounded-full shadow-sm mr-3 transition-colors duration-300">
+                                                <i class="lni lni-information text-blue-600 group-hover:text-blue-700 group-hover:rotate-12 transition-all duration-300"></i>
+                                            </div>
+                                            <span class="relative">
+                                                Basic Information
+                                                <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-blue-500 to-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                                            </span>
+                                        </h3>
+                                    </td>
+                                </tr>
+
+                                <!-- Basic Information Rows with Enhanced Styling -->
+                                <tr>
+                                    <td class="font-semibold border-r border-gray-200 sticky left-0 z-10 bg-white p-4 shadow-sm hover:bg-blue-50/30 transition-colors duration-300">
+                                        <div class="flex items-center group">
+                                            <div class="p-2 bg-primary/10 rounded-full text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 mr-3">
+                                                <i class="lni lni-tag group-hover:rotate-12 transition-transform"></i>
+                                            </div>
+                                            <span class="relative">
+                                                Category
+                                                <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    {% for product in products %}
+                                    <td class="text-center p-4 hover:bg-blue-50/30 transition-colors duration-300">
+                                        <span class="px-4 py-1.5 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-primary/10 hover:to-primary/20
+                                                   rounded-full text-gray-700 font-medium inline-block transform transition-all duration-300
+                                                   hover:shadow-md hover:-translate-y-1 cursor-default">
+                                            {{ product.category }}
+                                        </span>
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+
+                                <tr class="bg-gray-50 hover:bg-blue-50/30 transition-colors duration-300">
+                                    <td class="font-semibold border-r border-gray-200 sticky left-0 z-10 bg-gray-50 p-4 shadow-sm hover:bg-blue-50/30 transition-colors duration-300">
+                                        <div class="flex items-center group">
+                                            <div class="p-2 bg-primary/10 rounded-full text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 mr-3">
+                                                <i class="lni lni-certificate group-hover:rotate-12 transition-transform"></i>
+                                            </div>
+                                            <span class="relative">
+                                                Brand
+                                                <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    {% for product in products %}
+                                    <td class="text-center p-4 hover:bg-blue-50/30 transition-colors duration-300">
+                                        <span class="font-medium text-lg bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent
+                                                     inline-block transform transition-all duration-300 hover:scale-110">
+                                            {{ product.brand }}
+                                        </span>
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+
+                                <tr class="hover:bg-blue-50/30 transition-colors duration-300">
+                                    <td class="font-semibold border-r border-gray-200 sticky left-0 z-10 bg-white p-4 shadow-sm hover:bg-blue-50/30 transition-colors duration-300">
+                                        <div class="flex items-center group">
+                                            <div class="p-2 bg-primary/10 rounded-full text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 mr-3">
+                                                <i class="lni lni-shield group-hover:rotate-12 transition-transform"></i>
+                                            </div>
+                                            <span class="relative">
+                                                Warranty
+                                                <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    {% for product in products %}
+                                    <td class="text-center p-4 hover:bg-blue-50/30 transition-colors duration-300">
+                                        {% if product.warranty %}
+                                            <span class="px-4 py-1.5 bg-gradient-to-r from-green-500 to-teal-500 text-white font-medium
+                                                       rounded-lg shadow-md inline-block transform transition-all duration-300
+                                                       hover:shadow-green-300/50 hover:-translate-y-1 hover:scale-105">
+                                                <i class="lni lni-checkmark-circle mr-1.5"></i>{{ product.warranty }}
+                                            </span>
+                                        {% else %}
+                                            <span class="text-gray-400 italic px-4 py-1.5 bg-gray-100/50 rounded-lg inline-block">
+                                                No warranty info
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+
+                                <!-- Category-Specific Features (when same category) -->
+                                {% if same_category and category_specs %}
+                                    <!-- Category Specifications Header with Enhanced Styling -->
+                                    <tr class="bg-gradient-to-r from-purple-100/70 to-purple-50/70 hover:from-purple-200/80 hover:to-purple-100/80 transition-colors duration-300">
+                                        <td colspan="{{ products|length|add:1 }}" class="p-5 relative overflow-hidden group">
+                                            <!-- Animated background elements -->
+                                            <div class="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden">
+                                                <div class="absolute -top-20 -right-20 w-40 h-40 bg-amber-400/10 rounded-full filter blur-xl animate-pulse"></div>
+                                                <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-teal-500/10 rounded-full filter blur-xl animate-pulse" style="animation-delay: 0.5s"></div>
+                                            </div>
+
+                                            <h3 class="font-bold text-purple-800 flex items-center text-lg transform group-hover:translate-x-1 transition-transform duration-300">
+                                                <div class="p-2 bg-purple-100 group-hover:bg-purple-200 rounded-full shadow-sm mr-3 transition-colors duration-300">
+                                                    <i class="lni lni-cog text-purple-600 group-hover:text-purple-700 group-hover:rotate-45 transition-all duration-500"></i>
+                                                </div>
+                                                <span class="relative">
+                                                    {{ category }} Specifications
+                                                    <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-amber-500 to-teal-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                                                </span>
+                                            </h3>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Dynamic Display of Category-Specific Features -->
+                                    {% for spec_key, spec_name in category_specs.items %}
+                                    <tr class="{% cycle '' 'bg-gray-50/70' %} hover:bg-blue-50/50 transition-all duration-300 group">
+                                        <td class="font-semibold border-r border-gray-200 sticky left-0 z-10 {% cycle 'bg-white' 'bg-gray-50/70' %} p-4 shadow-sm hover:bg-blue-50/50 transition-all duration-300">
+                                            <div class="flex items-center group cursor-default">
+                                                <div class="p-1.5 bg-primary/10 rounded-full text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 mr-2.5">
+                                                    <i class="lni lni-checkmark-circle group-hover:rotate-12 transition-transform"></i>
+                                                </div>
+                                                <span class="relative">
+                                                    {{ spec_name }}
+                                                    <span class="absolute -bottom-0.5 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        {% for product in products %}
+                                        <td class="text-center p-4 hover:bg-blue-50/50 transition-all duration-300">
+                                            {% with value=product|getattribute:spec_key %}
+                                                {% if value is None %}
+                                                    <span class="text-gray-400 italic opacity-70 transition-all duration-300 hover:opacity-100">Not specified</span>
+                                                {% elif value == True %}
+                                                    <span class="badge badge-success gap-1.5 shadow-sm transform hover:scale-110 hover:shadow-green-200 transition-all duration-300">
+                                                        <i class="lni lni-checkmark-circle"></i> Yes
+                                                    </span>
+                                                {% elif value == False %}
+                                                    <span class="badge badge-error gap-1.5 shadow-sm transform hover:scale-110 hover:shadow-red-200 transition-all duration-300">
+                                                        <i class="lni lni-close"></i> No
+                                                    </span>
+                                                {% else %}
+                                                    <span class="font-medium px-3 py-1.5 bg-white/80 rounded-lg shadow-sm inline-block
+                                                               transform transition-all duration-300 hover:shadow-md hover:-translate-y-0.5
+                                                               hover:bg-gradient-to-r hover:from-white hover:to-blue-50/50 border border-transparent hover:border-blue-100/50">
+                                                    {{ value }}
+                                                    {% if spec_key == 'base_frequency' or spec_key == 'boost_frequency' %}
+                                                        <span class="text-xs font-bold text-primary/70 ml-0.5">GHz</span>
+                                                    {% elif spec_key == 'tdp' %}
+                                                        <span class="text-xs font-bold text-primary/70 ml-0.5">W</span>
+                                                    {% elif spec_key == 'cache' %}
+                                                        <span class="text-xs font-bold text-primary/70 ml-0.5">MB</span>
+                                                    {% elif spec_key == 'brightness' %}
+                                                        <span class="text-xs font-bold text-primary/70 ml-0.5">cd/m²</span>
+                                                    {% elif spec_key == 'response_time' %}
+                                                        <span class="text-xs font-bold text-primary/70 ml-0.5">ms</span>
+                                                    {% elif spec_key == 'refresh_rate' %}
+                                                        <span class="text-xs font-bold text-primary/70 ml-0.5">Hz</span>
+                                                    {% elif spec_key == 'impedance' %}
+                                                        <span class="text-xs font-bold text-primary/70 ml-0.5">ohms</span>
+                                                    {% elif spec_key == 'sensitivity' %}
+                                                        <span class="text-xs font-bold text-primary/70 ml-0.5">dB</span>
+                                                    {% elif spec_key == 'cable_length' %}
+                                                        <span class="text-xs font-bold text-primary/70 ml-0.5">m</span>
+                                                    {% elif spec_key == 'read_speed' or spec_key == 'write_speed' %}
+                                                        <span class="text-xs font-bold text-primary/70 ml-0.5">MB/s</span>
+                                                    {% elif spec_key == 'wattage' %}
+                                                        <span class="text-xs font-bold text-primary/70 ml-0.5">W</span>
+                                                    {% endif %}
+                                                    </span>
+                                                {% endif %}
+                                            {% endwith %}
+                                        </td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% endfor %}
+                                {% endif %}
+
+                                <!-- Price Section With Enhanced Styling -->
+                                <tr class="bg-gradient-to-r from-green-100/70 to-green-50/70 hover:from-green-200/80 hover:to-green-100/80 transition-colors duration-300">
+                                    <td colspan="{{ products|length|add:1 }}" class="p-5 relative overflow-hidden group">
+                                        <!-- Animated background elements -->
+                                        <div class="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden">
+                                            <div class="absolute -top-20 -right-20 w-40 h-40 bg-green-400/10 rounded-full filter blur-xl animate-pulse"></div>
+                                            <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-primary/10 rounded-full filter blur-xl animate-pulse" style="animation-delay: 0.5s"></div>
+                                        </div>
+
+                                        <h3 class="font-bold text-green-800 flex items-center text-lg transform group-hover:translate-x-1 transition-transform duration-300">
+                                            <div class="p-2 bg-green-100 group-hover:bg-green-200 rounded-full shadow-sm mr-3 transition-colors duration-300">
+                                                <i class="lni lni-coin text-green-600 group-hover:text-green-700 group-hover:rotate-12 transition-all duration-300"></i>
+                                            </div>
+                                            <span class="relative">
+                                                Pricing Information
+                                                <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-green-500 to-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                                            </span>
+                                        </h3>
+                                    </td>
+                                </tr>
+
+                                <!-- Enhanced Pricing Information Rows -->
+                                <tr class="hover:bg-green-50/40 transition-all duration-300">
+                                    <td class="font-semibold border-r border-gray-200 sticky left-0 z-10 bg-white p-4 shadow-sm hover:bg-green-50/40 transition-colors duration-300">
+                                        <div class="flex items-center group">
+                                            <div class="p-2 bg-primary/10 rounded-full text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 mr-3">
+                                                <i class="lni lni-tag group-hover:rotate-12 transition-transform"></i>
+                                            </div>
+                                            <span class="relative">
+                                                Current Price
+                                                <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    {% for product in products %}
+                                    <td class="text-center p-4 hover:bg-green-50/40 transition-colors duration-300 group">
+                                        <div class="flex flex-col items-center justify-center transform transition-all duration-300 group-hover:scale-110">
+                                            <span class="text-2xl font-bold bg-gradient-to-r from-primary to-green-600 bg-clip-text text-transparent drop-shadow-sm">
+                                                ৳{{ product.price|floatformat:0|intcomma }}
+                                            </span>
+                                            <div class="h-0.5 w-0 bg-gradient-to-r from-primary to-green-600 group-hover:w-full transition-all duration-500 mt-1 rounded-full"></div>
+                                        </div>
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+
+                                <tr class="bg-gray-50/80 hover:bg-green-50/40 transition-all duration-300">
+                                    <td class="font-semibold border-r border-gray-200 sticky left-0 z-10 bg-gray-50/80 p-4 shadow-sm hover:bg-green-50/40 transition-colors duration-300">
+                                        <div class="flex items-center group">
+                                            <div class="p-2 bg-primary/10 rounded-full text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 mr-3">
+                                                <i class="lni lni-ticket group-hover:rotate-12 transition-transform"></i>
+                                            </div>
+                                            <span class="relative">
+                                                Regular Price
+                                                <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    {% for product in products %}
+                                    <td class="text-center p-4 hover:bg-green-50/40 transition-colors duration-300 group">
+                                        {% if product.regular_price %}
+                                            <div class="relative inline-block transition-all duration-300 group-hover:scale-105">
+                                                <span class="text-gray-500 line-through relative">
+                                                    ৳{{ product.regular_price|floatformat:0|intcomma }}
+                                                    <span class="absolute inset-0 bg-red-500/20 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left skew-y-3 rounded-sm"></span>
+                                                </span>
+                                            </div>
+                                        {% else %}
+                                            <span class="text-gray-400 italic px-3 py-1 bg-gray-100/70 rounded-lg text-sm">Same as current</span>
+                                        {% endif %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+
+                                <tr class="hover:bg-green-50/40 transition-all duration-300">
+                                    <td class="font-semibold border-r border-gray-200 sticky left-0 z-10 bg-white p-4 shadow-sm hover:bg-green-50/40 transition-colors duration-300">
+                                        <div class="flex items-center group">
+                                            <div class="p-2 bg-primary/10 rounded-full text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 mr-3">
+                                                <i class="lni lni-offer group-hover:rotate-12 transition-transform"></i>
+                                            </div>
+                                            <span class="relative">
+                                                Discount
+                                                <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    {% for product in products %}
+                                    <td class="text-center p-4 hover:bg-green-50/40 transition-colors duration-300">
+                                        {% if product.regular_price and product.price < product.regular_price %}
+                                            <div class="relative group/badge">
+                                                <span class="px-3 py-1.5 bg-gradient-to-r from-green-600 to-teal-500 text-white rounded-lg font-bold shadow-sm inline-block
+                                                           transform transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:shadow-green-300/30">
+                                                    <span class="absolute inset-0 bg-white/20 rounded-lg scale-0 group-hover/badge:scale-100 group-hover/badge:opacity-0 transition-all duration-1000 origin-center"></span>
+                                                    <i class="lni lni-percentage mr-1 animate-pulse"></i>
+                                                    {{ product.discount_percentage|default:0|floatformat:0 }}% OFF
+                                                </span>
+                                            </div>
+                                        {% else %}
+                                            <span class="px-3 py-1 bg-gray-100/70 text-gray-400 italic rounded-lg text-sm">No discount</span>
+                                        {% endif %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+
+                                <tr class="bg-gray-50/80 hover:bg-green-50/40 transition-all duration-300">
+                                    <td class="font-semibold border-r border-gray-200 sticky left-0 z-10 bg-gray-50/80 p-4 shadow-sm hover:bg-green-50/40 transition-colors duration-300">
+                                        <div class="flex items-center group">
+                                            <div class="p-2 bg-primary/10 rounded-full text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 mr-3">
+                                                <i class="lni lni-wallet group-hover:rotate-12 transition-transform"></i>
+                                            </div>
+                                            <span class="relative">
+                                                You Save
+                                                <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    {% for product in products %}
+                                    <td class="text-center p-4 hover:bg-green-50/40 transition-colors duration-300 group">
+                                        {% if product.regular_price and product.price < product.regular_price %}
+                                            <div class="transform transition-all duration-300 group-hover:scale-110 relative">
+                                                <span class="text-lg font-bold bg-gradient-to-r from-green-600 to-teal-500 bg-clip-text text-transparent drop-shadow-sm">
+                                                    ৳{{ product.discount_amount|floatformat:0|intcomma }}
+                                                </span>
+                                                <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 h-0.5 w-0 bg-gradient-to-r from-green-600 to-teal-500 group-hover:w-3/4 transition-all duration-500 rounded-full"></div>
+                                                <!-- Mini coin animation on hover -->
+                                                <div class="absolute -right-2 -top-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                    <i class="lni lni-coin text-sm text-yellow-500 animate-ping"></i>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <span class="inline-block px-4 py-1 bg-gray-100/70 text-gray-400 italic rounded-lg">—</span>
+                                        {% endif %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Enhanced Clear All Button with Improved Styling -->
+                <div class="mt-12 text-center relative">
+                    <!-- Decorative background elements -->
+                    <div class="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden">
+                        <div class="absolute -top-10 -right-20 w-40 h-40 bg-red-400/10 rounded-full filter blur-xl animate-pulse"></div>
+                        <div class="absolute -bottom-5 -left-10 w-32 h-32 bg-red-300/10 rounded-full filter blur-xl animate-pulse" style="animation-delay: 0.5s"></div>
+                    </div>
+
+                    <form method="POST" action="{% url 'clear_compare_list' %}" class="inline-block relative group perspective-1000">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="btn px-8 py-3.5 border-none shadow-xl
+                                       bg-gradient-to-r from-red-500 via-rose-500 to-red-600 text-white
+                                       hover:shadow-red-400/40 active:shadow-red-500/50
+                                       transition-all duration-300 ease-out
+                                       transform hover:-translate-y-1 group-hover:scale-105 relative
+                                       overflow-hidden rounded-xl group">
+                            <!-- Animated background shine effect -->
+                            <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-white/0 via-white/30 to-white/0
+                                         opacity-0 group-hover:opacity-100 -skew-x-12
+                                         transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+
+                            <!-- Animated icon and text with micro-interactions -->
+                            <div class="flex items-center justify-center relative z-10 gap-3">
+                                <div class="relative">
+                                    <i class="lni lni-trash-can text-lg group-hover:rotate-12 transition-all duration-300"></i>
+                                    <span class="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full scale-0 group-hover:scale-100 group-hover:animate-ping"></span>
+                                </div>
+                                <span class="font-bold tracking-wide text-base">Clear All Items</span>
+                            </div>
+
+                            <!-- Bottom border animation -->
+                            <span class="absolute bottom-0 left-0 w-full h-1 bg-white/30 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></span>
+                        </button>
+
+                        <!-- Enhanced tooltip with animation -->
+                        <div class="mt-3 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg shadow-sm border border-red-100/20
+                                   opacity-0 group-hover:opacity-100 transform group-hover:-translate-y-1
+                                   transition-all duration-300 max-w-xs mx-auto">
+                            <p class="text-sm text-red-600/80 font-medium">
+                                <i class="lni lni-information mr-1"></i>
+                                This will remove all products from your comparison list
+                            </p>
+                        </div>
+                    </form>
+
+                    <!-- Warning flash animation on hover -->
+                    <div class="absolute inset-0 -z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64
+                                  bg-red-500/5 rounded-full animate-ping" style="animation-duration: 3s;"></div>
+                    </div>
+                </div>
+            {% else %}
+                <!-- Need more items to compare - Enhanced Version -->
+                <div class="text-center p-10 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl shadow-lg border border-blue-200 relative overflow-hidden transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <!-- Animated background elements -->
+                    <div class="absolute inset-0 opacity-10 pointer-events-none overflow-hidden">
+                        <div class="absolute -top-20 -right-20 w-64 h-64 bg-primary rounded-full filter blur-3xl animate-pulse"></div>
+                        <div class="absolute -bottom-10 -left-20 w-48 h-48 bg-secondary/50 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1.2s"></div>
+                        <div class="absolute top-1/3 left-1/4 w-32 h-32 bg-blue-400 rounded-full filter blur-2xl animate-pulse" style="animation-delay: 0.5s"></div>
+                    </div>
+
+                    <!-- Enhanced icon with animation -->
+                    <div class="mb-6 text-primary text-7xl flex justify-center group perspective-1000">
+                        <div class="transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-12 relative">
+                            <i class="lni lni-graph drop-shadow-md"></i>
+                            <span class="absolute -top-3 -right-3 w-6 h-6 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-ping"></span>
+                            <div class="absolute inset-0 bg-primary/10 rounded-full scale-0 group-hover:scale-150 transition-all duration-700 -z-10"></div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced heading with gradient text -->
+                    <h3 class="text-3xl font-extrabold bg-gradient-to-r from-purple-600 via-blue-600 to-primary bg-clip-text text-transparent mb-4 leading-tight">
+                        Add More Products to Compare <span class="inline-block animate-bounce delay-300">↓</span>
+                    </h3>
+
+                    <!-- Enhanced description with better typography -->
+                    <p class="text-gray-600 mb-8 max-w-xl mx-auto text-lg leading-relaxed">
+                        You need at least <span class="font-bold text-primary">2 products</span> to make a meaningful comparison.
+                        <span class="block mt-1 text-indigo-500 font-medium italic">Keep browsing and find your perfect match!</span>
+                    </p>
+
+                    <!-- Enhanced CTA button with effects -->
+                    <a href="{% url 'product-list' %}" class="btn btn-primary btn-lg shadow-xl hover:shadow-primary/30 px-8 py-3 transition-all duration-300 group relative overflow-hidden">
+                        <!-- Button shine effect -->
+                        <span class="absolute inset-0 w-full h-full bg-white/30 -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-700"></span>
+
+                        <div class="relative z-10 flex items-center">
+                            <i class="lni lni-shopping-basket text-lg mr-2.5 group-hover:animate-bounce"></i>
+                            <span class="font-bold tracking-wide">Browse Products</span>
+                        </div>
+                    </a>
+
+                    <!-- Added helpful tips section -->
+                    <div class="mt-8 flex flex-col items-center justify-center space-y-3">
+                        <div class="flex items-center justify-center space-x-2 text-sm text-blue-600 bg-white/70 px-4 py-2 rounded-full shadow-sm animate-pulse">
+                            <i class="lni lni-information"></i>
+                            <p>Add products using the <span class="font-semibold">Compare</span> button on product pages</p>
+                        </div>
+                        <div class="text-xs text-gray-500 italic flex items-center space-x-1">
+                            <span class="inline-block w-1.5 h-1.5 bg-primary rounded-full"></span>
+                            <p>Compare specs, features, and prices at a glance!</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <!-- Empty compare list -->
+            <div class="text-center p-12 bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl shadow-lg border border-gray-200 relative overflow-hidden transform transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
+                <!-- Enhanced decorative elements with improved animations -->
+                <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
+                    <div class="absolute -top-10 -right-10 w-60 h-60 bg-primary rounded-full filter blur-xl animate-pulse"></div>
+                    <div class="absolute -bottom-10 -left-10 w-60 h-60 bg-secondary rounded-full filter blur-xl animate-pulse" style="animation-delay: 1s"></div>
+                    <div class="absolute top-1/2 left-1/4 w-40 h-40 bg-accent rounded-full filter blur-xl animate-pulse" style="animation-delay: 2s"></div>
+                    <div class="absolute bottom-1/3 right-1/4 w-32 h-32 bg-info rounded-full filter blur-xl animate-pulse" style="animation-delay: 1.5s"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 hover:opacity-100 transition-opacity duration-700"></div>
+                </div>
+
+                <div class="mb-8 text-primary text-8xl flex justify-center relative group perspective-1000">
+                    <div class="transform transition-all duration-700 group-hover:scale-110 group-hover:rotate-12 hover:rotate-y-180">
+                        <i class="lni lni-graph drop-shadow-lg"></i>
+                        <!-- Ripple effect on hover -->
+                        <span class="absolute inset-0 bg-primary/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-1000 -z-10"></span>
+                        <!-- Pulse dots -->
+                        <span class="absolute -top-2 -right-2 w-4 h-4 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity animate-ping"></span>
+                        <span class="absolute bottom-0 left-0 w-3 h-3 bg-secondary rounded-full opacity-0 group-hover:opacity-100 transition-opacity animate-ping" style="animation-delay: 0.5s"></span>
+                    </div>
+                </div>
+
+                <h3 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-700 via-blue-600 to-primary bg-clip-text text-transparent mb-4 leading-tight relative overflow-hidden group">
+                    Your Compare List is Empty
+                    <!-- Animated underline -->
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-700 via-blue-600 to-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"></span>
+                    <!-- Animated highlight -->
+                    <span class="absolute inset-0 bg-white/20 -translate-x-full hover:translate-x-0 transition-transform duration-1000 -z-10 skew-x-12"></span>
+                </h3>
+
+                <p class="text-gray-600 mb-8 max-w-xl mx-auto leading-relaxed text-lg transform transition-all duration-500 hover:scale-105">
+                    Add products to your compare list to evaluate their features side-by-side
+                    and make the best purchase decision for your needs.
+                </p>
+
+                <a href="{% url 'product-list' %}" class="btn btn-primary btn-lg shadow-xl px-8 relative overflow-hidden group">
+                    <!-- Button shine effect -->
+                    <span class="absolute inset-0 w-full h-full bg-white/30 -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-all duration-700"></span>
+                    <!-- Button elevation animation -->
+                    <span class="absolute inset-0 w-full h-full bg-primary opacity-0 group-hover:opacity-20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-lg"></span>
+
+                    <div class="relative z-10 flex items-center transform transition-all duration-500 group-hover:-translate-y-1">
+                        <i class="lni lni-shopping-basket mr-2 transform transition-all duration-500 group-hover:rotate-12 group-hover:scale-125"></i>
+                        <span class="transform transition-all duration-500 group-hover:translate-x-1">Browse Products</span>
+                    </div>
+                </a>
+
+                <div class="mt-8 flex flex-col items-center justify-center space-y-3">
+                    <div class="flex items-center justify-center space-x-1 text-sm text-gray-500 bg-white bg-opacity-70 px-4 py-2 rounded-full shadow-sm transform transition-all duration-500 hover:shadow-md hover:-translate-y-1 hover:bg-opacity-90">
+                        <i class="lni lni-information text-primary transform transition-all duration-500 group-hover:rotate-12"></i>
+                        <p>You can add products to compare from any product page</p>
+                        <!-- Animated glow -->
+                        <span class="absolute inset-0 rounded-full bg-primary/10 opacity-0 hover:opacity-100 transition-opacity duration-500 -z-10"></span>
+                    </div>
+                    <div class="flex items-center justify-center space-x-2 text-sm text-gray-500">
+                        <span class="inline-block w-2 h-2 bg-primary rounded-full animate-ping"></span>
+                        <p class="italic transform transition-all duration-500 hover:text-primary hover:font-medium">
+                            Start comparing to find your perfect match!
+                        </p>
+                    </div>
+
+                    <!-- Added floating animated elements -->
+                    <div class="absolute w-16 h-16 -bottom-2 right-1/4 opacity-0 hover:opacity-100 transition-opacity duration-700">
+                        <i class="lni lni-laptop-phone text-3xl text-primary/20 absolute animate-float"></i>
+                        <i class="lni lni-display text-2xl text-secondary/20 absolute top-8 right-2 animate-float" style="animation-delay: 0.8s"></i>
+                        <i class="lni lni-headphone text-2xl text-accent/20 absolute bottom-2 left-2 animate-float" style="animation-delay: 1.5s"></i>
+                    </div>
+                </div>
+            </div>
+
+            <style>
+            @keyframes float {
+                0% { transform: translateY(0px) rotate(0deg); }
+                50% { transform: translateY(-10px) rotate(5deg); }
+                100% { transform: translateY(0px) rotate(0deg); }
+            }
+            .animate-float {
+                animation: float 6s ease-in-out infinite;
+            }
+            </style>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Add to Cart AJAX Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add event listeners to all add-to-cart buttons
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product-id');
+                const productCategory = this.getAttribute('data-product-category');
+                const csrfToken = this.getAttribute('data-csrf-token');
+
+                // Create FormData and append values
+                const formData = new FormData();
+                formData.append('product_id', productId);
+                formData.append('product_category', productCategory);
+                formData.append('quantity', 1); // Default quantity
+                formData.append('csrfmiddlewaretoken', csrfToken);
+
+                // Send AJAX request
+                fetch('{% url "add_to_cart" %}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Show success toast
+                        const toast = document.createElement('div');
+                        toast.className = 'fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center';
+                        toast.innerHTML = `
+                            <i class="lni lni-checkmark-circle text-xl mr-2"></i>
+                            <div>
+                                <p class="font-medium">${data.message}</p>
+                                <a href="{% url 'view_cart' %}" class="text-sm underline">View Cart</a>
+                            </div>
+                        `;
+                        document.body.appendChild(toast);
+
+                        // Remove toast after 4 seconds
+                        setTimeout(() => {
+                            toast.remove();
+                        }, 4000);
+
+                        // Update cart count
+                        const cartCountElements = document.querySelectorAll('.cart-count');
+                        cartCountElements.forEach(element => {
+                            element.textContent = data.cart_count;
+                        });
+                    } else {
+                        // Show error toast
+                        const toast = document.createElement('div');
+                        toast.className = 'fixed bottom-4 right-4 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center';
+                        toast.innerHTML = `
+                            <i class="lni lni-warning text-xl mr-2"></i>
+                            <div>${data.message}</div>
+                        `;
+                        document.body.appendChild(toast);
+
+                        // Remove toast after 4 seconds
+                        setTimeout(() => {
+                            toast.remove();
+                        }, 4000);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error adding to cart:', error);
+                    alert('An error occurred while adding the product to your cart.');
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

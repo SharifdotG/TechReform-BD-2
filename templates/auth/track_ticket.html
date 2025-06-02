@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Track Your Support Ticket - TechReform BD{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-20 bg-gradient-to-br from-primary/10 via-base-100 to-base-200">
+    <div class="container mx-auto px-4">
+        <!-- Page Header -->
+        <div class="text-center mb-16">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 text-primary drop-shadow-xl tracking-tight">
+            <span class="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+                Track Your Support Ticket
+            </span>
+            </h1>
+            <p class="text-lg md:text-xl text-base-content/80 max-w-2xl mx-auto mb-2">
+            Enter your <span class="font-semibold text-primary">Ticket ID</span> and <span class="font-semibold text-primary">Email Address</span> to check the status of your support request.
+            </p>
+            <div class="flex justify-center mt-4">
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-base-200/70 border border-primary/20 shadow text-base-content/70 text-sm font-medium">
+                <i class="lni lni-info text-accent"></i>
+                Secure &amp; private lookup
+            </span>
+            </div>
+        </div>
+
+        <div class="max-w-lg mx-auto">
+            <!-- Card with form -->
+            <div class="card bg-base-200/90 shadow-2xl border border-primary/20 rounded-3xl backdrop-blur-md">
+                <div class="card-body">
+                    <!-- Form Title -->
+                    <div class="flex flex-col items-center mb-10">
+                        <div class="bg-gradient-to-tr from-primary via-accent to-secondary p-2 rounded-full shadow-lg mb-4 animate-pulse">
+                            <i class="lni lni-ticket-alt text-3xl text-white drop-shadow"></i>
+                        </div>
+                        <h2 class="card-title text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-secondary tracking-tight mb-2 drop-shadow-lg">
+                            Ticket Lookup
+                        </h2>
+                        <p class="text-base-content/70 text-base text-center max-w-xs">
+                            Quickly check your ticket status by entering your details below.
+                        </p>
+                    </div>
+
+                    {% if error_message %}
+                        <div class="alert alert-error mb-6 shadow">
+                            <i class="lni lni-warning"></i>
+                            <span>{{ error_message }}</span>
+                        </div>
+                    {% endif %}
+
+                    <form method="post" class="space-y-6">
+                        {% csrf_token %}
+
+                        <!-- Ticket ID Field -->
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-semibold text-base-content text-lg tracking-wide">
+                                    <i class="lni lni-ticket text-primary mr-2"></i>
+                                    Ticket ID
+                                </span>
+                            </label>
+                            <div class="relative group">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <i class="lni lni-ticket text-primary/80 group-focus-within:text-accent transition-colors"></i>
+                                </span>
+                                <input
+                                    type="text"
+                                    name="ticket_id"
+                                    placeholder="e.g. TR12345AB"
+                                    class="input input-bordered w-full pl-12 pr-4 py-3 rounded-xl focus:input-primary bg-base-100/90 text-lg font-medium shadow-sm transition-all duration-200 border-primary/30 focus:ring-2 focus:ring-primary/40"
+                                    required
+                                    maxlength="20"
+                                    autocomplete="off"
+                                />
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-base-content/30 group-focus-within:text-primary transition-colors">
+                                    <i class="lni lni-checkmark-circle hidden" id="ticket-id-valid"></i>
+                                </span>
+                            </div>
+                            <label class="label">
+                                <span class="label-text-alt text-base-content/60 italic">
+                                    Enter the ticket ID provided when you submitted your request
+                                </span>
+                            </label>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-semibold text-base-content text-lg tracking-wide">
+                                    <i class="lni lni-envelope text-primary mr-2"></i>
+                                    Email Address
+                                </span>
+                            </label>
+                            <div class="relative group">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <i class="lni lni-envelope text-primary/80 group-focus-within:text-accent transition-colors"></i>
+                                </span>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="e.g. you@email.com"
+                                    class="input input-bordered w-full pl-12 pr-4 py-3 rounded-xl focus:input-primary bg-base-100/90 text-lg font-medium shadow-sm transition-all duration-200 border-primary/30 focus:ring-2 focus:ring-primary/40"
+                                    required
+                                    maxlength="100"
+                                    autocomplete="off"
+                                />
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-base-content/30 group-focus-within:text-primary transition-colors">
+                                    <i class="lni lni-checkmark-circle hidden" id="email-valid"></i>
+                                </span>
+                            </div>
+                            <label class="label">
+                                <span class="label-text-alt text-base-content/60 italic">
+                                    Enter the email address you used when submitting the ticket
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="form-control mt-10">
+                            <button
+                                type="submit"
+                                class="btn btn-primary btn-lg w-full shadow-xl hover:scale-105 hover:bg-gradient-to-r hover:from-primary hover:via-accent hover:to-secondary transition-all duration-200 border-0 rounded-2xl flex items-center justify-center gap-2 group"
+                            >
+                                <span class="bg-white/20 rounded-full p-2 group-hover:bg-white/30 transition">
+                                    <i class="lni lni-search text-xl group-hover:text-accent"></i>
+                                </span>
+                                <span class="font-bold tracking-wide text-lg group-hover:text-white transition">
+                                    Track Ticket
+                                </span>
+                            </button>
+                            <div class="flex justify-center mt-4">
+                                <span class="text-base-content/60 text-sm flex items-center gap-2">
+                                    <i class="lni lni-lock-alt text-primary"></i>
+                                    Your information is encrypted &amp; secure
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Enhanced Additional Information -->
+            <div class="mt-16 flex flex-col items-center">
+                <div class="bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 rounded-2xl px-8 py-7 shadow-lg border border-primary/10 w-full max-w-xl">
+                    <p class="text-base-content/80 text-lg font-medium mb-5 flex items-center justify-center gap-2">
+                        <i class="lni lni-question-circle text-accent text-2xl"></i>
+                        Need help with your ticket?
+                    </p>
+                    <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+                        <a href="{% url 'contact' %}" class="btn btn-outline btn-primary rounded-xl px-6 py-3 flex items-center gap-2 font-semibold shadow hover:scale-105 transition-all duration-150">
+                            <i class="lni lni-plus text-lg"></i>
+                            Create New Ticket
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
