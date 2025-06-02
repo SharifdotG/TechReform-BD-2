@@ -1,539 +1,438 @@
-<div align="center">
-
 # 🖥️ TechReform BD 2
 
-<h2 style="color: #2563eb; font-weight: bold;">Revolutionary E-Commerce Platform for PC Components</h2>
-
-</div>
+## 🚀 Revolutionary E-Commerce Platform for PC Components
 
 <div align="center">
 
 [![Django](https://img.shields.io/badge/Django-5.1.4-092e20?style=for-the-badge&logo=django&logoColor=white)](https://www.djangoproject.com/)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-3776ab?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
-[![Code Style](https://img.shields.io/badge/code%20style-ruff-D7FF64?style=for-the-badge)](https://github.com/astral-sh/ruff)
-
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Code Style](https://img.shields.io/badge/code%20style-ruff-D7FF64?style=for-the-badge)](https://github.com/astral-sh/ruff)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 </div>
+
+> **TechReform BD 2** is a next-generation e-commerce platform built with Django, Tailwind CSS, and modern web technologies.
+> Bringing *fair pricing*, *transparent supply chains*, and *reliable after-sales service* to PC enthusiasts in Bangladesh.
 
 ---
 
-<div align="center">
-<table>
-<tr>
-<td align="center" width="100%" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 10px;">
-<h3 style="color: white; margin: 0;">🎯 Mission Statement</h3>
-<p style="color: white; font-size: 18px; margin: 10px 0; font-weight: bold;">
-Revolutionizing PC component purchasing in Bangladesh through <em>fair pricing</em>, <em>transparent supply chains</em>, and <em>reliable after-sales service</em>
-</p>
-</td>
-</tr>
-</table>
-</div>
+## 🎯 Mission Statement
+
+> **Empowering Bangladesh’s PC community by transforming how components are bought and sold.**
+>
+> We are committed to:
+>
+> - 💰 **Fair Pricing:** Ensuring access to genuine products at or near MSRP.
+> - 🔍 **Transparent Supply Chains:** Building trust through clear, direct sourcing from manufacturers to users.
+> - 🛠️ **Reliable After-Sales Service:** Providing manufacturer-backed warranty and support for every purchase.
+>
+> **TechReform BD 2** stands for a future where technology is accessible, affordable, and dependable for all.
 
 ---
 
 ## 📋 Table of Contents
 
+<details>
+<summary><strong>Expand to view all sections</strong></summary>
+
 - [🖥️ TechReform BD 2](#️-techreform-bd-2)
+  - [🚀 Revolutionary E-Commerce Platform for PC Components](#-revolutionary-e-commerce-platform-for-pc-components)
+  - [🎯 Mission Statement](#-mission-statement)
   - [📋 Table of Contents](#-table-of-contents)
-  - [📖 Overview](#-overview)
   - [🖼️ Preview](#️-preview)
+    - [✨ Application Demo](#-application-demo)
   - [🎯 Project Motivation](#-project-motivation)
-    - [🚨 Problems We Solve](#-problems-we-solve)
+    - [🚨 The Problems We’re Solving](#-the-problems-were-solving)
     - [🎯 Our Mission](#-our-mission)
   - [✨ Features](#-features)
+    - [🛍️ E-Commerce Core](#️-e-commerce-core)
+    - [👥 User Management](#-user-management)
+    - [🖥️ PC Builder Tool](#️-pc-builder-tool)
+    - [📊 Product Features](#-product-features)
+    - [📝 Content Management](#-content-management)
+    - [🎨 Modern UI/UX](#-modern-uiux)
   - [👥 Development Team](#-development-team)
+    - [Meet the Team Behind TechReform BD 2](#meet-the-team-behind-techreform-bd-2)
   - [🏛️ Technical Architecture](#️-technical-architecture)
-    - [Design Patterns](#design-patterns)
-    - [Development Methodology](#development-methodology)
-    - [Database Design](#database-design)
+    - [🏗️ Design Patterns](#️-design-patterns)
+    - [🛠️ Development Methodology](#️-development-methodology)
+    - [🗄️ Database Design](#️-database-design)
   - [🏗️ Architecture](#️-architecture)
+    - [Project Structure](#project-structure)
+      - [📂 Overview](#-overview)
+      - [🔄 Request Lifecycle](#-request-lifecycle)
+      - [📁 Directory Layout](#-directory-layout)
+      - [🔐 Security Highlights](#-security-highlights)
+      - [🔌 Middleware \& Extensions](#-middleware--extensions)
+      - [📦 Database Model Overview](#-database-model-overview)
+      - [🌐 URL Structure](#-url-structure)
+    - [Application Components](#application-components)
+      - [**ProductsApp – Product Catalog**](#productsapp--product-catalog)
+      - [**AuthApp – Authentication \& Support**](#authapp--authentication--support)
+      - [**CartApp – Shopping \& Orders**](#cartapp--shopping--orders)
+      - [**PCBuilderApp – PC Configuration**](#pcbuilderapp--pc-configuration)
+      - [**CompareApp – Product Comparison**ges)](#compareapp--product-comparisonges)
+      - [**WishlistApp – User Favorites**](#wishlistapp--user-favorites)
+      - [**BlogApp – Content Management**tes](#blogapp--content-managementtes)
+      - [TechReform Core - Project Foundation](#techreform-core---project-foundation)
   - [🚀 Quick Start](#-quick-start)
-- [Edit .env with your configuration](#edit-env-with-your-configuration)
+    - [📋 Prerequisites](#-prerequisites)
+    - [⚡ Installation Steps](#-installation-steps)
+      - [1. 📥 Clone the Repository](#1--clone-the-repository)
+      - [2. 🐍 Set Up Python Virtual Environment](#2--set-up-python-virtual-environment)
+      - [3. 📦 Install Python Dependencies](#3--install-python-dependencies)
+      - [4. 🎨 Install Node.js Dependencies (Tailwind CSS)](#4--install-nodejs-dependencies-tailwind-css)
+      - [5. ⚙️ Environment Configuration (Optional)](#5-️-environment-configuration-optional)
+      - [6. 🗄️ Database Setup](#6-️-database-setup)
+      - [7. 👤 Create Superuser](#7--create-superuser)
+      - [8. 📂 Collect Static Files](#8--collect-static-files)
+      - [9. 🏃 Start Development Servers](#9--start-development-servers)
+      - [10. 🌐 Access the Application](#10--access-the-application)
   - [🛠️ Development](#️-development)
-    - [Code Quality](#code-quality)
-    - [Database Management](#database-management)
-    - [Code Formatting and Linting](#code-formatting-and-linting)
-    - [Tailwind CSS Development](#tailwind-css-development)
+    - [🧹 Code Quality \& Standards](#-code-quality--standards)
+    - [🗄️ Database Management](#️-database-management)
+    - [🎨 Code Formatting \& Linting](#-code-formatting--linting)
+    - [💠 Tailwind CSS Workflow](#-tailwind-css-workflow)
   - [📦 Dependencies](#-dependencies)
     - [🔧 Core Dependencies](#-core-dependencies)
     - [🛠️ Development Dependencies](#️-development-dependencies)
     - [🚀 Production Dependencies](#-production-dependencies)
     - [🔐 Authentication](#-authentication)
   - [🧪 Testing](#-testing)
+    - [📊 Test Coverage Overview](#-test-coverage-overview)
+    - [📁 Test Suite Structure](#-test-suite-structure)
+    - [🏃 How to Run Tests](#-how-to-run-tests)
+      - [🔹 Run All Tests](#-run-all-tests)
+      - [🔹 Run a Specific Test File](#-run-a-specific-test-file)
+      - [🔹 Generate Coverage Report](#-generate-coverage-report)
   - [🤝 Contributing](#-contributing)
     - [🚀 Development Workflow](#-development-workflow)
     - [📏 Code Standards](#-code-standards)
-    - [🔄 Pull Request Process](#-pull-request-process)
-    - [🎯 Contribution Areas](#-contribution-areas)
+    - [🔄 Pull Request Checklist](#-pull-request-checklist)
+    - [🎯 Where to Contribute?](#-where-to-contribute)
   - [📄 License](#-license)
   - [🙏 Acknowledgments](#-acknowledgments)
   - [📞 Support](#-support)
-    - [Getting Help](#getting-help)
   - [🗺️ Roadmap](#️-roadmap)
+    - [🚀 Version 2.0 (Upcoming)](#-version-20-upcoming)
+    - [🌟 Version 2.1 (Planned/Future)](#-version-21-plannedfuture)
+    - [🚀 Join the TechReform Movement](#-join-the-techreform-movement)
+      - [🤝 Get Involved \& Shape the Future](#-get-involved--shape-the-future)
+
+</details>
 
 ---
 
-## 📖 Overview
+**Tip:** Click the arrow to expand/collapse the full Table of Contents for easier navigation.
+      - [📊 Admin Analytics](#-admin-analytics)
+      - [🏪 Multi-vendor Marketplace](#-multi-vendor-marketplace)
+    - [Join the TechReform Movement](#join-the-techreform-movement)
 
-**TechReform BD 2** is a comprehensive e-commerce platform specializing in PC components and accessories. Built with Django and modern web technologies, it revolutionizes how PC components are purchased in Bangladesh by ensuring users get fair prices at or near Manufacturer's Suggested Retail Price (MSRP) and reliable after-sales service through a streamlined **"manufacturer → authorized local supplier → user"** model.
+---
 
 ## 🖼️ Preview
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 8px; padding: 20px; margin-bottom: 20px; background-color: var(--vscode-editor-background, #f5f5f5);">
-  <h3 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">✨ Application Demo</h3>
+<div align="center">
 
-  <div style="text-align: center; margin: 20px 0;">
-    <img src="placeholder/Preview.gif" alt="TechReform BD Application Preview" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--vscode-panel-border, #ddd); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-  </div>
+### ✨ Application Demo
 
-  <p style="text-align: center; color: var(--vscode-editor-foreground, #333); margin-top: 10px; font-style: italic;">
-    Preview of TechReform BD 2 showing the complete user experience and key features
-  </p>
 </div>
+
+<div align="center">
+
+<img src="placeholder/Preview.gif" alt="TechReform BD Application Preview" width="800" style="border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.12);" />
+
+</div>
+
+<p align="center">
+<em>
+A glimpse of <strong>TechReform BD 2</strong> in action — experience seamless navigation, modern UI, and powerful features designed for PC enthusiasts in Bangladesh.
+</em>
+</p>
 
 ## 🎯 Project Motivation
 
-**TechReform BD 2** addresses critical challenges in Bangladesh's PC component market by revolutionizing the traditional supply chain.
+**TechReform BD 2** is built to solve the most pressing issues facing Bangladesh’s PC component market by reimagining the entire supply chain for fairness, trust, and user empowerment.
 
-### 🚨 Problems We Solve
+### 🚨 The Problems We’re Solving
 
-| Challenge | Traditional Market | TechReform BD 2 Solution |
-|-----------|-------------------|--------------------------|
-| 💰 **Inflated Prices** | Multiple intermediary layers add 30-50% markup | Direct manufacturer partnerships eliminate unnecessary markups |
-| 🔍 **Price Transparency** | Hidden pricing, unclear margins | Clear MSRP-aligned pricing with transparency |
-| 🛠️ **After-Sales Service** | Complex multi-step warranty claims | Streamlined manufacturer-backed warranty and RMA |
-| ✅ **Product Authenticity** | Risk of counterfeit products | Guaranteed genuine products with valid warranties |
-| 📊 **Information Gap** | Limited product knowledge | Comprehensive education and fair pricing awareness |
+| **Challenge**                | **Traditional Market**                                         | **TechReform BD 2 Approach**                                 |
+|------------------------------|---------------------------------------------------------------|--------------------------------------------------------------|
+| 💰 **Inflated Prices**       | 30–50% markup from multiple intermediaries                    | Direct manufacturer partnerships—no unnecessary markups       |
+| 🔍 **Opaque Pricing**        | Hidden costs, unclear profit margins                          | Transparent, MSRP-aligned pricing for every product           |
+| 🛠️ **After-Sales Hassles**   | Complicated, multi-step warranty claims                       | Seamless, manufacturer-backed warranty and RMA support        |
+| ✅ **Product Authenticity**   | Risk of counterfeits and unauthorized imports                 | 100% genuine products with verified warranties                |
+| 📊 **Information Gap**       | Limited product knowledge and misleading marketing            | Honest education, clear specs, and fair pricing awareness     |
 
 ### 🎯 Our Mission
 
-By implementing a **"manufacturer → authorized local supplier → user"** model, TechReform BD 2 empowers the Bangladeshi tech community with:
+By championing a **“manufacturer → authorized local supplier → user”** model, TechReform BD 2 is committed to:
 
-- ✅ **Fair Pricing** at or near MSRP
-- ✅ **Transparent Supply Chain** operations
-- ✅ **Reliable Support Services** with direct manufacturer relationships
-- ✅ **Community Education** about fair pricing and warranty procedures
+- 💰 **Fair Pricing:** Access to genuine products at or near MSRP
+- 🔍 **Transparent Supply Chains:** Direct, traceable sourcing—no hidden markups
+- 🛠️ **Reliable Support:** Manufacturer-backed warranty and responsive after-sales service
+- 📚 **Community Education:** Empowering users with knowledge about fair pricing, product authenticity, and warranty rights
 
 ## ✨ Features
 
-<details open>
-<summary>
-<h3 style="display: inline-block; margin: 0;">🛍️ E-Commerce Core</h3>
-</summary>
-<div style="padding: 10px 20px; background-color: var(--vscode-editor-background, #f8fafc); border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 8px; margin-top: 10px;">
-<table>
-<tr>
-<td width="50" align="center">💰</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Fair Pricing Model</strong>: Direct supply chain from manufacturers to eliminate intermediary markups</td>
-</tr>
-<tr>
-<td width="50" align="center">🏷️</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>MSRP Transparency</strong>: Clear pricing aligned with Manufacturer's Suggested Retail Price</td>
-</tr>
-<tr>
-<td width="50" align="center">📦</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Product Catalog</strong>: Comprehensive catalog for computer hardware and accessories</td>
-</tr>
-<tr>
-<td width="50" align="center">🛒</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Shopping Cart</strong>: Session-based cart for anonymous users and persistent cart for registered users</td>
-</tr>
-<tr>
-<td width="50" align="center">🔒</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Secure Checkout</strong>: Complete order processing with multiple payment options</td>
-</tr>
-<tr>
-<td width="50" align="center">📋</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Order Management</strong>: Full order lifecycle tracking from cart to delivery</td>
-</tr>
-<tr>
-<td width="50" align="center">📊</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Inventory Management</strong>: Real-time stock tracking and availability status</td>
-</tr>
-<tr>
-<td width="50" align="center">✅</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Authentic Products</strong>: Genuine products with full manufacturer warranty coverage</td>
-</tr>
-</table>
-</div>
-</details>
+### 🛍️ E-Commerce Core
 
-<details open>
-<summary>
-<h3 style="display: inline-block; margin: 0;">👥 User Management</h3>
-</summary>
-<div style="padding: 10px 20px; background-color: var(--vscode-editor-background, #f8fafc); border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 8px; margin-top: 10px;">
-<table>
-<tr>
-<td width="50" align="center">🔐</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Role-Based Authentication</strong>: Multiple user roles (Admin, Staff, Content Manager, Blogger, Customer, Guest)</td>
-</tr>
-<tr>
-<td width="50" align="center">👤</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>User Profiles</strong>: Extended user profiles with customizable information</td>
-</tr>
-<tr>
-<td width="50" align="center">🎧</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Customer Support</strong>: Comprehensive ticket system with categories and responses</td>
-</tr>
-<tr>
-<td width="50" align="center">✉️</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Account Verification</strong>: Email-based user verification system</td>
-</tr>
-<tr>
-<td width="50" align="center">🛡️</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Warranty & RMA Support</strong>: Direct access to manufacturer-backed warranty and RMA services</td>
-</tr>
-</table>
-</div>
-</details>
+💰 **Fair Pricing Model**: Direct supply chain from manufacturers to eliminate intermediary markups
+🏷️ **MSRP Transparency**: Clear pricing aligned with Manufacturer's Suggested Retail Price
+📦 **Product Catalog**: Comprehensive catalog for computer hardware and accessories
+🛒 **Shopping Cart**: Session-based cart for anonymous users and persistent cart for registered users
+🔒 **Secure Checkout**: Complete order processing with multiple payment options
+📋 **Order Management**: Full order lifecycle tracking from cart to delivery
+📊 **Inventory Management**: Real-time stock tracking and availability status
+✅ **Authentic Products**: Genuine products with full manufacturer warranty coverage
 
-<details open>
-<summary>
-<h3 style="display: inline-block; margin: 0;">🖥️ PC Builder Tool</h3>
-</summary>
-<div style="padding: 10px 20px; background-color: var(--vscode-editor-background, #f8fafc); border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 8px; margin-top: 10px;">
-<table>
-<tr>
-<td width="50" align="center">⚙️</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Custom PC Configuration</strong>: Interactive PC building tool with component compatibility</td>
-</tr>
-<tr>
-<td width="50" align="center">✅</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Real-time Compatibility Checking</strong>: Automatic validation of component combinations (CPU socket vs motherboard, RAM type, PSU wattage)</td>
-</tr>
-<tr>
-<td width="50" align="center">⚡</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Power Calculation</strong>: Total system power consumption estimation</td>
-</tr>
-<tr>
-<td width="50" align="center">🔗</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Build Sharing</strong>: Public/private build configurations with sharing capabilities</td>
-</tr>
-<tr>
-<td width="50" align="center">💰</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Fair Pricing Integration</strong>: All components displayed with MSRP transparency</td>
-</tr>
-<tr>
-<td width="50" align="center">💾</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Saved Builds</strong>: Save and manage multiple PC configurations in user profiles</td>
-</tr>
-</table>
-</div>
-</details>
+### 👥 User Management
 
-<details open>
-<summary>
-<h3 style="display: inline-block; margin: 0;">📊 Product Features</h3>
-</summary>
-<div style="padding: 10px 20px; background-color: var(--vscode-editor-background, #f8fafc); border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 8px; margin-top: 10px;">
-<table>
-<tr>
-<td width="50" align="center">⚖️</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Product Comparison</strong>: Side-by-side comparison of up to multiple products</td>
-</tr>
-<tr>
-<td width="50" align="center">❤️</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Wishlist Management</strong>: Save favorite products for later purchase</td>
-</tr>
-<tr>
-<td width="50" align="center">🔍</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Advanced Search</strong>: Filter products by specifications, price, brand, and availability</td>
-</tr>
-<tr>
-<td width="50" align="center">⭐</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Product Reviews</strong>: User ratings and reviews system</td>
-</tr>
-</table>
-</div>
-</details>
+🔐 **Role-Based Authentication**: Multiple user roles (Admin, Staff, Content Manager, Blogger, Customer, Guest)
+👤 **User Profiles**: Extended user profiles with customizable information
+🎧 **Customer Support**: Comprehensive ticket system with categories and responses
+✉️ **Account Verification**: Email-based user verification system
+🛡️ **Warranty & RMA Support**: Direct access to manufacturer-backed warranty and RMA services
 
-<details open>
-<summary>
-<h3 style="display: inline-block; margin: 0;">📝 Content Management</h3>
-</summary>
-<div style="padding: 10px 20px; background-color: var(--vscode-editor-background, #f8fafc); border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 8px; margin-top: 10px;">
-<table>
-<tr>
-<td width="50" align="center">📰</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Blog System</strong>: Rich content management with CKEditor integration</td>
-</tr>
-<tr>
-<td width="50" align="center">🔍</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>SEO Optimization</strong>: URL slugs, meta descriptions, and search-friendly URLs</td>
-</tr>
-<tr>
-<td width="50" align="center">📁</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Category Management</strong>: Hierarchical product and content categorization</td>
-</tr>
-<tr>
-<td width="50" align="center">🎨</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Media Management</strong>: Comprehensive image and file upload system</td>
-</tr>
-</table>
-</div>
-</details>
+### 🖥️ PC Builder Tool
 
-<details open>
-<summary>
-<h3 style="display: inline-block; margin: 0;">🎨 Modern UI/UX</h3>
-</summary>
-<div style="padding: 10px 20px; background-color: var(--vscode-editor-background, #f8fafc); border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 8px; margin-top: 10px;">
-<table>
-<tr>
-<td width="50" align="center">📱</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Responsive Design</strong>: Mobile-first approach with Tailwind CSS</td>
-</tr>
-<tr>
-<td width="50" align="center">🌓</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Dark/Light Mode</strong>: Theme switching capabilities</td>
-</tr>
-<tr>
-<td width="50" align="center">✨</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Modern Interface</strong>: Clean, professional design with intuitive navigation</td>
-</tr>
-<tr>
-<td width="50" align="center">⚡</td>
-<td style="color: var(--vscode-editor-foreground, #333);"><strong>Performance Optimized</strong>: Fast loading times and optimized queries</td>
-</tr>
-</table>
-</div>
-</details>
+⚙️ **Custom PC Configuration**: Interactive PC building tool with component compatibility
+✅ **Real-time Compatibility Checking**: Automatic validation of component combinations (CPU socket vs motherboard, RAM type, PSU wattage)
+⚡ **Power Calculation**: Total system power consumption estimation
+🔗 **Build Sharing**: Public/private build configurations with sharing capabilities
+💰 **Fair Pricing Integration**: All components displayed with MSRP transparency
+💾 **Saved Builds**: Save and manage multiple PC configurations in user profiles
+
+### 📊 Product Features
+
+⚖️ **Product Comparison**: Side-by-side comparison of up to multiple products
+❤️ **Wishlist Management**: Save favorite products for later purchase
+🔍 **Advanced Search**: Filter products by specifications, price, brand, and availability
+⭐ **Product Reviews**: User ratings and reviews system
+
+### 📝 Content Management
+
+📰 **Blog System**: Rich content management with CKEditor integration
+🔍 **SEO Optimization**: URL slugs, meta descriptions, and search-friendly URLs
+📁 **Category Management**: Hierarchical product and content categorization
+🎨 **Media Management**: Comprehensive image and file upload system
+
+### 🎨 Modern UI/UX
+
+📱 **Responsive Design**: Mobile-first approach with Tailwind CSS
+🌓 **Dark/Light Mode**: Theme switching capabilities
+✨ **Modern Interface**: Clean, professional design with intuitive navigation
+⚡ **Performance Optimized**: Fast loading times and optimized queries
 
 ## 👥 Development Team
 
-<div style="border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--vscode-panel-border, #ddd);">
-<h3 style="text-align: center; margin-top: 0; margin-bottom: 15px; font-size: 20px; color: var(--vscode-editor-foreground, #333);">Meet the Team Behind TechReform BD 2</h3>
-<p style="text-align: center; max-width: 800px; margin: 0 auto 20px auto; font-size: 16px; color: var(--vscode-editor-foreground, #333);">
-Our platform is developed by a passionate team of software engineering students dedicated to revolutionizing the PC component market in Bangladesh.
-</p>
+<div align="center">
 
-<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 20px;">
-  <!-- Team Member Card 1 -->
-  <div style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 8px; width: 300px; padding: 0; overflow: hidden;">
-    <div style="border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding: 12px; text-align: center; background-color: var(--vscode-editor-selectionBackground, rgba(0, 120, 215, 0.1));">
-      <img src="https://img.shields.io/badge/👨‍💻-Lead%20Developer-blue?style=for-the-badge" alt="Lead Developer"/>
-    </div>
-    <div style="padding: 15px; text-align: center;">
-      <h3 style="margin: 0 0 10px 0; font-size: 18px; color: var(--vscode-editor-foreground, #333);">Sharif Md. Yousuf</h3>
-      <div style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 15px; padding: 4px 10px; display: inline-block; margin-bottom: 12px;">
-        <span style="font-weight: bold; color: var(--vscode-editor-foreground, #333);">Project Manager & Lead Developer</span>
-      </div>
-      <p style="margin: 0; color: var(--vscode-editor-foreground, #333); line-height: 1.5;">Project architecture, team coordination, full-stack development</p>      <div style="margin-top: 12px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;">
-        <span style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 15px; padding: 2px 8px; font-size: 12px; color: var(--vscode-editor-foreground, #333);">Django</span>
-        <span style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 15px; padding: 2px 8px; font-size: 12px; color: var(--vscode-editor-foreground, #333);">React</span>
-        <span style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 15px; padding: 2px 8px; font-size: 12px; color: var(--vscode-editor-foreground, #333);">Python</span>
-      </div>
-      <div style="margin-top: 12px; display: flex; justify-content: center;">
-        <a href="https://github.com/SharifdotG" target="_blank" style="text-decoration: none;">
-          <img src="https://img.shields.io/badge/GitHub-SharifdotG-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Profile"/>
-        </a>
-      </div>
-    </div>
+### Meet the Team Behind TechReform BD 2
+
+<!-- Team Member Cards in Grid -->
+<div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+
+  <div style="flex: 0 1 220px; text-align: center;">
+    <img src="static/index/images/team/Sharif.jpg" width="100" style="border-radius: 50%; box-shadow: 0 2px 12px rgba(0,0,0,0.10);" alt="Sharif Md. Yousuf"/><br>
+    <b>Sharif Md. Yousuf</b><br>
+    <sub>Project Manager & Lead Developer</sub><br>
+    <a href="https://github.com/SharifdotG" target="_blank">
+      <img src="https://img.shields.io/badge/GitHub-SharifdotG-181717?style=flat-square&logo=github" alt="GitHub"/>
+    </a>
+    <br>
+    <span style="font-size: 0.9em;">
+      <b>Skills:</b> Django, React, Python
+    </span>
   </div>
 
-  <!-- Team Member Card 2 -->
-  <div style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 8px; width: 300px; padding: 0; overflow: hidden;">
-    <div style="border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding: 12px; text-align: center; background-color: var(--vscode-editor-selectionBackground, rgba(0, 120, 215, 0.1));">
-      <img src="https://img.shields.io/badge/🔧-Backend%20Developer-green?style=for-the-badge" alt="Backend Developer"/>
-    </div>
-    <div style="padding: 15px; text-align: center;">
-      <h3 style="margin: 0 0 10px 0; font-size: 18px; color: var(--vscode-editor-foreground, #333);">Noor Mohammed Priom</h3>
-      <div style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 15px; padding: 4px 10px; display: inline-block; margin-bottom: 12px;">
-        <span style="font-weight: bold; color: var(--vscode-editor-foreground, #333);">Backend Developer & Database Architect</span>
-      </div>
-      <p style="margin: 0; color: var(--vscode-editor-foreground, #333); line-height: 1.5;">Django backend, database design, API development</p>      <div style="margin-top: 12px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;">
-        <span style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 15px; padding: 2px 8px; font-size: 12px; color: var(--vscode-editor-foreground, #333);">Django</span>
-        <span style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 15px; padding: 2px 8px; font-size: 12px; color: var(--vscode-editor-foreground, #333);">SQL</span>
-        <span style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 15px; padding: 2px 8px; font-size: 12px; color: var(--vscode-editor-foreground, #333);">Python</span>
-      </div>
-      <div style="margin-top: 12px; display: flex; justify-content: center;">
-        <a href="https://github.com/SOrtINgmASteR" target="_blank" style="text-decoration: none;">
-          <img src="https://img.shields.io/badge/GitHub-SOrtINgmASteR-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Profile"/>
-        </a>
-      </div>
-    </div>
+  <div style="flex: 0 1 220px; text-align: center;">
+    <img src="static/index/images/team/Priom.jpg" width="100" style="border-radius: 50%; box-shadow: 0 2px 12px rgba(0,0,0,0.10);" alt="Noor Mohammed Priom"/><br>
+    <b>Noor Mohammed Priom</b><br>
+    <sub>Backend Developer & Database Architect</sub><br>
+    <a href="https://github.com/SOrtINgmASteR" target="_blank">
+      <img src="https://img.shields.io/badge/GitHub-SOrtINgmASteR-181717?style=flat-square&logo=github" alt="GitHub"/>
+    </a>
+    <br>
+    <span style="font-size: 0.9em;">
+      <b>Skills:</b> Django, SQL, Python
+    </span>
   </div>
 
-  <!-- Team Member Card 3 -->
-  <div style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 8px; width: 300px; padding: 0; overflow: hidden;">
-    <div style="border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding: 12px; text-align: center; background-color: var(--vscode-editor-selectionBackground, rgba(0, 120, 215, 0.1));">
-      <img src="https://img.shields.io/badge/🎨-Frontend%20Developer-purple?style=for-the-badge" alt="Frontend Developer"/>
-    </div>
-    <div style="padding: 15px; text-align: center;">
-      <h3 style="margin: 0 0 10px 0; font-size: 18px; color: var(--vscode-editor-foreground, #333);">Shornali Akter</h3>
-      <div style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 15px; padding: 4px 10px; display: inline-block; margin-bottom: 12px;">
-        <span style="font-weight: bold; color: var(--vscode-editor-foreground, #333);">Frontend Developer & UI/UX Designer</span>
-      </div>
-      <p style="margin: 0; color: var(--vscode-editor-foreground, #333); line-height: 1.5;">User interface design, frontend implementation, user experience</p>      <div style="margin-top: 12px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;">
-        <span style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 15px; padding: 2px 8px; font-size: 12px; color: var(--vscode-editor-foreground, #333);">HTML/CSS</span>
-        <span style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 15px; padding: 2px 8px; font-size: 12px; color: var(--vscode-editor-foreground, #333);">Tailwind</span>
-        <span style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 15px; padding: 2px 8px; font-size: 12px; color: var(--vscode-editor-foreground, #333);">Figma</span>
-      </div>
-      <div style="margin-top: 12px; display: flex; justify-content: center;">
-        <a href="https://github.com/nudhar60" target="_blank" style="text-decoration: none;">
-          <img src="https://img.shields.io/badge/GitHub-nudhar60-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Profile"/>
-        </a>
-      </div>
-    </div>
+  <div style="flex: 0 1 220px; text-align: center;">
+    <img src="static/index/images/team/Shorna.jpg" width="100" style="border-radius: 50%; box-shadow: 0 2px 12px rgba(0,0,0,0.10);" alt="Shornali Akter"/><br>
+    <b>Shornali Akter</b><br>
+    <sub>Frontend Developer & UI/UX Designer</sub><br>
+    <a href="https://github.com/nudhar60" target="_blank">
+      <img src="https://img.shields.io/badge/GitHub-nudhar60-181717?style=flat-square&logo=github" alt="GitHub"/>
+    </a>
+    <br>
+    <span style="font-size: 0.9em;">
+      <b>Skills:</b> HTML/CSS, Tailwind, Figma
+    </span>
   </div>
+
 </div>
 </div>
+
+Together, we combine expertise in backend, frontend, and UI/UX to deliver a seamless, modern, and reliable e-commerce experience for PC enthusiasts in Bangladesh.
+
+---
 
 ## 🏛️ Technical Architecture
 
-### Design Patterns
+### 🏗️ Design Patterns
 
-- **Model-View-Template (MVT)**: Django's architectural pattern for separation of concerns
-- **Repository Pattern**: Abstracted data access through Django ORM
-- **Factory Pattern**: Component creation and PC build assembly logic
+- **Model-View-Template (MVT):**
+  Leverages Django’s robust separation of concerns for scalable, maintainable code.
+- **Repository Pattern:**
+  Clean abstraction of data access using Django ORM, simplifying database operations.
+- **Factory Pattern:**
+  Modular logic for dynamic component creation and PC build assembly.
 
-### Development Methodology
+### 🛠️ Development Methodology
 
-- **Agile/Scrum**: Iterative development with 2-week sprints
-- **Version Control**: Git with feature branch workflow
-- **Test-Driven Development**: Comprehensive testing at unit and integration levels
-- **Continuous Integration**: Automated testing and quality checks
+- **Agile/Scrum:**
+  Rapid, iterative progress with focused 2-week sprints and regular feedback loops.
+- **Version Control:**
+  Git-based workflow with feature branches for safe, collaborative development.
+- **Test-Driven Development (TDD):**
+  Unit and integration tests ensure reliability and catch regressions early.
+- **Continuous Integration (CI):**
+  Automated pipelines for testing, linting, and code quality enforcement.
 
-### Database Design
+### 🗄️ Database Design
 
-The application uses a relational database with key entities:
+The platform is powered by a relational database, structured for clarity and extensibility:
 
-- **User Management**: User profiles, roles, authentication
-- **Product Catalog**: Components, categories, specifications, pricing
-- **E-commerce**: Cart, orders, order items, inventory tracking
-- **PC Builder**: Build configurations, component compatibility rules
-- **Content**: Blog posts, comments, user-generated content
+- **User Management:**
+  Comprehensive user profiles, role-based permissions, and secure authentication.
+- **Product Catalog:**
+  Detailed component models, hierarchical categories, rich specifications, and transparent pricing.
+- **E-commerce:**
+  Shopping cart, order processing, order items, and real-time inventory management.
+- **PC Builder:**
+  Saved build configurations, compatibility validation, and component relationship rules.
+- **Content:**
+  Blog posts, threaded comments, and user-generated content for community engagement.
+
+---
 
 ## 🏗️ Architecture
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 8px; padding: 20px; margin-bottom: 20px;">
-<h3 style="color: var(--vscode-editor-foreground, #333); margin-top: 0; margin-bottom: 15px;">Project Structure</h3>
+### Project Structure
 
-<div style="display: flex; margin-bottom: 20px;">
-  <div style="flex: 1; background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 6px; padding: 15px; margin-right: 10px; color: var(--vscode-editor-foreground, #333);">
-    <h4 style="margin-top: 0; margin-bottom: 10px; color: var(--vscode-editor-foreground, #333); border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding-bottom: 5px;">
-      📂 Project Overview
-    </h4>
-    <p style="margin-top: 0; margin-bottom: 10px; font-size: 14px;">
-      TechReform BD 2 follows a modular architecture with specialized Django apps for each core functionality. The project is built on <strong>Django 5.1.4</strong> and uses <strong>SQLite</strong> for development and can be configured for <strong>PostgreSQL</strong> in production.
-    </p>
-    <p style="margin-top: 0; font-size: 14px;">
-      The front-end uses <strong>Tailwind CSS</strong> for responsive styling with both light and dark mode support, while rich content management is handled through <strong>CKEditor</strong> integration.
-    </p>
-  </div>
+#### 📂 Overview
 
-  <div style="flex: 1; background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 6px; padding: 15px; color: var(--vscode-editor-foreground, #333);">
-    <h4 style="margin-top: 0; margin-bottom: 10px; color: var(--vscode-editor-foreground, #333); border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding-bottom: 5px;">
-      🔄 Request Flow
-    </h4>
-    <p style="margin-top: 0; margin-bottom: 10px; font-size: 14px;">
-      <strong>1.</strong> URL patterns in <code>TechReform/urls.py</code> route requests to appropriate app views<br>
-      <strong>2.</strong> Views process requests, interact with models, and render templates<br>
-      <strong>3.</strong> Global context processors inject cart, wishlist, and comparison data<br>
-      <strong>4.</strong> Templates use Tailwind CSS for responsive rendering<br>
-      <strong>5.</strong> Form submissions are protected with CSRF middleware<br>
-      <strong>6.</strong> Authentication middleware manages user sessions and permissions
-    </p>
-  </div>
-</div>
+TechReform BD 2 is organized as a modular Django project, with each core feature encapsulated in its own app for clarity, scalability, and maintainability. The backend is powered by **Django 5.1.4** with **SQLite** for development and optional **PostgreSQL** for production. The frontend leverages **Tailwind CSS** for responsive, modern design, and **CKEditor** for rich content editing.
 
-<div style="background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 6px; padding: 15px; font-family: monospace; white-space: pre; overflow-x: auto; color: var(--vscode-editor-foreground, #333); margin-bottom: 20px;">
-<span style="color: var(--vscode-textPreformat-foreground, #0550ae); font-weight: bold;">TechReform BD 2/</span>
-├── 📁 <span style="color: var(--vscode-textLink-foreground, #2563eb);">AuthApp/</span>              # User authentication & customer support
-│   ├── __init__.py         # Package initialization
-│   ├── admin.py            # Admin panel configuration
-│   ├── apps.py             # App configuration
-│   ├── decorators.py       # Custom auth decorators for role-based access
-│   ├── forms.py            # User registration and profile forms
-│   ├── models.py           # User profile and support ticket models
-│   ├── tests.py            # Unit tests for authentication features
-│   ├── urls.py             # Authentication URL routing
-│   ├── views.py            # Authentication and user management views
-│   └── migrations/         # Database migrations for user models
-│
-├── 📁 <span style="color: var(--vscode-textLink-foreground, #2563eb);">BlogApp/</span>              # Content management system
-│   ├── __init__.py         # Package initialization
-│   ├── admin.py            # Blog content admin interface
-│   ├── apps.py             # App configuration
-│   ├── forms.py            # Blog post creation and editing forms
-│   ├── models.py           # Blog post, category, and comment models
-│   ├── tests.py            # Content management test cases
-│   ├── urls.py             # Blog content URL patterns
-│   ├── views.py            # Blog content views and processing
-│   └── migrations/         # Database migrations for blog models
-│
-├── 📁 <span style="color: var(--vscode-textLink-foreground, #2563eb);">CartApp/</span>              # Shopping cart & order processing
-│   ├── __init__.py         # Package initialization
-│   ├── admin.py            # Cart and order admin interface
-│   ├── apps.py             # App configuration
-│   ├── models.py           # Cart, order, and line item models
-│   ├── tests.py            # Cart and checkout test cases
-│   ├── urls.py             # Cart and checkout URL patterns
-│   ├── views.py            # Cart management and checkout views
-│   ├── context_processors/ # Global cart data processors
-│   ├── migrations/         # Database migrations for cart models
-│   └── templatetags/       # Custom template tags for cart
-│
-├── 📁 <span style="color: var(--vscode-textLink-foreground, #2563eb);">CompareApp/</span>           # Product comparison functionality
-│   ├── __init__.py         # Package initialization
-│   ├── admin.py            # Comparison admin configuration
-│   ├── apps.py             # App configuration
-│   ├── models.py           # Comparison and history models
-│   ├── tests.py            # Comparison feature test cases
-│   ├── urls.py             # Comparison URL patterns
-│   ├── views.py            # Product comparison views
-│   ├── context_processors/ # Global comparison data processors
-│   ├── migrations/         # Database migrations for comparison models
-│   └── templatetags/       # Custom template tags for comparisons
-│
-├── 📁 <span style="color: var(--vscode-textLink-foreground, #2563eb);">PCBuilderApp/</span>         # PC configuration builder
-│   ├── __init__.py         # Package initialization
-│   ├── admin.py            # PC Builder admin interface
-│   ├── apps.py             # App configuration
-│   ├── models.py           # PC build configuration models
-│   ├── tests.py            # PC Builder test cases
-│   ├── urls.py             # PC Builder URL patterns
-│   ├── views.py            # PC configuration views and logic
-│   └── migrations/         # Database migrations for builder models
-│
-├── 📁 <span style="color: var(--vscode-textLink-foreground, #2563eb);">ProductsApp/</span>          # Product catalog & inventory
-│   ├── __init__.py         # Package initialization
-│   ├── admin.py            # Product admin configuration
-│   ├── apps.py             # App configuration
-│   ├── models.py           # Product models (CPU, GPU, etc.)
-│   ├── tests.py            # Product catalog test cases
-│   ├── urls.py             # Product URL patterns
-│   ├── views.py            # Product listing and detail views
-│   ├── migrations/         # Database migrations for product models
-│   └── templatetags/       # Custom template tags for products
-│
-├── 📁 <span style="color: var(--vscode-textLink-foreground, #2563eb);">WishlistApp/</span>          # User wishlists & favorites
-│   ├── __init__.py         # Package initialization
-│   ├── admin.py            # Wishlist admin interface
-│   ├── apps.py             # App configuration
-│   ├── models.py           # Wishlist and favorite item models
-│   ├── tests.py            # Wishlist feature test cases
-│   ├── urls.py             # Wishlist URL patterns
-│   ├── views.py            # Wishlist management views
-│   ├── context_processors/ # Global wishlist data processors
-│   └── migrations/         # Database migrations for wishlist models
-│
-├── 📁 <span style="color: var(--vscode-textLink-foreground, #2563eb);">TechReform/</span>           # Main project settings
-│   ├── __init__.py         # Package initialization
-│   ├── asgi.py             # ASGI configuration
-│   ├── settings.py         # Project settings and configurations
-│   ├── urls.py             # Main URL routing configuration
-│   └── wsgi.py             # WSGI configuration for deployment
-│
-├── 📁 <span style="color: var(--vscode-textLink-foreground, #2563eb);">templates/</span>            # HTML templates
-│   ├── base.html           # Base template with common structure
+#### 🔄 Request Lifecycle
+
+1. **Routing:** URLs in `TechReform/urls.py` direct requests to the appropriate app.
+2. **View Logic:** Views handle business logic, interact with models, and render templates.
+3. **Context Processors:** Inject cart, wishlist, and comparison data globally.
+4. **Templating:** Tailwind CSS ensures responsive, accessible UI.
+5. **Security:** CSRF middleware protects form submissions.
+6. **Authentication:** Middleware manages sessions and permissions.
+
+#### 📁 Directory Layout
+
+```text
+TechReform BD 2/
+├── AuthApp/         # User authentication & support
+├── BlogApp/         # Blog & content management
+├── CartApp/         # Shopping cart & orders
+├── CompareApp/      # Product comparison
+├── PCBuilderApp/    # PC configuration builder
+├── ProductsApp/     # Product catalog & inventory
+├── WishlistApp/     # User wishlists & favorites
+├── TechReform/      # Project settings & URLs
+├── templates/       # HTML templates (modular by app)
+├── static/          # Static assets (CSS, JS, images)
+├── media/           # User uploads (profile, blog, products)
+├── theme/           # Tailwind CSS theme & config
+├── tests/           # Automated test suites
+├── manage.py        # Django management script
+└── requirements.txt # Python dependencies
+```
+
+> **Tip:** Each app contains its own `models.py`, `views.py`, `urls.py`, `admin.py`, `forms.py`, `tests.py`, and migrations for clear separation of concerns.
+
+#### 🔐 Security Highlights
+
+- **CSRF Protection:** Prevents cross-site request forgery.
+- **Password Validation:** Enforces strong password policies.
+- **Role-Based Access:** Custom decorators for permission control.
+- **Session Security:** Secure cookies and session timeouts.
+- **XSS Prevention:** Template escaping and sanitization.
+
+#### 🔌 Middleware & Extensions
+
+- **Security Middleware:** Enforces HTTPS and security headers.
+- **Authentication Middleware:** Associates users with requests.
+- **Session Middleware:** Manages user state.
+- **CKEditor:** Rich text editing for content.
+- **Browser Reload:** Auto-refresh during development.
+- **Tailwind CSS:** Utility-first styling.
+
+#### 📦 Database Model Overview
+
+- **User Models:** Extended profiles, roles, and permissions.
+- **Product Models:** Detailed models for each hardware type.
+- **E-commerce Models:** Cart, order, and payment tracking.
+- **Content Models:** Blog posts, categories, comments.
+- **Builder Models:** PC configurations and compatibility.
+- **Support Models:** Customer tickets and support logs.
+
+#### 🌐 URL Structure
+
+| Path           | Purpose                          |
+|----------------|----------------------------------|
+| `/`            | Homepage & product catalog       |
+| `/auth/`       | User authentication & profiles   |
+| `/cart/`       | Shopping cart & checkout        |
+| `/pc-builder/` | PC configuration tool           |
+| `/compare/`    | Product comparison              |
+| `/wishlist/`   | User wishlists                  |
+| `/blog/`       | Blog & articles                 |
+| `/admin/`      | Admin dashboard                 |
+
+---
+
+### Application Components
+
+#### **ProductsApp – Product Catalog**
+
+- **Models:** CPU, GPU, Motherboard, RAM, SSD, HDD, Cooler, PSU, Casing, Monitor, Keyboard, Mouse, Headphone
+- **Features:** Advanced filtering, inventory, pricing, categorization
+- **Media:** Multiple images per product, optimized storage
+- **API:** Endpoints for PC Builder and comparison tools
+
+#### **AuthApp – Authentication & Support**
+
+- **User Management:** Extended profiles, role-based permissions
+- **Support:** Ticketing system with categories and tracking
+- **Security:** Password validation, email verification, password reset
+- **Roles:** Admin, Staff, Content Manager, Blogger, Customer, Guest
+
+#### **CartApp – Shopping & Orders**
+
+- **Cart:** Session-based and persistent carts
+- **Orders:** Full lifecycle management, status tracking
+- **Shipping:** Address management, shipping calculations
+- **Payments:** Ready for multiple gateways
+- **Order History:** User-accessible purchase records
+
+#### **PCBuilderApp – PC Configuration**
+
+- **Component Selection:** Guided, filterable interface
+- **Compatibility:** Real-time validation of component choices
+- **Build Management:** Save, share, and manage builds
+- **Power Calculation:** Estimate system power needs
 │   ├── auth/               # Authentication templates
 │   ├── blog/               # Blog and content templates
 │   ├── cart/               # Cart and checkout templates
@@ -542,691 +441,523 @@ The application uses a relational database with key entities:
 │   ├── product/            # Product catalog templates
 │   ├── static/             # Static template parts
 │   ├── user/               # User profile templates
-│   └── wishlist/           # Wishlist templates
-│
-├── 📁 <span style="color: var(--vscode-textLink-foreground, #2563eb);">static/</span>               # Static files (CSS, JS, images)
-│   └── index/              # Core static assets
-│
-├── 📁 <span style="color: var(--vscode-textLink-foreground, #2563eb);">media/</span>                # User uploaded files
-│   ├── blog/               # Blog post images
-│   ├── profile_images/     # User profile photos
-│   └── *_images/           # Product category images
-│
-├── 📁 <span style="color: var(--vscode-textLink-foreground, #2563eb);">theme/</span>                # Tailwind CSS theme
-│   ├── __init__.py         # Package initialization
-│   ├── apps.py             # Tailwind app configuration
-│   ├── static/             # Compiled CSS output
-│   ├── static_src/         # Tailwind source files
-│   └── templates/          # Tailwind-specific templates
-│
-├── 📁 <span style="color: var(--vscode-textLink-foreground, #2563eb);">tests/</span>                # Automated test suites
-│   ├── Cart_Checkout.py    # E-commerce workflow tests
-│   ├── Create_Blog.py      # Blog functionality tests
-│   ├── PC_Builder.py       # PC builder logic tests
-│   ├── SignUp_Login.py     # Authentication flow tests
-│   └── User_Management.py  # User profile and management tests
-│
-├── 📄 <span style="color: var(--vscode-textLink-foreground, #2563eb);">manage.py</span>             # Django management script
-└── 📄 <span style="color: var(--vscode-textLink-foreground, #2563eb);">requirements.txt</span>      # Python dependencies
-</div>
+- **Cart Integration:** Add all build components to cart
 
-<div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
-  <div style="flex: 1; min-width: 300px; background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 6px; padding: 15px; color: var(--vscode-editor-foreground, #333);">
-    <h4 style="margin-top: 0; margin-bottom: 10px; color: var(--vscode-editor-foreground, #333); border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding-bottom: 5px;">
-      🔐 Security Features
-    </h4>
-    <ul style="padding-left: 20px; margin-top: 10px; margin-bottom: 0;">
-      <li><strong>CSRF Protection</strong>: Cross-site request forgery prevention</li>
-      <li><strong>Password Validation</strong>: Strong password enforcement</li>
-      <li><strong>Role-based Access</strong>: Permission controls via custom decorators</li>
-      <li><strong>Session Security</strong>: Secure cookie handling and timeout</li>
-      <li><strong>XSS Prevention</strong>: Template escaping and content sanitization</li>
-    </ul>
-  </div>
+#### **CompareApp – Product Comparison**ges)
 
-  <div style="flex: 1; min-width: 300px; background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 6px; padding: 15px; color: var(--vscode-editor-foreground, #333);">
-    <h4 style="margin-top: 0; margin-bottom: 10px; color: var(--vscode-editor-foreground, #333); border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding-bottom: 5px;">
-      🔌 Middleware & Extensions
-    </h4>
-    <ul style="padding-left: 20px; margin-top: 10px; margin-bottom: 0;">
-      <li><strong>Security Middleware</strong>: HTTPS and security headers</li>
-      <li><strong>Authentication Middleware</strong>: User request association</li>
-      <li><strong>Session Middleware</strong>: User state management</li>
-      <li><strong>CKEditor</strong>: Rich text content creation</li>
-      <li><strong>Browser Reload</strong>: Development auto-refresh</li>
-      <li><strong>Tailwind CSS</strong>: Utility-first styling framework</li>
-    </ul>
-  </div>
-</div>
+- **Multi-Product:** Compare up to 4 products side-by-side
+- **Category Views:** Tailored for each product type
+- **History:** Track previous comparisons
+- **Highlighting:** Visual differences for key specs
+- **Export:** Save as PDF or shareable links
+   └── *_images/           # Product category images
 
-<div style="display: flex; flex-wrap: wrap; gap: 15px;">
-  <div style="flex: 1; min-width: 300px; background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 6px; padding: 15px; color: var(--vscode-editor-foreground, #333);">
-    <h4 style="margin-top: 0; margin-bottom: 10px; color: var(--vscode-editor-foreground, #333); border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding-bottom: 5px;">
-      📦 Database Structure
-    </h4>
-    <ul style="padding-left: 20px; margin-top: 10px; margin-bottom: 0;">
-      <li><strong>User Models</strong>: Extended user profiles with custom fields</li>
-      <li><strong>Product Models</strong>: Specialized models for each component type</li>
-      <li><strong>E-commerce Models</strong>: Cart, order, and payment processing</li>
-      <li><strong>Content Models</strong>: Blog posts, categories, and comments</li>
-      <li><strong>Builder Models</strong>: PC configurations and compatibility rules</li>
-      <li><strong>Support Models</strong>: Customer tickets and interactions</li>
-    </ul>
-  </div>
+#### **WishlistApp – User Favorites**
 
-  <div style="flex: 1; min-width: 300px; background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 6px; padding: 15px; color: var(--vscode-editor-foreground, #333);">
-    <h4 style="margin-top: 0; margin-bottom: 10px; color: var(--vscode-editor-foreground, #333); border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding-bottom: 5px;">
-      🌐 URL Structure
-    </h4>
-    <ul style="padding-left: 20px; margin-top: 10px; margin-bottom: 0; font-family: monospace; font-size: 14px;">
-      <li><code>/</code> - Homepage and product catalog</li>
-      <li><code>/auth/</code> - User authentication and management</li>
-      <li><code>/cart/</code> - Shopping cart and checkout</li>
-      <li><code>/pc-builder/</code> - PC configuration tool</li>
-      <li><code>/compare/</code> - Product comparison system</li>
-      <li><code>/wishlist/</code> - User wishlists management</li>
-      <li><code>/blog/</code> - Blog content and articles</li>
-      <li><code>/admin/</code> - Staff administration interface</li>
-    </ul>
-  </div>
-</div>
+e
 
-<h3 style="color: var(--vscode-editor-foreground, #333); margin-top: 20px; margin-bottom: 15px;">Application Components</h3>
+- **Management:** Save and organize products   ├── **init**.py         # Package initialization
+- **Multiple Lists:** Themed wishlistsration
+- **Static Assets:** CSS, JS, media management
+- **Deployment:** WSGI/ASGI setup for production*Notifications:** Stock and price alertses
+- **Tracking:** Price change monitoringates
 
-<div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px;">
-  <!-- ProductsApp -->
-  <div style="flex: 1; min-width: 300px; border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 6px; padding: 15px;">
-    <h4 style="color: var(--vscode-editor-foreground, #333); margin-top: 0; border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding-bottom: 8px;">
-      ProductsApp - Product Catalog
-    </h4>
-    <ul style="padding-left: 20px; margin-bottom: 0; color: var(--vscode-editor-foreground, #333);">
-      <li><strong>Models</strong>: CPU, GPU, Motherboard, RAM, SSD, HDD, Cooler, PSU, Casing, Monitor, Keyboard, Mouse, Headphone</li>
-      <li><strong>Features</strong>: Specifications management, pricing, inventory, categorization</li>
-      <li><strong>Image Management</strong>: Multiple product images with optimized storage</li>
-      <li><strong>Search</strong>: Advanced filtering by specifications and price ranges</li>
-      <li><strong>Views</strong>: Catalog browsing, product details, featured products</li>
-      <li><strong>API</strong>: Product data endpoints for PC Builder and comparison tools</li>
-    </ul>
-  </div>
+---
 
-  <!-- AuthApp -->
-  <div style="flex: 1; min-width: 300px; border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 6px; padding: 15px;">
-    <h4 style="color: var(--vscode-editor-foreground, #333); margin-top: 0; border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding-bottom: 8px;">
-      AuthApp - Authentication & Support
-    </h4>
-    <ul style="padding-left: 20px; margin-bottom: 0; color: var(--vscode-editor-foreground, #333);">
-      <li><strong>User Management</strong>: Extended user profiles with role-based permissions</li>
-      <li><strong>Customer Support</strong>: Ticket system with categories and response tracking</li>
-      <li><strong>Security</strong>: Secure authentication with password validation</li>
-      <li><strong>Roles</strong>: Admin, Staff, Content Manager, Blogger, Customer, Guest</li>
-      <li><strong>Email Integration</strong>: Account verification and password reset</li>
-      <li><strong>Decorators</strong>: Custom access control for role-specific features</li>
-    </ul>
-  </div>
-</div>
+#### **BlogApp – Content Management**tes
+>
+> This modular, security-focused architecture ensures TechReform BD 2 is robust, scalable, and easy to maintain—ready to deliver a seamless experience for users and developers alike.
 
-<div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px;">
-  <!-- CartApp -->
-  <div style="flex: 1; min-width: 300px; border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 6px; padding: 15px;">
-    <h4 style="color: var(--vscode-editor-foreground, #333); margin-top: 0; border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding-bottom: 8px;">
-      CartApp - Shopping & Orders
-    </h4>
-    <ul style="padding-left: 20px; margin-bottom: 0; color: var(--vscode-editor-foreground, #333);">
-      <li><strong>Cart Management</strong>: Session-based and user-linked shopping carts</li>
-      <li><strong>Order Processing</strong>: Complete order lifecycle with status tracking</li>
-      <li><strong>Shipping</strong>: Address management and shipping calculations</li>
-      <li><strong>Payment Integration</strong>: Ready for multiple payment gateway integration</li>
-      <li><strong>Context Processors</strong>: Global cart data for all templates</li>
-      <li><strong>Order History</strong>: User-accessible purchase records and status</li>
-    </ul>
-  </div>
+- **Comment System**: User engagement through comments
+- **Author Management**: Content attribution and writer profiles
+- **Content Types**: Blog posts, tutorials, product reviews, news updates
 
-  <!-- PCBuilderApp -->
-  <div style="flex: 1; min-width: 300px; border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 6px; padding: 15px;">
-    <h4 style="color: var(--vscode-editor-foreground, #333); margin-top: 0; border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding-bottom: 8px;">
-      PCBuilderApp - PC Configuration
-    </h4>
-    <ul style="padding-left: 20px; margin-bottom: 0; color: var(--vscode-editor-foreground, #333);">
-      <li><strong>Component Selection</strong>: Interactive PC building interface with filtering</li>
-      <li><strong>Compatibility Checking</strong>: Real-time validation of component combinations</li>
-      <li><strong>Build Management</strong>: Save, share, and manage PC configurations</li>
-      <li><strong>Power Calculation</strong>: Estimate total system power requirements</li>
-      <li><strong>Performance Metrics</strong>: Expected performance scores for gaming and tasks</li>
-      <li><strong>Cart Integration</strong>: One-click add all components to cart</li>
-    </ul>
-  </div>
-</div>
+#### TechReform Core - Project Foundation
 
-<div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px;">
-  <!-- CompareApp -->
-  <div style="flex: 1; min-width: 300px; border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 6px; padding: 15px;">
-    <h4 style="color: var(--vscode-editor-foreground, #333); margin-top: 0; border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding-bottom: 8px;">
-      CompareApp - Product Comparison
-    </h4>
-    <ul style="padding-left: 20px; margin-bottom: 0; color: var(--vscode-editor-foreground, #333);">
-      <li><strong>Multi-Product Comparison</strong>: Compare up to 4 products side-by-side</li>
-      <li><strong>Category-Specific Views</strong>: Tailored comparison views for each product type</li>
-      <li><strong>Comparison History</strong>: Track previously compared products</li>
-      <li><strong>Highlight Differences</strong>: Visual indicators for key specification differences</li>
-      <li><strong>Context Processors</strong>: Global comparison data for all templates</li>
-      <li><strong>Export Options</strong>: Save comparison data as PDF or share via link</li>
-    </ul>
-  </div>
+- **Settings Configuration**: Environment-specific application settings
+- **URL Routing**: Central request dispatcher to application views
+- **Middleware Stack**: Request/response processing pipeline
+- **Template Structure**: Base templates and inheritance patterns
+- **Static Asset Management**: CSS, JavaScript, and media handling
+- **Deployment Configuration**: WSGI/ASGI setup for production
 
-  <!-- WishlistApp -->
-  <div style="flex: 1; min-width: 300px; border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 6px; padding: 15px;">
-    <h4 style="color: var(--vscode-editor-foreground, #333); margin-top: 0; border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding-bottom: 8px;">
-      WishlistApp - User Favorites
-    </h4>
-    <ul style="padding-left: 20px; margin-bottom: 0; color: var(--vscode-editor-foreground, #333);">
-      <li><strong>Wishlist Management</strong>: Save products for future purchase</li>
-      <li><strong>Multiple Lists</strong>: Create and organize multiple themed wishlists</li>
-      <li><strong>Sharing</strong>: Share wishlists with friends and family</li>
-      <li><strong>Stock Notifications</strong>: Alert users when wishlist items are available</li>
-      <li><strong>Price Tracking</strong>: Monitor price changes on wishlist items</li>
-      <li><strong>Context Processors</strong>: Global wishlist data for all templates</li>
-    </ul>
-  </div>
-</div>
-
-<div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px;">
-  <!-- BlogApp -->
-  <div style="flex: 1; min-width: 300px; border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 6px; padding: 15px;">
-    <h4 style="color: var(--vscode-editor-foreground, #333); margin-top: 0; border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding-bottom: 8px;">
-      BlogApp - Content Management
-    </h4>
-    <ul style="padding-left: 20px; margin-bottom: 0; color: var(--vscode-editor-foreground, #333);">
-      <li><strong>Rich Text Editor</strong>: CKEditor integration for content creation</li>
-      <li><strong>SEO Features</strong>: URL slugs, meta tags, and search optimization</li>
-      <li><strong>Category System</strong>: Organize content with categories and tags</li>
-      <li><strong>Comment System</strong>: User engagement through comments</li>
-      <li><strong>Author Management</strong>: Content attribution and writer profiles</li>
-      <li><strong>Content Types</strong>: Blog posts, tutorials, product reviews, news updates</li>
-    </ul>
-  </div>
-
-  <!-- TechReform Core -->
-  <div style="flex: 1; min-width: 300px; border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 6px; padding: 15px;">
-    <h4 style="color: var(--vscode-editor-foreground, #333); margin-top: 0; border-bottom: 1px solid var(--vscode-panel-border, #ddd); padding-bottom: 8px;">
-      TechReform Core - Project Foundation
-    </h4>
-    <ul style="padding-left: 20px; margin-bottom: 0; color: var(--vscode-editor-foreground, #333);">
-      <li><strong>Settings Configuration</strong>: Environment-specific application settings</li>
-      <li><strong>URL Routing</strong>: Central request dispatcher to application views</li>
-      <li><strong>Middleware Stack</strong>: Request/response processing pipeline</li>
-      <li><strong>Template Structure</strong>: Base templates and inheritance patterns</li>
-      <li><strong>Static Asset Management</strong>: CSS, JavaScript, and media handling</li>
-      <li><strong>Deployment Configuration</strong>: WSGI/ASGI setup for production</li>
-    </ul>
-  </div>
-</div>
-</div>
+---
 
 ## 🚀 Quick Start
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 8px; padding: 20px; margin-bottom: 20px;">
-<h3 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">📋 Prerequisites</h3>
+### 📋 Prerequisites
 
-<p style="color: var(--vscode-editor-foreground, #333);">Before you begin, ensure you have the following installed:</p>
+Make sure you have these tools installed before starting:
 
-<table style="width: 100%; border-collapse: collapse;">
-<tr style="background-color: var(--vscode-editor-selectionBackground, rgba(0, 120, 215, 0.1));">
-<th style="padding: 10px; text-align: left; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Requirement</th>
-<th style="padding: 10px; text-align: left; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Version</th>
-<th style="padding: 10px; text-align: left; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Purpose</th>
-</tr>
-<tr>
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">🐍 <strong>Python</strong></td>
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">3.8+</td>
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Backend runtime</td>
-</tr>
-<tr style="background-color: var(--vscode-editor-selectionBackground, rgba(0, 120, 215, 0.1));">
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">📦 <strong>Node.js</strong></td>
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">16+</td>
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Frontend tooling</td>
-</tr>
-<tr>
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">📥 <strong>npm</strong></td>
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">8+</td>
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Package management</td>
-</tr>
-<tr style="background-color: var(--vscode-editor-selectionBackground, rgba(0, 120, 215, 0.1));">
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">🔄 <strong>Git</strong></td>
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Latest</td>
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Version control</td>
-</tr>
-</table>
+| Requirement      | Version   | Purpose                |
+|------------------|-----------|------------------------|
+| 🐍 **Python**    | 3.8 or higher | Backend runtime      |
+| 📦 **Node.js**   | 16 or higher | Frontend tooling     |
+| 📥 **npm**       | 8 or higher  | JS package manager   |
+| 🔄 **Git**       | Latest    | Version control        |
 
-<h3 style="margin-top: 20px; color: var(--vscode-editor-foreground, #333);">⚡ Installation</h3>
+---
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-<h4 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">1. 📥 Clone the Repository</h4>
-<pre style="background-color: var(--vscode-dropdown-background, #1e293b); color: var(--vscode-dropdown-foreground, #e2e8f0); padding: 10px; border-radius: 5px; overflow-x: auto;"><code>git clone https://github.com/SharifdotG/TechReform-BD-2.git
-cd TechReform-BD-2</code></pre>
-</div>
+### ⚡ Installation Steps
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-<h4 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">2. 🐍 Create Virtual Environment</h4>
+#### 1. 📥 Clone the Repository
 
-<p style="color: var(--vscode-editor-foreground, #333);"><strong>Windows (PowerShell):</strong></p>
-<pre style="background-color: var(--vscode-dropdown-background, #1e293b); color: var(--vscode-dropdown-foreground, #e2e8f0); padding: 10px; border-radius: 5px; overflow-x: auto;"><code>pip install virtualenv
+```bash
+git clone https://github.com/SharifdotG/TechReform-BD-2.git
+cd TechReform-BD-2
+```
+
+#### 2. 🐍 Set Up Python Virtual Environment
+
+<details>
+<summary><strong>Windows (PowerShell)</strong></summary>
+
+```powershell
+pip install virtualenv
 python -m venv venv
-venv\Scripts\Activate.ps1</code></pre>
+venv\Scripts\Activate.ps1
+```
 
-<p style="color: var(--vscode-editor-foreground, #333);"><strong>macOS/Linux:</strong></p>
-<pre style="background-color: var(--vscode-dropdown-background, #1e293b); color: var(--vscode-dropdown-foreground, #e2e8f0); padding: 10px; border-radius: 5px; overflow-x: auto;"><code>pip install virtualenv
+</details>
+
+<details>
+<summary><strong>macOS / Linux</strong></summary>
+
+```bash
+pip install virtualenv
 python -m venv venv
-source venv/bin/activate</code></pre>
-</div>
+source venv/bin/activate
+```
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-<h4 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">3. 📦 Install Python Dependencies</h4>
-<pre style="background-color: var(--vscode-dropdown-background, #1e293b); color: var(--vscode-dropdown-foreground, #e2e8f0); padding: 10px; border-radius: 5px; overflow-x: auto;"><code>pip install -r requirements.txt</code></pre>
-</div>
+</details>
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-<h4 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">4. 🎨 Install Node.js Dependencies (for Tailwind CSS)</h4>
-<pre style="background-color: var(--vscode-dropdown-background, #1e293b); color: var(--vscode-dropdown-foreground, #e2e8f0); padding: 10px; border-radius: 5px; overflow-x: auto;"><code>cd theme/static_src
+#### 3. 📦 Install Python Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+#### 4. 🎨 Install Node.js Dependencies (Tailwind CSS)
+
+```bash
+cd theme/static_src
 npm install
-cd ../..</code></pre>
-</div>
+cd ../..
+```
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-<h4 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">5. ⚙️ Environment Setup (Optional)</h4>
-<pre style="background-color: var(--vscode-dropdown-background, #1e293b); color: var(--vscode-dropdown-foreground, #e2e8f0); padding: 10px; border-radius: 5px; overflow-x: auto;"><code># Create .env file
+#### 5. ⚙️ Environment Configuration (Optional)
+
+```bash
 cp .env.example .env
-# Edit .env with your configuration</code></pre>
-</div>
+# Edit .env to match your local setup
+```
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-<h4 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">6. 🗄️ Database Setup</h4>
-<pre style="background-color: var(--vscode-dropdown-background, #1e293b); color: var(--vscode-dropdown-foreground, #e2e8f0); padding: 10px; border-radius: 5px; overflow-x: auto;"><code>python manage.py makemigrations
-python manage.py migrate</code></pre>
-</div>
+#### 6. 🗄️ Database Setup
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-<h4 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">7. 👤 Create Superuser</h4>
-<pre style="background-color: var(--vscode-dropdown-background, #1e293b); color: var(--vscode-dropdown-foreground, #e2e8f0); padding: 10px; border-radius: 5px; overflow-x: auto;"><code>python manage.py createsuperuser</code></pre>
-</div>
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-<h4 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">8. 📂 Collect Static Files</h4>
-<pre style="background-color: var(--vscode-dropdown-background, #1e293b); color: var(--vscode-dropdown-foreground, #e2e8f0); padding: 10px; border-radius: 5px; overflow-x: auto;"><code>python manage.py collectstatic</code></pre>
-</div>
+#### 7. 👤 Create Superuser
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-<h4 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">9. 🏃 Run Development Server</h4>
-<p style="color: var(--vscode-editor-foreground, #333);"><strong>Terminal 1</strong> - Django Development Server:</p>
-<pre style="background-color: var(--vscode-dropdown-background, #1e293b); color: var(--vscode-dropdown-foreground, #e2e8f0); padding: 10px; border-radius: 5px; overflow-x: auto;"><code>python manage.py runserver</code></pre>
+```bash
+python manage.py createsuperuser
+```
 
-<p style="color: var(--vscode-editor-foreground, #333);"><strong>Terminal 2</strong> - Tailwind CSS Compilation:</p>
-<pre style="background-color: var(--vscode-dropdown-background, #1e293b); color: var(--vscode-dropdown-foreground, #e2e8f0); padding: 10px; border-radius: 5px; overflow-x: auto;"><code>python manage.py tailwind start</code></pre>
-</div>
+#### 8. 📂 Collect Static Files
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-<h4 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">10. 🌐 Access the Application</h4>
-<table style="width: 100%; border-collapse: collapse;">
-<tr style="background-color: var(--vscode-editor-selectionBackground, rgba(0, 120, 215, 0.1));">
-<th style="padding: 10px; text-align: left; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Service</th>
-<th style="padding: 10px; text-align: left; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">URL</th>
-<th style="padding: 10px; text-align: left; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Description</th>
-</tr>
-<tr>
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">🏠 <strong>Main Site</strong></td>
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd);"><a href="http://localhost:8000" style="color: var(--vscode-textLink-foreground, #2563eb); text-decoration: none;">http://localhost:8000</a></td>
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Main application interface</td>
-</tr>
-<tr style="background-color: var(--vscode-editor-selectionBackground, rgba(0, 120, 215, 0.1));">
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">⚙️ <strong>Admin Panel</strong></td>
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd);"><a href="http://localhost:8000/admin" style="color: var(--vscode-textLink-foreground, #2563eb); text-decoration: none;">http://localhost:8000/admin</a></td>
-<td style="padding: 10px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Django admin interface</td>
-</tr>
-</table>
-</div>
-</div>
+```bash
+python manage.py collectstatic
+```
+
+#### 9. 🏃 Start Development Servers
+
+- **Terminal 1** — Django backend:
+
+  ```bash
+  python manage.py runserver
+  ```
+
+- **Terminal 2** — Tailwind CSS watcher:
+
+  ```bash
+  python manage.py tailwind start
+  ```
+
+#### 10. 🌐 Access the Application
+
+| Service            | URL                                 | Description                |
+|--------------------|-------------------------------------|----------------------------|
+| 🏠 **Main Site**   | [http://localhost:8000](http://localhost:8000)       | User-facing web app        |
+| ⚙️ **Admin Panel** | [http://localhost:8000/admin](http://localhost:8000/admin) | Django admin dashboard     |
+
+---
+
+> 💡 **Tip:** For a smooth experience, keep both Django and Tailwind servers running in separate terminals.
+
+---
 
 ## 🛠️ Development
 
-### Code Quality
+### 🧹 Code Quality & Standards
 
-- **PEP 8**: Python code follows PEP 8 style guidelines
-- **Ruff**: Ultra-fast Python linter and code formatter
-- **Type Hints**: Type annotations for better code maintainability
-- **Pre-commit Hooks**: Automated code quality checks
+- **PEP 8 Compliance:** All Python code adheres to [PEP 8](https://peps.python.org/pep-0008/) style guidelines for readability and consistency.
+- **Ruff:** Blazing-fast linter and code formatter for Python. Ensures code is clean and error-free.
+- **Type Hints:** Extensive use of type annotations for improved maintainability and editor support.
+- **Pre-commit Hooks:** Automated checks for formatting, linting, and static analysis before every commit.
 
-### Database Management
+---
+
+### 🗄️ Database Management
 
 ```bash
-# Create new migrations
+# Create new migrations based on model changes
 python manage.py makemigrations
 
-# Apply migrations
+# Apply migrations to update the database schema
 python manage.py migrate
 
-# Reset database (development only)
+# Reset the database (development only – erases all data)
 python manage.py flush
 
-# Load sample data
+# Load sample data for testing and development
 python manage.py loaddata fixtures/sample_data.json
 ```
 
-### Code Formatting and Linting
+---
+
+### 🎨 Code Formatting & Linting
 
 ```bash
-# Format code with Ruff
+# Format all code using Ruff
 ruff format .
 
-# Check and fix linting issues
+# Check and automatically fix linting issues
 ruff check --fix .
 
-# Check code without making changes
+# Check code for linting issues (no changes made)
 ruff check .
 
-# Run type checking (if using mypy)
+# Run static type checking (if using mypy)
 mypy .
 ```
 
-### Tailwind CSS Development
+---
+
+### 💠 Tailwind CSS Workflow
 
 ```bash
-# Start Tailwind CSS watch mode
+# Start Tailwind CSS in watch mode for live development
 python manage.py tailwind start
 
-# Build for production
+# Build Tailwind CSS for production deployment
 python manage.py tailwind build
 
-# Install Tailwind dependencies
+# Install or update Tailwind CSS dependencies
 python manage.py tailwind install
 ```
+
+> **Tip:** Keep Django and Tailwind servers running in separate terminals for the best development experience.
+
+---
 
 ## 📦 Dependencies
 
 ### 🔧 Core Dependencies
 
-| Package | Version | Purpose | Documentation |
-|---------|---------|---------|---------------|
-| **Django** | 5.1.4 | Web framework with MVT architecture | [📖 Docs](https://www.djangoproject.com/) |
-| **Pillow** | 11.0.0 | Image processing for products and avatars | [📖 Docs](https://pillow.readthedocs.io/) |
-| **django-ckeditor** | 6.7.1 | Rich text editor for blog content | [📖 Docs](https://django-ckeditor.readthedocs.io/) |
-| **django-tailwind** | 3.8.0 | Tailwind CSS integration | [📖 Docs](https://django-tailwind.readthedocs.io/) |
-| **python-slugify** | 8.0.4 | URL-friendly slug generation for SEO | [📖 Docs](https://github.com/un33k/python-slugify) |
-| **requests** | 2.32.3 | HTTP client for external API integrations | [📖 Docs](https://requests.readthedocs.io/) |
-| **markdown-it-py** | 3.0.0 | Markdown rendering for blog posts | [📖 Docs](https://markdown-it-py.readthedocs.io/) |
+| Package                | Version  | Purpose                                         | Documentation                                      |
+|------------------------|----------|-------------------------------------------------|----------------------------------------------------|
+| **Django**             | 5.1.4    | High-level Python web framework (MVT)            | [Docs](https://www.djangoproject.com/)             |
+| **Pillow**             | 11.0.0   | Image processing for products & avatars          | [Docs](https://pillow.readthedocs.io/)             |
+| **django-ckeditor**    | 6.7.1    | Rich text editor for blog/content                | [Docs](https://django-ckeditor.readthedocs.io/)    |
+| **django-tailwind**    | 3.8.0    | Tailwind CSS integration for Django              | [Docs](https://django-tailwind.readthedocs.io/)    |
+| **python-slugify**     | 8.0.4    | SEO-friendly URL slug generation                 | [Docs](https://github.com/un33k/python-slugify)    |
+| **requests**           | 2.32.3   | HTTP client for API integrations                 | [Docs](https://requests.readthedocs.io/)           |
+| **markdown-it-py**     | 3.0.0    | Markdown rendering for blog posts                | [Docs](https://markdown-it-py.readthedocs.io/)     |
+
+---
 
 ### 🛠️ Development Dependencies
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| **django-browser-reload** | 1.18.0 | Auto-reload during development |
-| **django-extensions** | 3.2.3 | Additional management commands |
-| **django-environ** | 0.11.2 | Environment variable management |
+| Package                   | Version  | Purpose                                 |
+|---------------------------|----------|-----------------------------------------|
+| **django-browser-reload** | 1.18.0   | Live browser reload during development  |
+| **django-extensions**     | 3.2.3    | Extra management commands for Django    |
+| **django-environ**        | 0.11.2   | Environment variable management         |
+
+---
 
 ### 🚀 Production Dependencies
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| **gunicorn** | 21.2.0 | WSGI HTTP Server |
-| **whitenoise** | 6.6.0 | Static file serving |
-| **psycopg2-binary** | 2.9.10 | PostgreSQL adapter |
-| **redis** | 5.0.1 | Caching and session storage |
-| **celery** | 5.3.4 | Asynchronous task processing |
+| Package             | Version  | Purpose                        |
+|---------------------|----------|--------------------------------|
+| **gunicorn**        | 21.2.0   | WSGI HTTP server for deployment|
+| **whitenoise**      | 6.6.0    | Static file serving            |
+| **psycopg2-binary** | 2.9.10   | PostgreSQL database adapter    |
+| **redis**           | 5.0.1    | Caching & session storage      |
+| **celery**          | 5.3.4    | Asynchronous task processing   |
+
+---
 
 ### 🔐 Authentication
 
-The API uses Django's built-in session authentication and supports:
+TechReform BD 2 supports multiple authentication strategies:
 
-- 🍪 **Session-based authentication** for web interface
-- 🎫 **Token-based authentication** for mobile apps
-- 🔑 **JWT authentication** for SPA applications
+- 🍪 **Session-based authentication** — Secure login for web users (Django default)
+- 🎫 **Token-based authentication** — For mobile and external API clients
+- 🔑 **JWT authentication** — For modern SPAs and stateless API access
+
+> **Tip:** Choose the authentication method that best fits your client application (web, mobile, or SPA).
+
+---
 
 ## 🧪 Testing
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 8px; padding: 20px; margin-bottom: 20px;">
-<h3 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">📊 Test Coverage</h3>
+### 📊 Test Coverage Overview
 
-<table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-<tr style="background-color: var(--vscode-editor-selectionBackground, rgba(0, 120, 215, 0.1));">
-<th style="padding: 12px; text-align: left; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Test Type</th>
-<th style="padding: 12px; text-align: left; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Coverage</th>
-<th style="padding: 12px; text-align: left; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Description</th>
-</tr>
-<tr>
-<td style="padding: 12px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);"><span style="font-weight: bold;">✅ Unit Tests</span></td>
-<td style="padding: 12px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Individual components</td>
-<td style="padding: 12px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Testing models, views, and forms in isolation</td>
-</tr>
-<tr style="background-color: var(--vscode-editor-selectionBackground, rgba(0, 120, 215, 0.1));">
-<td style="padding: 12px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);"><span style="font-weight: bold;">🔄 Integration Tests</span></td>
-<td style="padding: 12px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">End-to-end workflows</td>
-<td style="padding: 12px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Cart-to-checkout, PC builder functionality</td>
-</tr>
-<tr>
-<td style="padding: 12px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);"><span style="font-weight: bold;">🔐 Authentication Tests</span></td>
-<td style="padding: 12px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">User management</td>
-<td style="padding: 12px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Registration, login, role-based access</td>
-</tr>
-<tr style="background-color: var(--vscode-editor-selectionBackground, rgba(0, 120, 215, 0.1));">
-<td style="padding: 12px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);"><span style="font-weight: bold;">🎯 Functional Tests</span></td>
-<td style="padding: 12px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">User journeys</td>
-<td style="padding: 12px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Testing major features across the platform</td>
-</tr>
-<tr>
-<td style="padding: 12px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);"><span style="font-weight: bold;">⚡ Performance Tests</span></td>
-<td style="padding: 12px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">Load testing</td>
-<td style="padding: 12px; border: 1px solid var(--vscode-panel-border, #ddd); color: var(--vscode-editor-foreground, #333);">High-traffic scenario validation</td>
-</tr>
-</table>
+| Test Type                | Scope/Target                | Description                                              |
+|--------------------------|-----------------------------|----------------------------------------------------------|
+| **✅ Unit Tests**        | Models, Views, Forms        | Isolated testing of individual components                |
+| **🔄 Integration Tests** | End-to-end Workflows        | Cart-to-checkout, PC builder, and multi-app interactions |
+| **🔐 Auth Tests**        | User Management             | Registration, login, permissions, and access control     |
+| **🎯 Functional Tests**  | User Journeys               | Real-world feature flows across the platform             |
+| **⚡ Performance Tests** | Load & Stress Scenarios     | High-traffic and resource-intensive operations           |
 
-<h3 style="color: var(--vscode-editor-foreground, #333);">📁 Test Files Structure</h3>
+---
 
-<p style="color: var(--vscode-editor-foreground, #333);">The project includes comprehensive test suites organized by functionality:</p>
+### 📁 Test Suite Structure
 
-<div style="background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 8px; padding: 15px; margin-bottom: 20px; font-family: monospace; white-space: pre; overflow-x: auto; color: var(--vscode-editor-foreground, #333);">
+All tests are organized by feature for clarity and maintainability:
+
+```text
 tests/
-├── 🛒 <span style="font-weight: bold;">Cart_Checkout.py</span>           # E-commerce workflow tests
-├── 📝 <span style="font-weight: bold;">Create_Blog.py</span>             # Blog functionality tests
-├── 🖥️ <span style="font-weight: bold;">PC_Builder.py</span>              # PC builder logic tests
-├── 🔐 <span style="font-weight: bold;">SignUp_Login.py</span>            # Authentication flow tests
-├── 👥 <span style="font-weight: bold;">User_Management.py</span>         # User profile and management tests
-└── 📋 <span style="font-weight: bold;">*_report.html</span>             # HTML test reports with coverage
-</div>
+├── cart_checkout.py        # 🛒 E-commerce workflow tests
+├── create_blog.py          # 📝 Blog and content management tests
+├── pc_builder.py           # 🖥️ PC builder logic and compatibility tests
+├── signup_login.py         # 🔐 Authentication and user flow tests
+├── user_management.py      # 👥 User profile and management tests
+└── *_report.html           # 📋 HTML coverage reports
+```
 
-<h3 style="color: var(--vscode-editor-foreground, #333);">🏃 Running Tests</h3>
+---
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-<h4 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">Run All Tests</h4>
-<pre style="background-color: var(--vscode-dropdown-background, #1e293b); color: var(--vscode-dropdown-foreground, #e2e8f0); padding: 10px; border-radius: 5px; overflow-x: auto;"><code>python manage.py test</code></pre>
-</div>
+### 🏃 How to Run Tests
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-<h4 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">Run Specific Test File</h4>
-<pre style="background-color: var(--vscode-dropdown-background, #1e293b); color: var(--vscode-dropdown-foreground, #e2e8f0); padding: 10px; border-radius: 5px; overflow-x: auto;"><code>python manage.py test tests.Cart_Checkout</code></pre>
-</div>
+#### 🔹 Run All Tests
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); background-color: var(--vscode-editor-background, #f5f5f5); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-<h4 style="margin-top: 0; color: var(--vscode-editor-foreground, #333);">Run with Coverage Report</h4>
-<pre style="background-color: var(--vscode-dropdown-background, #1e293b); color: var(--vscode-dropdown-foreground, #e2e8f0); padding: 10px; border-radius: 5px; overflow-x: auto;"><code>coverage run --source='.' manage.py test
+```bash
+python manage.py test
+```
+
+#### 🔹 Run a Specific Test File
+
+```bash
+python manage.py test tests.cart_checkout
+```
+
+#### 🔹 Generate Coverage Report
+
+```bash
+coverage run --source='.' manage.py test
 coverage report
-coverage html</code></pre>
-</div>
-</div>
+coverage html
+```
+
+> **Tip:** Coverage reports are generated as HTML files for easy visualization of test coverage.
+
+---
 
 ## 🤝 Contributing
 
-We welcome contributions to **TechReform BD 2**! Here's how you can help make this project even better:
+We’re excited to have you contribute to **TechReform BD 2**! Whether you’re fixing bugs, adding features, improving docs, or enhancing the UI, your input is valued.
+
+---
 
 ### 🚀 Development Workflow
 
-1. 🍴 **Fork the repository**
-2. 🌿 **Create a feature branch**: `git checkout -b feature/amazing-feature`
-3. ✨ **Make your changes and add tests**
-4. ✅ **Ensure tests pass**: `python manage.py test`
-5. 🎨 **Format and lint code**: `ruff format . && ruff check --fix .`
-6. 📝 **Commit changes**: `git commit -m 'Add amazing feature'`
-7. 🚀 **Push to branch**: `git push origin feature/amazing-feature`
-8. 📋 **Open a Pull Request**
+1. **Fork** this repository to your GitHub account.
+2. **Create a feature branch**
+
+  ```bash
+  git checkout -b feature/your-feature-name
+  ```
+
+3. **Make your changes**
+
+- Write clear, maintainable code.
+- Add or update tests as needed.
+
+4. **Run tests**
+
+  ```bash
+  python manage.py test
+  ```
+
+5. **Format & lint your code**
+
+  ```bash
+  ruff format .
+  ruff check --fix .
+  ```
+
+6. **Commit your changes**
+
+  ```bash
+  git commit -m "feat: add your feature description"
+  ```
+
+7. **Push to your fork**
+
+  ```bash
+  git push origin feature/your-feature-name
+  ```
+
+8. **Open a Pull Request**
+
+- Describe your changes clearly.
+- Reference related issues if applicable.
+
+---
 
 ### 📏 Code Standards
 
-| Standard | Tool/Guideline | Purpose |
-|----------|---------------|---------|
-| 🐍 **Python Style** | PEP 8 + Ruff | Consistent code formatting |
-| 📝 **Commit Messages** | Conventional Commits | Clear change tracking |
-| 🧪 **Testing** | Django TestCase | Quality assurance |
-| 📖 **Documentation** | Markdown + Docstrings | Code understanding |
-| 🔄 **Compatibility** | Semantic Versioning | Backward compatibility |
+| Standard                | Tool/Guideline           | Purpose                        |
+|-------------------------|--------------------------|--------------------------------|
+| 🐍 Python Style         | PEP 8 + Ruff             | Consistent, readable code      |
+| 📝 Commit Messages      | Conventional Commits     | Clear, semantic history        |
+| 🧪 Testing              | Django TestCase          | Reliable, robust features      |
+| 📖 Documentation        | Markdown & Docstrings    | Easy onboarding & maintenance  |
+| 🔄 Compatibility        | Semantic Versioning      | Predictable releases           |
 
-### 🔄 Pull Request Process
+---
 
-- [ ] ✍️ Update README.md with details of changes if needed
-- [ ] 📦 Update requirements.txt if you add dependencies
-- [ ] 🔢 Increase version numbers following [Semantic Versioning](https://semver.org/)
-- [ ] ✅ Ensure CI/CD pipeline passes
-- [ ] 👀 Request review from maintainers
+### 🔄 Pull Request Checklist
 
-### 🎯 Contribution Areas
+- [ ] Update `README.md` if your changes affect documentation.
+- [ ] Update `requirements.txt` if you add new dependencies.
+- [ ] Bump version numbers (see [Semantic Versioning](https://semver.org/)).
+- [ ] Ensure all tests and CI checks pass.
+- [ ] Request a review from project maintainers.
 
-We especially welcome contributions in these areas:
+---
 
-- 🐛 **Bug Fixes**: Report and fix issues
-- ✨ **New Features**: Implement feature requests
-- 📖 **Documentation**: Improve project documentation
-- 🧪 **Testing**: Add test coverage
-- 🎨 **UI/UX**: Enhance user interface and experience
-- ⚡ **Performance**: Optimize application performance
+### 🎯 Where to Contribute?
+
+We especially welcome help with:
+
+- 🐛 **Bug Fixes** — Squash those pesky issues!
+- ✨ **New Features** — Bring your ideas to life.
+- 📖 **Documentation** — Make the project easier to use.
+- 🧪 **Testing** — Improve coverage and reliability.
+- 🎨 **UI/UX** — Polish the look and feel.
+- ⚡ **Performance** — Make things faster and smoother.
+
+---
+
+**Thank you for making TechReform BD 2 better!**
+Your contributions help empower the PC community in Bangladesh.
+
+---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the [MIT License](LICENSE).
+You are free to use, modify, and distribute this software with proper attribution.
+
+---
 
 ## 🙏 Acknowledgments
 
-- **Django Team**: For the excellent web framework
-- **Tailwind CSS**: For the utility-first CSS framework
-- **CKEditor**: For the rich text editing capabilities
-- **Contributors**: All developers who contributed to this project
+Special thanks to the open-source community and the following projects for making TechReform BD 2 possible:
+
+- **[Django](https://www.djangoproject.com/)** — The robust web framework powering our backend.
+- **[Tailwind CSS](https://tailwindcss.com/)** — For rapid, utility-first frontend styling.
+- **[CKEditor](https://ckeditor.com/)** — For enabling rich text editing in our content management.
+- **All Contributors** — Every developer, designer, and tester who helped shape this project.
+
+---
 
 ## 📞 Support
 
-### Getting Help
+Need help or want to get involved?
 
-- **Issues**: Report bugs and request features on [GitHub Issues](../../issues)
-- **Discussions**: Join community discussions on [GitHub Discussions](../../discussions)
+- **🐞 Issues:** [Report bugs or request features](../../issues)
+- **💬 Discussions:** [Join the community conversation](../../discussions)
+- **📧 Contact:** For other inquiries, reach out via the project's GitHub page.
+
+Your feedback and participation help us grow and improve!
 
 ---
 
 ## 🗺️ Roadmap
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 10px; padding: 20px; margin-bottom: 30px;">
-<h3 style="color: var(--vscode-editor-foreground, #333); margin-top: 0;">Version 2.0 (Upcoming)</h3>
+### 🚀 Version 2.0 (Upcoming)
 
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0;">
-  <div style="background-color: var(--vscode-editor-background, #f5f5f5); border-left: 4px solid var(--vscode-symbolIcon-colorCustomization, #059669); border-radius: 5px; padding: 10px 15px; flex: 1; min-width: 250px;">
-    <h4 style="margin: 0 0 10px 0; color: var(--vscode-editor-foreground, #333);">🤖 AI-Powered PC Builder</h4>
-    <p style="margin: 0; font-size: 14px; color: var(--vscode-editor-foreground, #333);">Advanced system with personalized recommendations based on usage patterns, budget constraints, and performance requirements</p>
-  </div>
-
-  <div style="background-color: var(--vscode-editor-background, #f5f5f5); border-left: 4px solid var(--vscode-symbolIcon-colorCustomization, #0369a1); border-radius: 5px; padding: 10px 15px; flex: 1; min-width: 250px;">
-    <h4 style="margin: 0 0 10px 0; color: var(--vscode-editor-foreground, #333);">📊 Real-time Price Comparison</h4>
-    <p style="margin: 0; font-size: 14px; color: var(--vscode-editor-foreground, #333);">Live comparison with multiple local vendors to ensure maximum transparency and competitive pricing</p>
-  </div>
-</div>
-
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0;">
-  <div style="background-color: var(--vscode-editor-background, #f5f5f5); border-left: 4px solid var(--vscode-symbolIcon-colorCustomization, #7c3aed); border-radius: 5px; padding: 10px 15px; flex: 1; min-width: 250px;">
-    <h4 style="margin: 0 0 10px 0; color: var(--vscode-editor-foreground, #333);">⭐ Enhanced User Reviews</h4>
-    <p style="margin: 0; font-size: 14px; color: var(--vscode-editor-foreground, #333);">Comprehensive ratings system with verified purchase badges, photo uploads, and detailed product experiences</p>
-  </div>
-
-  <div style="background-color: var(--vscode-editor-background, #f5f5f5); border-left: 4px solid var(--vscode-symbolIcon-colorCustomization, #c026d3); border-radius: 5px; padding: 10px 15px; flex: 1; min-width: 250px;">
-    <h4 style="margin: 0 0 10px 0; color: var(--vscode-editor-foreground, #333);">💬 Community Forum</h4>
-    <p style="margin: 0; font-size: 14px; color: var(--vscode-editor-foreground, #333);">User discussion platform for tech advice, build showcases, and community support</p>
-  </div>
-</div>
-
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0;">
-  <div style="background-color: var(--vscode-editor-background, #f5f5f5); border-left: 4px solid var(--vscode-symbolIcon-colorCustomization, #db2777); border-radius: 5px; padding: 10px 15px; flex: 1; min-width: 250px;">
-    <h4 style="margin: 0 0 10px 0; color: var(--vscode-editor-foreground, #333);">📱 Mobile Applications</h4>
-    <p style="margin: 0; font-size: 14px; color: var(--vscode-editor-foreground, #333);">Native iOS and Android apps for enhanced mobile experience with push notifications</p>
-  </div>
-
-  <div style="background-color: var(--vscode-editor-background, #f5f5f5); border-left: 4px solid var(--vscode-symbolIcon-colorCustomization, #ea580c); border-radius: 5px; padding: 10px 15px; flex: 1; min-width: 250px;">
-    <h4 style="margin: 0 0 10px 0; color: var(--vscode-editor-foreground, #333);">🚚 Delivery Services Integration</h4>
-    <p style="margin: 0; font-size: 14px; color: var(--vscode-editor-foreground, #333);">Connection with local delivery services APIs for real-time tracking and faster delivery</p>
-  </div>
-</div>
-
-<h3 style="color: var(--vscode-editor-foreground, #333); margin-top: 30px;">Version 2.1 (Future)</h3>
-
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0;">
-  <div style="background-color: var(--vscode-editor-background, #f5f5f5); border-left: 4px solid var(--vscode-symbolIcon-colorCustomization, #2563eb); border-radius: 5px; padding: 10px 15px; flex: 1; min-width: 250px;">
-    <h4 style="margin: 0 0 10px 0; color: var(--vscode-editor-foreground, #333);">🧠 AI Product Recommendations</h4>
-    <p style="margin: 0; font-size: 14px; color: var(--vscode-editor-foreground, #333);">Smart suggestions based on user browsing behavior and purchase history</p>
-  </div>
-
-  <div style="background-color: var(--vscode-editor-background, #f5f5f5); border-left: 4px solid var(--vscode-symbolIcon-colorCustomization, #4f46e5); border-radius: 5px; padding: 10px 15px; flex: 1; min-width: 250px;">
-    <h4 style="margin: 0 0 10px 0; color: var(--vscode-editor-foreground, #333);">🇧🇩 Bengali Localization</h4>
-    <p style="margin: 0; font-size: 14px; color: var(--vscode-editor-foreground, #333);">Complete language support for Bengali to serve local users better</p>
-  </div>
-</div>
-
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0;">
-  <div style="background-color: var(--vscode-editor-background, #f5f5f5); border-left: 4px solid var(--vscode-symbolIcon-colorCustomization, #0891b2); border-radius: 5px; padding: 10px 15px; flex: 1; min-width: 250px;">
-    <h4 style="margin: 0 0 10px 0; color: var(--vscode-editor-foreground, #333);">🔍 AR Component Visualization</h4>
-    <p style="margin: 0; font-size: 14px; color: var(--vscode-editor-foreground, #333);">Augmented reality features to visualize components in real space</p>
-  </div>
-
-  <div style="background-color: var(--vscode-editor-background, #f5f5f5); border-left: 4px solid var(--vscode-symbolIcon-colorCustomization, #9333ea); border-radius: 5px; padding: 10px 15px; flex: 1; min-width: 250px;">
-    <h4 style="margin: 0 0 10px 0; color: var(--vscode-editor-foreground, #333);">🎮 Gamification</h4>
-    <p style="margin: 0; font-size: 14px; color: var(--vscode-editor-foreground, #333);">Community points, badges, and rewards for active participation</p>
-  </div>
-</div>
-
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0;">
-  <div style="background-color: var(--vscode-editor-background, #f5f5f5); border-left: 4px solid var(--vscode-symbolIcon-colorCustomization, #16a34a); border-radius: 5px; padding: 10px 15px; flex: 1; min-width: 250px;">
-    <h4 style="margin: 0 0 10px 0; color: var(--vscode-editor-foreground, #333);">📊 Admin Analytics</h4>
-    <p style="margin: 0; font-size: 14px; color: var(--vscode-editor-foreground, #333);">Advanced dashboard with sales insights, user behavior, and inventory management</p>
-  </div>
-
-  <div style="background-color: var(--vscode-editor-background, #f5f5f5); border-left: 4px solid var(--vscode-symbolIcon-colorCustomization, #ca8a04); border-radius: 5px; padding: 10px 15px; flex: 1; min-width: 250px;">
-    <h4 style="margin: 0 0 10px 0; color: var(--vscode-editor-foreground, #333);">🏪 Multi-vendor Marketplace</h4>
-    <p style="margin: 0; font-size: 14px; color: var(--vscode-editor-foreground, #333);">Platform expansion to include vetted vendors with fair pricing commitments</p>
-  </div>
-</div>
-</div>
+- [ ] **🤖 AI-Powered PC Builder:**
+  Personalized PC building assistant offering recommendations tailored to your usage, budget, and performance needs.
+- [ ] **📊 Real-time Price Comparison:**
+  Instantly compare prices across multiple local vendors for maximum transparency and the best deals.
+- [ ] **⭐ Enhanced User Reviews:**
+  Rich review system featuring verified purchase badges, photo uploads, and in-depth product experiences.
+- [ ] **💬 Community Forum:**
+  Interactive platform for tech discussions, build showcases, and peer-to-peer support.
+- [ ] **📱 Mobile Applications:**
+  Native iOS and Android apps with push notifications for a seamless mobile experience.
+- [ ] **🚚 Delivery Services Integration:**
+  Real-time order tracking and faster delivery through integration with local courier APIs.
 
 ---
 
-<div style="border: 1px solid var(--vscode-panel-border, #ddd); border-radius: 10px; padding: 30px; margin-top: 30px; background-color: var(--vscode-editor-background, #f5f5f5);">
-  <div style="text-align: center;">
-    <img src="https://img.shields.io/badge/⚡-Revolutionizing%20Tech%20Shopping-2563eb?style=for-the-badge" alt="Revolutionizing Tech Shopping"/>
-  </div>
+### 🌟 Version 2.1 (Planned/Future)
 
-  <h2 style="margin: 20px 0; color: var(--vscode-editor-foreground, #333); text-align: center;">Join the TechReform Movement</h2>
+- [ ] **🧠 AI Product Recommendations:**
+  Intelligent suggestions based on your browsing and purchase history.
+- [ ] **🇧🇩 Bengali Localization:**
+  Full Bengali language support to make the platform accessible to all local users.
+- [ ] **🔍 AR Component Visualization:**
+  Augmented reality tools to preview PC components in your own space.
+- [ ] **🎮 Gamification:**
+  Earn points, badges, and rewards for active participation and contributions.
+- [ ] **📊 Admin Analytics:**
+  Advanced dashboards for sales insights, user behavior analytics, and inventory management.
+- [ ] **🏪 Multi-vendor Marketplace:**
+  Expansion to include trusted vendors, ensuring fair pricing and greater selection.
 
-  <p style="max-width: 800px; margin: 0 auto 20px auto; font-size: 16px; color: var(--vscode-editor-foreground, #333); text-align: center;">
-    TechReform BD 2 is more than just an e-commerce platform — it's a movement to transform the PC component market in Bangladesh through fair pricing, transparency, and reliable service. Join us in our mission to make quality technology accessible to everyone.
-  </p>
+---
 
-  <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
-    <a href="https://github.com/yourusername/TechReform-BD-2/issues" style="text-decoration: none;">
-      <div style="background-color: var(--vscode-button-background, #2563eb); color: var(--vscode-button-foreground, white); padding: 10px 20px; border-radius: 5px; font-weight: bold;">
-        Report Issues
-      </div>
-    </a>
-    <a href="https://github.com/yourusername/TechReform-BD-2/discussions" style="text-decoration: none;">
-      <div style="background-color: var(--vscode-button-secondaryBackground, #059669); color: var(--vscode-button-secondaryForeground, white); padding: 10px 20px; border-radius: 5px; font-weight: bold;">
-        Join Discussions
-      </div>
-    </a>
-    <a href="#" style="text-decoration: none;">
-      <div style="background-color: var(--vscode-button-background, #7c3aed); color: var(--vscode-button-foreground, white); padding: 10px 20px; border-radius: 5px; font-weight: bold;">
-        Subscribe to Updates
-      </div>
-    </a>
-  </div>
+> **Stay tuned!**
+> We’re committed to continuous improvement—your feedback shapes our roadmap.
+> [Suggest a feature or join the discussion &rarr;](../../discussions)
 
-  <p style="margin-top: 30px; font-size: 14px; color: var(--vscode-descriptionForeground, #4b5563); text-align: center;">
-    <strong>Made with ❤️ by the TechReform BD 2 Team</strong>
-  </p>
+---
+
+### 🚀 Join the TechReform Movement
+
+**TechReform BD 2** isn’t just an e-commerce platform—it’s a community-driven initiative to revolutionize how PC components are bought and sold in Bangladesh. We believe in *fair pricing*, *transparency*, and *reliable service* for all.
+
+<div align="center">
+
+#### 🤝 Get Involved & Shape the Future
+
+<a href="https://github.com/SharifdotG/TechReform-BD-2/issues" target="_blank">
+  <img src="https://img.shields.io/badge/Report%20Issues-181717?style=for-the-badge&logo=github" alt="Report Issues"/>
+</a>
+<a href="https://github.com/SharifdotG/TechReform-BD-2/discussions" target="_blank">
+  <img src="https://img.shields.io/badge/Join%20Discussions-181717?style=for-the-badge&logo=github" alt="Join Discussions"/>
+</a>
+<a href="https://github.com/SharifdotG/TechReform-BD-2" target="_blank">
+  <img src="https://img.shields.io/github/watchers/SharifdotG/TechReform-BD-2?style=for-the-badge&label=Subscribe%20to%20Updates" alt="Subscribe to Updates"/>
+</a>
+
 </div>
+
+- 💡 **Report bugs or suggest features** to help us improve.
+- 💬 **Join discussions** and connect with fellow PC enthusiasts.
+- 📢 **Subscribe** to stay updated on new features and releases.
+
+---
+
+<p align="center">
+  Made with <span style="color: #e25555;">❤️</span> by the <strong>TechReform BD 2 Team</strong>
+</p>
