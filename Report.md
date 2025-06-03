@@ -1,8 +1,8 @@
-# TechReform BD v2 Project Report
+# TechReform BD 2 Project Report
 
 ## Table of Contents
 
-- [TechReform BD v2 Project Report](#techreform-bd-v2-project-report)
+- [TechReform BD 2 Project Report](#techreform-bd-2-project-report)
   - [Table of Contents](#table-of-contents)
     - [1. Motivation](#1-motivation)
     - [2. Problem Statement](#2-problem-statement)
@@ -24,26 +24,26 @@
 
 ### 1. Motivation
 
-The primary motivation behind "TechReform BD v2" is to revolutionize how PC components are purchased in Bangladesh, ensuring users get fair prices and reliable after-sales service. The project aims to create a transparent and user-friendly online platform where technology enthusiasts can buy components at or near Manufacturer's Suggested Retail Price (MSRP). This is achieved by fundamentally altering the traditional supply chain, moving from an often opaque "importer -> multiple intermediaries -> supplier -> user" model to a more direct "manufacturer -> authorized local supplier/TechReform BD -> user" model.
+The primary motivation behind "TechReform BD 2" is to revolutionize how PC components are purchased in Bangladesh, ensuring users get fair prices and reliable after-sales service. The project aims to create a transparent and user-friendly online platform where technology enthusiasts can buy components at or near Manufacturer's Suggested Retail Price (MSRP). This is achieved by fundamentally altering the traditional supply chain, moving from an often opaque "importer -> multiple intermediaries -> supplier -> user" model to a more direct "manufacturer -> authorized local supplier/TechReform BD -> user" model.
 
-Existing systems and local market practices often involve multiple layers of intermediaries, leading to inflated prices, limited availability of niche products, and challenges in accessing timely and authentic warranty or RMA (Return Merchandise Authorization) services directly from manufacturers. "TechReform BD v2" intends to address these critical pain points.
+Existing systems and local market practices often involve multiple layers of intermediaries, leading to inflated prices, limited availability of niche products, and challenges in accessing timely and authentic warranty or RMA (Return Merchandise Authorization) services directly from manufacturers. "TechReform BD 2" intends to address these critical pain points.
 
 Two examples of similar or existing systems are:
 
 1. **PCPartPicker (Global):**
 
     - **Description:** PCPartPicker is a widely recognized platform that allows users to select individual computer components and checks for compatibility issues. It provides price comparisons from various retailers and enables users to share their builds.
-    - **Gaps/Improvements addressed by TechReform BD v2:** While PCPartPicker is excellent for compatibility checking and price aggregation from various retailers (often reflecting existing market prices), it doesn't inherently address the issue of inflated prices due to local supply chain inefficiencies or lack of direct manufacturer access. "TechReform BD v2" aims to go a step further by actively working to establish a supply channel that offers components closer to MSRP. It will provide a localized experience for Bangladesh, including local payment gateways and support, with a core focus on fair pricing and direct-from-manufacturer warranty benefits. The integrated blog and e-commerce backend will support this by educating users about fair pricing and warranty processes.
+    - **Gaps/Improvements addressed by TechReform BD 2:** While PCPartPicker is excellent for compatibility checking and price aggregation from various retailers (often reflecting existing market prices), it doesn't inherently address the issue of inflated prices due to local supply chain inefficiencies or lack of direct manufacturer access. "TechReform BD 2" aims to go a step further by actively working to establish a supply channel that offers components closer to MSRP. It will provide a localized experience for Bangladesh, including local payment gateways and support, with a core focus on fair pricing and direct-from-manufacturer warranty benefits. The integrated blog and e-commerce backend will support this by educating users about fair pricing and warranty processes.
 
 2. **Star Tech (Bangladesh):**
     - **Description:** Star Tech is a prominent e-commerce platform and retailer in Bangladesh that sells a wide range of tech products, including computer components, laptops, and accessories. They have physical stores and an online presence.
-    - **Gaps/Improvements addressed by TechReform BD v2:** While established retailers like Star Tech provide accessibility to products, pricing can still be influenced by traditional multi-layered distribution networks. "TechReform BD v2" aims to differentiate itself by focusing on the "manufacturer -> supplier -> user" model to offer more competitive pricing, potentially closer to MSRP. Furthermore, by fostering closer ties with manufacturers or their primary authorized distributors, the project aims to ensure users receive the best possible after-market service, RMA, and warranty support, which can sometimes be a complex process with traditional retail channels. The platform's PC building tools and community features will also empower users with knowledge about fair value and service expectations.
+    - **Gaps/Improvements addressed by TechReform BD 2:** While established retailers like Star Tech provide accessibility to products, pricing can still be influenced by traditional multi-layered distribution networks. "TechReform BD 2" aims to differentiate itself by focusing on the "manufacturer -> supplier -> user" model to offer more competitive pricing, potentially closer to MSRP. Furthermore, by fostering closer ties with manufacturers or their primary authorized distributors, the project aims to ensure users receive the best possible after-market service, RMA, and warranty support, which can sometimes be a complex process with traditional retail channels. The platform's PC building tools and community features will also empower users with knowledge about fair value and service expectations.
 
-"TechReform BD v2" seeks to fill these gaps by offering a tailored, all-in-one solution that prioritizes fair pricing and reliable after-sales support for the Bangladeshi tech community. By streamlining the supply chain and fostering direct or near-direct relationships with manufacturers, the project aims to empower users with access to components at or near MSRP, along with the assurance of authentic warranty and RMA services. This, combined with e-commerce, a sophisticated PC builder, product comparison tools, and a community blog, will create a truly reformed tech purchasing experience.
+"TechReform BD 2" seeks to fill these gaps by offering a tailored, all-in-one solution that prioritizes fair pricing and reliable after-sales support for the Bangladeshi tech community. By streamlining the supply chain and fostering direct or near-direct relationships with manufacturers, the project aims to empower users with access to components at or near MSRP, along with the assurance of authentic warranty and RMA services. This, combined with e-commerce, a sophisticated PC builder, product comparison tools, and a community blog, will create a truly reformed tech purchasing experience.
 
 ### 2. Problem Statement
 
-The core problem "TechReform BD v2" aims to solve is the prevalence of inflated pricing for PC components and the often cumbersome after-sales service experience faced by technology consumers and PC enthusiasts in Bangladesh. The traditional "importer -> multiple intermediaries -> supplier -> user" model frequently results in prices significantly above the Manufacturer's Suggested Retail Price (MSRP). This lack of price transparency and direct access to manufacturer-backed support creates several challenges:
+The core problem "TechReform BD 2" aims to solve is the prevalence of inflated pricing for PC components and the often cumbersome after-sales service experience faced by technology consumers and PC enthusiasts in Bangladesh. The traditional "importer -> multiple intermediaries -> supplier -> user" model frequently results in prices significantly above the Manufacturer's Suggested Retail Price (MSRP). This lack of price transparency and direct access to manufacturer-backed support creates several challenges:
 
 - **Inflated Component Prices:** Consumers often pay a premium for PC components due to multiple layers in the supply chain, each adding their margin. This makes building or upgrading PCs more expensive than it needs to be, limiting accessibility.
 - **Difficulty in Accessing Fair Deals:** It is challenging for users to ascertain fair market prices and find components at or near MSRP, leading to a sense of uncertainty and potential overpayment.
@@ -52,13 +52,13 @@ The core problem "TechReform BD v2" aims to solve is the prevalence of inflated 
 - **Information Asymmetry:** Users may lack clear information about official warranty terms and procedures directly from manufacturers, relying instead on retailer-specific policies which might not always align.
 - **Complexity of Custom PC Building:** While a secondary issue, building a custom PC is made more daunting when coupled with the uncertainty of fair pricing and reliable component sourcing.
 
-"TechReform BD v2" addresses these issues by creating an integrated web application that champions a "manufacturer -> authorized local supplier/TechReform BD -> user" model. This platform will provide a comprehensive product catalog with transparent pricing aiming for MSRP, an intuitive PC builder, robust product comparison, secure user authentication, and streamlined access to manufacturer-backed warranty and RMA information and processes. The goal is to ensure users get the right deal directly and the best possible after-market service.
+"TechReform BD 2" addresses these issues by creating an integrated web application that champions a "manufacturer -> authorized local supplier/TechReform BD -> user" model. This platform will provide a comprehensive product catalog with transparent pricing aiming for MSRP, an intuitive PC builder, robust product comparison, secure user authentication, and streamlined access to manufacturer-backed warranty and RMA information and processes. The goal is to ensure users get the right deal directly and the best possible after-market service.
 
 ### 3. Objectives & Project Output
 
 **Objectives:**
 
-The primary objectives of "TechReform BD v2" are:
+The primary objectives of "TechReform BD 2" are:
 
 1. **To establish a platform offering PC components at or near MSRP:** By streamlining the supply chain to a "manufacturer -> authorized local supplier/TechReform BD -> user" model, thereby eliminating unnecessary intermediary costs.
 2. **To ensure transparent pricing:** Clearly displaying component prices and how they align with MSRP, empowering users to make informed purchasing decisions.
@@ -73,11 +73,11 @@ The primary objectives of "TechReform BD v2" are:
 
 **Project Output:**
 
-The project output for "TechReform BD v2" is a **web application**. This will be accessible via standard web browsers, providing a comprehensive online platform focused on fair pricing and reliable support for PC components in Bangladesh.
+The project output for "TechReform BD 2" is a **web application**. This will be accessible via standard web browsers, providing a comprehensive online platform focused on fair pricing and reliable support for PC components in Bangladesh.
 
 ### 4. Effect on Society
 
-"TechReform BD v2," by focusing on providing PC components at or near MSRP and ensuring reliable manufacturer-backed after-sales service, has the potential to create significant positive effects on society in Bangladesh:
+"TechReform BD 2," by focusing on providing PC components at or near MSRP and ensuring reliable manufacturer-backed after-sales service, has the potential to create significant positive effects on society in Bangladesh:
 
 1. **Increased Affordability and Accessibility of Technology:**
 
@@ -105,16 +105,16 @@ The project output for "TechReform BD v2" is a **web application**. This will be
 
 **Potential Negative Impacts (and Mitigation):**
 
-- **Disruption to Traditional Retailers:** The model might pose a challenge to traditional retailers who rely on multi-layered distribution. [Mitigation: TechReform BD v2 could potentially offer partnership models for established retailers willing to adapt to transparent pricing and service standards, or focus on educating the market to drive broader change.]
+- **Disruption to Traditional Retailers:** The model might pose a challenge to traditional retailers who rely on multi-layered distribution. [Mitigation: TechReform BD 2 could potentially offer partnership models for established retailers willing to adapt to transparent pricing and service standards, or focus on educating the market to drive broader change.]
 - **Logistical Challenges:** Ensuring consistent supply and efficient direct/near-direct shipping across Bangladesh could be a hurdle. [Mitigation: Phased rollout, strategic partnerships with reputable logistics providers.]
 
-Overall, "TechReform BD v2" is envisioned to have a strong positive societal impact by making technology more affordable and reliable, empowering consumers, promoting fair market practices, and contributing to a more knowledgeable and sustainable tech ecosystem in Bangladesh.
+Overall, "TechReform BD 2" is envisioned to have a strong positive societal impact by making technology more affordable and reliable, empowering consumers, promoting fair market practices, and contributing to a more knowledgeable and sustainable tech ecosystem in Bangladesh.
 
 ### 5. Requirement Analysis
 
 **Basic Requirement (Functional Requirements):**
 
-Based on the project structure (AuthApp, BlogApp, CartApp, CompareApp, PCBuilderApp, ProductsApp, WishlistApp), the functional requirements of "TechReform BD v2" include:
+Based on the project structure (AuthApp, BlogApp, CartApp, CompareApp, PCBuilderApp, ProductsApp, WishlistApp), the functional requirements of "TechReform BD 2" include:
 
 1. **User Authentication & Management:**
     - User registration (e.g., name, email, password).
@@ -161,7 +161,7 @@ Based on the project structure (AuthApp, BlogApp, CartApp, CompareApp, PCBuilder
 
 - **Chosen Design Process Model:**
 
-  - **Model:** **Agile (specifically Scrum or Kanban)** is inferred or highly recommended for a project like "TechReform BD v2".
+  - **Model:** **Agile (specifically Scrum or Kanban)** is inferred or highly recommended for a project like "TechReform BD 2".
   - **Justification:**
     - **Iterative Development:** Web applications of this nature benefit from iterative development, allowing for features to be developed, tested, and released in cycles. This helps in gathering early feedback and adapting to changing requirements.
     - **Flexibility:** The tech market and user preferences can evolve. Agile allows for flexibility in accommodating new features or modifications throughout the development lifecycle.
@@ -174,7 +174,7 @@ Based on the project structure (AuthApp, BlogApp, CartApp, CompareApp, PCBuilder
   - **Model-View-Template (MVT):**
 
     - **Explanation:** Since the project uses Django (as indicated by manage.py, `settings.py` in TechReform, and Django in requirements.txt), it inherently follows the MVT architectural pattern.
-      - **Model:** Represents the data structure and interacts with the database. In "TechReform BD v2", models would define products, users, orders, blog posts, PC builds, etc. (evident in `models.py` files within each app).
+      - **Model:** Represents the data structure and interacts with the database. In "TechReform BD 2", models would define products, users, orders, blog posts, PC builds, etc. (evident in `models.py` files within each app).
       - **View:** Handles the request-response logic. It fetches data from models, processes it, and selects an appropriate template to render. In Django, views are Python functions or classes that take a web request and return a web response (evident in `views.py` files).
       - **Template:** Defines the presentation layer – how the data is displayed to the user. Django templates are typically HTML files with special syntax to display dynamic data (evident in the templates directory).
     - **Justification:** MVT promotes separation of concerns, making the codebase more organized, maintainable, and scalable. It allows front-end and back-end development to occur more independently.
@@ -189,7 +189,7 @@ Based on the project structure (AuthApp, BlogApp, CartApp, CompareApp, PCBuilder
 
 **Diagrams:**
 
-For "TechReform BD v2", several types of diagrams have been created to provide comprehensive system documentation and understanding of the system architecture:
+For "TechReform BD 2", several types of diagrams have been created to provide comprehensive system documentation and understanding of the system architecture:
 
 #### 1. Entity-Relationship (ER) Diagram
 
@@ -319,7 +319,7 @@ Details the integration timeline for different technical components showing depe
 
 - **Chosen Model:** **Agile (likely Scrum or a Kanban-like approach)**.
 
-  - **Justification:** As mentioned in Requirement Analysis, Agile is suitable for iterative development, flexibility, and collaboration, which are beneficial for a web application like "TechReform BD v2" developed by a small team.
+  - **Justification:** As mentioned in Requirement Analysis, Agile is suitable for iterative development, flexibility, and collaboration, which are beneficial for a web application like "TechReform BD 2" developed by a small team.
 
 - **How this model was implemented (Inferred/Suggested):**
 
@@ -454,7 +454,7 @@ Based on requirements.txt and common Django project structures:
 
 **Final Result:**
 
-The final result of "TechReform BD v2" will be a fully functional, deployed web application accessible via a URL. Key characteristics and functionalities of the final product will include:
+The final result of "TechReform BD 2" will be a fully functional, deployed web application accessible via a URL. Key characteristics and functionalities of the final product will include:
 
 1. **Homepage:** An engaging landing page showcasing featured products, popular PC builds, latest blog posts, and clear navigation to different sections of the site.
 2. **User Accounts:** Secure registration, login, and profile management where users can view their order history, saved PC builds, and wishlists.
@@ -666,20 +666,20 @@ A Gantt chart would visually represent the project schedule. Since I cannot gene
 
 **Finance Management:**
 
-- For a student project like "TechReform BD v2," direct financial management (revenue, expenses, profit/loss) is typically not a core component unless it's part of a specific business plan simulation.
+- For a student project like "TechReform BD 2," direct financial management (revenue, expenses, profit/loss) is typically not a core component unless it's part of a specific business plan simulation.
 - **Aspects that might be considered (if applicable):**
   - **Hosting Costs:** If deployed to a cloud platform (e.g., AWS, Heroku, PythonAnywhere), there might be minor hosting fees, especially if exceeding free tier limits.
   - **Domain Name Registration:** Cost of registering a domain name for the web application.
   - **Third-party API Costs:** Some APIs (e.g., advanced payment gateways, specialized data APIs) might have subscription fees, though free tiers are often used for student projects.
   - **Software/Tool Licenses:** Most tools used (Python, Django, VS Code, Git) are open-source and free.
 - **Statement for the Report:**
-  - "As 'TechReform BD v2' is an academic project, extensive finance management modules tracking revenue or detailed operational expenses were not implemented. Potential future costs would involve web hosting, domain registration, and any premium third-party API subscriptions. For the scope of this project, financial considerations were limited to utilizing free and open-source tools and services where possible."
+  - "As 'TechReform BD 2' is an academic project, extensive finance management modules tracking revenue or detailed operational expenses were not implemented. Potential future costs would involve web hosting, domain registration, and any premium third-party API subscriptions. For the scope of this project, financial considerations were limited to utilizing free and open-source tools and services where possible."
   - Alternatively: `[N/A or TO BE FILLED MANUALLY if specific financial simulations were part of the project requirements]`
 
 **Conclusion/Future Work:**
 
 - **Conclusion:**
-  - "TechReform BD v2" successfully aimed to develop a comprehensive web application serving as an e-commerce platform, custom PC builder, and tech community hub tailored for the Bangladeshi market. The project implemented key features including user authentication, product catalog management, an interactive PC builder with compatibility checks, shopping cart and wishlist functionalities, and a blog system. Built using Python and the Django framework, the MVT architecture ensured a modular and maintainable codebase. The development process, guided by Agile principles, allowed for iterative progress and adaptation. The final application provides a solid foundation for a user-centric online destination for tech enthusiasts in Bangladesh.
+  - "TechReform BD 2" successfully aimed to develop a comprehensive web application serving as an e-commerce platform, custom PC builder, and tech community hub tailored for the Bangladeshi market. The project implemented key features including user authentication, product catalog management, an interactive PC builder with compatibility checks, shopping cart and wishlist functionalities, and a blog system. Built using Python and the Django framework, the MVT architecture ensured a modular and maintainable codebase. The development process, guided by Agile principles, allowed for iterative progress and adaptation. The final application provides a solid foundation for a user-centric online destination for tech enthusiasts in Bangladesh.
 - **Future Work/Enhancements:**
   - **Advanced AI-Powered PC Builder:** Integrate AI to suggest builds based on user needs (e.g., gaming, video editing, budget) or to optimize component selection.
   - **Real-time Price Comparison:** Integrate APIs from multiple local vendors for real-time price comparisons.
@@ -707,7 +707,7 @@ A Gantt chart would visually represent the project schedule. Since I cannot gene
 
 ### 10. References
 
-The report for "TechReform BD v2" would typically cite a variety of sources. Here are types of references that might be included:
+The report for "TechReform BD 2" would typically cite a variety of sources. Here are types of references that might be included:
 
 1. **Framework and Library Documentation:**
 
@@ -814,7 +814,7 @@ By adhering to these guidelines, the project report will be professional, easy t
 
 - **K3: Design and Development of Solutions (or K4: Design - if K3 is more about broader engineering solutions)**
 
-  - **How addressed by 'TechReform BD v2':** This project directly addresses K3/K4 through the entire process of designing and developing the web application. This includes:
+  - **How addressed by 'TechReform BD 2':** This project directly addresses K3/K4 through the entire process of designing and developing the web application. This includes:
     - Conceptualizing the system architecture (MVT pattern).
     - Designing the database schema (ER diagrams, Django models for `Product`, `User`, `Order`, `PCBuild`, etc.).
     - Designing user interfaces and user experience (UI for product browsing, PC builder, cart, blog).
@@ -826,7 +826,7 @@ By adhering to these guidelines, the project report will be professional, easy t
 
 - **K5: Tools and Technologies**
 
-  - **How addressed by 'TechReform BD v2':** The project necessitates the use and understanding of various modern software development tools and technologies:
+  - **How addressed by 'TechReform BD 2':** The project necessitates the use and understanding of various modern software development tools and technologies:
     - **Programming Language:** Python.
     - **Web Framework:** Django (including its ORM, templating engine, admin panel).
     - **Database:** SQLite (for development), potentially PostgreSQL/MySQL for production.
@@ -840,7 +840,7 @@ By adhering to these guidelines, the project report will be professional, easy t
     - **POy:** Modern Tool Usage.
 
 - **K6: Professionalism and Ethics**
-  - **How addressed by 'TechReform BD v2':**
+  - **How addressed by 'TechReform BD 2':**
     - **Project Management:** Adhering to a project timeline, managing tasks, and collaborating within a team (Sharif, Noor, Shornali) demonstrates professionalism.
     - **Code Quality & Documentation:** Writing maintainable code, commenting, and preparing a project report reflect professional software engineering practices.
     - **User Data Privacy (Ethical Consideration):** Implementing secure user authentication and (implicitly) handling user data responsibly (e.g., for registration, orders) touches upon ethical considerations in software.
@@ -854,7 +854,7 @@ By adhering to these guidelines, the project report will be professional, easy t
 
 - **P1: Problem Analysis**
 
-  - **How addressed by 'TechReform BD v2':**
+  - **How addressed by 'TechReform BD 2':**
     - Identifying the core problem: the fragmented experience for tech consumers and PC builders in Bangladesh.
     - Analyzing existing systems (PCPartPicker, Star Tech) to understand gaps and opportunities.
     - Breaking down the overall problem into smaller, manageable functional requirements for each app module (AuthApp, ProductsApp, PCBuilderApp, etc.).
@@ -864,7 +864,7 @@ By adhering to these guidelines, the project report will be professional, easy t
 
 - **P3: Communication**
 
-  - **How addressed by 'TechReform BD v2':**
+  - **How addressed by 'TechReform BD 2':**
     - **Team Communication:** Collaboration among project members (Sharif, Noor, Shornali) requires effective communication for task coordination, resolving issues, and integrating work.
     - **Written Communication:** This project report itself is a major exercise in written communication, detailing the project's motivation, design, methodology, and results.
     - **Code as Communication:** Well-commented and structured code communicates design intent to other developers (and future self).
@@ -874,7 +874,7 @@ By adhering to these guidelines, the project report will be professional, easy t
     - **POy:** Communication.
 
 - **P7: Teamwork**
-  - **How addressed by 'TechReform BD v2':**
+  - **How addressed by 'TechReform BD 2':**
     - The project is explicitly a team effort involving Sharif Md. Yousuf, Noor Mohammed Priom, and Shornali Akter.
     - Successful completion requires division of labor (e.g., different members might focus on different apps or features), integration of individual contributions, and collaborative problem-solving.
     - Using version control (Git) facilitates teamwork in a software development context.
@@ -887,7 +887,7 @@ By adhering to these guidelines, the project report will be professional, easy t
 
 - **A1: Lifelong Learning**
 
-  - **How addressed by 'TechReform BD v2':**
+  - **How addressed by 'TechReform BD 2':**
     - Learning and applying a complex web framework like Django.
     - Keeping up with best practices in web development, database design, and potentially front-end technologies.
     - Researching similar systems and new technologies (e.g., for future enhancements like AI).
@@ -897,7 +897,7 @@ By adhering to these guidelines, the project report will be professional, easy t
     - **POy:** Life-long Learning.
 
 - **A4: Ethical and Social Responsibility**
-  - **How addressed by 'TechReform BD v2':**
+  - **How addressed by 'TechReform BD 2':**
     - **Societal Impact:** Considering the effect of the project on society (as detailed in Section 4), such as increasing tech accessibility and empowering consumers.
     - **Data Privacy:** Designing systems that handle user data (registration, orders) securely and responsibly.
     - **Honest Representation:** Providing accurate product information and avoiding deceptive practices in an e-commerce context.
