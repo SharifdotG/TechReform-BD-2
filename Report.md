@@ -10,6 +10,11 @@
     - [4. Effect on Society](#4-effect-on-society)
     - [5. Requirement Analysis](#5-requirement-analysis)
     - [6. Methodology](#6-methodology)
+      - [1. Entity-Relationship (ER) Diagram](#1-entity-relationship-er-diagram)
+      - [2. Data Flow Diagram (DFD)](#2-data-flow-diagram-dfd)
+      - [3. Activity Diagram](#3-activity-diagram)
+      - [4. Sequence Diagrams](#4-sequence-diagrams)
+      - [5. Gantt Chart - Project Timeline](#5-gantt-chart---project-timeline)
     - [7. Final Result \& Testing](#7-final-result--testing)
     - [8. Project Management](#8-project-management)
     - [9. Version Control, Finance, Conclusion/Future Work](#9-version-control-finance-conclusionfuture-work)
@@ -184,56 +189,131 @@ Based on the project structure (AuthApp, BlogApp, CartApp, CompareApp, PCBuilder
 
 **Diagrams:**
 
-For "TechReform BD v2", several types of diagrams would be crucial for planning, documentation, and understanding the system architecture:
+For "TechReform BD v2", several types of diagrams have been created to provide comprehensive system documentation and understanding of the system architecture:
 
-1. **Entity-Relationship (ER) Diagram:**
+#### 1. Entity-Relationship (ER) Diagram
 
-    - **Explanation:** An ER diagram would visually represent the database structure.
-    - **Content for TechReform BD v2:**
-        - **Entities:** `User`, `Product` (with attributes like name, description, price, stock, category, brand), `Category`, `Brand`, `Order`, `OrderItem`, `Cart`, `CartItem`, `Wishlist`, `WishlistItem`, `PCBuild` (with selected components), `BlogPostMapping`, `Comment`, `Address`.
-        - **Relationships:**
-            - `User` places `Order` (one-to-many).
-            - `Order` contains `OrderItem` (one-to-many).
-            - `Product` belongs to `Category` (many-to-one).
-            - `Product` has `Brand` (many-to-one).
-            - `User` has `Cart` (one-to-one).
-            - `Cart` contains `CartItem` (one-to-many).
-            - `User` has `Wishlist` (one-to-one).
-            - `Wishlist` contains `WishlistItem` (one-to-many).
-            - `User` creates `PCBuild` (one-to-many).
-            - `PCBuild` consists of `Product` (many-to-many, possibly through a linking table like `BuildComponent`).
-            - `User` writes `BlogPostMapping` (one-to-many).
-            - `BlogPostMapping` has `Comment` (one-to-many).
-            - `User` makes `Comment` (many-to-one).
+![ER Diagram](diagrams/ER_Diagram/ER_Diagram.png)
 
-2. **Data Flow Diagram (DFD):**
+The ER diagram illustrates the database schema and relationships between different entities in the TechReform system. Key components include:
 
-    - **Explanation:** DFDs would illustrate how data moves through the system.
-    - **Content for TechReform BD v2 (example for Level 0/Context Diagram):**
-        - **External Entities:** `Customer`, `Administrator`.
-        - **Process:** `TechReform BD v2 System`.
-        - **Data Flows:**
-            - `Customer` -> `System`: Registration details, login credentials, product search queries, PC build selections, cart additions, order requests, blog comments.
-            - `System` -> `Customer`: Product listings, search results, build compatibility status, cart details, order confirmations, blog posts.
-            - `Administrator` -> `System`: Product management data, user management commands, order fulfillment updates, blog content.
-            - `System` -> `Administrator`: Sales reports, user data, inventory levels, site analytics.
-    - **Lower-level DFDs** would break down processes like "User Registration," "Process Order," "Manage PC Build," etc.
+- **User Management:** User, UserProfile entities with one-to-one relationship for extended user information
+- **Product Catalog:** BaseProduct entity serving as parent for all product types (CPU, GPU, Motherboard, etc.) with polymorphic relationships
+- **E-commerce Core:** Cart, CartItem, Order, OrderItem, and ShippingAddress entities handling the shopping workflow
+- **Content Management:** BlogPost, Comment, Category entities for the blog system
+- **Advanced Features:** WishList, PCBuilder, CompareProduct, and SupportTicket entities for enhanced user experience
 
-3. **Unified Modeling Language (UML) Diagrams:**
-    - **Use Case Diagram:**
-        - **Actors:** `Customer`, `Administrator`, `GuestUser`.
-        - **Use Cases for Customer:** Register, Login, Logout, View Products, Search Products, Build PC, Compare Products, Add to Cart, Manage Cart, Place Order, View Order History, Manage Profile, Add to Wishlist, Read Blog, Post Comment.
-        - **Use Cases for Administrator:** Manage Products, Manage Categories, Manage Users, Manage Orders, Manage Blog Content, View Reports.
-        - **Use Cases for GuestUser:** View Products, Search Products, Read Blog.
-    - **Class Diagram:**
-        - **Explanation:** A more detailed version of the ER diagram, showing classes, their attributes, methods, and relationships (inheritance, association, aggregation).
-        - **Classes:** Would correspond to Django models (`User`, `Product`, `Order`, etc.) and potentially key service/logic classes.
-    - **Sequence Diagrams:**
-        - **Explanation:** To model interactions between objects over time for specific scenarios.
-        - **Examples:** "User Login Sequence," "Add Product to Cart Sequence," "PC Component Compatibility Check Sequence."
-    - **Activity Diagrams:**
-        - **Explanation:** To model workflows or business processes.
-        - **Examples:** "Order Fulfillment Workflow," "User Registration Process."
+The diagram shows proper normalization with foreign key relationships, ensuring data integrity and efficient querying.
+
+#### 2. Data Flow Diagram (DFD)
+
+The Data Flow Diagrams provide a hierarchical view of data movement through the system:
+
+**Level 0 - Context Diagram:**
+![DFD Context](diagrams/Data_Flow_Diagram/Data_Flow_Diagram_Level_0_Context_Diagram.png)
+
+Shows the system boundaries with external entities (Customer, Admin, Staff, Payment Gateway, Email Service) and their high-level interactions with the TechReform system.
+
+**Level 1 - System Overview:**
+![DFD Level 1](diagrams/Data_Flow_Diagram/Data_Flow_Diagram_Level_1_System_Overview.png)
+
+Breaks down the system into major processes:
+
+1. User Management
+2. Product Catalog
+3. Shopping Cart
+4. Order Processing
+5. Blog System
+6. PC Builder
+7. Support System
+
+**Level 2 - Detailed Process Diagrams:**
+
+- **Product Catalog System:** ![Product Catalog DFD](diagrams/Data_Flow_Diagram/Data_Flow_Diagram_Level_2_Product_Catalog_System.png)
+- **Order Processing System:** ![Order Processing DFD](diagrams/Data_Flow_Diagram/Data_Flow_Diagram_Level_2_Order_Processing_System.png)
+- **PC Builder System:** ![PC Builder DFD](diagrams/Data_Flow_Diagram/Data_Flow_Diagram_Level_2_PC_Builder_System.png)
+- **Blog System:** ![Blog System DFD](diagrams/Data_Flow_Diagram/Data_Flow_Diagram_Level_2_Blog_System.png)
+- **Support System:** ![Support System DFD](diagrams/Data_Flow_Diagram/Data_Flow_Diagram_Level_2_Support_System.png)
+
+These detailed DFDs show specific data flows, processes, and data stores for each subsystem, providing clear understanding of how data moves through different parts of the application.
+
+#### 3. Activity Diagram
+
+![Activity Diagram](diagrams/Activity_Diagram/Activity_Diagram.png)
+
+The Activity Diagram maps out the complete user journey through the TechReform system, showing:
+
+- **User Authentication Flow:** Guest vs. authenticated user paths
+- **Product Browsing:** Search, filter, and view product details
+- **Shopping Experience:** Add to cart, wishlist, comparison, and PC builder workflows
+- **Checkout Process:** Guest checkout vs. user checkout with saved addresses
+- **Payment Processing:** Multiple payment methods including COD and online payments
+- **Blog Interaction:** Reading posts, commenting (requires authentication)
+- **PC Builder Workflow:** Component selection, compatibility checking, saving builds
+
+The diagram uses decision points, parallel activities, and merge nodes to show the complex user interactions and system responses.
+
+#### 4. Sequence Diagrams
+
+Multiple sequence diagrams illustrate key system interactions:
+
+**User Registration and Login:**
+![User Auth Sequence](diagrams/Sequence_Diagram/Sequence_Diagram_User_Registration_Login_Sequence.png)
+
+Shows the complete authentication workflow including user creation, profile setup via Django signals, and login process.
+
+**Shopping Cart and Checkout:**
+![Cart Checkout Sequence](diagrams/Sequence_Diagram/Sequence_Diagram_Shopping_Cart_Checkout_Sequence.png)
+
+Details the e-commerce workflow from adding items to cart through order completion, including cart management, order creation, and address handling.
+
+**Product Search and Filter:**
+![Product Search Sequence](diagrams/Sequence_Diagram/Sequence_Diagram_Product_Search_Filter_Sequence.png)
+
+Demonstrates the product discovery process with search queries, filtering, and dynamic result updates.
+
+**PC Builder Configuration:**
+![PC Builder Sequence](diagrams/Sequence_Diagram/Sequence_Diagram_PC_Builder_Configuration_Sequence.png)
+
+Shows the complex PC building process including component selection, compatibility checking, and configuration saving.
+
+**Blog Post Creation and Comment:**
+![Blog Sequence](diagrams/Sequence_Diagram/Sequence_Diagram_Blog_Post_Creation_Comment_Sequence.png)
+
+Illustrates content management workflow for blog posts and user interaction through comments.
+
+**Order Processing and Status Update:**
+![Order Processing Sequence](diagrams/Sequence_Diagram/Sequence_Diagram_Order_Processing_Status_Update_Sequence.png)
+
+Details the order fulfillment process from placement to delivery with status updates.
+
+**Support Ticket Management:**
+![Support Sequence](diagrams/Sequence_Diagram/Sequence_Diagram_Support_Ticket_Management_Sequence.png)
+
+Shows customer support workflow including ticket creation, staff assignment, and resolution tracking.
+
+#### 5. Gantt Chart - Project Timeline
+
+The project includes comprehensive Gantt charts showing the development timeline:
+
+**Development Timeline:**
+![Development Gantt](diagrams/Gantt_Chart/Gantt_Chart_Development.png)
+
+Shows the 8-week development schedule with parallel workstreams for frontend, backend, and design work across three team members:
+
+- **Sharif:** Frontend Developer (React/Django Templates, JavaScript, CSS/Tailwind)
+- **Priom:** Backend Developer (Django, Python, Database, APIs)
+- **Shorna:** UI/UX Designer (Design Systems, User Experience, Prototyping)
+
+**Key Milestones:**
+![Milestones Gantt](diagrams/Gantt_Chart/Gantt_Chart_Key_Milestones.png)
+
+Highlights critical project milestones including Backend Foundation Complete, Frontend Core Complete, Feature Integration Done, and Production Ready.
+
+**Technical Stack Integration:**
+![Technical Integration Gantt](diagrams/Gantt_Chart/Gantt_Chart_Technical_Stack_Integration_Timeline.png)
+
+Details the integration timeline for different technical components showing dependencies between backend development, frontend implementation, and system integration phases.
 
 **Software Process Model:**
 
