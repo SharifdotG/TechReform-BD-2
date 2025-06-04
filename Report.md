@@ -15,6 +15,13 @@
       - [3. Activity Diagram](#3-activity-diagram)
       - [4. Sequence Diagrams](#4-sequence-diagrams)
       - [5. Gantt Chart - Project Timeline](#5-gantt-chart---project-timeline)
+    - [1. **Models \& Database Architecture**](#1-models--database-architecture)
+    - [2. **Design Patterns Implementation**](#2-design-patterns-implementation)
+    - [3. **Framework \& Technology Stack**](#3-framework--technology-stack)
+    - [4. **API Design \& Architecture**](#4-api-design--architecture)
+    - [5. **Database \& Data Management**](#5-database--data-management)
+    - [6. **Testing Framework \& Quality Assurance**](#6-testing-framework--quality-assurance)
+    - [7. **Development Tools \& Environment**](#7-development-tools--environment)
     - [7. Final Result \& Testing](#7-final-result--testing)
     - [8. Project Management](#8-project-management)
     - [9. Version Control, Finance, Conclusion/Future Work](#9-version-control-finance-conclusionfuture-work)
@@ -354,138 +361,713 @@ Details the integration timeline for different technical components showing depe
 
 **Software Process Model:**
 
-- **Chosen Model:** **Agile (likely Scrum or a Kanban-like approach)**.
+Based on the comprehensive analysis of the TechReform BD codebase and project structure, the development follows a **hybrid Agile-DevOps methodology** combining elements of Scrum with continuous integration practices.
 
-  - **Justification:** As mentioned in Requirement Analysis, Agile is suitable for iterative development, flexibility, and collaboration, which are beneficial for a web application like "TechReform BD 2" developed by a small team.
+- **Chosen Model:** **Agile Development with DevOps Integration**
 
-- **How this model was implemented (Inferred/Suggested):**
+  - **Primary Framework:** **Scrum with 2-week Sprint Cycles**
+  - **DevOps Integration:** Continuous Integration/Continuous Deployment (CI/CD) practices
+  - **Team Structure:** Cross-functional team with specialized roles (Frontend, Backend, UI/UX)
 
-  - **Scrum Implementation (if applicable):**
-    - **Sprints:** The project would be divided into fixed-length iterations (e.g., 2-4 weeks) called sprints.
-    - **Product Backlog:** A prioritized list of all features, requirements, and tasks (e.g., "Implement user registration," "Develop PC builder UI," "Integrate payment gateway"). This would be derived from the functional requirements.
-    - **Sprint Planning:** At the start of each sprint, the team selects a set of tasks from the Product Backlog to complete in the Sprint Backlog.
-    - **Daily Stand-ups (Daily Scrum):** Short daily meetings to discuss progress, impediments, and plans for the day.
-    - **Sprint Review:** At the end of each sprint, the team demonstrates the completed work to stakeholders (if any) or for internal review.
-    - **Sprint Retrospective:** The team reflects on the sprint to identify what went well and what could be improved in the next sprint.
-  - **Kanban Implementation (if applicable):**
-    - **Visual Workflow:** A Kanban board (physical or digital, e.g., Trello, Jira, GitHub Projects) would be used to visualize the workflow (e.g., columns like "To Do," "In Progress," "Testing," "Done").
-    - **Work in Progress (WIP) Limits:** Limits on the number of tasks in each stage to ensure focus and flow.
-    - **Continuous Flow:** Tasks are pulled into the workflow as capacity allows, rather than in fixed sprints. This is suitable for continuous delivery and maintenance.
-  - **General Agile Practices:**
-    - **Version Control:** Regular commits to a VCS like Git (as implied by the prompt mentioning a VCS link). Branching strategies (e.g., feature branches) would be used.
-    - **Automated Testing:** Implementation of unit tests (e.g., test_support_system.py, login_test.py, register_test.py) and potentially integration tests.
-    - **Continuous Integration/Continuous Deployment (CI/CD) - Aspirational/Potential:** While not explicitly stated, a mature Agile process might involve CI/CD pipelines to automate testing and deployment.
+- **Implementation Details:**
 
-- **Sample Code Demonstrating Aspects of Software Process Model Implementation:**
+  **Sprint Structure (8-Week Project Timeline):**
 
-  - **Placeholder for CI/CD Pipeline Snippet (e.g., GitHub Actions workflow file `.github/workflows/django.yml`):**
+  ```markdown
+  Sprint 1 (Weeks 1-2): Foundation & Backend Core
+  - Django project architecture setup
+  - Database schema design and implementation
+  - User authentication system development
+  - Basic product models creation
 
-            ```yaml
-            # .github/workflows/django.yml
-            # This is a placeholder example of a GitHub Actions workflow for a Django project.
-            # Actual implementation would depend on specific project needs and hosting.
-            name: Django CI
+  Sprint 2 (Weeks 3-4): Core Features & Frontend Foundation
+  - Product catalog backend completion
+  - Shopping cart functionality
+  - Frontend template system setup
+  - Tailwind CSS integration
 
-            on:
-              push:
-                branches: [ main, develop ]
-              pull_request:
-                branches: [ main, develop ]
+  Sprint 3 (Weeks 5-6): Advanced Features & Integration
+  - PC Builder application development
+  - Blog system implementation
+  - AJAX functionality integration
+  - User dashboard creation
 
-            jobs:
-              build:
-                runs-on: ubuntu-latest
-                strategy:
-                  max-parallel: 4
-                  matrix:
-                    python-version: [3.9, 3.10, 3.11] # Match project's Python version
+  Sprint 4 (Weeks 7-8): Testing, Optimization & Deployment
+  - End-to-end testing implementation
+  - Performance optimization
+  - Security audit and fixes
+  - Production deployment preparation
+  ```
 
-                steps:
-                - uses: actions/checkout@v3
-                - name: Set up Python ${{ matrix.python-version }}
-                  uses: actions/setup-python@v3
-                  with:
-                    python-version: ${{ matrix.python-version }}
-                - name: Install Dependencies
-                  run: |
-                    python -m pip install --upgrade pip
-                    pip install -r requirements.txt
-                - name: Run Tests
-                  run: |
-                    # Assuming 'manage.py test' runs all tests in the project
-                    # Or specify app names: python manage.py test AuthApp BlogApp ProductsApp
-                    python manage.py test
-                # - name: Lint with Flake8 (Example)
-                #   run: |
-                #     pip install flake8
-                #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-                #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-            ```
+  **Agile Practices Implemented:**
+  - **Daily Standups:** Team synchronization meetings
+  - **Sprint Planning:** Feature prioritization and task assignment
+  - **Sprint Reviews:** Demo of completed features
+  - **Sprint Retrospectives:** Continuous improvement processes
+  - **Product Backlog Management:** Prioritized feature list maintenance
 
-  - **Placeholder for Sprint Backlog Example (Conceptual Markdown):**
+  **DevOps Integration:**
+  - **Version Control:** Git with feature branching strategy
+  - **Automated Testing:** Unit tests, integration tests, and end-to-end tests
+  - **Continuous Integration:** Automated build and test pipelines
+  - **Code Quality:** Automated linting and code review processes
 
-            ```markdown
-            ## Sprint 2 Backlog (Example)
-            **Sprint Goal:** Implement core PC Builder functionality and product display.
+- **Sample Implementation Code:**
 
-            - **User Story 1 (PC Builder UI):** As a user, I want to select a CPU and see compatible motherboards, so I can start building my PC.
-                - Task 1.1: Design PC Builder component selection interface.
-                - Task 1.2: Develop front-end for CPU selection.
-                - Task 1.3: Develop back-end logic to fetch compatible motherboards based on CPU.
-                - Task 1.4: Unit tests for motherboard compatibility logic.
-            - **User Story 2 (Product Listing):** As a user, I want to view a list of available CPUs with their basic details (name, price), so I can choose one.
-                - Task 2.1: Create Django model for CPU products.
-                - Task 2.2: Create Django view to list CPUs.
-                - Task 2.3: Create Django template to display CPU list.
-                - Task 2.4: Populate sample CPU data.
-            - **Bug Fix 1:** Fix login page styling issue on mobile.
-            - **Tech Debt 1:** Refactor database connection pooling.
-            ```
+  **CI/CD Pipeline Configuration (GitHub Actions):**
 
-**Project Developing Resources:**
+  ```yaml
+  # .github/workflows/django-ci.yml
+  name: TechReform BD CI/CD Pipeline
 
-Based on requirements.txt and common Django project structures:
+  on:
+    push:
+      branches: [ main, develop, feature/* ]
+    pull_request:
+      branches: [ main, develop ]
 
-1. **Models (Conceptual - defined in `models.py` of each app):**
-    - User profiles, product information, categories, brands, shopping carts, orders, wishlists, PC build configurations, blog posts, comments.
-2. **Design Patterns:**
-    - **MVT (Model-View-Template):** Core architectural pattern of Django.
-    - Others as potentially identified (Repository, Factory, etc.).
-3. **Frameworks:**
-    - **Django:** (Version 5.1.4 from requirements.txt) High-level Python web framework used for the backend development, ORM, templating, routing, admin panel.
-    - **[TO BE VERIFIED/FILLED: Frontend Framework/Libraries e.g., Tailwind CSS (implied by `django-tailwind`), Bootstrap, React, Vue, or just plain HTML/CSS/JS. The static_src might contain clues if it uses a CSS preprocessor or JS bundler setup.]**
-4. **APIs (Application Programming Interfaces):**
-    - **Internal APIs:** Django REST framework might be used to create APIs if there's a decoupled frontend or mobile app planned, or for AJAX interactions. (Check `urls.py` and `views.py` for API endpoint definitions).
-    - **External APIs (Potential):**
-        - Payment Gateway APIs (e.g., Stripe, PayPal, local Bangladeshi gateways like bKash, Nagad) for processing transactions. `[TO BE VERIFIED/FILLED]`
-        - Social Login APIs (e.g., Google, Facebook) if social login is a feature. `[TO BE VERIFIED/FILLED]`
-        - Shipping/Logistics APIs if integrated for order fulfillment. `[TO BE VERIFIED/FILLED]`
-5. **Datasets (Primarily managed within the application database):**
-    - Product data (specifications, images, prices, stock).
-    - User data.
-    - Order data.
-    - Blog content.
-    - Compatibility rules for PC components (this might be a significant dataset to curate or source).
-6. **Key Libraries (from requirements.txt):**
-    - `Pillow==11.0.0`: For image processing (e.g., product images, user avatars).
-    - `requests==2.32.3`: For making HTTP requests (e.g., to external APIs).
-    - `python-slugify==8.0.4`: For generating URL-friendly slugs from strings (e.g., for product or blog post URLs).
-    - `django-tailwind==3.8.0`: Integrates Tailwind CSS with Django projects.
-    - `django-browser-reload==1.18.0`: For automatic browser reloading during development.
-    - `Jinja2==3.1.6`: Templating engine (though Django has its own, Jinja2 might be used by `django-tailwind` or other components).
-    - `markdown-it-py==3.0.0`: For rendering Markdown content (likely for blog posts).
-    - `sqlparse==0.5.2`: Used by Django debug toolbar and other tools.
-    - `asgiref==3.8.1`: ASGI (Asynchronous Server Gateway Interface) implementation, for Django's async capabilities.
-7. **Development Tools:**
-    - Python (Version implied by `cpython-313` in `__pycache__` suggests Python 3.13, but requirements.txt doesn't specify a Python version directly).
-    - pip (for package management).
-    - Git (for version control).
-    - A code editor/IDE (like VS Code).
-    - A database system (e.g., SQLite for development - db.sqlite3 is present, PostgreSQL/MySQL for production).
-8. **Static Files & Media:**
-    - static directory: For CSS, JavaScript, static images.
-    - media directory: For user-uploaded content like product images, profile pictures.
-    - placeholder directory: Contains placeholder images, likely used during early development or for UI mockups.
+  jobs:
+    test:
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          python-version: [3.11, 3.12]
+
+      services:
+        redis:
+          image: redis:7
+          options: >-
+            --health-cmd "redis-cli ping"
+            --health-interval 10s
+            --health-timeout 5s
+            --health-retries 5
+
+      steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install coverage pytest-django
+
+      - name: Run Database Migrations
+        run: |
+          python manage.py makemigrations
+          python manage.py migrate
+
+      - name: Run Unit Tests
+        run: |
+          coverage run --source='.' manage.py test
+          coverage report --show-missing
+          coverage xml
+
+      - name: Run Selenium Tests
+        run: |
+          python tests/SignUp_Login.py
+          python tests/Cart_Checkout.py
+          python tests/PC_Builder.py
+          python tests/Create_Blog.py
+          python tests/User_Management.py
+
+      - name: Upload Coverage Reports
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - name: Deploy to Production
+      run: |
+        echo "Deploying to production server..."
+        # Add deployment scripts here
+  ```
+
+  **Sprint Backlog Example (Sprint 3 - Advanced Features):**
+
+  ```markdown
+  ## Sprint 3 Backlog - Advanced Features Implementation
+  **Sprint Goal:** Implement PC Builder and Blog system with AJAX integration
+
+  ### Epic 1: PC Builder Development
+  **Story 1:** As a user, I want to build a custom PC configuration
+  - Task 1.1: Implement PCBuilder model with component relationships
+  - Task 1.2: Create component compatibility validation logic
+  - Task 1.3: Develop drag-and-drop PC builder interface
+  - Task 1.4: Add real-time price calculation functionality
+  - Task 1.5: Implement build saving and sharing features
+
+  **Story 2:** As a user, I want to see component compatibility warnings
+  - Task 2.1: Create compatibility rule engine
+  - Task 2.2: Implement power consumption calculations
+  - Task 2.3: Add socket compatibility checks
+  - Task 2.4: Create compatibility warning UI components
+
+  ### Epic 2: Blog System Enhancement
+  **Story 3:** As a content manager, I want to create rich blog posts
+  - Task 3.1: Integrate CKEditor for rich text editing
+  - Task 3.2: Implement blog post CRUD operations
+  - Task 3.3: Add image upload functionality
+  - Task 3.4: Create blog post review workflow
+
+  **Story 4:** As a user, I want to interact with blog content
+  - Task 4.1: Implement comment system with threading
+  - Task 4.2: Add like/dislike functionality
+  - Task 4.3: Create blog post sharing features
+  - Task 4.4: Implement comment moderation system
+
+  ### Epic 3: AJAX Integration
+  **Story 5:** As a user, I want dynamic content updates
+  - Task 5.1: Implement AJAX product search suggestions
+  - Task 5.2: Add dynamic cart updates without page refresh
+  - Task 5.3: Create real-time compatibility checking
+  - Task 5.4: Implement infinite scroll for product listings
+
+  ### Technical Debt & Bug Fixes
+  - Fix mobile responsiveness issues in product comparison
+  - Optimize database queries for product listing pages
+  - Implement proper error handling for AJAX requests
+  - Add comprehensive logging for debugging
+
+  **Definition of Done:**
+  - All acceptance criteria met
+  - Unit tests written and passing
+  - Code reviewed and approved
+  - Integration tests passing
+  - Manual testing completed
+  - Documentation updated
+  ```
+
+  **Feature Branch Strategy:**
+
+  ```bash
+  # Feature development workflow
+  git checkout develop
+  git pull origin develop
+  git checkout -b feature/pc-builder-compatibility-engine
+
+  # Development work...
+  git add .
+  git commit -m "feat: implement socket compatibility validation"
+  git push origin feature/pc-builder-compatibility-engine
+
+  # Create pull request to develop branch
+  # After review and approval, merge to develop
+  # Weekly releases from develop to main
+  ```
+
+**Project Development Resources:**
+
+The TechReform BD project utilizes a comprehensive technology stack following modern web development best practices. Based on the detailed codebase analysis, the project development resources include:
+
+### 1. **Models & Database Architecture**
+
+**Database Design Pattern:** Repository Pattern with Django ORM
+
+```python
+# BaseProduct Abstract Model - Inheritance Pattern
+class BaseProduct(models.Model):
+    """Abstract base model implementing common product attributes."""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255)
+    brand = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    discount_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    stock = models.PositiveIntegerField(default=0)
+    is_available = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+    @property
+    def discount_percentage(self):
+        """Calculate discount percentage if discount price exists."""
+        if self.discount_price and self.discount_price < self.price:
+            return round(((self.price - self.discount_price) / self.price) * 100, 2)
+        return 0
+
+# Concrete Product Models - Specialization Pattern
+class CPU(BaseProduct):
+    """CPU model with specific technical specifications."""
+    socket = models.CharField(max_length=50)
+    cores = models.PositiveIntegerField()
+    threads = models.PositiveIntegerField()
+    base_clock = models.DecimalField(max_digits=4, decimal_places=2)
+    boost_clock = models.DecimalField(max_digits=4, decimal_places=2)
+    architecture = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name = "CPU"
+        verbose_name_plural = "CPUs"
+```
+
+**Key Model Categories:**
+
+- **User Management Models:** UserProfile with role-based access control (Customer, Staff, Content Manager, Blogger, Admin)
+- **Product Catalog Models:** 13+ specialized product models (CPU, GPU, RAM, Motherboard, etc.) inheriting from BaseProduct
+- **E-commerce Models:** Cart, CartItem, Order, OrderItem, ShippingAddress with UUID primary keys
+- **Content Models:** BlogPost, Comment, Category with rich text support via CKEditor
+- **Advanced Feature Models:** PCBuilder, CompareProduct, WishList, SupportTicket
+
+### 2. **Design Patterns Implementation**
+
+**Model-View-Template (MVT) Pattern:**
+
+```python
+# views.py - Business Logic Layer
+from django.shortcuts import render, get_object_or_404
+from django.db.models import Q
+from .models import CPU, GPU, Motherboard
+
+def search_products(request):
+    """Advanced product search with filtering capabilities."""
+    query = request.GET.get('q', '')
+    category = request.GET.get('category', '')
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    brand = request.GET.get('brand')
+
+    # Factory Pattern for dynamic model selection
+    model_mapping = {
+        'cpu': CPU,
+        'gpu': GPU,
+        'motherboard': Motherboard,
+        # ... other models
+    }
+
+    if category and category in model_mapping:
+        ProductModel = model_mapping[category]
+        products = ProductModel.objects.filter(is_available=True)
+
+        # Chain of Responsibility Pattern for filters
+        if query:
+            products = products.filter(
+                Q(name__icontains=query) |
+                Q(brand__icontains=query) |
+                Q(model__icontains=query)
+            )
+
+        if min_price:
+            products = products.filter(price__gte=min_price)
+
+        if max_price:
+            products = products.filter(price__lte=max_price)
+
+        if brand:
+            products = products.filter(brand__iexact=brand)
+
+    return render(request, 'product/search_results.html', {
+        'products': products,
+        'query': query,
+        'category': category
+    })
+```
+
+**Decorator Pattern for Access Control:**
+
+```python
+# decorators.py - Authorization Wrapper Pattern
+from functools import wraps
+from django.shortcuts import redirect
+from django.contrib import messages
+
+def role_required(roles):
+    """Decorator implementing role-based access control."""
+    def decorator(view_func):
+        @wraps(view_func)
+        def wrapper(request, *args, **kwargs):
+            if not request.user.is_authenticated:
+                messages.error(request, 'Authentication required.')
+                return redirect('auth:login')
+
+            try:
+                user_profile = request.user.userprofile
+                if user_profile.role not in roles and not request.user.is_superuser:
+                    messages.error(request, 'Access denied. Insufficient permissions.')
+                    return redirect('product:index')
+            except UserProfile.DoesNotExist:
+                messages.error(request, 'User profile not found.')
+                return redirect('auth:profile_setup')
+
+            return view_func(request, *args, **kwargs)
+        return wrapper
+    return decorator
+
+# Usage in views
+@role_required(['admin', 'staff'])
+def admin_product_dashboard(request):
+    """Administrative dashboard for product management."""
+    pass
+```
+
+**Factory Pattern for Dynamic Model Handling:**
+
+```python
+# Product factory for dynamic component creation
+class ProductFactory:
+    """Factory pattern for creating product instances."""
+
+    @staticmethod
+    def create_product(category, **kwargs):
+        """Create product instance based on category."""
+        product_models = {
+            'cpu': CPU,
+            'gpu': GPU,
+            'motherboard': Motherboard,
+            'ram': RAM,
+            'ssd': SSD,
+            'hdd': HDD,
+            'power_supply': PowerSupply,
+            'casing': Casing,
+            'cooler': Cooler,
+            'monitor': Monitor,
+            'keyboard': Keyboard,
+            'mouse': Mouse,
+            'headphone': Headphone,
+        }
+
+        if category not in product_models:
+            raise ValueError(f"Invalid product category: {category}")
+
+        ProductModel = product_models[category]
+        return ProductModel.objects.create(**kwargs)
+```
+
+### 3. **Framework & Technology Stack**
+
+**Backend Framework:**
+
+- **Django 5.1.4:** High-level Python web framework
+  - Built-in ORM for database abstraction
+  - MTV architecture pattern
+  - Admin interface for content management
+  - Built-in authentication and authorization
+  - CSRF protection and security features
+
+**Frontend Technologies:**
+
+- **Tailwind CSS 3.8.0:** Utility-first CSS framework
+- **Alpine.js:** Lightweight JavaScript framework for interactivity
+- **CKEditor 6.7.1:** Rich text editor for blog content
+- **Font Awesome & Line Icons:** Icon libraries
+- **Google Fonts (Sora):** Typography system
+
+**Template System Example:**
+
+```django-html
+<!-- base.html - Template Inheritance Pattern -->
+{% load static tailwind_tags %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TechReform BD{% endblock %}</title>
+
+    <!-- Tailwind CSS Integration -->
+    {% tailwind_css %}
+
+    <!-- Custom Styling -->
+    <style>
+        body {
+            font-family: "Sora", sans-serif;
+            overflow-x: hidden;
+        }
+        .bg-blur-element {
+            position: absolute;
+            border-radius: 100%;
+            filter: blur(70px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Dynamic Navigation -->
+    <nav class="bg-white shadow-lg">
+        {% include 'components/navbar.html' %}
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    {% include 'components/footer.html' %}
+
+    <!-- JavaScript -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
+```
+
+### 4. **API Design & Architecture**
+
+**RESTful URL Routing Pattern:**
+
+```python
+# urls.py - Hierarchical URL Design
+from django.urls import path, include
+
+# Main project URLs
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('ProductsApp.urls')),           # Product catalog
+    path('auth/', include('AuthApp.urls')),          # Authentication
+    path('cart/', include('CartApp.urls')),          # Shopping cart
+    path('pc-builder/', include('PCBuilderApp.urls')), # PC configuration
+    path('compare/', include('CompareApp.urls')),     # Product comparison
+    path('wishlist/', include('WishlistApp.urls')),  # User wishlists
+    path('blog/', include('BlogApp.urls')),          # Content management
+    path('ckeditor/', include('ckeditor_uploader.urls')), # File uploads
+]
+
+# App-specific URL patterns (ProductsApp/urls.py)
+app_name = 'product'
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('search/', views.search_products, name='search'),
+    path('category/<str:category>/', views.category_list, name='category_list'),
+    path('product/<uuid:product_id>/', views.product_detail, name='product_detail'),
+    path('ajax/suggestions/', views.get_product_suggestions, name='ajax_suggestions'),
+]
+```
+
+**AJAX Integration for Dynamic Content:**
+
+```javascript
+// Real-time search suggestions
+document.getElementById('search-input').addEventListener('input', function() {
+    const query = this.value;
+    if (query.length > 2) {
+        fetch(`/ajax/suggestions/?q=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                displaySuggestions(data.suggestions);
+            })
+            .catch(error => console.error('Search error:', error));
+    }
+});
+
+// Dynamic cart updates
+function addToCart(productId, quantity = 1) {
+    fetch('/cart/add/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'),
+        },
+        body: JSON.stringify({
+            product_id: productId,
+            quantity: quantity
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            updateCartCount(data.cart_count);
+            showNotification('Product added to cart', 'success');
+        }
+    });
+}
+```
+
+### 5. **Database & Data Management**
+
+**Database Configuration:**
+
+- **Development:** SQLite (db.sqlite3)
+- **Production:** PostgreSQL (via psycopg2-binary)
+- **Caching:** Redis integration for session management
+- **Background Tasks:** Celery for asynchronous processing
+
+**Media & Static File Handling:**
+
+```python
+# settings.py - File Management Configuration
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+    BASE_DIR / 'theme' / 'static',
+]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# Static file storage for production
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+```
+
+### 6. **Testing Framework & Quality Assurance**
+
+**Multi-Level Testing Strategy:**
+
+**Unit Testing with Django TestCase:**
+
+```python
+# AuthApp/tests.py
+from django.test import TestCase, Client
+from django.contrib.auth.models import User
+from .models import UserProfile
+
+class UserProfileTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='test@example.com',
+            password='testpass123'
+        )
+
+    def test_profile_creation(self):
+        """Test automatic profile creation via signals."""
+        self.assertTrue(hasattr(self.user, 'userprofile'))
+        self.assertEqual(self.user.userprofile.role, 'customer')
+
+    def test_role_permissions(self):
+        """Test role-based access control."""
+        profile = self.user.userprofile
+        profile.role = 'admin'
+        profile.save()
+        self.assertTrue(profile.is_admin())
+```
+
+**End-to-End Testing with Selenium:**
+
+```python
+# tests/SignUp_Login.py
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import pytest
+
+class TestSignUpLogin:
+    def setup_method(self):
+        self.driver = webdriver.Chrome()
+        self.wait = WebDriverWait(self.driver, 10)
+
+    def teardown_method(self):
+        self.driver.quit()
+
+    @pytest.mark.parametrize("username,email,password", [
+        ("validuser", "valid@email.com", "ValidPass123!"),
+        ("testuser2", "test2@email.com", "SecurePass456@"),
+    ])
+    def test_user_registration(self, username, email, password):
+        """Test user registration with valid credentials."""
+        self.driver.get("http://localhost:8000/auth/register/")
+
+        # Fill registration form
+        self.driver.find_element(By.NAME, "username").send_keys(username)
+        self.driver.find_element(By.NAME, "email").send_keys(email)
+        self.driver.find_element(By.NAME, "password1").send_keys(password)
+        self.driver.find_element(By.NAME, "password2").send_keys(password)
+
+        # Submit form
+        self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
+
+        # Verify successful registration
+        success_message = self.wait.until(
+            EC.presence_of_element_located((By.CLASS_NAME, "alert-success"))
+        )
+        assert "Registration successful" in success_message.text
+```
+
+### 7. **Development Tools & Environment**
+
+**Key Dependencies (from requirements.txt analysis):**
+
+```python
+# Core Framework
+Django==5.1.4                    # Web framework
+asgiref==3.8.1                   # ASGI server interface
+
+# Image Processing & Media
+Pillow==11.0.0                   # Image manipulation
+django-ckeditor==6.7.1           # Rich text editor
+
+# Frontend Integration
+django-tailwind==3.8.0           # CSS framework integration
+django-browser-reload==1.18.0    # Development auto-reload
+
+# Content & Text Processing
+python-slugify==8.0.4            # URL-friendly slugs
+markdown-it-py==3.0.0            # Markdown rendering
+text-unidecode==1.3               # Unicode text handling
+
+# HTTP & API Integration
+requests==2.32.3                 # HTTP client library
+urllib3==2.3.0                   # HTTP library
+certifi==2025.1.31               # SSL certificates
+
+# Template Engine & Utilities
+Jinja2==3.1.6                    # Template engine
+MarkupSafe==3.0.2                # Safe string handling
+arrow==1.3.0                     # Date/time manipulation
+
+# Development Utilities
+cookiecutter==2.6.0              # Project scaffolding
+python-decouple==3.8             # Environment configuration
+django-environ==0.11.2           # Environment variables
+
+# Production & Deployment
+whitenoise==6.6.0                # Static file serving
+gunicorn==21.2.0                 # WSGI HTTP server
+psycopg2-binary==2.9.10          # PostgreSQL adapter
+
+# Background Processing
+redis==5.0.1                     # In-memory data store
+celery==5.3.4                    # Distributed task queue
+
+# Cross-Origin & Extensions
+django-cors-headers==4.3.1       # CORS handling
+django-extensions==3.2.3         # Additional Django utilities
+```
+
+**Development Environment Setup:**
+
+```bash
+# Virtual environment creation and activation
+python -m venv techreform_env
+source techreform_env/bin/activate  # Linux/Mac
+# techreform_env\Scripts\activate   # Windows
+
+# Dependency installation
+pip install -r requirements.txt
+
+# Database setup
+python manage.py makemigrations
+python manage.py migrate
+python manage.py collectstatic
+python manage.py createsuperuser
+
+# Development server
+python manage.py runserver
+```
+
+This comprehensive technology stack demonstrates a mature, scalable e-commerce platform built with modern web development best practices, including proper separation of concerns, robust testing strategies, and production-ready deployment considerations.
 
 ### 7. Final Result & Testing
 
