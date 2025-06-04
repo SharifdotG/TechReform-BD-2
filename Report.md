@@ -178,12 +178,49 @@ Based on the project structure (AuthApp, BlogApp, CartApp, CompareApp, PCBuilder
       - **View:** Handles the request-response logic. It fetches data from models, processes it, and selects an appropriate template to render. In Django, views are Python functions or classes that take a web request and return a web response (evident in `views.py` files).
       - **Template:** Defines the presentation layer – how the data is displayed to the user. Django templates are typically HTML files with special syntax to display dynamic data (evident in the templates directory).
     - **Justification:** MVT promotes separation of concerns, making the codebase more organized, maintainable, and scalable. It allows front-end and back-end development to occur more independently.
+  - **Other Verified Design Patterns (from AuthApp analysis):**
 
-  - **Other Potential Patterns (to be verified from deeper code analysis):**
-    - **Repository Pattern:** Might be used for abstracting data access logic, though Django's ORM often serves this purpose.
-    - **Factory Pattern:** Could be used for creating complex objects, perhaps in the PC builder logic.
-    - **Observer Pattern:** Could be used for notifications (e.g., when an order status changes).
-    - `[TO BE VERIFIED/FILLED: Further analysis of specific app logic in AuthApp/forms.py, views.py etc. might reveal more granular design patterns.]`
+    **Decorator Pattern:**
+    - **Implementation:** Custom authentication decorators (`@admin_required`, `@staff_required`, `@role_required`)
+    - **Location:** `AuthApp/decorators.py`
+    - **Purpose:** Role-based access control with composable permission checking
+    - **Example:** `@role_required(['admin', 'staff'])` wraps view functions with authorization logic
+
+    **Template Method Pattern:**
+    - **Implementation:** Custom form classes extending Django's base forms
+    - **Location:** `AuthApp/forms.py` (`CustomUserCreationForm`, `CustomAuthenticationForm`)
+    - **Purpose:** Defines form processing skeleton while allowing customization of specific steps
+    - **Example:** `CustomUserCreationForm.save()` extends base save method with profile creation
+
+    **Observer Pattern:**
+    - **Implementation:** Django signals for automatic profile management
+    - **Location:** `AuthApp/models.py` (`@receiver` decorators)
+    - **Purpose:** Automatic UserProfile creation and role management when User objects are created/updated
+    - **Example:** `create_or_update_user_profile` signal automatically creates profiles for new users
+
+    **Strategy Pattern:**
+    - **Implementation:** Role-based permission checking in UserProfile model
+    - **Location:** `AuthApp/models.py` (UserProfile methods: `is_admin()`, `is_staff()`, etc.)
+    - **Purpose:** Different permission strategies based on user roles
+    - **Example:** Different access levels for admin, staff, content_manager, blogger, user roles
+
+    **Factory Pattern:**
+    - **Implementation:** Automatic ticket ID generation and default category creation
+    - **Location:** `AuthApp/models.py` (`SupportTicket.save()`, signal for default categories)
+    - **Purpose:** Standardized creation of complex objects with proper initialization
+    - **Example:** Ticket IDs generated as "TR{8-char-UUID}" format with automatic timestamps
+
+    **State Pattern:**
+    - **Implementation:** Support ticket status management with behavior changes
+    - **Location:** `AuthApp/models.py` (`SupportTicket` model)
+    - **Purpose:** Ticket behavior changes based on status (open, in_progress, resolved, closed)
+    - **Example:** `is_overdue` property calculates differently based on current status
+
+    **Command Pattern:**
+    - **Implementation:** Support ticket response system with different action types
+    - **Location:** `AuthApp/models.py` (`SupportResponse` model)
+    - **Purpose:** Encapsulates different types of ticket actions (customer response, staff response, internal note)
+    - **Example:** Responses can be customer messages, staff replies, or internal notes with different access levels
 
 ### 6. Methodology
 
