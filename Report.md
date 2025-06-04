@@ -168,13 +168,65 @@ Based on the project structure (AuthApp, BlogApp, CartApp, CompareApp, PCBuilder
 
 - **Chosen Design Process Model:**
 
-  - **Model:** **Agile (specifically Scrum or Kanban)** is inferred or highly recommended for a project like "TechReform BD 2".
-  - **Justification:**
-    - **Iterative Development:** Web applications of this nature benefit from iterative development, allowing for features to be developed, tested, and released in cycles. This helps in gathering early feedback and adapting to changing requirements.
-    - **Flexibility:** The tech market and user preferences can evolve. Agile allows for flexibility in accommodating new features or modifications throughout the development lifecycle.
-    - **Collaboration:** Agile promotes close collaboration between developers, and potentially stakeholders (if user feedback is actively sought). Given the team structure (multiple members), Agile methodologies facilitate better coordination.
-    - **Rapid Prototyping:** Features like the PC builder or product comparison can be complex. Agile allows for building core functionality first and then incrementally adding enhancements.
-    - **Continuous Improvement:** Regular reviews and retrospectives in Agile help in refining the development process and the product itself.
+  **Agile Development with DevOps Integration**
+
+  Based on the comprehensive analysis of the TechReform BD codebase and project structure, the development follows a **hybrid Agile-DevOps methodology** combining elements of Scrum with continuous integration practices.
+
+  - **Primary Framework:** **Scrum with 2-week Sprint Cycles**
+  - **DevOps Integration:** Continuous Integration/Continuous Deployment (CI/CD) practices
+  - **Team Structure:** Cross-functional team with specialized roles:
+    - **Sharif:** Frontend Developer (React/Django Templates, JavaScript, CSS/Tailwind)
+    - **Priom:** Backend Developer (Django, Python, Database, APIs)
+    - **Shorna:** UI/UX Designer (Design Systems, User Experience, Prototyping)
+
+  **Sprint Structure (8-Week Project Timeline):**
+
+  ```markdown
+  Sprint 1 (Weeks 1-2): Foundation & Backend Core
+  - Django project architecture setup
+  - Database schema design and implementation
+  - User authentication system development
+  - Basic product models creation
+
+  Sprint 2 (Weeks 3-4): Core Features & Frontend Foundation
+  - Product catalog backend completion
+  - Shopping cart functionality
+  - Frontend template system setup
+  - Tailwind CSS integration
+
+  Sprint 3 (Weeks 5-6): Advanced Features & Integration
+  - PC Builder application development
+  - Blog system implementation
+  - AJAX functionality integration
+  - User dashboard creation
+
+  Sprint 4 (Weeks 7-8): Testing, Optimization & Deployment
+  - End-to-end testing implementation
+  - Performance optimization
+  - Security audit and fixes
+  - Production deployment preparation
+  ```
+
+  **Agile Practices Implemented:**
+  - **Daily Standups:** Team synchronization meetings for progress tracking
+  - **Sprint Planning:** Feature prioritization and task assignment based on project backlog
+  - **Sprint Reviews:** Demo of completed features to stakeholders
+  - **Sprint Retrospectives:** Continuous improvement processes and team feedback
+  - **Product Backlog Management:** Prioritized feature list maintenance with user stories
+
+  **DevOps Integration:**
+  - **Version Control:** Git with feature branching strategy (main, develop, feature/*)
+  - **Automated Testing:** Multi-level testing including unit tests, integration tests, and end-to-end Selenium tests
+  - **Continuous Integration:** Automated build and test pipelines using GitHub Actions
+  - **Code Quality:** Automated linting, code review processes, and coverage reporting
+  - **Environment Management:** Separate development, staging, and production environments
+
+  **Justification:**
+  - **Iterative Development:** Complex e-commerce features like PC Builder and product comparison benefit from incremental development and early user feedback
+  - **Risk Mitigation:** Short sprints allow for early detection and correction of issues
+  - **Quality Assurance:** Integrated testing in CI/CD pipeline ensures code quality and functionality
+  - **Team Collaboration:** Cross-functional team structure with defined roles promotes efficient parallel development
+  - **Scalability:** DevOps practices ensure the platform can handle production deployment and scaling requirements
 
 - **Design Pattern(s) Used:**
 
