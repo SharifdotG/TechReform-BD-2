@@ -126,7 +126,8 @@ urlpatterns = (
     # =================================================================
     # Media files: User uploads, product images, profile pictures, attachments
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    # Static files: CSS, JavaScript, fonts, and other static assets
-    # Note: In production, these should be served by a web server (nginx/apache)
-    + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 )
+
+# Static files are automatically served by Django's staticfiles app during development
+# when DEBUG=True and 'django.contrib.staticfiles' is in INSTALLED_APPS
+# No additional URL configuration needed for static files in development

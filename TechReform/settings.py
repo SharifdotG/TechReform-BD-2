@@ -48,6 +48,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
+import platform
 from pathlib import Path
 
 # =============================================================================
@@ -131,8 +132,12 @@ INTERNAL_IPS = [
 ]
 
 # Path to NPM binary for Tailwind CSS compilation
-# Adjust this path based on your Node.js installation
-NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
+# Automatically detects the correct path based on the operating system
+if platform.system() == "Windows":
+    NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
+else:
+    # Linux/macOS - npm is typically in PATH
+    NPM_BIN_PATH = "npm"
 
 
 # =============================================================================
@@ -281,7 +286,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Directory where all static files will be collected for production
 # Run 'python manage.py collectstatic' before deploying
-# STATIC_ROOT = BASE_DIR / "staticfiles"  # Uncomment for production
+STATIC_ROOT = BASE_DIR / "staticfiles"  # Required for serving static files
 
 # URL prefix for user-uploaded media files
 MEDIA_URL = "media/"
