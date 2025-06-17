@@ -50,6 +50,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 import platform
 from pathlib import Path
+import dj_database_url
 
 # =============================================================================
 # PATH CONFIGURATION
@@ -75,12 +76,16 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-^=(31@%01)s)t!0n^_*jd
 # SECURITY WARNING: don't run with debug turned on in production!
 # Debug mode provides detailed error pages and should never be enabled in production.
 # Set to False in production for security and performance.
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+DEBUG = 'RENDER' not in os.environ
 
 # Allowed hostnames that this Django site can serve.
 # In production, specify the actual domain names and IP addresses.
 # Example: ['techreform.com', 'www.techreform.com', '192.168.1.100']
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',') if os.environ.get('ALLOWED_HOSTS') else []
+ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # =============================================================================
@@ -148,6 +153,8 @@ else:
 MIDDLEWARE = [
     # Security middleware - must be first for proper HTTPS handling
     "django.middleware.security.SecurityMiddleware",
+    # WhiteNoise middleware for serving static files - must be after SecurityMiddleware
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     # Session middleware - manages user sessions and authentication state
     "django.contrib.sessions.middleware.SessionMiddleware",
     # Common middleware - handles URL normalization and other common tasks
@@ -209,23 +216,14 @@ WSGI_APPLICATION = "TechReform.wsgi.application"
 # =============================================================================
 # DATABASE CONFIGURATION
 # =============================================================================
-# Database configuration - currently using SQLite for development
-# For production, consider PostgreSQL or MySQL for better performance
+# Database configuration - PostgreSQL for production, SQLite for development
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",  # SQLite database engine
-        "NAME": BASE_DIR / "db.sqlite3",  # Database file location
-    }
-    # Production database configuration example:
-    # "default": {
-    #     "ENGINE": "django.db.backends.postgresql",
-    #     "NAME": "techreform_db",
-    #     "USER": "techreform_user",
-    #     "PASSWORD": "secure_password",
-    #     "HOST": "localhost",
-    #     "PORT": "5432",
-    # }
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
+        conn_max_age=600
+    )
 }
 
 
@@ -286,7 +284,12 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Directory where all static files will be collected for production
 # Run 'python manage.py collectstatic' before deploying
-STATIC_ROOT = BASE_DIR / "staticfiles"  # Required for serving static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+if not DEBUG:
+    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
+    # and renames the files with unique names for each version to support long-term caching
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # URL prefix for user-uploaded media files
 MEDIA_URL = "media/"

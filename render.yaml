@@ -1,0 +1,22 @@
+databases:
+  - name: techreformdb
+    plan: free
+    databaseName: techreform
+    user: techreform
+
+services:
+  - type: web
+    plan: free
+    name: techreform
+    runtime: python
+    buildCommand: './build.sh'
+    startCommand: 'python -m gunicorn TechReform.asgi:application -k uvicorn.workers.UvicornWorker'
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: techreformdb
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4

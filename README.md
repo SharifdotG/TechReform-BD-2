@@ -602,6 +602,7 @@ python manage.py collectstatic --noinput
 
   # Start Django server
   python manage.py runserver
+  # using SQLite for development, PostgreSQL is used in production
   ```
 
 - **Terminal 2** — Tailwind CSS watcher (for live CSS updates):
