@@ -9,19 +9,19 @@ def copy_data(apps, schema_editor):
     """
     cursor = connection.cursor()
     db_vendor = connection.vendor
-    
+
     # Skip this migration on PostgreSQL if it's a fresh installation
     # (source tables won't exist)
     if db_vendor == 'postgresql':
         # Check if any of the source tables exist
         cursor.execute("""
-            SELECT table_name 
-            FROM information_schema.tables 
-            WHERE table_schema = 'public' 
+            SELECT table_name
+            FROM information_schema.tables
+            WHERE table_schema = 'public'
             AND table_name LIKE 'TechReformApp_%'
         """)
         existing_source_tables = [row[0] for row in cursor.fetchall()]
-        
+
         if not existing_source_tables:
             # No source tables found, skip this migration
             return
@@ -49,8 +49,8 @@ def copy_data(apps, schema_editor):
         existing_tables = [row[0] for row in cursor.fetchall()]
     elif db_vendor == 'postgresql':
         cursor.execute("""
-            SELECT table_name 
-            FROM information_schema.tables 
+            SELECT table_name
+            FROM information_schema.tables
             WHERE table_schema = 'public'
         """)
         existing_tables = [row[0] for row in cursor.fetchall()]
@@ -74,18 +74,18 @@ def copy_data(apps, schema_editor):
                 elif db_vendor == 'postgresql':
                     # Get column names from source table
                     cursor.execute(f"""
-                        SELECT column_name 
-                        FROM information_schema.columns 
-                        WHERE table_name = '{source_table}' 
+                        SELECT column_name
+                        FROM information_schema.columns
+                        WHERE table_name = '{source_table}'
                         AND table_schema = 'public'
                     """)
                     source_columns = [row[0] for row in cursor.fetchall()]
 
                     # Get column names from destination table
                     cursor.execute(f"""
-                        SELECT column_name, data_type, is_nullable 
-                        FROM information_schema.columns 
-                        WHERE table_name = '{dest_table}' 
+                        SELECT column_name, data_type, is_nullable
+                        FROM information_schema.columns
+                        WHERE table_name = '{dest_table}'
                         AND table_schema = 'public'
                     """)
                     dest_columns_info = cursor.fetchall()
