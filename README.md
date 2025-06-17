@@ -85,13 +85,19 @@
       - [1. 📥 Clone the Repository](#1--clone-the-repository)
       - [2. 🐍 Set Up Python Virtual Environment](#2--set-up-python-virtual-environment)
       - [3. 📦 Install Python Dependencies](#3--install-python-dependencies)
-      - [4. 🎨 Install Node.js Dependencies (Tailwind CSS)](#4--install-nodejs-dependencies-tailwind-css)
+      - [4. 🎨 Install Node.js Dependencies \& Build Tailwind CSS](#4--install-nodejs-dependencies--build-tailwind-css)
       - [5. ⚙️ Environment Configuration (Optional)](#5-️-environment-configuration-optional)
       - [6. 🗄️ Database Setup](#6-️-database-setup)
       - [7. 👤 Create Superuser](#7--create-superuser)
       - [8. 📂 Collect Static Files](#8--collect-static-files)
       - [9. 🏃 Start Development Servers](#9--start-development-servers)
       - [10. 🌐 Access the Application](#10--access-the-application)
+  - [🔧 Troubleshooting](#-troubleshooting)
+    - [Common Issues and Solutions](#common-issues-and-solutions)
+      - [🚨 Site Shows Raw HTML Without Styling](#-site-shows-raw-html-without-styling)
+      - [🐍 "ModuleNotFoundError: No module named 'django'"](#-modulenotfounderror-no-module-named-django)
+      - [📦 "npm audit" Issues](#-npm-audit-issues)
+      - [🚪 "That port is already in use"](#-that-port-is-already-in-use)
   - [🛠️ Development](#️-development)
     - [🧹 Code Quality \& Standards](#-code-quality--standards)
     - [🗄️ Database Management](#️-database-management)
@@ -537,13 +543,16 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-#### 4. 🎨 Install Node.js Dependencies (Tailwind CSS)
+#### 4. 🎨 Install Node.js Dependencies & Build Tailwind CSS
 
 ```bash
 cd theme/static_src
 npm install
+npm run build
 cd ../..
 ```
+
+> 💡 **Important:** This step builds the Tailwind CSS files. Without this, the site will display raw HTML without styling.
 
 #### 5. ⚙️ Environment Configuration (Optional)
 
@@ -554,7 +563,15 @@ cp .env.example .env
 
 #### 6. 🗄️ Database Setup
 
+**⚠️ Make sure your virtual environment is activated before running Django commands:**
+
 ```bash
+# Ensure virtual environment is active
+source venv/bin/activate  # Linux/macOS
+# OR
+venv\Scripts\activate     # Windows
+
+# Run database migrations
 python manage.py makemigrations
 python manage.py migrate
 ```
@@ -568,22 +585,33 @@ python manage.py createsuperuser
 #### 8. 📂 Collect Static Files
 
 ```bash
-python manage.py collectstatic
+python manage.py collectstatic --noinput
 ```
 
 #### 9. 🏃 Start Development Servers
 
+**You need to run TWO servers simultaneously in separate terminals:**
+
 - **Terminal 1** — Django backend:
 
   ```bash
+  # Make sure virtual environment is activated
+  source venv/bin/activate  # Linux/macOS
+  # OR
+  venv\Scripts\activate     # Windows
+
+  # Start Django server
   python manage.py runserver
   ```
 
-- **Terminal 2** — Tailwind CSS watcher:
+- **Terminal 2** — Tailwind CSS watcher (for live CSS updates):
 
   ```bash
-  python manage.py tailwind start
+  cd theme/static_src
+  npm run dev
   ```
+
+> 🚨 **Troubleshooting:** If you see raw HTML without styling, ensure both servers are running and the Tailwind CSS was built (step 4).
 
 #### 10. 🌐 Access the Application
 
@@ -595,6 +623,55 @@ python manage.py collectstatic
 ---
 
 > 💡 **Tip:** For a smooth experience, keep both Django and Tailwind servers running in separate terminals.
+
+---
+
+## 🔧 Troubleshooting
+
+### Common Issues and Solutions
+
+#### 🚨 Site Shows Raw HTML Without Styling
+
+**Problem:** The website displays unstyled HTML content.
+
+**Solution:**
+1. Ensure Tailwind CSS is built:
+   ```bash
+   cd theme/static_src
+   npm run build
+   ```
+2. Make sure both servers are running:
+   - Django server: `python manage.py runserver`
+   - Tailwind watcher: `npm run dev` (in `theme/static_src` directory)
+
+#### 🐍 "ModuleNotFoundError: No module named 'django'"
+
+**Problem:** Python can't find Django or other dependencies.
+
+**Solution:** Activate your virtual environment:
+```bash
+source venv/bin/activate  # Linux/macOS
+# OR
+venv\Scripts\activate     # Windows
+```
+
+#### 📦 "npm audit" Issues
+
+**Problem:** Security vulnerabilities in npm packages.
+
+**Solution:** Run audit fix from the correct directory:
+```bash
+cd theme/static_src
+npm audit fix
+```
+
+#### 🚪 "That port is already in use"
+
+**Problem:** Port 8000 is occupied by another process.
+
+**Solutions:**
+- Use a different port: `python manage.py runserver 8001`
+- Kill existing processes: `pkill -f "python manage.py runserver"`
 
 ---
 
@@ -648,15 +725,24 @@ mypy .
 ### 💠 Tailwind CSS Workflow
 
 ```bash
+# Navigate to the Tailwind directory
+cd theme/static_src
+
 # Start Tailwind CSS in watch mode for live development
-python manage.py tailwind start
+npm run dev
 
 # Build Tailwind CSS for production deployment
-python manage.py tailwind build
+npm run build
 
 # Install or update Tailwind CSS dependencies
-python manage.py tailwind install
+npm install
+
+# Build and clean (for production)
+npm run build:clean && npm run build:tailwind
 ```
+
+> **Important:** Use `npm run dev` instead of Django's tailwind commands for better compatibility and performance.
+> Keep the Tailwind watcher (`npm run dev`) running in a separate terminal during development.
 
 > **Tip:** Keep Django and Tailwind servers running in separate terminals for the best development experience.
 
